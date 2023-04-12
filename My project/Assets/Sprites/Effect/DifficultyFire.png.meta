@@ -1,0 +1,3721 @@
+fileFormatVersion: 2
+guid: bed4bd300cf8650449fcf65904347637
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 131228892026362167
+    second: DifficultyFire 1_0
+  - first:
+      213: 6914285209836614273
+    second: DifficultyFire 1_1
+  - first:
+      213: 2560996809583169111
+    second: DifficultyFire 1_2
+  - first:
+      213: 5359299927482845509
+    second: DifficultyFire 1_3
+  - first:
+      213: -3655917237736710789
+    second: DifficultyFire 1_4
+  - first:
+      213: -2509965927612526735
+    second: DifficultyFire 1_5
+  - first:
+      213: 5648309420113172032
+    second: DifficultyFire 1_6
+  - first:
+      213: 8060400050854572912
+    second: DifficultyFire 1_7
+  - first:
+      213: -311182057747326556
+    second: DifficultyFire 1_8
+  - first:
+      213: 8941902136841138228
+    second: DifficultyFire 1_9
+  - first:
+      213: -5242570730376975080
+    second: DifficultyFire 1_10
+  - first:
+      213: -4335173650657461256
+    second: DifficultyFire 1_11
+  - first:
+      213: 9120656711156571719
+    second: DifficultyFire 1_12
+  - first:
+      213: -6785565244365344335
+    second: DifficultyFire 1_13
+  - first:
+      213: 4462357438142562908
+    second: DifficultyFire 1_14
+  - first:
+      213: -5139036814903569615
+    second: DifficultyFire 1_15
+  - first:
+      213: -2448034881443595336
+    second: DifficultyFire 1_16
+  - first:
+      213: -6260155182090862158
+    second: DifficultyFire 1_17
+  - first:
+      213: 4039094625884994027
+    second: DifficultyFire 1_18
+  - first:
+      213: -8903927797776970773
+    second: DifficultyFire 1_19
+  - first:
+      213: 325922627637197529
+    second: DifficultyFire 1_20
+  - first:
+      213: -370154717143895865
+    second: DifficultyFire 1_21
+  - first:
+      213: -4891318593372544966
+    second: DifficultyFire 1_22
+  - first:
+      213: -3202419891143064246
+    second: DifficultyFire 1_23
+  - first:
+      213: -6052911770993326388
+    second: DifficultyFire 1_24
+  - first:
+      213: -1344794561848709339
+    second: DifficultyFire 1_25
+  - first:
+      213: -5729907750273128951
+    second: DifficultyFire 1_26
+  - first:
+      213: 6583221117751926874
+    second: DifficultyFire 1_27
+  - first:
+      213: -3595452327040776703
+    second: DifficultyFire 1_28
+  - first:
+      213: 899688815298638322
+    second: DifficultyFire 1_29
+  - first:
+      213: -877367271458316418
+    second: DifficultyFire 1_30
+  - first:
+      213: -3068885437869248280
+    second: DifficultyFire 1_31
+  - first:
+      213: 2292717940962599406
+    second: DifficultyFire 1_32
+  - first:
+      213: -6643466630265627134
+    second: DifficultyFire 1_33
+  - first:
+      213: 709191031652257705
+    second: DifficultyFire 1_34
+  - first:
+      213: -1215129481128473920
+    second: DifficultyFire 1_35
+  - first:
+      213: 8612180178042080590
+    second: DifficultyFire 1_36
+  - first:
+      213: 7855041104906176227
+    second: DifficultyFire 1_37
+  - first:
+      213: -7827490463823133074
+    second: DifficultyFire 1_38
+  - first:
+      213: 7179071412630071399
+    second: DifficultyFire 1_39
+  - first:
+      213: 6966876445765093059
+    second: DifficultyFire 1_40
+  - first:
+      213: 5167679178191758245
+    second: DifficultyFire 1_41
+  - first:
+      213: -7104363608975774367
+    second: DifficultyFire 1_42
+  - first:
+      213: -1792366864050984668
+    second: DifficultyFire 1_43
+  - first:
+      213: 747513668806187858
+    second: DifficultyFire 1_44
+  - first:
+      213: -611304785154717467
+    second: DifficultyFire 1_45
+  - first:
+      213: -4003422382342250375
+    second: DifficultyFire 1_46
+  - first:
+      213: -4587854505006084608
+    second: DifficultyFire 1_47
+  - first:
+      213: -1960635117048581714
+    second: DifficultyFire 1_48
+  - first:
+      213: 123061580025616984
+    second: DifficultyFire 1_49
+  - first:
+      213: 3217444762407908063
+    second: DifficultyFire 1_50
+  - first:
+      213: -6952509842228177867
+    second: DifficultyFire 1_51
+  - first:
+      213: -7867090001223584552
+    second: DifficultyFire 1_52
+  - first:
+      213: -8941783645896881136
+    second: DifficultyFire 1_53
+  - first:
+      213: -2094365635787938696
+    second: DifficultyFire 1_54
+  - first:
+      213: 5503365954728959204
+    second: DifficultyFire 1_55
+  - first:
+      213: -3994256793271760340
+    second: DifficultyFire 1_56
+  - first:
+      213: 3747628291367057289
+    second: DifficultyFire 1_57
+  - first:
+      213: -1283116441322013682
+    second: DifficultyFire 1_58
+  - first:
+      213: 376415714748953571
+    second: DifficultyFire 1_59
+  - first:
+      213: -6554873192023157270
+    second: DifficultyFire 1_60
+  - first:
+      213: -2249293083460136236
+    second: DifficultyFire 1_61
+  - first:
+      213: -1073361338246462429
+    second: DifficultyFire 1_62
+  - first:
+      213: -3141857369036159539
+    second: DifficultyFire 1_63
+  - first:
+      213: 1635047612780760963
+    second: DifficultyFire 1_64
+  - first:
+      213: 8096170863365288801
+    second: DifficultyFire 1_65
+  - first:
+      213: -5454995044980547250
+    second: DifficultyFire 1_66
+  - first:
+      213: -7829967797470156916
+    second: DifficultyFire 1_67
+  - first:
+      213: 6085110162437026214
+    second: DifficultyFire 1_68
+  - first:
+      213: 3290198367193273352
+    second: DifficultyFire 1_69
+  - first:
+      213: -5554118240279761988
+    second: DifficultyFire 1_70
+  - first:
+      213: 8334448238290904265
+    second: DifficultyFire 1_71
+  - first:
+      213: -2267454961582222607
+    second: DifficultyFire 1_72
+  - first:
+      213: -1478831606354417749
+    second: DifficultyFire 1_73
+  - first:
+      213: -7604824741480506874
+    second: DifficultyFire 1_74
+  - first:
+      213: 879599836397372366
+    second: DifficultyFire 1_75
+  - first:
+      213: 5284918961430698878
+    second: DifficultyFire 1_76
+  - first:
+      213: -5393766206803472709
+    second: DifficultyFire 1_77
+  - first:
+      213: 2416697325918362511
+    second: DifficultyFire 1_78
+  - first:
+      213: 4138848972405335880
+    second: DifficultyFire 1_79
+  - first:
+      213: -5164145870512233327
+    second: DifficultyFire 1_80
+  - first:
+      213: 4986645248251749309
+    second: DifficultyFire 1_81
+  - first:
+      213: 3774395769705611328
+    second: DifficultyFire 1_82
+  - first:
+      213: 6007010201199969388
+    second: DifficultyFire 1_83
+  - first:
+      213: 8153925245828716382
+    second: DifficultyFire 1_84
+  - first:
+      213: 5945424760699991032
+    second: DifficultyFire 1_85
+  - first:
+      213: 8610387207632036472
+    second: DifficultyFire 1_86
+  - first:
+      213: 6181831951183483942
+    second: DifficultyFire 1_87
+  - first:
+      213: -153914406365271742
+    second: DifficultyFire 1_88
+  - first:
+      213: 6680383816103722384
+    second: DifficultyFire 1_89
+  - first:
+      213: -8892470657488986928
+    second: DifficultyFire 1_90
+  - first:
+      213: -1531419362575233632
+    second: DifficultyFire 1_91
+  - first:
+      213: 5842469276778838940
+    second: DifficultyFire 1_92
+  - first:
+      213: -8555962931406333074
+    second: DifficultyFire 1_93
+  - first:
+      213: -4267811108962241880
+    second: DifficultyFire 1_94
+  - first:
+      213: 8358605328571546626
+    second: DifficultyFire 1_95
+  - first:
+      213: 4596129756915355581
+    second: DifficultyFire 1_96
+  - first:
+      213: 2992098897060543304
+    second: DifficultyFire 1_97
+  - first:
+      213: 6218171460399060934
+    second: DifficultyFire 1_98
+  - first:
+      213: -1684261604462364479
+    second: DifficultyFire 1_99
+  - first:
+      213: -9027227127082404291
+    second: DifficultyFire_0
+  - first:
+      213: 5958017893172414070
+    second: DifficultyFire_1
+  - first:
+      213: 2058853163694957990
+    second: DifficultyFire_2
+  - first:
+      213: 9187411388408334265
+    second: DifficultyFire_3
+  - first:
+      213: -2471836257135889109
+    second: DifficultyFire_4
+  - first:
+      213: -1093289716468877707
+    second: DifficultyFire_5
+  - first:
+      213: -3062135974353816147
+    second: DifficultyFire_6
+  - first:
+      213: -2574731400347303515
+    second: DifficultyFire_7
+  - first:
+      213: 6910871485304546308
+    second: DifficultyFire_8
+  - first:
+      213: -857177757869379763
+    second: DifficultyFire_9
+  - first:
+      213: -1906127145318854903
+    second: DifficultyFire_10
+  - first:
+      213: 7159960833240801629
+    second: DifficultyFire_11
+  - first:
+      213: -3546609767425922254
+    second: DifficultyFire_12
+  - first:
+      213: 9070827142529491365
+    second: DifficultyFire_13
+  - first:
+      213: -6337188897610389662
+    second: DifficultyFire_14
+  - first:
+      213: 8967006067854752612
+    second: DifficultyFire_15
+  - first:
+      213: 4194534753696395310
+    second: DifficultyFire_16
+  - first:
+      213: -6505067900426666045
+    second: DifficultyFire_17
+  - first:
+      213: 6411242736703490650
+    second: DifficultyFire_18
+  - first:
+      213: -4572770072626839367
+    second: DifficultyFire_19
+  - first:
+      213: 2187666141861719783
+    second: DifficultyFire_20
+  - first:
+      213: -6784907596046863829
+    second: DifficultyFire_21
+  - first:
+      213: -5153082570837029590
+    second: DifficultyFire_22
+  - first:
+      213: 1861846808782272135
+    second: DifficultyFire_23
+  - first:
+      213: -3862232705451815969
+    second: DifficultyFire_24
+  - first:
+      213: 4816906798987333961
+    second: DifficultyFire_25
+  - first:
+      213: -8422547426406624587
+    second: DifficultyFire_26
+  - first:
+      213: -6042780252613694279
+    second: DifficultyFire_27
+  - first:
+      213: -3539952318719570026
+    second: DifficultyFire_28
+  - first:
+      213: 1939537672108129927
+    second: DifficultyFire_29
+  - first:
+      213: -7728618719651786690
+    second: DifficultyFire_30
+  - first:
+      213: 4609876785098332937
+    second: DifficultyFire_31
+  - first:
+      213: -8388974394253645120
+    second: DifficultyFire_32
+  - first:
+      213: -381126655446641828
+    second: DifficultyFire_33
+  - first:
+      213: 1581231553711602627
+    second: DifficultyFire_34
+  - first:
+      213: -4412652025509446959
+    second: DifficultyFire_35
+  - first:
+      213: -2277653796904740603
+    second: DifficultyFire_36
+  - first:
+      213: -1957275648093964765
+    second: DifficultyFire_37
+  - first:
+      213: 2310892215121719459
+    second: DifficultyFire_38
+  - first:
+      213: 1904927639502441007
+    second: DifficultyFire_39
+  - first:
+      213: 4907130967332156390
+    second: DifficultyFire_40
+  - first:
+      213: 7504153664850000113
+    second: DifficultyFire_41
+  - first:
+      213: 2617888337863409315
+    second: DifficultyFire_42
+  - first:
+      213: -1513986094124792222
+    second: DifficultyFire_43
+  - first:
+      213: -1624579449137823060
+    second: DifficultyFire_44
+  - first:
+      213: -2259997657981072340
+    second: DifficultyFire_45
+  - first:
+      213: -7431230401655499982
+    second: DifficultyFire_46
+  - first:
+      213: 85317605722869079
+    second: DifficultyFire_47
+  - first:
+      213: 5898536441060099793
+    second: DifficultyFire_48
+  - first:
+      213: -8708152804585843811
+    second: DifficultyFire_49
+  - first:
+      213: -6968509063717330387
+    second: DifficultyFire_50
+  - first:
+      213: 3250082667068717666
+    second: DifficultyFire_51
+  - first:
+      213: -3114725658655423307
+    second: DifficultyFire_52
+  - first:
+      213: 4007138169014731663
+    second: DifficultyFire_53
+  - first:
+      213: -5510740778269563209
+    second: DifficultyFire_54
+  - first:
+      213: 7578281923498788196
+    second: DifficultyFire_55
+  - first:
+      213: -4383318114675438416
+    second: DifficultyFire_56
+  - first:
+      213: -6746820495807368790
+    second: DifficultyFire_57
+  - first:
+      213: 7214077371741824164
+    second: DifficultyFire_58
+  - first:
+      213: -282540544310182557
+    second: DifficultyFire_59
+  - first:
+      213: -5896383485855292494
+    second: DifficultyFire_60
+  - first:
+      213: -876296183729225225
+    second: DifficultyFire_61
+  - first:
+      213: -5989802173339831062
+    second: DifficultyFire_62
+  - first:
+      213: -612526830655317658
+    second: DifficultyFire_63
+  - first:
+      213: -1681985404647228831
+    second: DifficultyFire_64
+  - first:
+      213: 601083338283107704
+    second: DifficultyFire_65
+  - first:
+      213: 6098233035545751404
+    second: DifficultyFire_66
+  - first:
+      213: 6535266510531701365
+    second: DifficultyFire_67
+  - first:
+      213: -7616197302336553830
+    second: DifficultyFire_68
+  - first:
+      213: -4011338464427606724
+    second: DifficultyFire_69
+  - first:
+      213: -3253919181699502890
+    second: DifficultyFire_70
+  - first:
+      213: 4992048844264588021
+    second: DifficultyFire_71
+  - first:
+      213: -4592898352609951171
+    second: DifficultyFire_72
+  - first:
+      213: 6057664883938167214
+    second: DifficultyFire_73
+  - first:
+      213: -8191094074721635006
+    second: DifficultyFire_74
+  - first:
+      213: -7169477970308847115
+    second: DifficultyFire_75
+  - first:
+      213: 424288651969595246
+    second: DifficultyFire_76
+  - first:
+      213: 7487655277063873104
+    second: DifficultyFire_77
+  - first:
+      213: -2887030185737558711
+    second: DifficultyFire_78
+  - first:
+      213: -6921469794914455707
+    second: DifficultyFire_79
+  - first:
+      213: -8722027558785638177
+    second: DifficultyFire_80
+  - first:
+      213: 1422514057040949212
+    second: DifficultyFire_81
+  - first:
+      213: -4237483288204556782
+    second: DifficultyFire_82
+  - first:
+      213: 7477287169821350719
+    second: DifficultyFire_83
+  - first:
+      213: -5749673278416535034
+    second: DifficultyFire_84
+  - first:
+      213: 5347612187417245983
+    second: DifficultyFire_85
+  - first:
+      213: 3730542734486422239
+    second: DifficultyFire_86
+  - first:
+      213: 7816549323464472158
+    second: DifficultyFire_87
+  - first:
+      213: 417859800630612324
+    second: DifficultyFire_88
+  - first:
+      213: -7360111868814966856
+    second: DifficultyFire_89
+  - first:
+      213: -6983454222099844485
+    second: DifficultyFire_90
+  - first:
+      213: -6134728840132328843
+    second: DifficultyFire_91
+  - first:
+      213: -6718940851357497777
+    second: DifficultyFire_92
+  - first:
+      213: 5975275951702347122
+    second: DifficultyFire_93
+  - first:
+      213: 212198474086127144
+    second: DifficultyFire_94
+  - first:
+      213: 2519341751939430403
+    second: DifficultyFire_95
+  - first:
+      213: 1768640050693076733
+    second: DifficultyFire_96
+  - first:
+      213: 2982201800942574412
+    second: DifficultyFire_97
+  - first:
+      213: -825850025081785640
+    second: DifficultyFire_98
+  - first:
+      213: -2424811706994168425
+    second: DifficultyFire_99
+  - first:
+      213: -5670929829253679532
+    second: DifficultyFire_100
+  - first:
+      213: -1368592922502480152
+    second: DifficultyFire_101
+  - first:
+      213: 4579263196225020674
+    second: DifficultyFire_102
+  - first:
+      213: 4762605468207905968
+    second: DifficultyFire_103
+  - first:
+      213: -5403683080121400782
+    second: DifficultyFire_104
+  - first:
+      213: -7345136071910867089
+    second: DifficultyFire_105
+  - first:
+      213: -5260677170530651492
+    second: DifficultyFire_106
+  - first:
+      213: 4831148270330638715
+    second: DifficultyFire_107
+  - first:
+      213: -2075254192057098150
+    second: DifficultyFire_108
+  - first:
+      213: 8784240335675540018
+    second: DifficultyFire_109
+  - first:
+      213: -8978834627652209851
+    second: DifficultyFire_110
+  - first:
+      213: -7909005957616561567
+    second: DifficultyFire_111
+  - first:
+      213: 1770426387156569346
+    second: DifficultyFire_112
+  - first:
+      213: -3548901073655956572
+    second: DifficultyFire_113
+  - first:
+      213: 509870153004151282
+    second: DifficultyFire_114
+  - first:
+      213: -3384607789226714514
+    second: DifficultyFire_115
+  - first:
+      213: -4980646838329981849
+    second: DifficultyFire_116
+  - first:
+      213: -5927571348682066771
+    second: DifficultyFire_117
+  - first:
+      213: -7850542125159378660
+    second: DifficultyFire_118
+  - first:
+      213: 3580707777550157577
+    second: DifficultyFire_119
+  - first:
+      213: 5608001689745777776
+    second: DifficultyFire_120
+  - first:
+      213: -6533854053453100739
+    second: DifficultyFire_121
+  - first:
+      213: 1286341053875642465
+    second: DifficultyFire_122
+  - first:
+      213: 4546072751229159814
+    second: DifficultyFire_123
+  - first:
+      213: -1971586777075273315
+    second: DifficultyFire_124
+  - first:
+      213: 1569827884319672278
+    second: DifficultyFire_125
+  - first:
+      213: -810288625244128326
+    second: DifficultyFire_126
+  - first:
+      213: -6858168071289066062
+    second: DifficultyFire_127
+  - first:
+      213: -1548597361756880852
+    second: DifficultyFire_128
+  - first:
+      213: -4179606485583608606
+    second: DifficultyFire_129
+  - first:
+      213: 2781975839235292125
+    second: DifficultyFire_130
+  - first:
+      213: 7708530591839217887
+    second: DifficultyFire_131
+  - first:
+      213: 2595290922520926847
+    second: DifficultyFire_132
+  - first:
+      213: 6007128931192640906
+    second: DifficultyFire_133
+  - first:
+      213: -6369606164134242393
+    second: DifficultyFire_134
+  - first:
+      213: 6096566195979561647
+    second: DifficultyFire_135
+  - first:
+      213: 2064340286585119299
+    second: DifficultyFire_136
+  - first:
+      213: -3982335914508087794
+    second: DifficultyFire_137
+  - first:
+      213: -7517719811881932910
+    second: DifficultyFire_138
+  - first:
+      213: 6560868913325831442
+    second: DifficultyFire_139
+  - first:
+      213: 4814756121941197182
+    second: DifficultyFire_140
+  - first:
+      213: -8023897638660688333
+    second: DifficultyFire_141
+  - first:
+      213: -6497363981561840259
+    second: DifficultyFire_142
+  - first:
+      213: -3678762364161232257
+    second: DifficultyFire_143
+  - first:
+      213: 813813047983256583
+    second: DifficultyFire_144
+  - first:
+      213: 2956046460761942686
+    second: DifficultyFire_145
+  - first:
+      213: 6414518943793501523
+    second: DifficultyFire_146
+  - first:
+      213: 6970950809092101349
+    second: DifficultyFire_147
+  - first:
+      213: 7804397774615186833
+    second: DifficultyFire_148
+  - first:
+      213: 1027044592969612496
+    second: DifficultyFire_149
+  - first:
+      213: -5411904222307375763
+    second: DifficultyFire_150
+  - first:
+      213: 5474728692917624848
+    second: DifficultyFire_151
+  - first:
+      213: 5768572029997795739
+    second: DifficultyFire_152
+  - first:
+      213: 301656071894589175
+    second: DifficultyFire_153
+  - first:
+      213: 6146072745839230605
+    second: DifficultyFire_154
+  - first:
+      213: -4750305763953896343
+    second: DifficultyFire_155
+  - first:
+      213: 7416298119415245570
+    second: DifficultyFire_156
+  - first:
+      213: 4837464563546537614
+    second: DifficultyFire_157
+  - first:
+      213: -5596173682250941512
+    second: DifficultyFire_158
+  - first:
+      213: -3015573637373308195
+    second: DifficultyFire_159
+  - first:
+      213: 3862315342329922678
+    second: DifficultyFire_160
+  - first:
+      213: -7604861228245702923
+    second: DifficultyFire_161
+  - first:
+      213: 8603185386951682128
+    second: DifficultyFire_162
+  - first:
+      213: 8197381613882432936
+    second: DifficultyFire_163
+  - first:
+      213: -4687131500437896267
+    second: DifficultyFire_164
+  - first:
+      213: -1780703358430047331
+    second: DifficultyFire_165
+  - first:
+      213: 7048912533087335905
+    second: DifficultyFire_166
+  - first:
+      213: -7330940076224466536
+    second: DifficultyFire_167
+  - first:
+      213: -583334472285444785
+    second: DifficultyFire_168
+  - first:
+      213: -5937953184717383060
+    second: DifficultyFire_169
+  - first:
+      213: -2021877700693156339
+    second: DifficultyFire_170
+  - first:
+      213: -4980000405724796175
+    second: DifficultyFire_171
+  - first:
+      213: 1293799967302105426
+    second: DifficultyFire_172
+  - first:
+      213: -8633797172752756672
+    second: DifficultyFire_173
+  - first:
+      213: 6937944238225727136
+    second: DifficultyFire_174
+  - first:
+      213: 7075671270162666548
+    second: DifficultyFire_175
+  - first:
+      213: -3844462156407098590
+    second: DifficultyFire_176
+  - first:
+      213: -2214392348154495536
+    second: DifficultyFire_177
+  - first:
+      213: -7679569704997105826
+    second: DifficultyFire_178
+  - first:
+      213: -6856188912461775689
+    second: DifficultyFire_179
+  - first:
+      213: 7748803464756365419
+    second: DifficultyFire_180
+  - first:
+      213: 7978009264515684496
+    second: DifficultyFire_181
+  - first:
+      213: -307625399825839543
+    second: DifficultyFire_182
+  - first:
+      213: -9017608529938915245
+    second: DifficultyFire_183
+  - first:
+      213: -1461612010485625746
+    second: DifficultyFire_184
+  - first:
+      213: 1613131228757019050
+    second: DifficultyFire_185
+  - first:
+      213: -8966361773950797522
+    second: DifficultyFire_186
+  - first:
+      213: 1717541536542263741
+    second: DifficultyFire_187
+  - first:
+      213: 6286763426822691146
+    second: DifficultyFire_188
+  - first:
+      213: -3552949782400775107
+    second: DifficultyFire_189
+  - first:
+      213: -1686744207368962893
+    second: DifficultyFire_190
+  - first:
+      213: 2928607055477799758
+    second: DifficultyFire_191
+  - first:
+      213: -623106355023352282
+    second: DifficultyFire_192
+  - first:
+      213: 6612035913443402907
+    second: DifficultyFire_193
+  - first:
+      213: -5971989619601291877
+    second: DifficultyFire_194
+  - first:
+      213: 764194775101968185
+    second: DifficultyFire_195
+  - first:
+      213: -3867108963052858047
+    second: DifficultyFire_196
+  - first:
+      213: -6820358874655474691
+    second: DifficultyFire_197
+  - first:
+      213: 1088307914418058787
+    second: DifficultyFire_198
+  - first:
+      213: -6099334674241093005
+    second: DifficultyFire_199
+  - first:
+      213: 4707019871949496857
+    second: DifficultyFire_200
+  - first:
+      213: 8052442603554288269
+    second: DifficultyFire_201
+  - first:
+      213: 1772087452397924510
+    second: DifficultyFire_202
+  - first:
+      213: -7816590354079007949
+    second: DifficultyFire_203
+  - first:
+      213: 8015380703734394188
+    second: DifficultyFire_204
+  - first:
+      213: -704665555071126861
+    second: DifficultyFire_205
+  - first:
+      213: -646875511856671418
+    second: DifficultyFire_206
+  - first:
+      213: -3893175109015491822
+    second: DifficultyFire_207
+  - first:
+      213: 8100519725129336235
+    second: DifficultyFire_208
+  - first:
+      213: -8784726091981061064
+    second: DifficultyFire_209
+  - first:
+      213: 1739637398918462690
+    second: DifficultyFire_210
+  - first:
+      213: 5084592597053447710
+    second: DifficultyFire_211
+  - first:
+      213: 6584778403711742966
+    second: DifficultyFire_212
+  - first:
+      213: 1422773375107559120
+    second: DifficultyFire_213
+  - first:
+      213: -257914692316514087
+    second: DifficultyFire_214
+  - first:
+      213: -9142888104445886077
+    second: DifficultyFire_215
+  - first:
+      213: 1565342205347501918
+    second: DifficultyFire_216
+  - first:
+      213: 31533926303425895
+    second: DifficultyFire_217
+  - first:
+      213: 9183885880482923502
+    second: DifficultyFire_218
+  - first:
+      213: 7585840086389506373
+    second: DifficultyFire_219
+  - first:
+      213: 528994790330476296
+    second: DifficultyFire_220
+  - first:
+      213: 1580501953256231691
+    second: DifficultyFire_221
+  - first:
+      213: 3310452775800444469
+    second: DifficultyFire_222
+  - first:
+      213: -24034618693695927
+    second: DifficultyFire_223
+  - first:
+      213: -3421541756283339042
+    second: DifficultyFire_224
+  - first:
+      213: 6236923971401281275
+    second: DifficultyFire_225
+  - first:
+      213: -7256939857988799544
+    second: DifficultyFire_226
+  - first:
+      213: 6294124666676817951
+    second: DifficultyFire_227
+  - first:
+      213: -6184154959732933478
+    second: DifficultyFire_228
+  - first:
+      213: -6660823614193067157
+    second: DifficultyFire_229
+  - first:
+      213: -825798250423914466
+    second: DifficultyFire_230
+  - first:
+      213: 6982518580354317960
+    second: DifficultyFire_231
+  - first:
+      213: 6464533522189988024
+    second: DifficultyFire_232
+  - first:
+      213: -5206031174351953830
+    second: DifficultyFire_233
+  - first:
+      213: -5123886193650580392
+    second: DifficultyFire_234
+  - first:
+      213: -4952512541700480861
+    second: DifficultyFire_235
+  - first:
+      213: -2442603574061355860
+    second: DifficultyFire_236
+  - first:
+      213: 1595303998658511668
+    second: DifficultyFire_237
+  - first:
+      213: 5009086425840425107
+    second: DifficultyFire_238
+  - first:
+      213: -6768265876681301585
+    second: DifficultyFire_239
+  - first:
+      213: -483127231442703757
+    second: DifficultyFire_240
+  - first:
+      213: -6491977039262162227
+    second: DifficultyFire_241
+  - first:
+      213: 6104810973443164062
+    second: DifficultyFire_242
+  - first:
+      213: 4326326829394282997
+    second: DifficultyFire_243
+  - first:
+      213: -3584705257537928688
+    second: DifficultyFire_244
+  - first:
+      213: -1383565083291031758
+    second: DifficultyFire_245
+  - first:
+      213: -6161261108078272697
+    second: DifficultyFire_246
+  - first:
+      213: -263649663438957054
+    second: DifficultyFire_247
+  - first:
+      213: -805784929009982281
+    second: DifficultyFire_248
+  - first:
+      213: 6653298211628540890
+    second: DifficultyFire_249
+  - first:
+      213: 2986990601151623833
+    second: DifficultyFire_250
+  - first:
+      213: -6580809599441576183
+    second: DifficultyFire_251
+  - first:
+      213: -3722410416225645061
+    second: DifficultyFire_252
+  - first:
+      213: -6747562782783940170
+    second: DifficultyFire_253
+  - first:
+      213: -6298345013199182245
+    second: DifficultyFire_254
+  - first:
+      213: -7435520088897124025
+    second: DifficultyFire_255
+  - first:
+      213: 2820033682934872422
+    second: DifficultyFire_256
+  - first:
+      213: 2719157885590454831
+    second: DifficultyFire_257
+  - first:
+      213: 7682584486609540344
+    second: DifficultyFire_258
+  - first:
+      213: 5390208448680647195
+    second: DifficultyFire_259
+  - first:
+      213: 1056697256731502165
+    second: DifficultyFire_260
+  - first:
+      213: 125175974744313415
+    second: DifficultyFire_261
+  - first:
+      213: 4360490602555927785
+    second: DifficultyFire_262
+  - first:
+      213: -7027648276661993942
+    second: DifficultyFire_263
+  - first:
+      213: -8000696152456317435
+    second: DifficultyFire_264
+  - first:
+      213: -2648996996740388161
+    second: DifficultyFire_265
+  - first:
+      213: 2171420953697347149
+    second: DifficultyFire_266
+  - first:
+      213: 7132446668670523729
+    second: DifficultyFire_267
+  - first:
+      213: 934554938761787513
+    second: DifficultyFire_268
+  - first:
+      213: 1194394832005269201
+    second: DifficultyFire_269
+  - first:
+      213: -5884278446500579879
+    second: DifficultyFire_270
+  - first:
+      213: 1522567240095101727
+    second: DifficultyFire_271
+  - first:
+      213: 6242310271274466578
+    second: DifficultyFire_272
+  - first:
+      213: 7621329751669471462
+    second: DifficultyFire_273
+  - first:
+      213: 3022224043400059388
+    second: DifficultyFire_274
+  - first:
+      213: 4680873967146519473
+    second: DifficultyFire_275
+  - first:
+      213: 4381933555691330548
+    second: DifficultyFire_276
+  - first:
+      213: 6410259303996655598
+    second: DifficultyFire_277
+  - first:
+      213: 3467313442769213584
+    second: DifficultyFire_278
+  - first:
+      213: -5194404165970309381
+    second: DifficultyFire_279
+  - first:
+      213: 8571231329454684180
+    second: DifficultyFire_280
+  - first:
+      213: -7661593780889604190
+    second: DifficultyFire_281
+  - first:
+      213: -5686060488119940936
+    second: DifficultyFire_282
+  - first:
+      213: 7379139644470560665
+    second: DifficultyFire_283
+  - first:
+      213: 6192398466004883741
+    second: DifficultyFire_284
+  - first:
+      213: 1050702693972845705
+    second: DifficultyFire_285
+  - first:
+      213: 3134721051651157234
+    second: DifficultyFire_286
+  - first:
+      213: -6166566762629000786
+    second: DifficultyFire_287
+  - first:
+      213: -7333503981550359012
+    second: DifficultyFire_288
+  - first:
+      213: 6638202440319460023
+    second: DifficultyFire_289
+  - first:
+      213: 6066555814009186129
+    second: DifficultyFire_290
+  - first:
+      213: 7520904570087343705
+    second: DifficultyFire_291
+  - first:
+      213: 4019255555188544746
+    second: DifficultyFire_292
+  - first:
+      213: 8089432426083730446
+    second: DifficultyFire_293
+  - first:
+      213: -6935337410945359143
+    second: DifficultyFire_294
+  - first:
+      213: 7086728772546787633
+    second: DifficultyFire_295
+  - first:
+      213: -2909421529330306911
+    second: DifficultyFire_296
+  - first:
+      213: 7092187419910893685
+    second: DifficultyFire_297
+  - first:
+      213: -112174554764811512
+    second: DifficultyFire_298
+  - first:
+      213: -4010337673300474298
+    second: DifficultyFire_299
+  - first:
+      213: -7141837398650331567
+    second: DifficultyFire_300
+  - first:
+      213: 5752171897030562419
+    second: DifficultyFire_301
+  - first:
+      213: 2855337186280757917
+    second: DifficultyFire_302
+  - first:
+      213: 6832147093501678852
+    second: DifficultyFire_303
+  - first:
+      213: -8928145993435482578
+    second: DifficultyFire_304
+  - first:
+      213: -4325413184674648590
+    second: DifficultyFire_305
+  - first:
+      213: 7302245326920833972
+    second: DifficultyFire_306
+  - first:
+      213: 3883959589744998444
+    second: DifficultyFire_307
+  - first:
+      213: -4208719177018768554
+    second: DifficultyFire_308
+  - first:
+      213: 8421130045072515512
+    second: DifficultyFire_309
+  - first:
+      213: 7240263166263945238
+    second: DifficultyFire_310
+  - first:
+      213: 5348229799668599239
+    second: DifficultyFire_311
+  - first:
+      213: 4510003314546908694
+    second: DifficultyFire_312
+  - first:
+      213: 4475542981990422657
+    second: DifficultyFire_313
+  - first:
+      213: -7347001556004746597
+    second: DifficultyFire_314
+  - first:
+      213: -7267579403865630610
+    second: DifficultyFire_315
+  - first:
+      213: 4236471385928775085
+    second: DifficultyFire_316
+  - first:
+      213: 6911213345164511524
+    second: DifficultyFire_317
+  - first:
+      213: -5342811636647332069
+    second: DifficultyFire_318
+  - first:
+      213: 6008406325570731438
+    second: DifficultyFire_319
+  - first:
+      213: -1768433582407157848
+    second: DifficultyFire_320
+  - first:
+      213: -8272950147474120665
+    second: DifficultyFire_321
+  - first:
+      213: -4279286507887609400
+    second: DifficultyFire_322
+  - first:
+      213: 8329941528450898881
+    second: DifficultyFire_323
+  - first:
+      213: 6222059274630337857
+    second: DifficultyFire_324
+  - first:
+      213: 965229949297875050
+    second: DifficultyFire_325
+  - first:
+      213: -1852904466876563352
+    second: DifficultyFire_326
+  - first:
+      213: -4843316917599907703
+    second: DifficultyFire_327
+  - first:
+      213: 4194368915405580178
+    second: DifficultyFire_328
+  - first:
+      213: 4030833327238171831
+    second: DifficultyFire_329
+  - first:
+      213: 8255985361091708050
+    second: DifficultyFire_330
+  - first:
+      213: -7584157131197053932
+    second: DifficultyFire_331
+  - first:
+      213: -3308730031143140568
+    second: DifficultyFire_332
+  - first:
+      213: 4840994016696518668
+    second: DifficultyFire_333
+  - first:
+      213: 4977213750111459613
+    second: DifficultyFire_334
+  - first:
+      213: 6324133285264856461
+    second: DifficultyFire_335
+  - first:
+      213: -8519971077891105519
+    second: DifficultyFire_336
+  - first:
+      213: -983676558657371912
+    second: DifficultyFire_337
+  - first:
+      213: -6236806996561842713
+    second: DifficultyFire_338
+  - first:
+      213: -4951883878900733702
+    second: DifficultyFire_339
+  - first:
+      213: -3105630212609603507
+    second: DifficultyFire_340
+  - first:
+      213: 3387445817224096251
+    second: DifficultyFire_341
+  - first:
+      213: 3779715736064078908
+    second: DifficultyFire_342
+  - first:
+      213: -8640815485432507863
+    second: DifficultyFire_343
+  - first:
+      213: -6095879859672025871
+    second: DifficultyFire_344
+  - first:
+      213: 7596611268186045274
+    second: DifficultyFire_345
+  - first:
+      213: -7690052587271989094
+    second: DifficultyFire_346
+  - first:
+      213: -3897622258309604229
+    second: DifficultyFire_347
+  - first:
+      213: -3825042525513841679
+    second: DifficultyFire_348
+  - first:
+      213: 1507231383475341183
+    second: DifficultyFire_349
+  - first:
+      213: 7444589249704936890
+    second: DifficultyFire_350
+  - first:
+      213: -6827309855773339258
+    second: DifficultyFire_351
+  - first:
+      213: -8254990286189061307
+    second: DifficultyFire_352
+  - first:
+      213: -1843389927100342052
+    second: DifficultyFire_353
+  - first:
+      213: 5226521277921935937
+    second: DifficultyFire_354
+  - first:
+      213: -3768333667949385654
+    second: DifficultyFire_355
+  - first:
+      213: -7673095098608030457
+    second: DifficultyFire_356
+  - first:
+      213: -6324894270506550862
+    second: DifficultyFire_357
+  - first:
+      213: -6220756004937250590
+    second: DifficultyFire_358
+  - first:
+      213: -7383867366495615820
+    second: DifficultyFire_359
+  - first:
+      213: 3786810503269568178
+    second: DifficultyFire_360
+  - first:
+      213: -1621269580527462921
+    second: DifficultyFire_361
+  - first:
+      213: -4685004550492796918
+    second: DifficultyFire_362
+  - first:
+      213: 5807064044847753988
+    second: DifficultyFire_363
+  - first:
+      213: 5982497944804005785
+    second: DifficultyFire_364
+  - first:
+      213: -4915912685595156185
+    second: DifficultyFire_365
+  - first:
+      213: -5353803330252299502
+    second: DifficultyFire_366
+  - first:
+      213: 3765650374561763436
+    second: DifficultyFire_367
+  - first:
+      213: 4382847368237215850
+    second: DifficultyFire_368
+  - first:
+      213: -5648498705177264028
+    second: DifficultyFire_369
+  - first:
+      213: -1629767777721935970
+    second: DifficultyFire_370
+  - first:
+      213: -2988393315921894529
+    second: DifficultyFire_371
+  - first:
+      213: -9157955428231110220
+    second: DifficultyFire_372
+  - first:
+      213: 7986575340497597962
+    second: DifficultyFire_373
+  - first:
+      213: 2266755417872967532
+    second: DifficultyFire_374
+  - first:
+      213: -6461208342383348822
+    second: DifficultyFire_375
+  - first:
+      213: 5394205279883410317
+    second: DifficultyFire_376
+  - first:
+      213: 4862757710993427519
+    second: DifficultyFire_377
+  - first:
+      213: -5193869573862195074
+    second: DifficultyFire_378
+  - first:
+      213: 7846926024249194770
+    second: DifficultyFire_379
+  - first:
+      213: -4245391291310269108
+    second: DifficultyFire_380
+  - first:
+      213: -1734044891537415212
+    second: DifficultyFire_381
+  - first:
+      213: 3657600139896215977
+    second: DifficultyFire_382
+  - first:
+      213: 6379559124146900058
+    second: DifficultyFire_383
+  - first:
+      213: -608653653503332156
+    second: DifficultyFire_384
+  - first:
+      213: -2992557150388836103
+    second: DifficultyFire_385
+  - first:
+      213: 5757482746522442155
+    second: DifficultyFire_386
+  - first:
+      213: 4262440724343298354
+    second: DifficultyFire_387
+  - first:
+      213: 8134526998308274755
+    second: DifficultyFire_388
+  - first:
+      213: 6844751608618039538
+    second: DifficultyFire_389
+  - first:
+      213: -1650587763943863342
+    second: DifficultyFire_390
+  - first:
+      213: 4914319428408639855
+    second: DifficultyFire_391
+  - first:
+      213: -7285875967674732380
+    second: DifficultyFire_392
+  - first:
+      213: -1665614376516409842
+    second: DifficultyFire_393
+  - first:
+      213: 3528268609634699909
+    second: DifficultyFire_394
+  - first:
+      213: 6802119449671486489
+    second: DifficultyFire_395
+  - first:
+      213: 7641557020197946253
+    second: DifficultyFire_396
+  - first:
+      213: 6908804861809973112
+    second: DifficultyFire_397
+  - first:
+      213: -9038168713966274725
+    second: DifficultyFire_398
+  - first:
+      213: 2170669842765232202
+    second: DifficultyFire_399
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DifficultyFire_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d36bb7791c8d8b280800000000000000
+      internalID: -9027227127082404291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_1
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67686f7f4b12fa250800000000000000
+      internalID: 5958017893172414070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_2
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a52aba4b04829c10800000000000000
+      internalID: 2058853163694957990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_3
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b705731bfd308f70800000000000000
+      internalID: 9187411388408334265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_4
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b25fb7e350642bdd0800000000000000
+      internalID: -2471836257135889109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_5
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 576f84d9bcad3d0f0800000000000000
+      internalID: -1093289716468877707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_6
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da532b22e8b1185d0800000000000000
+      internalID: -3062135974353816147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_7
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a14142de67b44cd0800000000000000
+      internalID: -2574731400347303515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_8
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40424f1200958ef50800000000000000
+      internalID: 6910871485304546308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_9
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 1332
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4f64d8ee51ba14f0800000000000000
+      internalID: -857177757869379763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90f4a8ed5731c85e0800000000000000
+      internalID: -1906127145318854903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_11
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d512707517a4d5360800000000000000
+      internalID: 7159960833240801629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_12
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23ba5af0539e7cec0800000000000000
+      internalID: -3546609767425922254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_13
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a121711a3d02ed70800000000000000
+      internalID: 9070827142529491365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_14
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26722630648cd08a0800000000000000
+      internalID: -6337188897610389662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_15
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b314d6284317c70800000000000000
+      internalID: 8967006067854752612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_16
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20ba18822bf53a30800000000000000
+      internalID: 4194534753696395310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_17
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cfb54bb53b59b5a0800000000000000
+      internalID: -6505067900426666045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_18
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5ac3020d4f49f850800000000000000
+      internalID: 6411242736703490650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_19
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 1184
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b04a85b8d14a80c0800000000000000
+      internalID: -4572770072626839367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ee21d8e3c62c5e10800000000000000
+      internalID: 2187666141861719783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_21
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b22f6c74d7a27d1a0800000000000000
+      internalID: -6784907596046863829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_22
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2d800b34b29c78b0800000000000000
+      internalID: -5153082570837029590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_23
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78679afdecb96d910800000000000000
+      internalID: 1861846808782272135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_24
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdb06af31d7966ac0800000000000000
+      internalID: -3862232705451815969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_25
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 941ddcd663719d240800000000000000
+      internalID: 4816906798987333961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_26
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b217218db91d1b80800000000000000
+      internalID: -8422547426406624587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_27
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bc2733506bb32ca0800000000000000
+      internalID: -6042780252613694279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_28
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69f46e02f109fdec0800000000000000
+      internalID: -3539952318719570026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_29
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 1036
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e3e769c3f9aea10800000000000000
+      internalID: 1939537672108129927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3098b2f83e6eb490800000000000000
+      internalID: -7728618719651786690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_31
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90b1b1a038299ff30800000000000000
+      internalID: 4609876785098332937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_32
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cae9a03c30649b80800000000000000
+      internalID: -8388974394253645120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_33
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c539baf7357f5baf0800000000000000
+      internalID: -381126655446641828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_34
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cb7e9a68b9a1f510800000000000000
+      internalID: 1581231553711602627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_35
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1daf91eac5c13c2c0800000000000000
+      internalID: -4412652025509446959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_36
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5095c2270f52460e0800000000000000
+      internalID: -2277653796904740603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_37
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32636db0b2c56d4e0800000000000000
+      internalID: -1957275648093964765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_38
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a0bb8cd930f11020800000000000000
+      internalID: 2310892215121719459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_39
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 888
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2acd5b6899af6a10800000000000000
+      internalID: 1904927639502441007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e3f62e9d91a91440800000000000000
+      internalID: 4907130967332156390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_41
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f8745ddffb142860800000000000000
+      internalID: 7504153664850000113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_42
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ae7cf7b29b945420800000000000000
+      internalID: 2617888337863409315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_43
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2668fc83bad3dfae0800000000000000
+      internalID: -1513986094124792222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_44
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca28db039955479e0800000000000000
+      internalID: -1624579449137823060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_45
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2cc2d2aa10e2a0e0800000000000000
+      internalID: -2259997657981072340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_46
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2339d317257fed890800000000000000
+      internalID: -7431230401655499982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_47
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75dc23e09eb1f2100800000000000000
+      internalID: 85317605722869079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_48
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d6851034afcbd150800000000000000
+      internalID: 5898536441060099793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_49
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 740
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d93d6d8792d662780800000000000000
+      internalID: -8708152804585843811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d22e9036de1ea4f90800000000000000
+      internalID: -6968509063717330387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_51
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26af84d47fc9a1d20800000000000000
+      internalID: 3250082667068717666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_52
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b48c07148546c4d0800000000000000
+      internalID: -3114725658655423307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_53
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f83480a1fe63c9730800000000000000
+      internalID: 4007138169014731663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_54
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b6abf5957ae583b0800000000000000
+      internalID: -5510740778269563209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_55
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 465c8e902477b2960800000000000000
+      internalID: 7578281923498788196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_56
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bc4c3506635b23c0800000000000000
+      internalID: -4383318114675438416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_57
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1b318518a7e52a0800000000000000
+      internalID: -6746820495807368790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_58
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a4ead4d52d8d1460800000000000000
+      internalID: 7214077371741824164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_59
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 592
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36dfeb53fd6341cf0800000000000000
+      internalID: -282540544310182557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b3ad12c576db2ea0800000000000000
+      internalID: -5896383485855292494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_61
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f10ac28345c6d3f0800000000000000
+      internalID: -876296183729225225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_62
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4773f98a2ffdca0800000000000000
+      internalID: -5989802173339831062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_63
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 669d463c71edf77f0800000000000000
+      internalID: -612526830655317658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_64
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16a3c9e9f2368a8e0800000000000000
+      internalID: -1681985404647228831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_65
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87545ca8c1a775800800000000000000
+      internalID: 601083338283107704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_66
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6fa141d2a641a450800000000000000
+      internalID: 6098233035545751404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_67
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57aafb8144ee1ba50800000000000000
+      internalID: 6535266510531701365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_68
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9cf0f6e7e4dd4690800000000000000
+      internalID: -7616197302336553830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_69
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 444
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3d7ee96becd458c0800000000000000
+      internalID: -4011338464427606724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dca8f68eb1c7d2d0800000000000000
+      internalID: -3253919181699502890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_71
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f24acf89f1574540800000000000000
+      internalID: 4992048844264588021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_72
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d320533584fb240c0800000000000000
+      internalID: -4592898352609951171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_73
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea90e77fd16211450800000000000000
+      internalID: 6057664883938167214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_74
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245f86a5653635e80800000000000000
+      internalID: -8191094074721635006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_75
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9a0c285c5e08c90800000000000000
+      internalID: -7169477970308847115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_76
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6780eee74063e500800000000000000
+      internalID: 424288651969595246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_77
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 052a8fd9dce79e760800000000000000
+      internalID: 7487655277063873104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_78
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 945684b97553fe7d0800000000000000
+      internalID: -2887030185737558711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_79
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 296
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56f278e94eff1ff90800000000000000
+      internalID: -6921469794914455707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd02a65852225f680800000000000000
+      internalID: -8722027558785638177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_81
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdfece18ff8cdb310800000000000000
+      internalID: 1422514057040949212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_82
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 216c9e8866f6135c0800000000000000
+      internalID: -4237483288204556782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_83
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b99c88019a4c760800000000000000
+      internalID: 7477287169821350719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_84
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6024d69cd9e0530b0800000000000000
+      internalID: -5749673278416535034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_85
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f19fd8b93f8863a40800000000000000
+      internalID: 5347612187417245983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_86
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd24a7c0adc85c330800000000000000
+      internalID: 3730542734486422239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_87
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e567b622236f97c60800000000000000
+      internalID: 7816549323464472158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_88
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 461d08656498cc500800000000000000
+      internalID: 417859800630612324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_89
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 148
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bfb5283041abd990800000000000000
+      internalID: -7360111868814966856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b72798a8269c51f90800000000000000
+      internalID: -6983454222099844485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_91
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57281928f901ddaa0800000000000000
+      internalID: -6134728840132328843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_92
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f46c9f7e4e681c2a0800000000000000
+      internalID: -6718940851357497777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_93
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27d0728d1d17ce250800000000000000
+      internalID: 5975275951702347122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_94
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82698cd4361e1f200800000000000000
+      internalID: 212198474086127144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_95
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 308f820b9ff76f220800000000000000
+      internalID: 2519341751939430403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_96
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df6f61561c87b8810800000000000000
+      internalID: 1768640050693076733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_97
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4b56b1dcb8e26920800000000000000
+      internalID: 2982201800942574412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_98
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d2b04917cdf984f0800000000000000
+      internalID: -825850025081785640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DifficultyFire_99
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 0
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79d67658996595ed0800000000000000
+      internalID: -2424811706994168425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,10 @@
+Grassland
+Forest
+Mountain
+Sea
+Skyscraper
+Corridor
+JapanCastle
+Hell
+SubmergedRuin
+UnendingDungeon
