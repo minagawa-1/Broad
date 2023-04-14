@@ -322,6 +322,16 @@
 "Assets/Scripts/CreateBoard.cs"
 "Assets/Scripts/Manager/GameManager.cs"
 "Assets/Scripts/PuzzleBlock.cs"
+"Assets/Scripts/woskni/DebugHotKey.cs"
+"Assets/Scripts/woskni/method/ColorExpansion.cs"
+"Assets/Scripts/woskni/method/EnumLength.cs"
+"Assets/Scripts/woskni/method/GameObjectExpansion.cs"
+"Assets/Scripts/woskni/method/ListExpansion.cs"
+"Assets/Scripts/woskni/method/Vector3Expansion.cs"
+"Assets/Scripts/woskni/MethodButton.cs"
+"Assets/Scripts/woskni/Name.cs"
+"Assets/Scripts/woskni/ReadOnly.cs"
+"Assets/Scripts/woskni/Round.cs"
 -langversion:8.0
 
 /deterministic

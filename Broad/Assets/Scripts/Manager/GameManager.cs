@@ -36,19 +36,19 @@ public class GameManager : MonoBehaviour
         // ゲームオブジェクト
         public GameObject       gameObject;
         // スプライトレンダラー
-        public MeshRenderer   meshRenderer;
+        public MeshRenderer     meshRenderer;
         // 座標：左上がVector2Int( 0, 0)
         public Vector2Int       position;
-        // 設置できるか
-        public bool             setable;
+        // 状況（-1: 設置不可, 0：未設置, n: nPが設置済み)
+        public int              state;
 
         // コンストラクタ
-        public Square(GameObject gameObject, MeshRenderer meshRenderer, Vector2Int position, bool setable)
+        public Square(GameObject gameObject, MeshRenderer meshRenderer, Vector2Int position, int state)
         {
             this.gameObject = gameObject;
             this.meshRenderer = meshRenderer;
             this.position = position;
-            this.setable = setable;
+            this.state = state;
         }
     }
 
@@ -60,9 +60,6 @@ public class GameManager : MonoBehaviour
 
     // ボードマスのステータス
     int[] m_SquareState = { -1, 0, 1, 2, 3, 4 };
-
-    // デフォルトのボード設定
-    int m_DefaultSquare;
 
     // Start is called before the first frame update
     void Start()
@@ -86,14 +83,14 @@ public class GameManager : MonoBehaviour
         // 盤面のサイズを渡す
         m_Board = new Square[m_BoardSize.x, m_BoardSize.y];
 
-        // デフォルトのボードマスを設定
-        m_DefaultSquare = m_SquareState[1];
-
         // 設置不可マスの決定
         ShaveBoard(m_BoardSize);
 
         // ボードの作成
         LayOutSquare(m_SquarePrefab, m_UnsetBleSquarePrefab, m_BoardSize, m_SquareSize, m_SetableParentTransform);
+
+        // 背景の作成
+        CreateBackGround(m_UnsetBleSquarePrefab, m_BoardSize);
         
         // 範囲内でランダムな座標を返す関数内の関数
         Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
@@ -115,38 +112,21 @@ public class GameManager : MonoBehaviour
             // x軸方向の生成
             for (int x = 0; x < boardSize.x; x++)
             {
-                // 設置不可の場合
-                if (m_Board[x, y].setable)
-                {
-                    // マス目生成
-                    GameObject newSquare = Instantiate(unsetablePrefab);
+                // 設置状況の初期化
+                if (m_Board[x, y].state > 0) m_Board[x, y].state = 0;
 
-                    // 新しく生成したオブジェクトの名前、親、座標を設定する
-                    newSquare.gameObject.name = "Square[" + x + "," + y + "]";
-                    newSquare.transform.parent = parentTransform;
-                    newSquare.transform.position = new Vector3((float)x - (float)boardSize.x / 2f + 0.5f, -0.1f, (float)y - (float)boardSize.y / 2f + 0.5f);
-                    newSquare.transform.position = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
-                    newSquare.transform.localScale = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
+                // マス目生成
+                GameObject newSquare = Instantiate(m_Board[x, y].state == 0 ? setablePrefab : unsetablePrefab);
 
-                    // ボードにマス目情報を格納
-                    m_Board[x, y] = new Square(newSquare, newSquare.GetComponent<MeshRenderer>(), new Vector2Int(x, y), true);
-                }
-                // 設置可能の場合
-                else
-                {
-                    // マス目生成
-                    GameObject newSquare = Instantiate(setablePrefab);
+                // 新しく生成したオブジェクトの名前、親、座標を設定する
+                newSquare.gameObject.name = "Square[" + x + "," + y + "]";
+                newSquare.transform.parent = parentTransform;
+                newSquare.transform.position = new Vector3((float)x - (float)boardSize.x / 2f + 0.5f, -0.1f, (float)y - (float)boardSize.y / 2f + 0.5f);
+                newSquare.transform.position = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
+                newSquare.transform.localScale = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
 
-                    // 新しく生成したオブジェクトの名前、親、座標を設定する
-                    newSquare.gameObject.name = "Square[" + x + "," + y + "]";
-                    newSquare.transform.parent = parentTransform;
-                    newSquare.transform.position = new Vector3((float)x - (float)boardSize.x / 2f + 0.5f, -0.1f, (float)y - (float)boardSize.y / 2f + 0.5f);
-                    newSquare.transform.position = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
-                    newSquare.transform.localScale = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
-
-                    // ボードにマス目情報を格納
-                    m_Board[x, y] = new Square(newSquare, newSquare.GetComponent<MeshRenderer>(), new Vector2Int(x, y), true);
-                }
+                // ボードにマス目情報を格納
+                m_Board[x, y] = new Square(newSquare, newSquare.GetComponent<MeshRenderer>(), new Vector2Int(x, y), m_Board[x, y].state);
             }
         }
     }
@@ -172,10 +152,38 @@ public class GameManager : MonoBehaviour
                 if (perlinValue >= m_BoardViability)
                 {
                     // 設置不可にする
-                    m_Board[ x, y].setable = true;
+                    m_Board[x, y].state = -1;
                 }
             }
         }
+    }
+
+    /// <summary> 背景生成 </summary>
+    /// <param name="prefab">プレファブ</param>
+    /// <param name="boardSize">ボードのサイズ</param>
+    void CreateBackGround(GameObject prefab, Vector2Int boardSize)
+    {
+        // 盤面の最大サイズ + 余白 の長さ
+        const float size = 48f;
+
+        // 左
+        GameObject left             = Instantiate(prefab);
+        left.transform.localScale = new Vector3(size / 2f - m_BoardSize.x / 2f, left.transform.localScale.y, size);
+        left.transform.position     = new Vector3(-m_BoardSize.x / 2f - left.transform.localScale.x / 2f, -0.1f, 0f);
+        
+
+        // 右
+        GameObject right            = Instantiate(left);
+        right.transform.position    = new Vector3(-right.transform.position.x, right.transform.position.y, right.transform.position.z);
+
+        // 上
+        GameObject top              = Instantiate(prefab);
+        top.transform.localScale    = new Vector3(m_BoardSize.x, top.transform.localScale.y, size / 2f - m_BoardSize.y / 2f);
+        top.transform.position      = new Vector3(0f, -0.1f, -m_BoardSize.y / 2f - top.transform.localScale.z / 2f);
+
+        // 下
+        GameObject under            = Instantiate(top);
+        top.transform.position = new Vector3(top.transform.position.x, top.transform.position.y, -top.transform.position.z);
     }
 
     /// <summary>ベクトル同士の乗算</summary>

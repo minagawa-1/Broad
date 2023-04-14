@@ -62,6 +62,16 @@
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\PuzzleBlock.cs" />
     <Compile Include="Assets\Scripts\CreateBoard.cs" />
+    <Compile Include="Assets\Scripts\woskni\method\EnumLength.cs" />
+    <Compile Include="Assets\Scripts\woskni\Round.cs" />
+    <Compile Include="Assets\Scripts\woskni\ReadOnly.cs" />
+    <Compile Include="Assets\Scripts\woskni\method\GameObjectExpansion.cs" />
+    <Compile Include="Assets\Scripts\woskni\method\ColorExpansion.cs" />
+    <Compile Include="Assets\Scripts\woskni\method\ListExpansion.cs" />
+    <Compile Include="Assets\Scripts\woskni\method\Vector3Expansion.cs" />
+    <Compile Include="Assets\Scripts\woskni\DebugHotKey.cs" />
+    <Compile Include="Assets\Scripts\woskni\MethodButton.cs" />
+    <Compile Include="Assets\Scripts\woskni\Name.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
