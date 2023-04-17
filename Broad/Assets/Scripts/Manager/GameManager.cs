@@ -20,9 +20,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector2Int m_MinBoardSize;
     [SerializeField] Vector2Int m_MaxBoardSize;
 
-    // マス目サイズ
-    [SerializeField] Vector2 m_SquareSize;
-
     // 盤面管理オブジェクト
     GameObject m_BoardManagerObject = null;
     GameObject m_UnsetableParent = null;
@@ -51,13 +48,16 @@ public class GameManager : MonoBehaviour
     }
 
     // 盤面
-    Square[,] m_Board;
+    [HideInInspector] public Square[,] m_Board;
 
     // 盤面のサイズ
-    Vector2Int m_BoardSize;
+    [HideInInspector] public Vector2Int m_BoardSize;
+
+    // マス目サイズ
+    public Vector2 m_SquareSize;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_BoardManagerObject = new GameObject("BoardManager");
         m_SetableParent =  new GameObject("SetableSquares");
@@ -200,4 +200,6 @@ public class GameManager : MonoBehaviour
 
         return v[0];
     }
+
+
 }

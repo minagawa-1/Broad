@@ -21,7 +21,7 @@ public class BulletPool : MonoBehaviour
     // 弾の種類
     private BulletName   m_BulletName               = BulletName.Small;
 
-    // セットアップ
+    /// <summary> セットアップ </summary>
     public void Setup()
     {
         // 非待機オブジェクトを設定
@@ -37,39 +37,58 @@ public class BulletPool : MonoBehaviour
         m_UnactiveObjectTransform = m_UnactiveObject.transform;
     }
 
-    // オブジェクトプールの作成
+    /// <summary>                   プールの作成 </summary>
+    /// <param name="bulletName">   弾幕名 </param>
+    /// <param name="poolPrefab">   生成したいプレファブ </param>
+    /// <param name="sprite">       アタッチしたい画像 </param>
+    /// <param name="scale">        拡大率 </param>
+    /// <param name="poolSize">     プールの大きさ </param>
     public void CreatePool(BulletName bulletName, GameObject poolPrefab, Sprite sprite, Vector2 scale, int poolSize)
     {
+        // 弾幕名・プレファブ・画像・拡大率をそれぞれ設定
         m_BulletName        = bulletName;
-        m_BulletScale       = scale;
-        m_BulletSprite      = sprite;
         m_PoolPrefab        = poolPrefab;
+        m_BulletSprite      = sprite;
+        m_BulletScale       = scale;
 
         // poolSize分オブジェクトを生成
         for(int i = 0; i < poolSize; ++i)
             CreateNewPoolObject();
     }
 
+    /// <summary> プール内のオブジェクト取得 </summary>
+    /// <returns> プールオブジェクト </returns>
     public GameObject GetPoolObject()
     {
         //待機オブジェクトがあるか調べる
         if (m_UnactiveObjectTransform.childCount > 0)
         {
+            // 待機オブジェクトの0番を取得
             Transform child = m_UnactiveObjectTransform.GetChild(0);
+
+            // 画像・アクティブ・親の設定をする
             child.GetComponent<SpriteRenderer>().sprite = m_BulletSprite;
             child.gameObject.SetActive(true);
             child.SetParent(m_ActiveObjectTransform);
+
+            // オブジェクトを返す
             return child.gameObject;
         }
 
-        // 全部使っていたら、新しく生成して返す
+        // 待機オブジェクトがいなかったら、新しく生成
         GameObject newObject = CreateNewPoolObject();
 
+        // アクティブ・親の設定
         newObject.SetActive(true);
         newObject.transform.SetParent(m_ActiveObjectTransform);
+
+        // 生成したオブジェクトを返す
         return newObject;
     }
 
+    /// <summary>                   使い終わったオブジェクトを非アクティブ化する </summary>
+    /// <param name="poolPrefab">   非アクティブ化したいオブジェクト </param>
+    /// <returns>                   オブジェクト </returns>
     public GameObject SetUnActive(GameObject poolPrefab)
     {
         // UnActiveObjectの子供にする
@@ -84,22 +103,28 @@ public class BulletPool : MonoBehaviour
         // poolPrefabを非アクティブにする
         poolPrefab.SetActive(false);
 
+        // プレファブを返す
         return poolPrefab;
     }
 
-    // プールに入れるオブジェクトの生成
+    /// <summary> オブジェクト生成 </summary>
+    /// <returns> 生成したオブジェクト </returns>
     private GameObject CreateNewPoolObject()
     {
+        // オブジェクトの生成
         GameObject newObject = Instantiate(m_PoolPrefab, m_UnactiveObjectTransform);
 
+        // 拡大率・画像・アクティブの設定
         newObject.transform.localScale = m_BulletScale;
         newObject.GetComponent<SpriteRenderer>().sprite = m_BulletSprite;
         newObject.SetActive(false);
 
         // Bulletが小弾
         if (m_BulletName == BulletName.Small)
+            // マテリアルの設定
             newObject.GetComponent<SpriteRenderer>().material.SetFloat("_OutlineSize", 8f);
 
+        // 生成したオブジェクトを返す
         return newObject;
     }
 }

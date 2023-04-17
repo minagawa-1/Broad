@@ -14,6 +14,7 @@ public class BulletManager : MonoBehaviour
         // BulletPoolを消す
         m_BulletPools.Clear();
 
+        // BuleltData型のリストを作る
         List<BulletData.Bullet> bulletData = m_BulletData.GetBulletDataList();
 
         // bulletDataの要素数分ゲットコンポーネントする
@@ -22,6 +23,7 @@ public class BulletManager : MonoBehaviour
             //子オブジェクトを作る
             GameObject child = new GameObject();
 
+            // 名前を設定
             child.name = "BulletPool[" + ((BulletName)i).ToString() + "]";
 
             //親を設定する
@@ -29,6 +31,8 @@ public class BulletManager : MonoBehaviour
 
             // BulletPoolを入れられるようにする
             BulletPool pool = child.AddComponent<BulletPool>();
+
+            // BulletPoolのSetupを呼ぶ
             pool.Setup();
 
             // プールとオブジェクトの生成
@@ -95,9 +99,11 @@ public class BulletManager : MonoBehaviour
         moveBullet.Initialize(bullet, bulletPreset, bulletProcess, target, layerName, direction + (bulletProcess.isLookTarget ? 0f : 90f));
     }
 
-    // 弾を非アクティブにする
+    /// <summary> 弾幕を非アクティブ化する </summary>
+    /// <param name="bullet"> 非アクティブ化したい弾幕 </param>
     public static void BulletUnactive(MoveBullet bullet)
     {
+        // BulletPoolのSetUnActiveを呼ぶ
         m_BulletPools[(int)bullet.m_BulletName].SetUnActive(bullet.gameObject);
     }
 }
