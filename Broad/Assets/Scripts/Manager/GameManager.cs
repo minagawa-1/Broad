@@ -20,15 +20,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector2Int m_MinBoardSize;
     [SerializeField] Vector2Int m_MaxBoardSize;
 
-    [Header("ボードの親に設定したいオブジェクトのトランスフォーム")]
-    [SerializeField] Transform m_SetableParentTransform = null;
-
-    [Header("ボードの親に設定したいオブジェクトのトランスフォーム")]
-    [SerializeField] Transform m_UnsetableParentTransform = null;
-
     // マス目サイズ
     [SerializeField] Vector2 m_SquareSize;
 
+    // 盤面管理オブジェクト
+    GameObject m_BoardManagerObject = null;
+    GameObject m_UnsetableParent = null;
+    GameObject m_SetableParent = null;
 
     // マス目の持つ情報
     public struct Square
@@ -58,20 +56,19 @@ public class GameManager : MonoBehaviour
     // 盤面のサイズ
     Vector2Int m_BoardSize;
 
-    // ボードマスのステータス
-    int[] m_SquareState = { -1, 0, 1, 2, 3, 4 };
-
     // Start is called before the first frame update
     void Start()
     {
+        m_BoardManagerObject = new GameObject("BoardManager");
+        m_SetableParent =  new GameObject("SetableSquares");
+        m_UnsetableParent = new GameObject("SetableSquares");
+
+        // 盤面管理オブジェクトを親にする
+        m_SetableParent.transform.parent = m_BoardManagerObject.transform;
+        m_UnsetableParent.transform.parent = m_BoardManagerObject.transform;
+
         // 盤面の設定
         SetupBoard();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // 盤面の設定
@@ -87,7 +84,7 @@ public class GameManager : MonoBehaviour
         ShaveBoard(m_BoardSize);
 
         // ボードの作成
-        LayOutSquare(m_SquarePrefab, m_UnsetBleSquarePrefab, m_BoardSize, m_SquareSize, m_SetableParentTransform);
+        LayOutSquare(m_SquarePrefab, m_UnsetBleSquarePrefab, m_BoardSize, m_SquareSize);
 
         // 背景の作成
         CreateBackGround(m_UnsetBleSquarePrefab, m_BoardSize);
@@ -103,7 +100,7 @@ public class GameManager : MonoBehaviour
     /// <param name="boardSize">盤面の縦横幅</param>
     /// <param name="squareSize">マスのサイズ</param>
     /// <param name="parentTransform">親のトランスフォーム</param>
-    void LayOutSquare(GameObject setablePrefab, GameObject unsetablePrefab, Vector2Int boardSize, Vector2 squareSize, Transform parentTransform)
+    void LayOutSquare(GameObject setablePrefab, GameObject unsetablePrefab, Vector2Int boardSize, Vector2 squareSize)
     {
         // オブジェクトの生成
         // y軸方向の生成
@@ -118,9 +115,9 @@ public class GameManager : MonoBehaviour
                 // マス目生成
                 GameObject newSquare = Instantiate(m_Board[x, y].state == 0 ? setablePrefab : unsetablePrefab);
 
-                // 新しく生成したオブジェクトの名前、親、座標を設定する
+                // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
                 newSquare.gameObject.name = "Square[" + x + "," + y + "]";
-                newSquare.transform.parent = parentTransform;
+                newSquare.transform.parent = m_Board[x, y].state == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position = new Vector3((float)x - (float)boardSize.x / 2f + 0.5f, -0.1f, (float)y - (float)boardSize.y / 2f + 0.5f);
                 newSquare.transform.position = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
                 newSquare.transform.localScale = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
@@ -163,27 +160,34 @@ public class GameManager : MonoBehaviour
     /// <param name="boardSize">ボードのサイズ</param>
     void CreateBackGround(GameObject prefab, Vector2Int boardSize)
     {
+        // 親の生成
+        GameObject parent = new GameObject("Backgrounds");
+        parent.transform.parent = m_BoardManagerObject.transform;
+
         // 盤面の最大サイズ + 余白 の長さ
         const float size = 48f;
 
         // 左
-        GameObject left             = Instantiate(prefab);
+        GameObject left             = Instantiate(prefab, parent.transform);
+        left.name = "BackgroundLeft";
         left.transform.localScale = new Vector3(size / 2f - m_BoardSize.x / 2f, left.transform.localScale.y, size);
         left.transform.position     = new Vector3(-m_BoardSize.x / 2f - left.transform.localScale.x / 2f, -0.1f, 0f);
-        
 
         // 右
-        GameObject right            = Instantiate(left);
+        GameObject right            = Instantiate(left, parent.transform);
+        right.name = "BackgroundRight";
         right.transform.position    = new Vector3(-right.transform.position.x, right.transform.position.y, right.transform.position.z);
 
         // 上
-        GameObject top              = Instantiate(prefab);
+        GameObject top              = Instantiate(prefab, parent.transform);
+        top.name = "BackgroundTop";
         top.transform.localScale    = new Vector3(m_BoardSize.x, top.transform.localScale.y, size / 2f - m_BoardSize.y / 2f);
         top.transform.position      = new Vector3(0f, -0.1f, -m_BoardSize.y / 2f - top.transform.localScale.z / 2f);
 
         // 下
-        GameObject under            = Instantiate(top);
-        top.transform.position = new Vector3(top.transform.position.x, top.transform.position.y, -top.transform.position.z);
+        GameObject bottom            = Instantiate(top, parent.transform);
+        bottom.name = "BackgroundBottom";
+        top.transform.position = new Vector3(bottom.transform.position.x, bottom.transform.position.y, -bottom.transform.position.z);
     }
 
     /// <summary>ベクトル同士の乗算</summary>
