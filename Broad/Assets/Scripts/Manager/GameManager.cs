@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,20 +29,14 @@ public class GameManager : MonoBehaviour
     // マス目の持つ情報
     public struct Square
     {
-        // ゲームオブジェクト
-        public GameObject       gameObject;
-        // スプライトレンダラー
-        public MeshRenderer     meshRenderer;
         // 座標：左上がVector2Int( 0, 0)
         public Vector2Int       position;
         // 状況（-1: 設置不可, 0：未設置, n: nPが設置済み)
         public int              state;
 
         // コンストラクタ
-        public Square(GameObject gameObject, MeshRenderer meshRenderer, Vector2Int position, int state)
+        public Square(Vector2Int position, int state)
         {
-            this.gameObject = gameObject;
-            this.meshRenderer = meshRenderer;
             this.position = position;
             this.state = state;
         }
@@ -61,7 +56,7 @@ public class GameManager : MonoBehaviour
     {
         m_BoardManagerObject = new GameObject("BoardManager");
         m_SetableParent =  new GameObject("SetableSquares");
-        m_UnsetableParent = new GameObject("SetableSquares");
+        m_UnsetableParent = new GameObject("UnsetableSquares");
 
         // 盤面管理オブジェクトを親にする
         m_SetableParent.transform.parent = m_BoardManagerObject.transform;
@@ -69,6 +64,10 @@ public class GameManager : MonoBehaviour
 
         // 盤面の設定
         SetupBoard();
+
+        // もういらないので消し飛ばす
+        Destroy(m_SetableParent);
+        Destroy(m_UnsetableParent);
     }
 
     // 盤面の設定
@@ -86,9 +85,20 @@ public class GameManager : MonoBehaviour
         // ボードの作成
         LayOutSquare(m_SquarePrefab, m_UnsetBleSquarePrefab, m_BoardSize, m_SquareSize);
 
+        // カメラの位置を移動
+        Camera.main.transform.position = Camera.main.transform.position.Difference(x: m_BoardSize.x / 2f);
+
         // 背景の作成
         CreateBackGround(m_UnsetBleSquarePrefab, m_BoardSize);
-        
+
+        // 設置可能マスのメッシュの結合処理
+        GetComponent<MeshCombiner>().Combine(m_SetableParent.GetChildren(), "SetableBoard", m_BoardManagerObject.transform);
+
+        // 設置不可マスのメッシュの結合処理
+        GameObject[] background = GameObject.Find("Background").GetChildren();
+        GameObject[] unsetable = m_UnsetableParent.GetChildren().Concat(background).ToArray();
+        GetComponent<MeshCombiner>().Combine(unsetable, "UnSetableBoard", m_BoardManagerObject.transform);
+
         // 範囲内でランダムな座標を返す関数内の関数
         Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
             => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
@@ -116,14 +126,14 @@ public class GameManager : MonoBehaviour
                 GameObject newSquare = Instantiate(m_Board[x, y].state == 0 ? setablePrefab : unsetablePrefab);
 
                 // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
-                newSquare.gameObject.name = "Square[" + x + "," + y + "]";
-                newSquare.transform.parent = m_Board[x, y].state == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
-                newSquare.transform.position = new Vector3((float)x - (float)boardSize.x / 2f + 0.5f, -0.1f, (float)y - (float)boardSize.y / 2f + 0.5f);
-                newSquare.transform.position = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
-                newSquare.transform.localScale = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
+                newSquare.gameObject.name       = "Square[" + x + "," + y + "]";
+                newSquare.transform.parent      = m_Board[x, y].state == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
+                newSquare.transform.position    = new Vector3( x, -0.1f, -y);
+                newSquare.transform.position    = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
+                newSquare.transform.localScale  = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
 
                 // ボードにマス目情報を格納
-                m_Board[x, y] = new Square(newSquare, newSquare.GetComponent<MeshRenderer>(), new Vector2Int(x, y), m_Board[x, y].state);
+                m_Board[x, y] = new Square(new Vector2Int(x, y), m_Board[x, y].state);
             }
         }
     }
@@ -161,33 +171,33 @@ public class GameManager : MonoBehaviour
     void CreateBackGround(GameObject prefab, Vector2Int boardSize)
     {
         // 親の生成
-        GameObject parent = new GameObject("Backgrounds");
-        parent.transform.parent = m_BoardManagerObject.transform;
+        GameObject parent           = new GameObject("Background");
 
         // 盤面の最大サイズ + 余白 の長さ
         const float size = 48f;
 
         // 左
         GameObject left             = Instantiate(prefab, parent.transform);
-        left.name = "BackgroundLeft";
-        left.transform.localScale = new Vector3(size / 2f - m_BoardSize.x / 2f, left.transform.localScale.y, size);
-        left.transform.position     = new Vector3(-m_BoardSize.x / 2f - left.transform.localScale.x / 2f, -0.1f, 0f);
+        left.name                   = "BackgroundLeft";
+        left.transform.localScale   = new Vector3(size / 2f - m_BoardSize.x / 2f, left.transform.localScale.y, size);
+        left.transform.position     = new Vector3(-left.transform.localScale.x / 2f - 0.5f, -0.1f, -m_BoardSize.y / 2f + 0.5f);
 
         // 右
         GameObject right            = Instantiate(left, parent.transform);
-        right.name = "BackgroundRight";
-        right.transform.position    = new Vector3(-right.transform.position.x, right.transform.position.y, right.transform.position.z);
+        right.name                  = "BackgroundRight";
+        right.transform.position    = right.transform.position.Difference(x: m_BoardSize.x + left.transform.localScale.x);
+
 
         // 上
         GameObject top              = Instantiate(prefab, parent.transform);
-        top.name = "BackgroundTop";
+        top.name                    = "BackgroundTop";
         top.transform.localScale    = new Vector3(m_BoardSize.x, top.transform.localScale.y, size / 2f - m_BoardSize.y / 2f);
-        top.transform.position      = new Vector3(0f, -0.1f, -m_BoardSize.y / 2f - top.transform.localScale.z / 2f);
+        top.transform.position      = new Vector3(m_BoardSize.x / 2f - 0.5f, -0.1f, top.transform.localScale.z / 2 + 0.5f);
 
         // 下
-        GameObject bottom            = Instantiate(top, parent.transform);
-        bottom.name = "BackgroundBottom";
-        top.transform.position = new Vector3(bottom.transform.position.x, bottom.transform.position.y, -bottom.transform.position.z);
+        GameObject bottom           = Instantiate(top, parent.transform);
+        bottom.name                 = "BackgroundBottom";
+        top.transform.position      = bottom.transform.position.Difference(z: -m_BoardSize.y - top.transform.localScale.z);
     }
 
     /// <summary>ベクトル同士の乗算</summary>
