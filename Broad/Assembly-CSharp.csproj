@@ -59,33 +59,40 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ListExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\control\KeyBoard.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\Vector3Expansion.cs" />
-    <Compile Include="Assets\Scripts\ControlBlock.cs" />
+    <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\Vibration.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Timer.cs" />
+    <Compile Include="Assets\Scripts\Block\ChangeTransparency.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\MethodButton.cs" />
-    <Compile Include="Assets\Scripts\LotteryBlocks.cs" />
+    <Compile Include="Assets\Scripts\Block\LotteryBlocks.cs" />
     <Compile Include="Assets\Scripts\woskni\math\MathOther.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ChangeActiveSelection.cs" />
-    <Compile Include="Assets\Scripts\Manager\BlockManager.cs" />
+    <Compile Include="Assets\Scripts\Block\BlockManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ColorExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ReadOnly.cs" />
     <Compile Include="Assets\Scripts\woskni\math\Round.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\Name.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\DebugHotKey.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumLength.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\RenderingMode.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\GameObjectExpansion.cs" />
     <Compile Include="Assets\Scripts\MeshCombiner.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\TextOperate.cs" />
-    <Compile Include="Assets\Scripts\Blocks.cs" />
+    <Compile Include="Assets\Scripts\Block\Blocks.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\VectorExpansion.cs" />
+    <Compile Include="Assets\Scripts\ColorUtils.cs" />
+    <Compile Include="Assets\Scripts\GameState.cs" />
+    <Compile Include="Assets\Scripts\Block\HandBlocks.cs" />
+    <Compile Include="Assets\Scripts\UI\CalcBroad.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\blockShape[,].txt" />
     <None Include="Assets\Scripts\woskni\expantion\仕様.txt" />
-    <None Include="Assets\debugText.txt" />
+    <None Include="Assets\board[,].txt" />
     <None Include="Assets\Scripts\woskni\math\仕様.txt" />
     <None Include="Assets\Scripts\woskni\control\仕様.txt" />
   </ItemGroup>

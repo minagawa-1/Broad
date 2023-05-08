@@ -15,6 +15,9 @@ public class Test : MonoBehaviour
     [SerializeField, Range(0f, 1f)] float m_MinDensity;
     [SerializeField, Range(0f, 1f)] float m_MaxDensity;
 
+    [Header("ÉvÉåÉCÉÑÅ[î‘çÜ")]
+    [SerializeField, Range(0, 4)] int m_PlayerNum;
+
     // Update is called once per frame
     void Update()
     {
@@ -30,7 +33,8 @@ public class Test : MonoBehaviour
 
             //Debug.Log((float)sampleBlocks.GetLength(1) / 2f + ", " + (float)sampleBlocks.GetLength(0) / 2f);
 
-            m_BlockManager.CreateBlock(1, blocks, pos);
+            int player = m_PlayerNum == 0 ? Random.Range(1, 5) : m_PlayerNum;
+            m_BlockManager.CreateBlock(player, blocks, pos);
         }
     }
 }
