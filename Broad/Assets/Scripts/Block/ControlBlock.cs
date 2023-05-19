@@ -95,7 +95,7 @@ public class ControlBlock : MonoBehaviour
         if (woskni.KeyBoard.GetOrKeyDown(KeyCode.Z, KeyCode.Return))
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
-            if (blocks.IsSetable( m_GameManager.board, GetBoardPosition(transform.position.Setter(z: -transform.position.z)), playerIndex))
+            if (blocks.IsSetable( m_GameManager.board, playerIndex))
                 m_BlocksState = BlocksState.Set;
 
             // 設置ができない場合は振動
@@ -207,6 +207,8 @@ public class ControlBlock : MonoBehaviour
                 if (m_RotateDirection < 0f) blocks.RotateLeft();
                 if (m_RotateDirection > 0f) blocks.RotateRight();
 
+                blocks.position = GetBoardPosition(transform.position);
+
                 OutputDebugText(false, "blockShape[,].txt");
 
                 // 移動可能にし、移動方向をゼロにする
@@ -234,6 +236,8 @@ public class ControlBlock : MonoBehaviour
         transform.DOLocalMove(GetVector3Board(move), moveTime).SetEase(Ease.OutCubic).SetRelative()
             .OnComplete(() =>
             {
+                blocks.position = GetBoardPosition(transform.position);
+
                 // 移動可能にし、移動方向をゼロにする
                 m_IsOperatable = true;
                 m_MoveDirection = Vector2Int.zero;
@@ -246,7 +250,7 @@ public class ControlBlock : MonoBehaviour
     /// <summary> 設置処理 </summary>
     private void Set()
     {
-        var pos = GetBoardPosition(transform.position.Setter(z: -transform.position.z));
+        var pos = GetBoardPosition(transform.position);
 
         for (int y = 0; y < blocks.GetHeight(); ++y)
             for (int x = 0; x < blocks.GetWidth(); ++x)
@@ -295,7 +299,7 @@ public class ControlBlock : MonoBehaviour
     /// <returns>盤面の２次元座標</returns>
     Vector2Int GetBoardPosition(Vector3 pos)
     {
-        var posBoard = new Vector2Int((int)pos.x, (int)pos.z);
+        var posBoard = new Vector2Int((int)pos.x, (int)-pos.z);
         int offsetX = (int)(-blocks.center.x * m_GameManager.m_SquareSize.x);
         int offsetY = (int)(-blocks.center.y * m_GameManager.m_SquareSize.y);
 

@@ -60,7 +60,7 @@ public class BlockManager : MonoBehaviour
     /// <param name="position"> ç¿ïW </param>
     public void CreateBlock(int player, bool[,] shape, Vector2Int position)
     {
-        Blocks blocks = new Blocks(shape);
+        Blocks blocks = new Blocks(shape, position);
 
         // êeê›íË
         GameObject parent = new GameObject("ControlBlocks");

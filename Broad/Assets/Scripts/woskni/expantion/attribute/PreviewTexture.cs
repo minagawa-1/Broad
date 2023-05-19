@@ -188,7 +188,7 @@ public class PreviewTextureDrawer : PropertyDrawer
     float AddLabelField(Rect position, float currentY, string text)
     {
         position.x += EditorGUIUtility.labelWidth;
-        currentY += EditorGUIUtility.singleLineHeight;
+        position.y = currentY;
 
         EditorGUI.LabelField(position, text);
 

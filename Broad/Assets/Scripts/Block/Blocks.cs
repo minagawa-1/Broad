@@ -8,15 +8,15 @@ public class Blocks
     // ブロックの形状
     public bool[,] shape;
 
+    public Vector2Int position;
+
     public Vector2 center;
 
     /// <summary>コンストラクタ</summary>
     /// <param name="shape">形状データ</param>
-    public Blocks(bool[,] shape)
+    public Blocks(bool[,] shape, Vector2Int position)
     {
         this.shape = shape;
-
-        //Debug.Log(GetWidth() % 2 != GetHeight() % 2);
 
         // int型で位置を格納しているため、必ず整数が入る
         center = new Vector2(GetWidth() / 2, GetHeight() / 2);
@@ -24,7 +24,7 @@ public class Blocks
         // 縦横が偶数なら完全に真ん中にする
         if (GetWidth() % 2 == 0 && GetHeight() % 2 == 0) center = center.Offset(-0.5f, -0.5f);
 
-        //Debug.Log("size: " + new Vector2(GetWidth(), GetHeight()) + "\ncenter: " + center);
+        this.position = position;
     }
 
     /// <summary>ブロックの数</summary>
@@ -47,18 +47,8 @@ public class Blocks
 
     /// <summary>その位置に設置可能か</summary>
     /// <param name="board">ボード情報</param>
-    /// <param name="blocks">ブロック情報</param>
-    /// <param name="x">ｘ座標（ブロックスの左上基準）</param>
-    /// <param name="y">ｙ座標（ブロックスの左上基準）</param>
     /// <param name="player">プレイヤー番号</param>
-    public bool IsSetable(int[,] board, int x, int y, int player) => IsSetable(board, new Vector2Int(x, y), player);
-
-    /// <summary>その位置に設置可能か</summary>
-    /// <param name="board">ボード情報</param>
-    /// <param name="blocks">ブロック情報</param>
-    /// <param name="pos">座標（ブロックスの左上基準）</param>
-    /// <param name="player">プレイヤー番号</param>
-    public bool IsSetable(int[,] board, Vector2Int position, int player)
+    public bool IsSetable(int[,] board, int player)
     {
         for (int y = 0; y < GetHeight(); ++y)
         {

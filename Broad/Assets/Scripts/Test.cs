@@ -23,10 +23,9 @@ public class Test : MonoBehaviour
 
             bool[,] blocks = LotteryBlocks.Lottery(blockUnits, density);
 
-            //Debug.Log((float)sampleBlocks.GetLength(1) / 2f + ", " + (float)sampleBlocks.GetLength(0) / 2f);
-
             int player = m_PlayerNum == 0 ? Random.Range(1, GameSetting.instance.playerNum + 1)
                                           : Mathf.Min(m_PlayerNum, GameSetting.instance.playerNum);
+
             m_BlockManager.CreateBlock(player, blocks, pos);
         }
     }
