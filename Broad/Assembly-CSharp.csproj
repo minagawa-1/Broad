@@ -66,10 +66,12 @@
     <Compile Include="Assets\Scripts\woskni\control\KeyBoard.cs" />
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
+    <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
     <Compile Include="Assets\Scripts\Vibration.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Timer.cs" />
     <Compile Include="Assets\Scripts\Block\ChangeTransparency.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\MethodButton.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\attribute\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Block\LotteryBlocks.cs" />
     <Compile Include="Assets\Scripts\woskni\math\MathOther.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ChangeActiveSelection.cs" />
@@ -103,8 +105,6 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Tag.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\VectorExpansion.cs" />
     <Compile Include="Assets\Scripts\ColorUtils.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\attribute\ProgressBar.cs" />
-    <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\blockShape[,].txt" />

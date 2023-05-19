@@ -14,16 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 4
   playerColors:
-  - {r: 0.9628939, g: 0.6860204, b: 0.88093394, a: 1}
-  - {r: 0.9628939, g: 0.698762, b: 0.6860204, a: 1}
-  - {r: 0.9628939, g: 0.90641713, b: 0.6860204, a: 1}
-  - {r: 0.81171554, g: 0.9628939, b: 0.6860204, a: 1}
-  - {r: 0.6860204, g: 0.9628939, b: 0.76798034, a: 1}
+  - {r: 0.7428205, g: 0.97196275, b: 0.49156076, a: 1}
+  - {r: 0.49156076, g: 0.97196275, b: 0.960904, a: 1}
+  - {r: 0.720703, g: 0.49156076, b: 0.97196275, a: 1}
+  - {r: 0.97196275, g: 0.49156076, b: 0.5026195, a: 1}
   minBoardSize: {x: 8, y: 8}
   maxBoardSize: {x: 12, y: 12}
   boardViability: 0.67
   perlinScale: 0.25
   minBlockUnits: 1
-  maxBlockUnits: 1
-  minDensity: 0
+  maxBlockUnits: 10
+  minDensity: 0.2
   maxDensity: 1
