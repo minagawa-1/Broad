@@ -8,7 +8,7 @@ namespace woskni
     {
         public enum Mode
         {
-              Opaque
+            Opaque
             , Cutout
             , Fade
             , Transparent
@@ -68,14 +68,18 @@ namespace woskni
             return material;
         }
 
-        // ブレンドモードを取得
-        public static Mode GetBlendMode(Material material) => material.GetTag("RenderType", true) switch
+        /// <summary>ブレンドモードを取得</summary>
+        /// <param name="material"></param>
+        /// <returns></returns>
+        public static Mode GetBlendMode(Material material)
         {
-            "Opaque"            => Mode.Opaque,
-            "TransparentCutout" => Mode.Cutout,
-            "Transparent"       when material.renderQueue == 3000 => Mode.Fade,
-            "Transparent"       => Mode.Transparent,
-            _                   => Mode.Opaque
-        };
+            switch (material.GetTag("RenderType", true))
+            {
+                case "Opaque": return Mode.Opaque;
+                case "TransparentCutout": return Mode.Cutout;
+                case "Transparent": return material.renderQueue == 3000 ? Mode.Fade : Mode.Transparent;
+                default: return Mode.Opaque;
+            }
+        }
     }
 }

@@ -34,9 +34,9 @@ namespace woskni
         public bool IsFinished() => time >= limit;
 
         /// <summary>デバッグログ</summary>
-        public string DebugLog(bool isOutputLog = true, string name = null)
+        public string DebugLog(bool isOutputLog = true, string name = "")
         {
-            name ??= ToString();
+            if(name == "") name =  ToString();
 
             string logText = name + " : time: " + time.ToString("F2") + " / limit: " + limit.ToString("F2");
 

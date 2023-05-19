@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d9e7673b3000140aa1bf5424535440, type: 3}
+  m_Name: GameSetting
+  m_EditorClassIdentifier: 
+  playerNum: 4
+  playerColors:
+  - {r: 0.9628939, g: 0.6860204, b: 0.88093394, a: 1}
+  - {r: 0.9628939, g: 0.698762, b: 0.6860204, a: 1}
+  - {r: 0.9628939, g: 0.90641713, b: 0.6860204, a: 1}
+  - {r: 0.81171554, g: 0.9628939, b: 0.6860204, a: 1}
+  - {r: 0.6860204, g: 0.9628939, b: 0.76798034, a: 1}
+  minBoardSize: {x: 8, y: 8}
+  maxBoardSize: {x: 12, y: 12}
+  boardViability: 0.67
+  perlinScale: 0.25
+  minBlockUnits: 1
+  maxBlockUnits: 1
+  minDensity: 0
+  maxDensity: 1

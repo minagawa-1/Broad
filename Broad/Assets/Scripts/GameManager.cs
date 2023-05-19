@@ -5,24 +5,11 @@ using UnityEngine;
 
 public partial class GameManager : MonoBehaviour
 {
-    [Header("プレイヤー人数")]
-    public int playerNum;
-
     [Header("マス目用プレファブ")]
     [SerializeField] GameObject m_SquarePrefab = null;
 
     [Header("設置不可マス用プレファブ")]
     [SerializeField] GameObject m_UnsetbleSquarePrefab = null;
-
-    [Header("マス目の生存率")]
-    [SerializeField, Range(0f, 1f)] float m_BoardViability = 0.8f;
-
-    [Header("パーリンノイズの大きさ")]
-    [SerializeField] float m_PerlinScale = 0.1f;
-
-    [Header("盤面の最小・最大サイズ")]
-    [SerializeField] Vector2Int m_MinBoardSize;
-    [SerializeField] Vector2Int m_MaxBoardSize;
 
     [Header("カメラの最遠のときのOffset値")]
     [SerializeField] Vector3 m_FurthestCameraOffset;
@@ -33,68 +20,85 @@ public partial class GameManager : MonoBehaviour
     GameObject m_SetableParent = null;
 
     // 盤面
-    [HideInInspector] public int[,] m_Board;
+    [HideInInspector] public int[,] board;
 
     // 盤面のサイズ
-    [HideInInspector] public Vector2Int m_BoardSize;
+    [HideInInspector] public Vector2Int boardSize;
 
     // マス目サイズ
     public Vector2 m_SquareSize;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         m_BoardManagerObject = new GameObject("BoardManager");
         m_SetableParent =  new GameObject("SetableSquares");
         m_UnsetableParent = new GameObject("UnsetableSquares");
 
+        m_State = State.Placement;
+
         // 盤面管理オブジェクトを親にする
-        m_SetableParent.transform.parent = m_BoardManagerObject.transform;
-        m_UnsetableParent.transform.parent = m_BoardManagerObject.transform;
+        m_SetableParent.transform.SetParent(m_BoardManagerObject.transform);
+        m_UnsetableParent.transform.SetParent(m_BoardManagerObject.transform);
 
         // 盤面の設定
         SetupBoard();
-
-        // もういらないので消し飛ばす
-        Destroy(m_SetableParent);
-        Destroy(m_UnsetableParent);
     }
+
+    
 
     // 盤面の設定
     void SetupBoard()
     {
         // ボードサイズをランダムに設定
-        m_BoardSize = RandomVector2Int(m_MinBoardSize, m_MaxBoardSize);
+        boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
 
         // 盤面のサイズを渡す
-        m_Board = new int[m_BoardSize.x, m_BoardSize.y];
+        board = new int[boardSize.x, boardSize.y];
 
         // 設置不可マスの決定
-        ShaveBoard(m_BoardSize);
+        ShaveBoard(boardSize);
 
         // ボードの作成
-        LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, m_BoardSize, m_SquareSize);
+        LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, boardSize, m_SquareSize);
 
         // カメラの位置を移動
-        float rate = Mathf.InverseLerp(m_MinBoardSize.y, m_MaxBoardSize.y, m_BoardSize.y);
-        Vector3 offset = new Vector3(m_BoardSize.x / 2f, rate * m_FurthestCameraOffset.y, rate * m_FurthestCameraOffset.z);
+        float rate = Mathf.InverseLerp(GameSetting.instance.minBoardSize.y, GameSetting.instance.maxBoardSize.y, boardSize.y);
+        Vector3 offset = new Vector3(boardSize.x / 2f, rate * m_FurthestCameraOffset.y, rate * m_FurthestCameraOffset.z);
         Camera.main.transform.position = Camera.main.transform.position.Offset(offset);
 
         // 背景の作成
-        CreateBackGround(m_UnsetbleSquarePrefab, m_BoardSize);
+        CreateBackGround(m_UnsetbleSquarePrefab, boardSize);
 
         // 設置可能マスのメッシュの結合処理
-        GetComponent<MeshCombiner>().Combine(m_SetableParent.GetChildren(), "SetableBoard", m_BoardManagerObject.transform);
-
-        // 設置不可マスのメッシュの結合処理
-        GameObject[] background = GameObject.Find("Background").GetChildren();
-        GameObject[] unsetable = m_UnsetableParent.GetChildren().Concat(background).ToArray();
-        GetComponent<MeshCombiner>().Combine(unsetable, "UnSetableBoard", m_BoardManagerObject.transform);
+        StartCoroutine(CombineMeshes());
 
         // 範囲内でランダムな座標を返す関数内の関数
         Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
             => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
+
+        // メッシュの結合処理
+        IEnumerator CombineMeshes()
+        {
+            yield return new WaitForEndOfFrame();
+
+            var combiner = GetComponent<MeshCombiner>();
+
+            // 設置可能マスのメッシュ結合
+            combiner.Combine(m_SetableParent.GetChildren(), "SetableBoard", m_BoardManagerObject.transform);
+
+            // 設置不可マスと枠外背景のメッシュの結合
+            GameObject[] background = GameObject.Find("Background").GetChildren();
+            GameObject[] unsetable = m_UnsetableParent.GetChildren().Concat(background).ToArray();
+            combiner.Combine(unsetable, "UnsetableBoard", m_BoardManagerObject.transform);
+
+            // もういらないので消し飛ばす
+            Destroy(m_SetableParent);
+            Destroy(m_UnsetableParent);
+        }
     }
+
+    
 
     /// <summary>マス目を敷き詰める</summary>
     /// <param name="squarePrefab">プレファブ</param>
@@ -112,14 +116,14 @@ public partial class GameManager : MonoBehaviour
             for (int x = 0; x < boardSize.x; x++)
             {
                 // 設置状況の初期化
-                if (m_Board[x, y] > 0) m_Board[x, y] = 0;
+                if (board[x, y] > 0) board[x, y] = 0;
 
                 // マス目生成
-                GameObject newSquare = Instantiate(m_Board[x, y] == 0 ? setablePrefab : unsetablePrefab);
+                GameObject newSquare = Instantiate(board[x, y] == 0 ? setablePrefab : unsetablePrefab);
 
                 // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
                 newSquare.gameObject.name       = "Square[" + x + "," + y + "]";
-                newSquare.transform.parent      = m_Board[x, y] == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
+                newSquare.transform.parent      = board[x, y] == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position    = new Vector3( x, -0.1f, -y);
                 newSquare.transform.position    = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
                 newSquare.transform.localScale  = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
@@ -127,11 +131,9 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary> 設置不可マスに代わりのオブジェクトを設置する </summary>
-    /// <param name="squarePrefab">プレファブ</param>
-    /// <param name="boardSize">ボードのサイズ</param>
-    /// <param name="squareSize">オブジェクトサイズ</param>
-    /// <param name="parentTransform">親のトランスフォーム</param>
+    /// <summary>設置不可マスの決定</summary>
+    /// <remarks>パーリンノイズで決定する</remarks>
+    /// <param name="boardSize">ボードサイズ</param>
     void ShaveBoard(Vector2Int boardSize)
     {
         // パーリンノイズのシード値
@@ -142,13 +144,13 @@ public partial class GameManager : MonoBehaviour
             for(int x = 0; x < boardSize.x; ++x)
             {
                 // パーリンノイズのサンプリングをして設置不可マスにする確率を決める
-                Vector2 value = new Vector2( x, y) * m_PerlinScale + seed;
+                Vector2 value = new Vector2( x, y) * GameSetting.instance.perlinScale + seed;
                 float perlinValue = Mathf.PerlinNoise(value.x, value.y);
 
-                if (perlinValue >= m_BoardViability)
+                if (perlinValue >= GameSetting.instance.boardViability)
                 {
                     // 設置不可にする
-                    m_Board[x, y] = -1;
+                    board[x, y] = -1;
                 }
             }
         }
@@ -168,24 +170,24 @@ public partial class GameManager : MonoBehaviour
         // 左
         GameObject left             = Instantiate(prefab, parent.transform);
         left.name                   = "BackgroundLeft";
-        left.transform.localScale   = new Vector3(size / 2f - m_BoardSize.x / 2f, left.transform.localScale.y, size);
-        left.transform.position     = new Vector3(-left.transform.localScale.x / 2f - 0.5f, -0.1f, -m_BoardSize.y / 2f + 0.5f);
+        left.transform.localScale   = new Vector3(size / 2f - boardSize.x / 2f, left.transform.localScale.y, size);
+        left.transform.position     = new Vector3(-left.transform.localScale.x / 2f - 0.5f, -0.1f, -boardSize.y / 2f + 0.5f);
 
         // 右
         GameObject right            = Instantiate(left, parent.transform);
         right.name                  = "BackgroundRight";
-        right.transform.position    = right.transform.position.Offset(x: m_BoardSize.x + left.transform.localScale.x);
+        right.transform.position    = right.transform.position.Offset(x: boardSize.x + left.transform.localScale.x);
 
         // 上
         GameObject top              = Instantiate(prefab, parent.transform);
         top.name                    = "BackgroundTop";
-        top.transform.localScale    = new Vector3(m_BoardSize.x, top.transform.localScale.y, size / 2f - m_BoardSize.y / 2f);
-        top.transform.position      = new Vector3(m_BoardSize.x / 2f - 0.5f, -0.1f, top.transform.localScale.z / 2 + 0.5f);
+        top.transform.localScale    = new Vector3(boardSize.x, top.transform.localScale.y, size / 2f - boardSize.y / 2f);
+        top.transform.position      = new Vector3(boardSize.x / 2f - 0.5f, -0.1f, top.transform.localScale.z / 2 + 0.5f);
 
         // 下
         GameObject bottom           = Instantiate(top, parent.transform);
         bottom.name                 = "BackgroundBottom";
-        top.transform.position      = bottom.transform.position.Offset(z: -m_BoardSize.y - top.transform.localScale.z);
+        top.transform.position      = bottom.transform.position.Offset(z: -boardSize.y - top.transform.localScale.z);
     }
 
     /// <summary>ベクトル同士の乗算</summary>

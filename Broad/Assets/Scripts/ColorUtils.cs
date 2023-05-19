@@ -10,15 +10,13 @@ public class ColorUtils : MonoBehaviour
     {
         Color[] colors = new Color[num];
         float hue = color.GetHue();
-        float saturation = color.GetSaturation();
-        float brightness = color.GetBrightness();
         float hueStep = 1f / num;
 
         for (int i = 0; i < num; i++)
         {
             hue += hueStep;
             if (hue > 1f) hue -= 1f;
-            colors[i] = Color.HSVToRGB(hue, saturation, brightness);
+            colors[i] = color.SetHSV(h: hue);
         }
 
         return colors;

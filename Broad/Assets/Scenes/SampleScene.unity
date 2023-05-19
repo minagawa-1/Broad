@@ -280,8 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BlockPrefab: {fileID: 4511753789749413597, guid: ba55a8d7ccb955b4982436799a6cd040, type: 3}
-  m_GameManager: {fileID: 1546399919}
-  playerColors: []
 --- !u!4 &442827332
 Transform:
   m_ObjectHideFlags: 0
@@ -397,12 +395,12 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_NormalBias: 0.05
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -665,6 +663,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+--- !u!1 &1261718880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1261718882}
+  - component: {fileID: 1261718881}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1261718881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261718880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a54f70b8724784ba06720318bfb047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Texture1: {fileID: 2800000, guid: 31017b5e8775b914ba343ee113b29e37, type: 3}
+--- !u!4 &1261718882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261718880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.639999, y: -6.7327027, z: 1.7544175}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1437511597
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,10 +738,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BlockManager: {fileID: 442827331}
   m_GameManager: {fileID: 1546399919}
-  m_MinBlockUnits: 4
-  m_MaxBlockUnits: 9
-  m_MinDensity: 1
-  m_MaxDensity: 1
   m_PlayerNum: 0
 --- !u!4 &1437511599
 Transform:
@@ -745,15 +783,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541d70c84ec40f346a3b0846b29379c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 4
   m_SquarePrefab: {fileID: 1839065780756755263, guid: 5b74964b452e5844ab1c132273f944f1, type: 3}
   m_UnsetbleSquarePrefab: {fileID: 4286182845735445323, guid: 55c9f6a885b2ff1448f599d060072e15, type: 3}
-  m_BoardViability: 0.67
-  m_PerlinScale: 0.25
-  m_MinBoardSize: {x: 8, y: 8}
-  m_MaxBoardSize: {x: 12, y: 12}
   m_FurthestCameraOffset: {x: 0, y: 4, z: -4}
-  m_BoardSize: {x: 0, y: 0}
+  boardSize: {x: 0, y: 0}
   m_SquareSize: {x: 1, y: 1}
 --- !u!4 &1546399920
 Transform:

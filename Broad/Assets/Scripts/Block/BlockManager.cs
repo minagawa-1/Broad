@@ -8,38 +8,49 @@ public class BlockManager : MonoBehaviour
     [Header("生成したいブロックのプレファブ")]
     [SerializeField] GameObject m_BlockPrefab = null;
 
-    [Header("コンポーネント")]
-    [SerializeField] GameManager m_GameManager = null;
-
-    [HideInInspector]
-    public Color[] playerColors;
+    // プレファブのマテリアル
+    Material[] m_ControlBlockMaterials = null;
+    Material[] m_SetBlockMaterials = null;
 
     // 生成したブロックの親
     GameObject m_BlockParent = null;
 
-    // プレファブのマテリアル
-    Material[] m_BlockMaterials = null;
-
     private void Start()
     {
-        Color color1P = Color.HSVToRGB(Random.value, Random.Range(0.2f, 0.5f), 1f);
-
-        playerColors = ColorUtils.GetRelativeColor(color1P, m_GameManager.playerNum);
-
-        CreateMaterials(playerColors);
+        // プレイヤーの人数から色を決定
+        SetupPlayerColor();
 
         m_BlockParent = new GameObject("Blocks");
         m_BlockParent.transform.SetParent(transform);
     }
 
-    void CreateMaterials(Color[] colors)
+    void SetupPlayerColor()
     {
-        m_BlockMaterials = new Material[colors.Length];
-
-        for (int i = 0; i < colors.Length; ++i)
+        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
         {
-            m_BlockMaterials[i] = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
-            m_BlockMaterials[i].color = colors[i];
+            float h = Random.value;
+            float s = Random.Range(0.2f, 0.5f);
+            float v = Random.Range(0.9f, 1f);
+            Color color1P = Color.HSVToRGB(h, s, v);
+
+            GameSetting.instance.playerColors = ColorUtils.GetRelativeColor(color1P, GameSetting.instance.playerNum);
+
+            CreateMaterials(GameSetting.instance.playerColors);
+        }
+
+        void CreateMaterials(Color[] colors)
+        {
+            m_ControlBlockMaterials = new Material[colors.Length];
+            m_SetBlockMaterials     = new Material[colors.Length];
+
+            for (int i = 0; i < colors.Length; ++i)
+            {
+                m_ControlBlockMaterials[i] = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
+                m_SetBlockMaterials[i]     = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
+
+                m_ControlBlockMaterials[i].color = colors[i];
+                m_SetBlockMaterials[i].color     = colors[i];
+            }
         }
     }
 
@@ -55,11 +66,12 @@ public class BlockManager : MonoBehaviour
         GameObject parent = new GameObject("ControlBlocks");
         var cb = parent.AddComponent<ControlBlock>();
         cb.afterSetParent = m_BlockParent;
+        cb.afterSetMaterial = m_SetBlockMaterials[player - 1];
         cb.blocks = blocks;
         cb.playerIndex = player;
 
         var ct = parent.AddComponent<ChangeTransparency>();
-        ct.blockMaterials = m_BlockMaterials;
+        ct.blockMaterials = m_ControlBlockMaterials;
         ct.player = player;
 
         parent.transform.parent = transform;
@@ -91,7 +103,7 @@ public class BlockManager : MonoBehaviour
                 newBlock.transform.localPosition = GetBlockPosition(blocks, new Vector2Int(x, y));
 
                 // マテリアルの設定
-                newBlock.GetComponent<Renderer>().material = m_BlockMaterials[player - 1];
+                newBlock.GetComponent<Renderer>().material = m_ControlBlockMaterials[player - 1];
             }
         }
     }

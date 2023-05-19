@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using rendering = UnityEngine.Rendering;
 using rm = woskni.RenderingMode;
 
 public class ChangeTransparency : MonoBehaviour
@@ -15,22 +16,17 @@ public class ChangeTransparency : MonoBehaviour
     /// <param name="transparent">true : “§–¾‚É‚·‚é<br></br>false: ”¼“§–¾‚É‚·‚é</param>
     public void Set(ref GameObject[] objs, bool transparent)
     {
-        if (transparent)
+        for (int i = 0; i < objs.Length; ++i)
         {
-            blockMaterials[player - 1] = rm.GetAttachedBlend(blockMaterials[player - 1], rm.Mode.Fade);
-            blockMaterials[player - 1].color = blockMaterials[player - 1].color.GetAlphaColor(m_transparent_alpha);
+            var renderer = objs[i].GetComponent<Renderer>();
 
-            for (int i = 0; i < objs.Length; ++i)
-                objs[i].GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            //renderer.shadowCastingMode = transparent ? rendering.ShadowCastingMode.Off : rendering.ShadowCastingMode.On;
         }
-        else
-        {
-            blockMaterials[player - 1] = rm.GetAttachedBlend(blockMaterials[player - 1], rm.Mode.Opaque);
-            blockMaterials[player - 1].color = blockMaterials[player - 1].color.GetAlphaColor(1f);
 
-            for (int i = 0; i < objs.Length; ++i)
-                objs[i].GetComponent<Renderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
+        rm.Mode mode = transparent ? rm.Mode.Fade : rm.Mode.Opaque;
+        float alpha  = transparent ? m_transparent_alpha : 1f;
+
+        blockMaterials[player - 1] = rm.GetAttachedBlend(blockMaterials[player - 1], mode);
+        blockMaterials[player - 1].color = blockMaterials[player - 1].color.GetAlphaColor(alpha);
     }
-
 }

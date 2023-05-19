@@ -20,6 +20,9 @@ public class ControlBlock : MonoBehaviour
     ///<summary>設置後のオブジェクト</summary>
     public GameObject afterSetParent;
 
+    ///<summary>設置後のマテリアル</summary>
+    public Material afterSetMaterial;
+
 // private:
 
     /// <summary> ブロックの状態</summary>
@@ -92,7 +95,7 @@ public class ControlBlock : MonoBehaviour
         if (woskni.KeyBoard.GetOrKeyDown(KeyCode.Z, KeyCode.Return))
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
-            if (blocks.IsSetable( m_GameManager.m_Board, GetBoardPosition(transform.position.Setter(z: -transform.position.z)), playerIndex))
+            if (blocks.IsSetable( m_GameManager.board, GetBoardPosition(transform.position.Setter(z: -transform.position.z)), playerIndex))
                 m_BlocksState = BlocksState.Set;
 
             // 設置ができない場合は振動
@@ -247,7 +250,7 @@ public class ControlBlock : MonoBehaviour
 
         for (int y = 0; y < blocks.GetHeight(); ++y)
             for (int x = 0; x < blocks.GetWidth(); ++x)
-                if (blocks.shape[x, y]) m_GameManager.m_Board[pos.x + x, pos.y + y] = playerIndex;
+                if (blocks.shape[x, y]) m_GameManager.board[pos.x + x, pos.y + y] = playerIndex;
 
         GameObject[] children = gameObject.GetChildren();
 
@@ -274,6 +277,9 @@ public class ControlBlock : MonoBehaviour
 
             // 親を変える
             children[i].transform.SetParent(afterSetParent.transform);
+
+            // マテリアルを設置後のものに変更
+            children[i].GetComponent<Renderer>().material = afterSetMaterial;
         }
 
         m_BlockManager.SortBlocks();
@@ -334,11 +340,11 @@ public class ControlBlock : MonoBehaviour
 
         if (boardDebug)
         {
-            for (int y = 0; y < m_GameManager.m_BoardSize.y; ++y)
+            for (int y = 0; y < m_GameManager.boardSize.y; ++y)
             {
-                for (int x = 0; x < m_GameManager.m_BoardSize.x; ++x)
+                for (int x = 0; x < m_GameManager.boardSize.x; ++x)
                 {
-                    switch (m_GameManager.m_Board[x, y])
+                    switch (m_GameManager.board[x, y])
                     {
                         case -1: debugText += "　"; break;
                         case  0: debugText += "□"; break;
@@ -381,8 +387,8 @@ public class ControlBlock : MonoBehaviour
         bool[] isCollision = new bool[4];
 
         // 移動限界
-        Vector2 limitLeftTop = Vector2.zero - blocks.center;                    // 左上
-        Vector2 limitRightBottom = m_GameManager.m_BoardSize - blocks.center;   // 右下
+        Vector2 limitLeftTop = Vector2.zero - blocks.center;                  // 左上
+        Vector2 limitRightBottom = m_GameManager.boardSize - blocks.center;   // 右下
 
         if (blocks.GetWidth()  % 2 == 1) limitRightBottom.x -= 1;
         if (blocks.GetHeight() % 2 == 1) limitRightBottom.y -= 1;

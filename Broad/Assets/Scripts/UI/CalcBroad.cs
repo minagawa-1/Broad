@@ -16,9 +16,9 @@ public class CalcBroad : MonoBehaviour
     {
         m_PlayerText.text = "";
 
-        for (int i = 0; i < m_GameManager.playerNum; ++i)
+        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
         {
-            string colorCode = ColorUtility.ToHtmlStringRGB(m_BlockManager.playerColors[i]);
+            string colorCode = ColorUtility.ToHtmlStringRGB(GameSetting.instance.playerColors[i]);
 
             m_PlayerText.text += "<size=60><color=#" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
         }
@@ -31,93 +31,112 @@ public class CalcBroad : MonoBehaviour
 
         m_BroadValueText.text = "";
 
-        for (int i = 0; i < m_GameManager.playerNum; ++i)
+        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
             m_BroadValueText.text += counts[i] + " <size=50>㎡</size>\n";
     }
 
     int[] Calc()
     {
-        int[] counts = new int[m_GameManager.playerNum];
+        int[] counts = new int[GameSetting.instance.playerNum];
 
-        for (int i = 0; i < m_GameManager.playerNum; ++i)
-            counts[i] = GetLargestArea(m_GameManager.m_Board, i + 1);
+        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
+            counts[i] = GetLargestArea(m_GameManager.board, i + 1);
 
         return counts;
     }
 
+    /// <summary>指定されたプレイヤーの最大領域を取得</summary>
+    /// <param name="board">盤面の配列</param>
+    /// <param name="player">プレイヤー番号</param>
+    /// <returns>最大領域のサイズ</returns>
     int GetLargestArea(int[,] board, int player)
     {
-        int rows = board.GetLength(0);
-        int cols = board.GetLength(1);
+        int width = board.GetLength(0);
+        int height = board.GetLength(1);
 
-        int[] parent = new int[rows * cols]; // Union Findの親配列
-        int[] size = new int[rows * cols]; // 各グループのサイズを保持する配列
+        int[] parent = new int[width * height]; // Union-Findの親配列
+        int[] size = new int[width * height]; // 各グループのサイズを保持する配列
 
-        for (int i = 0; i < parent.Length; i++)
-        {
+        for (int i = 0; i < parent.Length; i++) {
             parent[i] = i;
             size[i] = 1;
         }
 
         int maxArea = 0;
 
-        int[][] directions = new int[][] { new int[] { -1, 0 }, new int[] { 1, 0 }, new int[] { 0, -1 }, new int[] { 0, 1 } };
+        (int x, int y)[] directions = { (-1, 0), (1, 0), (0, -1), (0, 1) };
 
-        for (int row = 0; row < rows; row++)
-        {
-            for (int col = 0; col < cols; col++)
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++)
             {
-                if (board[row, col] == player)
+                if (board[x, y] != player) continue;
+                
+                int index = y * width + x;
+
+                foreach (var direction in directions)
                 {
-                    int index = row * cols + col;
-                    foreach (int[] direction in directions)
+                    Vector2Int v = new Vector2Int(x + direction.x, y + direction.y);
+
+                    if (new RectInt(0, 0, width, height).Contains(v) && board[v.x, v.y] == player)
                     {
-                        int newRow = row + direction[0];
-                        int newCol = col + direction[1];
-
-                        if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && board[newRow, newCol] == player)
-                        {
-                            int newIndex = newRow * cols + newCol;
-                            Union(parent, size, index, newIndex);
-                        }
+                        int newIndex = v.y * width + v.x;
+                        Union(parent, size, index, newIndex);
                     }
-
-                    maxArea = Mathf.Max(maxArea, size[Find(parent, index)]);
                 }
+
+                maxArea = Mathf.Max(maxArea, size[Find(parent, index)]);
             }
         }
 
         return maxArea;
     }
 
+    /// <summary>指定した要素の親を探す</summary>
+    /// <param name="parent">親を格納した配列</param>
+    /// <param name="index">親を探す要素のインデックス</param>
+    /// <returns>要素の親</returns>
     int Find(int[] parent, int index)
     {
-        if (parent[index] != index)
-            parent[index] = Find(parent, parent[index]); // パス圧縮
+        int root = index;
 
-        return parent[index];
+        while (root != parent[root]) root = parent[root];
+
+        // パス圧縮: 直接親を設定
+        for (int i = index; i != root;)
+        {
+            int next = parent[i];
+            parent[i] = root;
+            i = next;
+        }
+
+        return root;
     }
 
+    /// <summary>2つの要素を指定したインデックスのグループとして結合</summary>
+    /// <remarks>Union操作により、グループの結合とサイズの更新が行われる</remarks>
+    /// <param name="parent">親を格納した配列</param>
+    /// <param name="size">各グループのサイズを格納した配列</param>
+    /// <param name="index1">結合する要素の1つ目のインデックス</param>
+    /// <param name="index2">結合する要素の2つ目のインデックス</param>
     void Union(int[] parent, int[] size, int index1, int index2)
     {
         int root1 = Find(parent, index1);
         int root2 = Find(parent, index2);
 
-        if (root1 != root2)
+        // 同一なら何もせずに終了
+        if (root1 == root2) return;
+        
+        if (size[root1] < size[root2])
         {
-            if (size[root1] < size[root2])
-            {
-                parent[root1] = root2;
-                size[root2] += size[root1];
-            }
-            else
-            {
-                parent[root2] = root1;
-                size[root1] += size[root2];
-            }
+            // root2をroot1の親として設定し、root2のサイズを増やす
+            parent[root1] = root2;
+            size[root2] += size[root1];
+        }
+        else
+        {
+            // root1をroot2の親として設定し、root1のサイズを増やす
+            parent[root2] = root1;
+            size[root1] += size[root2];
         }
     }
-
-
-
 }
