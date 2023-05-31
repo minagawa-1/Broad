@@ -85,11 +85,11 @@ public partial class GameManager : MonoBehaviour
             var combiner = GetComponent<MeshCombiner>();
 
             // 設置可能マスのメッシュ結合
-            combiner.Combine(m_SetableParent.GetChildren(), "SetableBoard", m_BoardManagerObject.transform);
+            combiner.Combine(m_SetableParent.transform.GetChildren().ToGameObjects(), "SetableBoard", m_BoardManagerObject.transform);
 
             // 設置不可マスと枠外背景のメッシュの結合
-            GameObject[] background = GameObject.Find("Background").GetChildren();
-            GameObject[] unsetable = m_UnsetableParent.GetChildren().Concat(background).ToArray();
+            GameObject[] background = GameObject.Find("Background").transform.GetChildren().ToGameObjects();
+            GameObject[] unsetable = m_UnsetableParent.transform.GetChildren().ToGameObjects().Concat(background).ToArray();
             combiner.Combine(unsetable, "UnsetableBoard", m_BoardManagerObject.transform);
 
             // もういらないので消し飛ばす

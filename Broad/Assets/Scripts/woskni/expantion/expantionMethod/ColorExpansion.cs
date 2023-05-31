@@ -4,6 +4,21 @@ using UnityEngine;
 
 public static class ColorExpansion
 {
+    /// <summary>RGB値をカラーコードで取得</summary>
+    /// <remarks>例: Color(1.0, 0.5, 0.0) => #FF8000FF</remarks>
+    /// <param name="isUpper">大文字か否か</param>
+    public static string ToHex(this Color color, bool isUpper = true)
+    {
+        int r = Mathf.RoundToInt(color.r * 255);
+        int g = Mathf.RoundToInt(color.g * 255);
+        int b = Mathf.RoundToInt(color.b * 255);
+        int a = Mathf.RoundToInt(color.a * 255);
+
+        string colorCode = string.Format("#{0:X2}{1:X2}{2:X2}{3:X2}", r, g, b, a);
+
+        return isUpper ? colorCode : colorCode.ToLower();
+    }
+
     /// <summary>アルファ値を変更した色を取得</summary>
     /// <param name="a">変更するアルファ値</param>
     public static Color GetAlphaColor(this Color color, float a) => new Color(color.r, color.g, color.b, a);
@@ -56,5 +71,24 @@ public static class ColorExpansion
 
         // 新しいColorを返す
         return new Color(r, g, b, color.a);
+    }
+
+    /// <summary>相対色を取得</summary>
+    /// <remarks>標準色から均等に離れた色相の色を取得</remarks>
+    /// <param name="color">標準色</param>
+    /// <param name="num">取得個数</param>
+    public static Color[] GetRelativeColor(this Color color, int num)
+    {
+        Color[] colors = new Color[num];
+        float hue = color.GetHue();
+        float hueStep = 1f / num;
+
+        for (int i = 0; i < num; i++)
+        {
+            hue += hue > 1f ? hueStep - 1f : hueStep;
+            colors[i] = color.SetHSV(h: hue);
+        }
+
+        return colors;
     }
 }

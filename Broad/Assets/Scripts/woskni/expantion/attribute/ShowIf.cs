@@ -39,8 +39,8 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
         condition = condition.Replace("@", "");
 
         // ‰‰ŽZŽq‚Å•ªŠ„
-        // ( ) * / % + - == != >= > <= < && ||
-        string pattern = @"(\(|\)|\*|/|%|\+|-|==|!=|>=|>|<=|<|&&|\|\|)";
+        // ( ) * / % + - == != >= > <= < ! && ||
+        string pattern = @"(\(|\)|\*|/|%|\+|-|==|!=|>=|>|<=|<|!|&&|\|\|)";
         string[] tokens = System.Text.RegularExpressions.Regex.Split(condition, pattern);
 
         return Analyze.ParseTokens(property, tokens);
@@ -261,9 +261,7 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
 
         // ‚»‚Ì‘¼
             else
-            {
                 throw new System.Exception("–¢’è‹`‚Ì‰‰ŽZŽq: " + op);
-            }
         }
 
         static object GetFieldValue(SerializedProperty property)
@@ -314,11 +312,13 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                 return value1.CompareTo(value2);
             }
 
+            // bool
+            if (type1 == typeof(bool) || type2 == typeof(bool))
+            return System.Convert.ToBoolean(left) == System.Convert.ToBoolean(right) ? 0 : -1;
+
             // ‚»‚Ì‘¼‚Ìƒf[ƒ^Œ^‚É‚æ‚é”äŠr
             else
-            {
-                throw new System.InvalidOperationException("Invalid operand types for comparison.");
-            }
+                throw new System.InvalidOperationException($"‘Î‰ž‚µ‚Ä‚¢‚Ü‚¹‚ñ: {type1}");
         }
     }
 }

@@ -10,15 +10,15 @@ public class ChangeTransparency : MonoBehaviour
     public int player;
 
     /// <summary>“§–¾E”¼“§–¾‚ğØ‚è‘Ö‚¦‚é</summary>
-    public void Change(ref GameObject[] objs) => Set(ref objs, rm.GetBlendMode(blockMaterials[player - 1]) != rm.Mode.Fade);
+    public void Change(ref Transform[] transforms) => Set(ref transforms, rm.GetBlendMode(blockMaterials[player - 1]) != rm.Mode.Fade);
 
     /// <summary>“§–¾E”¼“§–¾‚É‚·‚é</summary>
     /// <param name="transparent">true : “§–¾‚É‚·‚é<br></br>false: ”¼“§–¾‚É‚·‚é</param>
-    public void Set(ref GameObject[] objs, bool transparent)
+    public void Set(ref Transform[] transforms, bool transparent)
     {
-        for (int i = 0; i < objs.Length; ++i)
+        for (int i = 0; i < transforms.Length; ++i)
         {
-            var renderer = objs[i].GetComponent<Renderer>();
+            var renderer = transforms[i].GetComponent<Renderer>();
 
             //renderer.shadowCastingMode = transparent ? rendering.ShadowCastingMode.Off : rendering.ShadowCastingMode.On;
         }

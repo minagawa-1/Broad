@@ -33,7 +33,7 @@ public class BlockManager : MonoBehaviour
             float v = Random.Range(0.9f, 1f);
             Color color1P = Color.HSVToRGB(h, s, v);
 
-            GameSetting.instance.playerColors = ColorUtils.GetRelativeColor(color1P, GameSetting.instance.playerNum);
+            GameSetting.instance.playerColors = color1P.GetRelativeColor(GameSetting.instance.playerNum);
 
             CreateMaterials(GameSetting.instance.playerColors);
         }
@@ -113,7 +113,7 @@ public class BlockManager : MonoBehaviour
 
     public void SortBlocks()
     {
-        var blockList = m_BlockParent.GetChildren().ToList();
+        var blockList = m_BlockParent.transform.GetChildren().ToList();
 
         // オブジェクトを座標で昇順ソート
         blockList.Sort((a, b) => {

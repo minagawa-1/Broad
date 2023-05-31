@@ -87,7 +87,7 @@ public class ControlBlock : MonoBehaviour
         // Xキー で、ブロックスを半透明にする
         if (Input.GetKeyDown(KeyCode.X))
         {
-            GameObject[] children = gameObject.GetChildren();
+            var children = transform.GetChildren();
             GetComponent<ChangeTransparency>().Change(ref children);
         }
 
@@ -256,7 +256,7 @@ public class ControlBlock : MonoBehaviour
             for (int x = 0; x < blocks.GetWidth(); ++x)
                 if (blocks.shape[x, y]) m_GameManager.board[pos.x + x, pos.y + y] = playerIndex;
 
-        GameObject[] children = gameObject.GetChildren();
+        Transform[] children = transform.GetChildren();
 
         // ブロックの半透明化を解除
         GetComponent<ChangeTransparency>().Set(ref children, false);

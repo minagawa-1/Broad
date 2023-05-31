@@ -111,8 +111,9 @@ public class PreviewTextureDrawer : PropertyDrawer
                                            , position.width - EditorGUIUtility.labelWidth
                                            , field_height), property, GUIContent.none);
 
-            inputFieldY = AddLabelField(position, inputFieldY, $"File path: {GetFilePath(property)}");
-                          AddLabelField(position, inputFieldY, $"File size: {GetFileSize(property)}");
+            inputFieldY = AddLabelField(position, position.yMin, $"File path: {GetFilePath(property)}");
+            inputFieldY = AddLabelField(position, inputFieldY, $"({texture.width}x{texture.height})");
+                          AddLabelField(position, inputFieldY, $"File size: {GetFileSize(property).FormatSize()}B");
         }
         else
         {

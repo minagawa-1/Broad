@@ -27,7 +27,7 @@ public static  class StringExpansion
     /// <param name="fillStr">文字埋めに使用する文字列(例："　", "0")</param>
     /// <param name="maxDigit">文字埋めする際の最大文字数</param>
     /// <returns></returns>
-    public static string FillFront(string str, string fillStr, int maxDigit)
+    public static string ZeroFillFront(string str, string fillStr, int maxDigit)
     {
         // 最大文字数を文字埋め数に変換
         maxDigit -= str.Length;

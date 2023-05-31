@@ -20,7 +20,7 @@ public class DebugHotKey : EditorWindow
 
         // リロード
         else
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     /// <summary>エディタ停止</summary>

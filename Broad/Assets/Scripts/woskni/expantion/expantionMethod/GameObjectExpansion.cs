@@ -4,16 +4,15 @@ using UnityEngine;
 
 public static class GameObjectExpansion
 {
-	/// <summary>子オブジェクトを取得（非再帰的）</summary>
-	/// <remarks>孫以降は取得しない。取得したい場合はGetComponentsInChildrenでTransformを指定してね</remarks>
-	public static GameObject[] GetChildren(this GameObject gameObject)
-    {
-		List<GameObject> objs = new List<GameObject>();
+	/// <summary>GameObject[]をTransform[]に変換</summary>
+	public static Transform[] ToTransforms(this GameObject[] gameObjects)
+	{
+		var transforms = new Transform[gameObjects.Length];
 
-		for (int i = 0; i < gameObject.transform.childCount; ++i)
-			objs.Add(gameObject.transform.GetChild(i).gameObject);
+		for (int i = 0; i < gameObjects.Length; ++i)
+			transforms[i] = gameObjects[i].transform;
 
-		return objs.ToArray();
+		return transforms;
 	}
 
 	/// <summary>レイヤーを変更</summary>
