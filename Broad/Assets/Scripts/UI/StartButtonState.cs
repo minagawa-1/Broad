@@ -9,15 +9,21 @@ public class StartButtonState : MonoBehaviour
     [Header("コンポーネント")]
     [SerializeField] Text m_StartText;
     [SerializeField] Text m_MatchingText;
+    [SerializeField] Image m_Banner;
 
     [Chapter("テキストのDOTween前後情報")]
     [Header("テキストのサイズ・位置情報")]
     [SerializeField] int m_EasedStartTextFontSize;
     [SerializeField] Vector3 m_EasedStartTextOffset;
 
-    [Header("遷移時間")]
-    [SerializeField] float m_StartTime;
-    [SerializeField] float m_EndTime;
+    [Chapter("遷移時間")]
+    [Header("Button")]
+    [SerializeField] float m_ButtonStartTime;
+    [SerializeField] float m_ButtonEndTime;
+
+    [Header("Banner")]
+    [SerializeField] float m_BannerStartTime;
+    [SerializeField] float m_BannerEndTime;
 
     int m_InitStartTextFontSize;
     Vector3 m_InitStartTextPosition;
@@ -30,24 +36,26 @@ public class StartButtonState : MonoBehaviour
 
     public void DoStartMatch()
     {
-        Vector3 startTextPos = m_InitStartTextPosition + m_EasedStartTextOffset;
+        DoFontSize(m_EasedStartTextFontSize, m_ButtonStartTime, Ease.OutCubic);
+        m_MatchingText.DOPause();
+        m_MatchingText.DOFade(1f, m_ButtonStartTime).SetEase(Ease.OutCubic);
 
-        DoFontSize(m_EasedStartTextFontSize, startTextPos, m_StartTime);
-
-        m_MatchingText.DOFade(1f, m_EndTime);
+        m_StartText.rectTransform.DOMove(m_InitStartTextPosition + m_EasedStartTextOffset, m_ButtonStartTime).SetEase(Ease.OutCubic);
+        m_Banner.rectTransform.DOMoveY(0f, m_BannerStartTime).SetEase(Ease.OutCubic);
     }
 
-    public void DoEndMatch()
+    public void DoEndMatch(System.Action<int> action)
     {
-        DoFontSize(m_InitStartTextFontSize, m_InitStartTextPosition, m_EndTime);
+        DoFontSize(m_InitStartTextFontSize, m_ButtonEndTime, Ease.InCubic);
+        m_MatchingText.DOPause();
+        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => action.Invoke(1));
 
-        m_MatchingText.DOFade(0f, m_EndTime);
+        m_StartText.rectTransform.DOMove(m_InitStartTextPosition, m_ButtonEndTime).SetEase(Ease.InCubic);
+        m_Banner.rectTransform.DOMoveY(-m_Banner.rectTransform.rect.height, m_BannerEndTime).SetEase(Ease.InCubic);
     }
 
-    void DoFontSize(int endSize, Vector3 endPosition, float time)
+    void DoFontSize(int endSize, float time, Ease ease)
     {
-        DOTween.To(() => m_StartText.fontSize, size => m_StartText.fontSize = size, endSize, time).SetEase(Ease.OutCubic);
-
-        m_StartText.rectTransform.DOMove(endPosition, time);
+        DOTween.To(() => m_StartText.fontSize, size => m_StartText.fontSize = size, endSize, time).SetEase(ease);
     }
 }

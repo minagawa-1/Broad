@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace woskni
 {
+    [System.Serializable]
     public struct Timer : IEquatable<Timer>
     {
         /// <summary>タイマーの速度倍率</summary>
-        public float timeScale { get; set; }
+        public float timeScale;
 
         /// <summary>現在の経過秒数</summary>
-        public float time { get; set; }
+        public float time;
 
         /// <summary>終了時間(秒)</summary>
-        public float limit { get; set; }
+        public float limit;
 
         /// <summary>終了時間の初期設定</summary>
         /// <param name="limit">終了時間</param>
@@ -53,4 +58,29 @@ namespace woskni
 
         bool IEquatable<Timer>.Equals(Timer other){ return Equals(this, other); }
     }
+
+
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(Timer))]
+    public class TimerDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            // limitプロパティのSerializedPropertyを取得
+            SerializedProperty limitProperty = property.FindPropertyRelative("limit");
+
+            // ラベルの表示
+            label.text += ".limit";
+            EditorGUI.LabelField(position, label);
+
+            // limitプロパティのみ表示
+            Rect prefix = EditorGUI.PrefixLabel(position, label);
+            limitProperty.floatValue = EditorGUI.FloatField(prefix, limitProperty.floatValue);
+
+            EditorGUI.EndProperty();
+        }
+    }
+#endif
 }

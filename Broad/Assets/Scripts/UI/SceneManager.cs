@@ -75,6 +75,7 @@ public class SceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(fadeDuration);
 
+        DOTween.Clear();
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 
         fadeCanvasGroup.alpha = 1f;
