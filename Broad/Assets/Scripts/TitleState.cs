@@ -87,7 +87,7 @@ public class TitleState : MonoBehaviour
 
         if (m_MatchTimer.IsFinished())
         {
-            SceneManager.Instance.LoadScene(Scene.GameMainScene);
+            CustomSceneManager.Instance.LoadScene(Scene.GameMainScene);
 
             m_MatchState = MatchState.Matched;
         }

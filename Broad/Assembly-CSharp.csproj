@@ -95,8 +95,10 @@
     <Compile Include="Assets\Scripts\DFR.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Chapter.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Name.cs" />
+    <Compile Include="Assets\Scripts\UI\BlinkGraphic.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\DebugHotKey.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumLength.cs" />
+    <Compile Include="Assets\Scripts\UI\CustomSceneManager.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumSceneCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\Base64.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\PreviewTexture.cs" />
@@ -116,12 +118,10 @@
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\StringExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Range.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Tag.cs" />
-    <Compile Include="Assets\Scripts\UI\SceneManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\VectorExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\BoolExpansion.cs" />
-    <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
-    <Compile Include="Assets\Scripts\UI\BlinkGraphic.cs" />
+    <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\blockShape[,].txt" />
