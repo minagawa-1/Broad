@@ -3,9 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 
-public class SceneManager : MonoBehaviour
+public class CustomSceneManager : MonoBehaviour
 {
-    public static SceneManager Instance { get; private set; }
+    public static CustomSceneManager Instance { get; private set; }
 
     public float fadeDuration = 0.5f; // フェードの時間
 
@@ -14,7 +14,7 @@ public class SceneManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else                  Destroy(gameObject);
+        else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
     }
