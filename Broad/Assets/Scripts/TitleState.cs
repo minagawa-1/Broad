@@ -69,26 +69,33 @@ public class TitleState : MonoBehaviour
     void StartMatch()
     {
         m_StartButtonState.DoStartMatch();
-
-
         m_MatchState = MatchState.Matching;
     }
 
     /// <summary>マッチング中</summary>
     void Matching()
     {
+        // プレイヤーが2人以上のとき、自動開始機能を実行する
         if (m_GameSetting.playerNum > 1) m_MatchTimer.Update();
 
+        // Aキーで人数を増やす(仮)
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetPlayerNum(m_GameSetting.playerNum + 1);
             m_MatchTimer.Reset();
         }
 
+        // Dキーで人数を減らす(仮)
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            SetPlayerNum(m_GameSetting.playerNum - 1);
+            m_MatchTimer.Reset();
+        }
+
+        // 自動開始処理
         if (m_MatchTimer.IsFinished())
         {
             SceneManager.Instance.LoadScene(Scene.GameMainScene);
-
             m_MatchState = MatchState.Matched;
         }
     }
@@ -97,20 +104,24 @@ public class TitleState : MonoBehaviour
     void EndMatch()
     {
         m_StartButtonState.DoEndMatch(SetPlayerNum);
-
         m_MatchState = MatchState.None;
     }
 
     /// <summary>マッチング完了</summary>
     void Matched()
     {
-        
+        // マッチングが完了してから
+        // タイトルシーンをロードするまでの数秒間の処理
+
+
+
     }
 
-    // プレイヤー人数をGameSettingに反映させる
+    /// <summary>プレイヤー人数をGameSettingに反映させる</summary>
+    /// <param name="playerNum">プレイヤー人数</param>
     void SetPlayerNum(int playerNum)
     {
-        m_GameSetting.playerNum = playerNum;
+        m_GameSetting.playerNum = Mathf.Max(1, playerNum);
 
         foreach (Text text in m_MatchingTexts)
             text.text = $"Matching... ( {playerNum}人 )";
