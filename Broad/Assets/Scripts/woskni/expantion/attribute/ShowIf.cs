@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [System.AttributeUsage(System.AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
 public class ShowIfAttribute : PropertyAttribute
@@ -15,6 +18,7 @@ public class ShowIfAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ShowIfAttribute))]
 public class ConditionalShowAttributeDrawer : PropertyDrawer
 {
@@ -322,3 +326,4 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
         }
     }
 }
+#endif

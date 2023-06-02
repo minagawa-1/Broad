@@ -1,5 +1,7 @@
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+# endif
 
 /// <summary>フィールド上にコメントを付加</summary>
 public class CommentAttribute : PropertyAttribute
@@ -17,6 +19,7 @@ public class CommentAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(CommentAttribute))]
 public class CommentAttributeDrawer : DecoratorDrawer
 {
@@ -83,3 +86,4 @@ public class CommentAttributeDrawer : DecoratorDrawer
         EditorGUI.DrawRect(new Rect(borderRect.xMax - line_width, borderRect.y                  , line_width        , borderRect.height ), exposedColor); // 右辺の枠線
     }
 }
+#endif

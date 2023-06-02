@@ -1,5 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>プログレスバーを超過したときの処理</summary>
 [System.Serializable]
@@ -15,7 +17,7 @@ public enum ExcessType
     Around,
 }
 
-
+#if UNITY_EDITOR
 public class ProgressBarAttribute : PropertyAttribute
 {
     public float min;
@@ -75,3 +77,4 @@ public class ProgressBarDrawer : PropertyDrawer
         }
     }
 }
+#endif

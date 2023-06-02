@@ -1,4 +1,4 @@
-﻿/// <summary>レイヤー(列挙型)</summary>
+﻿/// <summary>シーン(列挙型)</summary>
 public class Scene
 {
 	/// <summary>GameMainScene</summary>

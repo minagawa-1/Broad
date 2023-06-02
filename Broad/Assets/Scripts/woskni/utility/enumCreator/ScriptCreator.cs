@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class ScriptCreator : MonoBehaviour
 {
@@ -45,3 +47,4 @@ public class ScriptCreator : MonoBehaviour
         return str;
     }
 }
+#endif

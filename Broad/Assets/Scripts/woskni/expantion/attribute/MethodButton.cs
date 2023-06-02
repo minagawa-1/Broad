@@ -3,6 +3,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 
 public class MethodButtonAttribute : PropertyAttribute
@@ -27,6 +28,7 @@ public class MethodButtonAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(MethodButtonAttribute))]
 public class MethodButtonDrawer : PropertyDrawer
 {

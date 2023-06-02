@@ -2,7 +2,10 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>タグの指定</summary>
 /// <remarks>対応データ型: int, string</remarks>
@@ -10,6 +13,7 @@ public class TagAttribute : PropertyAttribute
 {
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(TagAttribute))]
 public class TagAttributeDrawer : PropertyDrawer
 {
@@ -48,6 +52,7 @@ public class TagAttributeDrawer : PropertyDrawer
         }
     }
 }
+#endif
 
 /// <summary>レイヤーの指定</summary>
 /// <remarks>対応データ型: int, string</remarks>
@@ -55,6 +60,7 @@ public class LayerAttribute : PropertyAttribute
 {
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(LayerAttribute))]
 public class LayerAttributeDrawer : PropertyDrawer
 {
@@ -95,3 +101,4 @@ public class LayerAttributeDrawer : PropertyDrawer
         }
     }
 }
+#endif

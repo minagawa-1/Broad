@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Text;
+
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditorInternal;
 
 /// <summary>タグ名を列挙型で管理するクラスを作成するスクリプト</summary>
 public static class EnumSceneCreator
@@ -61,3 +62,4 @@ public static class EnumSceneCreator
         return scenes;
     }
 }
+#endif
