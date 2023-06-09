@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d9e7673b3000140aa1bf5424535440, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
-  playerNum: 1
-  playerColors:
-  - {r: 0, g: 0, b: 0, a: 1}
+  players: []
   minBoardSize: {x: 8, y: 8}
   maxBoardSize: {x: 12, y: 12}
   boardViability: 0.67

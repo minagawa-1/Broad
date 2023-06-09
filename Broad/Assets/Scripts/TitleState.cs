@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,46 +10,45 @@ using Mirror.Discovery;
 
 public class TitleState : NetworkDiscovery
 {
-    [Chapter("£NetworkDiscovery")]
-    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Chapter("â–²NetworkDiscovery")]
+    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] GameSetting m_GameSetting;
     [SerializeField] Text[] m_MatchingTexts;
 
-    [Chapter("Ú‘±î•ñ")]
-    [Header("ŠÔŠu")]
-    [SerializeField] private int m_ConnectIntervalFrame;
-    [SerializeField] private woskni.Timer m_WaitTimer;
+    [Chapter("æ¥ç¶šæƒ…å ±")]
+    [Header("é–“éš”(ms)")]
+    [SerializeField, Min(1)] private int m_ConnectInterval = 1;
 
-    [Header("Ú‘±s‰ñ”")]
+    [Header("æ¥ç¶šè©¦è¡Œå›æ•°")]
     [SerializeField] private int m_ConnectTryCount;
 
-    [Chapter("‚»‚Ì‘¼")]
-    [Header("‘Ò‹@ƒ^ƒCƒ}[")]
+    [Chapter("ãã®ä»–")]
+    [Header("å¾…æ©Ÿã‚¿ã‚¤ãƒãƒ¼")]
     [SerializeField] woskni.Timer m_MatchTimer;
 
-    NetworkManager m_NetworkManager;        // ƒlƒbƒgƒ[ƒNƒ}ƒl[ƒWƒƒ[
-    ServerResponse m_DiscoverdServer;       // Œ©‚Â‚¯‚½‚¢ƒT[ƒo[
+    NetworkManager m_NetworkManager;        // ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+    ServerResponse m_DiscoverdServer;       // è¦‹ã¤ã‘ãŸã„ã‚µãƒ¼ãƒãƒ¼
 
-    CancellationTokenSource m_CancelConnectServer;      // ŒŸõ‚ÉƒLƒƒƒ“ƒZƒ‹‚ğ‚·‚é‚½‚ß‚Ìƒ\[ƒX
-    CancellationToken m_CancelConnectToken;       // ŒŸõƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“
+    CancellationTokenSource m_CancelConnectServer;      // æ¤œç´¢æ™‚ã«ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚’ã™ã‚‹ãŸã‚ã®ã‚½ãƒ¼ã‚¹
+    CancellationToken m_CancelConnectToken;       // æ¤œç´¢ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³
 
     [System.Serializable]
     enum MatchState
     {
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
         None,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn’¼Œã</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹ç›´å¾Œ</summary>
         StartMatch,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
         Matching,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~’¼Œã</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢ç›´å¾Œ</summary>
         CancelMatch,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
         CompleteMatch,
     }
 
@@ -57,21 +56,22 @@ public class TitleState : NetworkDiscovery
 
     void Awake()
     {
-        // ConnectionData‚ğóM‚µ‚½‚çReceivedConnectData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // ConnectionDataã‚’å—ä¿¡ã—ãŸã‚‰ReceivedConnectDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
 
-        m_GameSetting.playerNum = 1;
+        m_GameSetting.players = new PlayerData[1];
+        m_GameSetting.players[0] = new PlayerData(0, Color.clear);
 
         m_MatchState = MatchState.None;
 
-        // ƒR[ƒ‹ƒoƒbƒNˆ—
-        // ƒT[ƒo[‚ªŒ©‚Â‚©‚Á‚½‚çŒÄ‚Î‚ê‚é
+        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‡¦ç†
+        // ã‚µãƒ¼ãƒãƒ¼ãŒè¦‹ã¤ã‹ã£ãŸã‚‰å‘¼ã°ã‚Œã‚‹
         OnServerFound.AddListener(ServerResponse =>
         {
-            // Œ©‚Â‚¯‚½ƒT[ƒo[ƒŒƒXƒ|ƒ“ƒX‚ğ“ü‚ê‚é
+            // è¦‹ã¤ã‘ãŸã‚µãƒ¼ãƒãƒ¼ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’å…¥ã‚Œã‚‹
             m_DiscoverdServer = ServerResponse;
 
-            // Debug.Log‚Å•\¦
+            // Debug.Logã§è¡¨ç¤º
             Debug.Log("ServerFound");
         });
     }
@@ -89,36 +89,36 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
     void None() 
     {
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹æ™‚</summary>
     void StartMatch()
     {
         m_StartButtonState.DoStartMatch();
 
-        // Ú‘±ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“¶¬
+        // æ¥ç¶šã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³ç”Ÿæˆ
         m_CancelConnectServer = new CancellationTokenSource();
         m_CancelConnectToken = m_CancelConnectServer.Token;
 
-        // ƒT[ƒo[ŒŸõ
-        // UniTask‚Ì”ñ“¯Šúˆ—‚ÍForget()‚ğ•t‚¯‚ÄŒÄ‚Ô
-        // ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“‚ğ“n‚·–‚ÅAawait‚ğ‚·‚é”ñ“¯Šúˆ—‚ÅCancel()‚ÌÀsƒ^ƒCƒ~ƒ“ƒO‚Åˆ—‚Ì’†’f‚ª‰Â”\
+        // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢
+        // UniTaskã®éåŒæœŸå‡¦ç†ã¯Forget()ã‚’ä»˜ã‘ã¦å‘¼ã¶
+        // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³ã‚’æ¸¡ã™äº‹ã§ã€awaitã‚’ã™ã‚‹éåŒæœŸå‡¦ç†ã§Cancel()ã®å®Ÿè¡Œã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§å‡¦ç†ã®ä¸­æ–­ãŒå¯èƒ½
         TryConnect(m_CancelConnectToken).Forget();
 
         m_MatchState = MatchState.Matching;
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
     void Matching()
     {
-        // [¦ƒfƒoƒbƒO—p] ‹­§“I‚ÉƒQ[ƒ€ƒXƒ^[ƒg
+        // [â€»ãƒ‡ãƒãƒƒã‚°ç”¨] å¼·åˆ¶çš„ã«ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ
         if(Input.GetMouseButtonDown(1)) m_MatchState = MatchState.CompleteMatch;
 
-        // l”‚ª‚Ql–¢–‚Ìê‡‚Íreturn
-        if (m_GameSetting.playerNum < 2) return;
+        // äººæ•°ãŒï¼’äººæœªæº€ã®å ´åˆã¯return
+        if (m_GameSetting.players.Length < 2) return;
 
         m_MatchTimer.Update(false);
 
@@ -130,111 +130,112 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢æ™‚</summary>
     void CancelMatch()
     {
         m_StartButtonState.DoCancelMatch(SetPlayerNum);
 
-        // ƒT[ƒo[ŒŸõ‚ğ’â~
+        // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢ã‚’åœæ­¢
         StopDiscovery();
 
-        // l”‚ª‚QlˆÈã‚Ìê‡
-        if (m_GameSetting.playerNum > 1)
+        // äººæ•°ãŒï¼’äººä»¥ä¸Šã®å ´åˆ
+        if (m_GameSetting.players.Length > 1)
         {
-            // ƒzƒXƒgEƒNƒ‰ƒCƒAƒ“ƒg‚Ì’â~
+            // ãƒ›ã‚¹ãƒˆãƒ»ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®åœæ­¢
             NetworkManager.singleton.StopHost();
             NetworkManager.singleton.StopClient();
         }
 
-        // ”ñ“¯Šúˆ—‚Ì’â~
-        // TokenSorce‚ÌƒLƒƒƒ“ƒZƒ‹‚Æ”pŠü‚ğ‚·‚é
+        // éåŒæœŸå‡¦ç†ã®åœæ­¢
+        // TokenSorceã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã¨å»ƒæ£„ã‚’ã™ã‚‹
         Cancel(m_CancelConnectServer);
 
         m_MatchState = MatchState.None;
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
     void CompleteMatch()
     {
-        // 1l‚Ìê‡A2`4‚Åƒ‰ƒ“ƒ_ƒ€‚Èl”‚É‚·‚é
-        if (GameSetting.instance.playerNum <= 1) GameSetting.instance.playerNum = Random.Range(2, 5);
+        // 1äººã®å ´åˆã€2ï½4ã§ãƒ©ãƒ³ãƒ€ãƒ ãªäººæ•°ã«ã™ã‚‹
+        if (GameSetting.instance.players.Length <= 1)
+            GameSetting.instance.players = new PlayerData[Random.Range(2, 5)];
 
-        // ƒV[ƒ“‘JˆÚˆ—
+        // ã‚·ãƒ¼ãƒ³é·ç§»å‡¦ç†
         Transition.Instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[l”‚ğGameSetting‚É”½‰f‚³‚¹‚é</summary>
-    /// <param name="playerNum">ƒvƒŒƒCƒ„[l”</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ã‚’GameSettingã«åæ˜ ã•ã›ã‚‹</summary>
+    /// <param name="playerNum">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°</param>
     void SetPlayerNum(int playerNum)
     {
-        // Å’á‚Å‚à‚PlˆÈã
+        // æœ€ä½ã§ã‚‚ï¼‘äººä»¥ä¸Š
         playerNum = Mathf.Max(1, playerNum);
 
-        // İ’è‚É‚Í”½‰f‚³‚¹‚é
-        m_GameSetting.playerNum = playerNum;
+        // è¨­å®šã«ã¯åæ˜ ã•ã›ã‚‹
+        GameSetting.instance.players = new PlayerData[playerNum];
 
         if (m_MatchingTexts.Length == 0 || m_NetworkManager == null) return;
 
         foreach (Text text in m_MatchingTexts)
-            if(text != null)text.text = $"Matching... ( {playerNum}l )";
+            if(text != null)text.text = $"Matching... ( {playerNum}äºº )";
     }
 
-    /// <summary>ƒT[ƒo[ŒŸõ</summary>
-    /// <async>”ñ“¯Šú<async>
-    /// <await>w’è‚µ‚½ŠÔEğŒ‚ª‘µ‚¤‚Ü‚Å‘Ò‚Â<await>
-    /// [async/await] ‚Íˆ—‚ğ”ñ“¯Šú‚És‚¤‚Ì‚Å‚Í‚È‚­A”ñ“¯Šú‚Ìˆ—‚ğ‘Ò‚Âd‘g‚İ
-    /// <param name="token">ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“</param>
+    /// <summary>ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢</summary>
+    /// <async>éåŒæœŸ<async>
+    /// <await>æŒ‡å®šã—ãŸæ™‚é–“ãƒ»æ¡ä»¶ãŒæƒã†ã¾ã§å¾…ã¤<await>
+    /// [async/await] ã¯å‡¦ç†ã‚’éåŒæœŸã«è¡Œã†ã®ã§ã¯ãªãã€éåŒæœŸã®å‡¦ç†ã‚’å¾…ã¤ä»•çµ„ã¿
+    /// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³</param>
     async UniTaskVoid TryConnect(CancellationToken token)
     {
-        // NetworkManageræ“¾
+        // NetworkManagerå–å¾—
         m_NetworkManager = NetworkManager.singleton;
 
-        // Ú‘±’§í‰ñ”
+        // æ¥ç¶šæŒ‘æˆ¦å›æ•°
         int tryCount = 0;
 
-        // ƒT[ƒo[ŒŸõŠJn
+        // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢é–‹å§‹
         StartDiscovery();
 
-        // Server–”‚ÍAClient‚ªactive‚ÈŒÀ‚è‘±‚¯‚é
+        // Serveråˆã¯ã€ClientãŒactiveãªé™ã‚Šç¶šã‘ã‚‹
         while (!m_NetworkManager.isNetworkActive)
         {
-            // m_ConnectIntervalFrame‚¾‚¯‚ÌƒtƒŒ[ƒ€‚ğ’x‚ç‚¹‚ÄÀs
-            await UniTask.Delay(m_ConnectIntervalFrame, cancellationToken: token);
+            // (m_ConnectInterval)msåˆ†å¾…æ©Ÿã—ã¦å®Ÿè¡Œ
+            await UniTask.Delay(m_ConnectInterval, cancellationToken: token);
 
-            // ƒT[ƒo[‚ğŒ©‚Â‚¯‚½
-            // URI‚ÍURL(Webã‚É‚ ‚éƒtƒ@ƒCƒ‹‚ÌZŠ)‚Æ
-            // URN(ƒlƒbƒgƒ[ƒNã‚Ì‘¶İ‚·‚é•¶‘‚È‚Ç‚ÌƒŠƒ\[ƒX‚ğˆêˆÓ‚É¯•Ê‚·‚é‚½‚ß‚Ì¯•Êq)‚Ì‘Ì
+            // ã‚µãƒ¼ãƒãƒ¼ã‚’è¦‹ã¤ã‘ãŸ
+            // URIã¯URL(Webä¸Šã«ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½æ‰€)ã¨
+            // URN(ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ä¸Šã®å­˜åœ¨ã™ã‚‹æ–‡æ›¸ãªã©ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ä¸€æ„ã«è­˜åˆ¥ã™ã‚‹ãŸã‚ã®è­˜åˆ¥å­)ã®ç·ç§°
             if (m_DiscoverdServer.uri != null)
             {
                 Debug.Log("Start Client");
 
-                // ƒNƒ‰ƒCƒAƒ“ƒg‚Æ‚µ‚ÄŠJn
-                // æ“¾‚µ‚½URI‚ğg‚Á‚ÄƒT[ƒo[‚ÉÚ‘±‚·‚é
+                // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã—ã¦é–‹å§‹
+                // å–å¾—ã—ãŸURIã‚’ä½¿ã£ã¦ã‚µãƒ¼ãƒãƒ¼ã«æ¥ç¶šã™ã‚‹
                 m_NetworkManager.StartClient(m_DiscoverdServer.uri);
 
-                // ƒT[ƒo[ŒŸõ‚ğ~‚ß‚é
+                // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢ã‚’æ­¢ã‚ã‚‹
                 StopDiscovery();
             }
             else
             {
                 Debug.Log("Try Connect...");
 
-                // ƒJƒEƒ“ƒg‚ğ‘‚â‚·
+                // ã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™
                 tryCount++;
 
-                // ŒŸõ‰ñ”‚ª‹K’è’l‚É’B‚µ‚½‚Æ‚«
+                // æ¤œç´¢å›æ•°ãŒè¦å®šå€¤ã«é”ã—ãŸã¨ã
                 if (tryCount > m_ConnectTryCount)
                 {
                     Debug.Log("Start Host");
 
-                    // ƒzƒXƒg‚Æ‚µ‚ÄŠJn
+                    // ãƒ›ã‚¹ãƒˆã¨ã—ã¦é–‹å§‹
                     m_NetworkManager.StartHost();
 
-                    // ƒT[ƒo[‚ÌéŒ¾‚ğ‚·‚é
-                    // ‚±‚ê‚ğ‚µ‚È‚¢‚ÆAƒT[ƒo[‚ªŒ©‚Â‚©‚ç‚È‚¢
+                    // ã‚µãƒ¼ãƒãƒ¼ã®å®£è¨€ã‚’ã™ã‚‹
+                    // ã“ã‚Œã‚’ã—ãªã„ã¨ã€ã‚µãƒ¼ãƒãƒ¼ãŒè¦‹ã¤ã‹ã‚‰ãªã„
                     AdvertiseServer();
 
-                    // ƒT[ƒo[ƒŒƒXƒ|ƒ“ƒX‚ª‚ ‚é‚©Debug.Log‚Å•\¦
+                    // ã‚µãƒ¼ãƒãƒ¼ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒã‚ã‚‹ã‹Debug.Logã§è¡¨ç¤º
                     if (m_DiscoverdServer.uri != null) Debug.Log("ServerURI : exist");
                     else Debug.Log("ServerURI : not found");
                 }
@@ -242,28 +243,28 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    /// <summary>Ú‘±ƒf[ƒ^óM</summary>
-    /// <param name="recivedData">óMƒf[ƒ^</param>
+    /// <summary>æ¥ç¶šãƒ‡ãƒ¼ã‚¿å—ä¿¡</summary>
+    /// <param name="recivedData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedConnectionData(ConnectionData receivedData)
     {
-        // ƒ^ƒCƒ}[ƒŠƒZƒbƒg
+        // ã‚¿ã‚¤ãƒãƒ¼ãƒªã‚»ãƒƒãƒˆ
         m_MatchTimer.Reset();
 
-        // playerNum‚ÉŒ»İ‚ÌƒvƒŒƒCƒ„[”‚ğ”½‰f
+        // playerNumã«ç¾åœ¨ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ•°ã‚’åæ˜ 
         SetPlayerNum(receivedData.playerCount);
     }
 
-    /// <summary>ƒLƒƒƒ“ƒZƒ‹</summary>
-    /// <param name="tokenSource">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“ƒ\[ƒX</param>
+    /// <summary>ã‚­ãƒ£ãƒ³ã‚»ãƒ«</summary>
+    /// <param name="tokenSource">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³ã‚½ãƒ¼ã‚¹</param>
     void Cancel(CancellationTokenSource tokenSource)
     {
-        // ©•ª‚ªƒzƒXƒg‚Å‚È‚¢‚È‚çAƒŠƒ^[ƒ“
+        // è‡ªåˆ†ãŒãƒ›ã‚¹ãƒˆã§ãªã„ãªã‚‰ã€ãƒªã‚¿ãƒ¼ãƒ³
         if (!NetworkClient.activeHost) return;
 
-        // ƒLƒƒƒ“ƒZƒ‹
+        // ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         tokenSource.Cancel();
 
-        // ”pŠü
+        // å»ƒæ£„
         tokenSource.Dispose();
     }
 

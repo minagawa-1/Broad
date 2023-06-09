@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 public class CalcBroad : MonoBehaviour
 {
-    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] Text m_PlayerText;
     [SerializeField] Text m_BroadValueText;
     [SerializeField] GameManager m_GameManager;
@@ -27,41 +27,41 @@ public class CalcBroad : MonoBehaviour
 
         m_BroadValueText.text = "";
 
-        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
-            m_BroadValueText.text += counts[i] + " <size=50>‡u</size>\n";
+        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
+            m_BroadValueText.text += counts[i] + " <size=50>ã¡</size>\n";
     }
 
     async UniTaskVoid SetUpPlayerText()
     {
-        // ƒvƒŒƒCƒ„[‘Sˆõ‚Ìî•ñ‚ª‘µ‚¤‚Ü‚Å‘Ò‹@
-        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length == GameSetting.instance.playerNum);
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å…¨å“¡ã®æƒ…å ±ãŒæƒã†ã¾ã§å¾…æ©Ÿ
+        await UniTask.WaitUntil(() => GameSetting.instance.players[0].color != Color.clear);
 
-        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
+        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
         {
-            string colorCode = ColorUtility.ToHtmlStringRGB(GameSetting.instance.playerColors[i]);
+            string colorCode = GameSetting.instance.players[i].color.ToHex();
 
-            m_PlayerText.text += "<size=60><color=#" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
+            m_PlayerText.text += "<size=60><color=" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
         }
     }
 
     int[] Calc()
     {
-        int[] counts = new int[GameSetting.instance.playerNum];
+        int[] counts = new int[GameSetting.instance.players.Length];
 
-        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
+        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
             counts[i] = GetLargestArea(m_GameManager.board, i + 1);
 
         return counts;
     }
 
-    /// <summary>w’è‚³‚ê‚½ƒvƒŒƒCƒ„[‚ÌÅ‘å—Ìˆæ‚ğæ“¾</summary>
-    /// <param name="board">”Õ–Ê‚Ì”z—ñ</param>
-    /// <param name="player">ƒvƒŒƒCƒ„[”Ô†</param>
-    /// <returns>Å‘å—Ìˆæ‚ÌƒTƒCƒY</returns>
+    /// <summary>æŒ‡å®šã•ã‚ŒãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€å¤§é ˜åŸŸã‚’å–å¾—</summary>
+    /// <param name="board">ç›¤é¢ã®é…åˆ—</param>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·</param>
+    /// <returns>æœ€å¤§é ˜åŸŸã®ã‚µã‚¤ã‚º</returns>
     int GetLargestArea(Board board, int player)
     {
-        int[] parent = new int[board.width * board.height]; // Union-Find‚Ìe”z—ñ
-        int[] size = new int[board.width * board.height]; // ŠeƒOƒ‹[ƒv‚ÌƒTƒCƒY‚ğ•Û‚·‚é”z—ñ
+        int[] parent = new int[board.width * board.height]; // Union-Findã®è¦ªé…åˆ—
+        int[] size = new int[board.width * board.height]; // å„ã‚°ãƒ«ãƒ¼ãƒ—ã®ã‚µã‚¤ã‚ºã‚’ä¿æŒã™ã‚‹é…åˆ—
 
         for (int i = 0; i < parent.Length; i++) {
             parent[i] = i;
@@ -97,17 +97,17 @@ public class CalcBroad : MonoBehaviour
         return maxArea;
     }
 
-    /// <summary>w’è‚µ‚½—v‘f‚Ìe‚ğ’T‚·</summary>
-    /// <param name="parent">e‚ğŠi”[‚µ‚½”z—ñ</param>
-    /// <param name="index">e‚ğ’T‚·—v‘f‚ÌƒCƒ“ƒfƒbƒNƒX</param>
-    /// <returns>—v‘f‚Ìe</returns>
+    /// <summary>æŒ‡å®šã—ãŸè¦ç´ ã®è¦ªã‚’æ¢ã™</summary>
+    /// <param name="parent">è¦ªã‚’æ ¼ç´ã—ãŸé…åˆ—</param>
+    /// <param name="index">è¦ªã‚’æ¢ã™è¦ç´ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
+    /// <returns>è¦ç´ ã®è¦ª</returns>
     int Find(int[] parent, int index)
     {
         int root = index;
 
         while (root != parent[root]) root = parent[root];
 
-        // ƒpƒXˆ³k: ’¼Úe‚ğİ’è
+        // ãƒ‘ã‚¹åœ§ç¸®: ç›´æ¥è¦ªã‚’è¨­å®š
         for (int i = index; i != root;)
         {
             int next = parent[i];
@@ -118,29 +118,29 @@ public class CalcBroad : MonoBehaviour
         return root;
     }
 
-    /// <summary>2‚Â‚Ì—v‘f‚ğw’è‚µ‚½ƒCƒ“ƒfƒbƒNƒX‚ÌƒOƒ‹[ƒv‚Æ‚µ‚ÄŒ‹‡</summary>
-    /// <remarks>Union‘€ì‚É‚æ‚èAƒOƒ‹[ƒv‚ÌŒ‹‡‚ÆƒTƒCƒY‚ÌXV‚ªs‚í‚ê‚é</remarks>
-    /// <param name="parent">e‚ğŠi”[‚µ‚½”z—ñ</param>
-    /// <param name="size">ŠeƒOƒ‹[ƒv‚ÌƒTƒCƒY‚ğŠi”[‚µ‚½”z—ñ</param>
-    /// <param name="index1">Œ‹‡‚·‚é—v‘f‚Ì1‚Â–Ú‚ÌƒCƒ“ƒfƒbƒNƒX</param>
-    /// <param name="index2">Œ‹‡‚·‚é—v‘f‚Ì2‚Â–Ú‚ÌƒCƒ“ƒfƒbƒNƒX</param>
+    /// <summary>2ã¤ã®è¦ç´ ã‚’æŒ‡å®šã—ãŸã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ã‚°ãƒ«ãƒ¼ãƒ—ã¨ã—ã¦çµåˆ</summary>
+    /// <remarks>Unionæ“ä½œã«ã‚ˆã‚Šã€ã‚°ãƒ«ãƒ¼ãƒ—ã®çµåˆã¨ã‚µã‚¤ã‚ºã®æ›´æ–°ãŒè¡Œã‚ã‚Œã‚‹</remarks>
+    /// <param name="parent">è¦ªã‚’æ ¼ç´ã—ãŸé…åˆ—</param>
+    /// <param name="size">å„ã‚°ãƒ«ãƒ¼ãƒ—ã®ã‚µã‚¤ã‚ºã‚’æ ¼ç´ã—ãŸé…åˆ—</param>
+    /// <param name="index1">çµåˆã™ã‚‹è¦ç´ ã®1ã¤ç›®ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
+    /// <param name="index2">çµåˆã™ã‚‹è¦ç´ ã®2ã¤ç›®ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
     void Union(int[] parent, int[] size, int index1, int index2)
     {
         int root1 = Find(parent, index1);
         int root2 = Find(parent, index2);
 
-        // “¯ˆê‚È‚ç‰½‚à‚¹‚¸‚ÉI—¹
+        // åŒä¸€ãªã‚‰ä½•ã‚‚ã›ãšã«çµ‚äº†
         if (root1 == root2) return;
         
         if (size[root1] < size[root2])
         {
-            // root2‚ğroot1‚Ìe‚Æ‚µ‚Äİ’è‚µAroot2‚ÌƒTƒCƒY‚ğ‘‚â‚·
+            // root2ã‚’root1ã®è¦ªã¨ã—ã¦è¨­å®šã—ã€root2ã®ã‚µã‚¤ã‚ºã‚’å¢—ã‚„ã™
             parent[root1] = root2;
             size[root2] += size[root1];
         }
         else
         {
-            // root1‚ğroot2‚Ìe‚Æ‚µ‚Äİ’è‚µAroot1‚ÌƒTƒCƒY‚ğ‘‚â‚·
+            // root1ã‚’root2ã®è¦ªã¨ã—ã¦è¨­å®šã—ã€root1ã®ã‚µã‚¤ã‚ºã‚’å¢—ã‚„ã™
             parent[root2] = root1;
             size[root1] += size[root2];
         }

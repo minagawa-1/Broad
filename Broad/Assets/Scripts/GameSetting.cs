@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,51 +7,49 @@ public class GameSetting : ScriptableObject
 {
     public static GameSetting instance;
 
-    // ScriptableObject‚Ì‰Šú‰»‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‚ğİ’è
+    // ScriptableObjectã®åˆæœŸåŒ–æ™‚ã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¨­å®š
     private void OnEnable() => instance = this;
 
-    [Chapter("ƒQ[ƒ€î•ñ")]
+    [Chapter("ã‚²ãƒ¼ãƒ æƒ…å ±")]
 
-    [Header("ƒvƒŒƒCƒ„[l”")]
-    [Min(1)] public int playerNum;
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²")]
+    public PlayerData[] players;
 
-    [Header("ƒvƒŒƒCƒ„[‚ÌF"), ReadOnly]
-    public Color[] playerColors;
+    [Chapter("ç›¤é¢æƒ…å ±")]
 
-    [Chapter("”Õ–Êî•ñ")]
-
-    [Header("”Õ–ÊƒTƒCƒY")]
+    [Header("ç›¤é¢ã‚µã‚¤ã‚º")]
     [Min(1)] public Vector2Int minBoardSize;
     [Min(1)] public Vector2Int maxBoardSize;
 
-    [Header("ƒ}ƒX–Ú‚Ì¶‘¶—¦")]
+    [Header("ãƒã‚¹ç›®ã®ç”Ÿå­˜ç‡")]
     [Range(0f, 1f)] public float boardViability = 0.8f;
 
-    [Header("ƒp[ƒŠƒ“ƒmƒCƒYŠg‘å—¦")]
-    [Comment("’l‚ª0‚É‹ß‚¢‚Ù‚Ç‘å‚«‚¢ŒŠ‚É‚È‚èA’l‚ª‰“‚¢‚Ù‚Ç”Á“_‚Ì‚æ‚¤‚È¬‚³‚¢ŒŠ‚É‚È‚é", -8)]
+    [Header("ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºæ‹¡å¤§ç‡")]
+    [Comment("å€¤ãŒ0ã«è¿‘ã„ã»ã©å¤§ãã„ç©´ã«ãªã‚Šã€å€¤ãŒé ã„ã»ã©æ–‘ç‚¹ã®ã‚ˆã†ãªå°ã•ã„ç©´ã«ãªã‚‹", -8)]
     public float perlinScale = 0.1f;
 
-    [Chapter("ƒuƒƒbƒNƒXî•ñ")]
+    [Chapter("ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æƒ…å ±")]
 
-    [Header("ƒuƒƒbƒN”")]
+    [Header("ãƒ–ãƒ­ãƒƒã‚¯æ•°")]
     [Min(1)] public int minBlockUnits;
     [Min(1)] public int maxBlockUnits;
 
-    [Header("–§“x")]
+    [Header("å¯†åº¦")]
     [Range(0f, 1f)] public float minDensity;
     [Range(0f, 1f)] public float maxDensity;
 
-    /// <summary>ƒvƒŒƒCƒ„[F‚Ì‰Šúİ’è</summary>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è‰²ã®åˆæœŸè¨­å®š</summary>
     public void SetupPlayerColor()
     {
-        for (int i = 0; i < instance.playerNum; ++i)
-        {
-            float h = Random.value;
-            float s = Random.Range(0.2f, 0.5f);
-            float v = Random.Range(0.9f, 1f);
-            Color color1P = Color.HSVToRGB(h, s, v);
+        float h = Random.value;
+        float s = Random.Range(0.2f, 0.5f);
+        float v = Random.Range(0.9f, 1f);
+        Color color1P = Color.HSVToRGB(h, s, v);
 
-            instance.playerColors = color1P.GetRelativeColor(instance.playerNum);
-        }
+        // 1Pã‹ã‚‰ç›¸å¯¾çš„ã«é›¢ã‚ŒãŸè‰²ç›¸ã®è‰²é…åˆ—ã‚’å–å¾—
+        var colors = color1P.GetRelativeColor(instance.players.Length);
+
+        // ç”Ÿæˆã—ãŸç›¸å¯¾è‰²ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æƒ…å ±ã«è¨­å®š
+        for (int i = 0; i < instance.players.Length; ++i) instance.players[i].color = colors[i];
     }
 }

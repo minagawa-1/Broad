@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class ColorExpansion
 {
-    /// <summary>RGB’l‚ğƒJƒ‰[ƒR[ƒh‚Åæ“¾</summary>
-    /// <remarks>—á: Color(1.0, 0.5, 0.0) => #FF8000FF</remarks>
-    /// <param name="isUpper">‘å•¶š‚©”Û‚©</param>
+    /// <summary>RGBå€¤ã‚’ã‚«ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã§å–å¾—</summary>
+    /// <remarks>ä¾‹: Color(1.0, 0.5, 0.0) => #FF8000FF</remarks>
+    /// <param name="isUpper">å¤§æ–‡å­—ã‹å¦ã‹</param>
     public static string ToHex(this Color color, bool isUpper = true)
     {
         int r = Mathf.RoundToInt(color.r * 255);
@@ -19,64 +19,64 @@ public static class ColorExpansion
         return isUpper ? colorCode : colorCode.ToLower();
     }
 
-    /// <summary>ƒAƒ‹ƒtƒ@’l‚ğ•ÏX‚µ‚½F‚ğæ“¾</summary>
-    /// <param name="a">•ÏX‚·‚éƒAƒ‹ƒtƒ@’l</param>
+    /// <summary>ã‚¢ãƒ«ãƒ•ã‚¡å€¤ã‚’å¤‰æ›´ã—ãŸè‰²ã‚’å–å¾—</summary>
+    /// <param name="a">å¤‰æ›´ã™ã‚‹ã‚¢ãƒ«ãƒ•ã‚¡å€¤</param>
     public static Color GetAlphaColor(this Color color, float a) => new Color(color.r, color.g, color.b, a);
 
-    /// <summary>F‘Š‚ğæ“¾</summary>
+    /// <summary>è‰²ç›¸ã‚’å–å¾—</summary>
     public static float GetHue(this Color color)
     {
         Color.RGBToHSV(color, out float hue, out _, out _);
         return hue;
     }
 
-    /// <summary>Ê“x‚ğæ“¾</summary>
+    /// <summary>å½©åº¦ã‚’å–å¾—</summary>
     public static float GetSaturation(this Color color)
     {
         Color.RGBToHSV(color, out _, out float saturation, out _);
         return saturation;
     }
 
-    /// <summary>–¾“x‚ğæ“¾</summary>
+    /// <summary>æ˜åº¦ã‚’å–å¾—</summary>
     public static float GetValue(this Color color)
     {
         Color.RGBToHSV(color, out _, out _, out float value);
         return value;
     }
 
-    /// <summary>HSV‚Ìİ’è</summary>
-    /// <remarks>ŒÂ•Ê‚Åİ’è‚µ‚½HSV‚ÌF‚ğ•Ô‚·</remarks>
-    /// <param name="h">F‘Š</param>
-    /// <param name="s">Ê“x</param>
-    /// <param name="v">–¾“x</param>
+    /// <summary>HSVã®è¨­å®š</summary>
+    /// <remarks>å€‹åˆ¥ã§è¨­å®šã—ãŸHSVã®è‰²ã‚’è¿”ã™</remarks>
+    /// <param name="h">è‰²ç›¸</param>
+    /// <param name="s">å½©åº¦</param>
+    /// <param name="v">æ˜åº¦</param>
     public static Color SetHSV(this Color color, float? h = null, float? s = null, float? v = null)
         => Color.HSVToRGB(h ?? color.GetHue(), s ?? color.GetSaturation(), v ?? color.GetValue());
 
-    /// <summary>ƒRƒ“ƒgƒ‰ƒXƒg’²®</summary>
-    /// <param name="contrast">ƒRƒ“ƒgƒ‰ƒXƒg”{—¦ (0 to)</param>
+    /// <summary>ã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆèª¿æ•´</summary>
+    /// <param name="contrast">ã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆå€ç‡ (0 to)</param>
     public static Color Contrast(this Color color, float contrast = 1f)
     {
-        // F‚ÌRGB¬•ª‚ğæ“¾
+        // è‰²ã®RGBæˆåˆ†ã‚’å–å¾—
         float r = color.r;
         float g = color.g;
         float b = color.b;
 
-        // RGB¬•ª‚Ì•½‹Ï‹P“x‚ğŒvZ
+        // RGBæˆåˆ†ã®å¹³å‡è¼åº¦ã‚’è¨ˆç®—
         float brightness = (r + g + b) / 3f;
 
-        // ƒRƒ“ƒgƒ‰ƒXƒg”{—¦‚ÉŠî‚Ã‚¢‚ÄV‚µ‚¢RGB¬•ª‚ğŒvZ
+        // ã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆå€ç‡ã«åŸºã¥ã„ã¦æ–°ã—ã„RGBæˆåˆ†ã‚’è¨ˆç®—
         r = Mathf.Clamp(brightness + (r - brightness) * contrast, 0f, 1f);
         g = Mathf.Clamp(brightness + (g - brightness) * contrast, 0f, 1f);
         b = Mathf.Clamp(brightness + (b - brightness) * contrast, 0f, 1f);
 
-        // V‚µ‚¢Color‚ğ•Ô‚·
+        // æ–°ã—ã„Colorã‚’è¿”ã™
         return new Color(r, g, b, color.a);
     }
 
-    /// <summary>‘Š‘ÎF‚ğæ“¾</summary>
-    /// <remarks>•W€F‚©‚ç‹Ï“™‚É—£‚ê‚½F‘Š‚ÌF‚ğæ“¾</remarks>
-    /// <param name="color">•W€F</param>
-    /// <param name="num">æ“¾ŒÂ”</param>
+    /// <summary>ç›¸å¯¾è‰²ã‚’å–å¾—</summary>
+    /// <remarks>æ¨™æº–è‰²ã‹ã‚‰å‡ç­‰ã«é›¢ã‚ŒãŸè‰²ç›¸ã®è‰²ã‚’å–å¾—</remarks>
+    /// <param name="color">æ¨™æº–è‰²</param>
+    /// <param name="num">å–å¾—å€‹æ•°</param>
     public static Color[] GetRelativeColor(this Color color, int num)
     {
         Color[] colors = new Color[num];

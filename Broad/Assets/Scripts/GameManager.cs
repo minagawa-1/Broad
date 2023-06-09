@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -8,31 +8,31 @@ using Mirror;
 [RequireComponent(typeof(MeshCombiner))]
 public partial class GameManager : MonoBehaviour
 {
-    [Chapter("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Chapter("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] BlockManager m_BlockManager;
 
     [Chapter]
-    [Header("ƒ}ƒX–Ú—pƒvƒŒƒtƒ@ƒu")]
+    [Header("ãƒã‚¹ç›®ç”¨ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–")]
     [SerializeField] GameObject m_SquarePrefab = null;
 
-    [Header("İ’u•s‰Âƒ}ƒX—pƒvƒŒƒtƒ@ƒu")]
+    [Header("è¨­ç½®ä¸å¯ãƒã‚¹ç”¨ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–")]
     [SerializeField] GameObject m_UnsetbleSquarePrefab = null;
 
-    [Header("ƒJƒƒ‰‚ÌÅ‰“‚Ì‚Æ‚«‚ÌOffset’l")]
+    [Header("ã‚«ãƒ¡ãƒ©ã®æœ€é ã®ã¨ãã®Offsetå€¤")]
     [SerializeField] Vector3 m_FurthestCameraOffset;
 
-    // ”Õ–ÊŠÇ—ƒIƒuƒWƒFƒNƒg
+    // ç›¤é¢ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     GameObject m_BoardManagerObject = null;
     GameObject m_UnsetableParent = null;
     GameObject m_SetableParent = null;
 
-    // ”Õ–Ê
+    // ç›¤é¢
     [HideInInspector] public Board board;
 
-    // ”Õ–Ê‚ÌƒTƒCƒY
+    // ç›¤é¢ã®ã‚µã‚¤ã‚º
     [HideInInspector] public Vector2Int boardSize;
 
-    // ƒ}ƒX–ÚƒTƒCƒY
+    // ãƒã‚¹ç›®ã‚µã‚¤ã‚º
     public Vector2 m_SquareSize;
 
     private void Awake()
@@ -41,31 +41,31 @@ public partial class GameManager : MonoBehaviour
         m_SetableParent      = new GameObject("SetableSquares");
         m_UnsetableParent    = new GameObject("UnsetableSquares");
 
-        // ”Õ–ÊŠÇ—ƒIƒuƒWƒFƒNƒg‚ğe‚É‚·‚é
+        // ç›¤é¢ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¦ªã«ã™ã‚‹
         m_SetableParent.transform.SetParent(m_BoardManagerObject.transform);
         m_UnsetableParent.transform.SetParent(m_BoardManagerObject.transform);
 
-        // ƒzƒXƒg‚Ì‚İƒ{[ƒhî•ñ‚ğŒˆ‚ß‚é
+        // ãƒ›ã‚¹ãƒˆã®ã¿ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’æ±ºã‚ã‚‹
         if (NetworkClient.activeHost)
         {
-            // ƒ{[ƒhƒTƒCƒY‚ğƒ‰ƒ“ƒ_ƒ€‚Éİ’è
+            // ãƒœãƒ¼ãƒ‰ã‚µã‚¤ã‚ºã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«è¨­å®š
             boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
 
-            // ”Õ–Ê‚ÌƒTƒCƒY‚ğ“n‚·
+            // ç›¤é¢ã®ã‚µã‚¤ã‚ºã‚’æ¸¡ã™
             board = new Board(boardSize.x, boardSize.y);
 
-            // İ’u•s‰Âƒ}ƒX‚ÌŒˆ’è
+            // è¨­ç½®ä¸å¯ãƒã‚¹ã®æ±ºå®š
             board.ShaveBoard();
 
-            // ”Õ–Êî•ñ‚ğ‘SƒNƒ‰ƒCƒAƒ“ƒg‚É‘—M
+            // ç›¤é¢æƒ…å ±ã‚’å…¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«é€ä¿¡
             BoardData sendData = new BoardData(board);
             NetworkServer.SendToAll(sendData);
         }
 
-        // BoardData‚ğóM‚µ‚½‚çAReceivedBoardData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // BoardDataã‚’å—ä¿¡ã—ãŸã‚‰ã€ReceivedBoardDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<BoardData>(ReceivedBoardData);
 
-        // ”ÍˆÍ“à‚Åƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W‚ğ•Ô‚·ŠÖ”“à‚ÌŠÖ”
+        // ç¯„å›²å†…ã§ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™ã‚’è¿”ã™é–¢æ•°å†…ã®é–¢æ•°
         Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
             => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
     }
@@ -75,77 +75,77 @@ public partial class GameManager : MonoBehaviour
     {
         m_State = State.Placement;
 
-        // ”Õ–Ê‚Ìİ’è
+        // ç›¤é¢ã®è¨­å®š
         SetupBoard().Forget();
     }
 
-    // ”Õ–Ê‚Ìİ’è
+    // ç›¤é¢ã®è¨­å®š
     async UniTask SetupBoard()
     {
-        // ƒ{[ƒh‚Ìî•ñ‚ª“ü‚é‚Ü‚Å‘Ò‹@
+        // ãƒœãƒ¼ãƒ‰ã®æƒ…å ±ãŒå…¥ã‚‹ã¾ã§å¾…æ©Ÿ
         await UniTask.WaitUntil(() => board.data != null);
 
         Debug.Log(board.data);
 
-        // ƒ{[ƒh‚Ìì¬
+        // ãƒœãƒ¼ãƒ‰ã®ä½œæˆ
         LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, boardSize, m_SquareSize);
 
-        // ƒJƒƒ‰‚ÌˆÊ’u‚ğˆÚ“®
+        // ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‚’ç§»å‹•
         float rate = Mathf.InverseLerp(GameSetting.instance.minBoardSize.y, GameSetting.instance.maxBoardSize.y, boardSize.y);
         Vector3 offset = new Vector3(boardSize.x / 2f, rate * m_FurthestCameraOffset.y, rate * m_FurthestCameraOffset.z);
         Camera.main.transform.position = Camera.main.transform.position.Offset(offset);
 
-        // ”wŒi‚Ìì¬
+        // èƒŒæ™¯ã®ä½œæˆ
         CreateBackGround(m_UnsetbleSquarePrefab, boardSize);
 
-        // ƒvƒŒƒCƒ„[‘Sˆõ‚Ìî•ñ‚ª‘µ‚¤‚Ü‚Å‘Ò‹@
-        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length == GameSetting.instance.playerNum);
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å…¨å“¡ã®æƒ…å ±ãŒæƒã†ã¾ã§å¾…æ©Ÿ
+        await UniTask.WaitUntil(() => GameSetting.instance.players.Length > 0);
         m_BlockManager.CreateMaterials();
 
-        // İ’u‰Â”\ƒ}ƒX‚ÌƒƒbƒVƒ…‚ÌŒ‹‡ˆ—
+        // è¨­ç½®å¯èƒ½ãƒã‚¹ã®ãƒ¡ãƒƒã‚·ãƒ¥ã®çµåˆå‡¦ç†
         //CombineMeshes().Forget();
     }
 
-    // ƒƒbƒVƒ…‚ÌŒ‹‡ˆ—
+    // ãƒ¡ãƒƒã‚·ãƒ¥ã®çµåˆå‡¦ç†
     async UniTaskVoid CombineMeshes()
     {
         await UniTask.DelayFrame(1);
 
-        // İ’u‰Â”\ƒ}ƒX‚ÌƒƒbƒVƒ…Œ‹‡
+        // è¨­ç½®å¯èƒ½ãƒã‚¹ã®ãƒ¡ãƒƒã‚·ãƒ¥çµåˆ
         MeshCombiner.Combine(m_SetableParent.transform.GetChildren().ToGameObjects(), "SetableBoard", m_BoardManagerObject.transform);
 
-        // İ’u•s‰Âƒ}ƒX‚Æ˜gŠO”wŒi‚ÌƒƒbƒVƒ…‚ÌŒ‹‡
+        // è¨­ç½®ä¸å¯ãƒã‚¹ã¨æ å¤–èƒŒæ™¯ã®ãƒ¡ãƒƒã‚·ãƒ¥ã®çµåˆ
         GameObject[] background = GameObject.Find("Background").transform.GetChildren().ToGameObjects();
         GameObject[] unsetable = m_UnsetableParent.transform.GetChildren().ToGameObjects().Concat(background).ToArray();
         var us = MeshCombiner.Combine(unsetable, "UnsetableBoard", m_BoardManagerObject.transform);
 
-        // ‚à‚¤‚¢‚ç‚È‚¢‚Ì‚ÅÁ‚µ”ò‚Î‚·
+        // ã‚‚ã†ã„ã‚‰ãªã„ã®ã§æ¶ˆã—é£›ã°ã™
         Destroy(m_SetableParent);
         Destroy(m_UnsetableParent);
     }
 
-    /// <summary>ƒ}ƒX–Ú‚ğ•~‚«‹l‚ß‚é</summary>
-    /// <param name="squarePrefab">ƒvƒŒƒtƒ@ƒu</param>
-    /// <param name="unsetablePrefab">ƒvƒŒƒtƒ@ƒu</param>
-    /// <param name="boardSize">”Õ–Ê‚Ìc‰¡•</param>
-    /// <param name="squareSize">ƒ}ƒX‚ÌƒTƒCƒY</param>
-    /// <param name="parentTransform">e‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€</param>
+    /// <summary>ãƒã‚¹ç›®ã‚’æ•·ãè©°ã‚ã‚‹</summary>
+    /// <param name="squarePrefab">ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–</param>
+    /// <param name="unsetablePrefab">ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–</param>
+    /// <param name="boardSize">ç›¤é¢ã®ç¸¦æ¨ªå¹…</param>
+    /// <param name="squareSize">ãƒã‚¹ã®ã‚µã‚¤ã‚º</param>
+    /// <param name="parentTransform">è¦ªã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ </param>
     void LayOutSquare(GameObject setablePrefab, GameObject unsetablePrefab, Vector2Int boardSize, Vector2 squareSize)
     {
-        // ƒIƒuƒWƒFƒNƒg‚Ì¶¬
-        // y²•ûŒü‚Ì¶¬
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+        // yè»¸æ–¹å‘ã®ç”Ÿæˆ
         for (int y = 0; y < boardSize.y; y++)
         {
-            // x²•ûŒü‚Ì¶¬
+            // xè»¸æ–¹å‘ã®ç”Ÿæˆ
             for (int x = 0; x < boardSize.x; x++)
             {
-                // İ’uó‹µ‚Ì‰Šú‰»
+                // è¨­ç½®çŠ¶æ³ã®åˆæœŸåŒ–
                 if (board.GetBoardData(x, y) > 0) board.SetBoardData(0, x, y);
 
-                // ƒ}ƒX–Ú¶¬
+                // ãƒã‚¹ç›®ç”Ÿæˆ
                 GameObject newSquare = Instantiate(board.GetBoardData(x, y) == 0 ? setablePrefab : unsetablePrefab);
 
-                // V‚µ‚­¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ì–¼‘OEeEÀ•WEƒXƒP[ƒ‹‚ğİ’è‚·‚é
+                // æ–°ã—ãç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ãƒ»è¦ªãƒ»åº§æ¨™ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®šã™ã‚‹
                 newSquare.gameObject.name       = "Square[" + x + "," + y + "]";
                 newSquare.transform.parent      = board.GetBoardData(x, y) == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position    = new Vector3( x, -0.1f, -y);
@@ -155,43 +155,43 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary> ”wŒi¶¬ </summary>
-    /// <param name="prefab">ƒvƒŒƒtƒ@ƒu</param>
-    /// <param name="boardSize">ƒ{[ƒh‚ÌƒTƒCƒY</param>
+    /// <summary> èƒŒæ™¯ç”Ÿæˆ </summary>
+    /// <param name="prefab">ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–</param>
+    /// <param name="boardSize">ãƒœãƒ¼ãƒ‰ã®ã‚µã‚¤ã‚º</param>
     void CreateBackGround(GameObject prefab, Vector2Int boardSize)
     {
-        // e‚Ì¶¬
+        // è¦ªã®ç”Ÿæˆ
         GameObject parent           = new GameObject("Background");
 
-        // ”Õ–Ê‚ÌÅ‘åƒTƒCƒY + —]”’ ‚Ì’·‚³
+        // ç›¤é¢ã®æœ€å¤§ã‚µã‚¤ã‚º + ä½™ç™½ ã®é•·ã•
         const float size = 48f;
 
-        // ¶
+        // å·¦
         GameObject left             = Instantiate(prefab, parent.transform);
         left.name                   = "BackgroundLeft";
         left.transform.localScale   = new Vector3(size / 2f - boardSize.x / 2f, left.transform.localScale.y, size);
         left.transform.position     = new Vector3(-left.transform.localScale.x / 2f - 0.5f, -0.1f, -boardSize.y / 2f + 0.5f);
 
-        // ‰E
+        // å³
         GameObject right            = Instantiate(left, parent.transform);
         right.name                  = "BackgroundRight";
         right.transform.position    = right.transform.position.Offset(x: boardSize.x + left.transform.localScale.x);
 
-        // ã
+        // ä¸Š
         GameObject top              = Instantiate(prefab, parent.transform);
         top.name                    = "BackgroundTop";
         top.transform.localScale    = new Vector3(boardSize.x, top.transform.localScale.y, size / 2f - boardSize.y / 2f);
         top.transform.position      = new Vector3(boardSize.x / 2f - 0.5f, -0.1f, top.transform.localScale.z / 2 + 0.5f);
 
-        // ‰º
+        // ä¸‹
         GameObject bottom           = Instantiate(top, parent.transform);
         bottom.name                 = "BackgroundBottom";
         top.transform.position      = bottom.transform.position.Offset(z: -boardSize.y - top.transform.localScale.z);
     }
 
-        /// <summary>ƒxƒNƒgƒ‹“¯m‚ÌæZ</summary>
-        /// <param name="v">ƒxƒNƒgƒ‹i•¡”İ’è‰Â”\j</param>
-        /// <returns>æZ‚µ‚½“z‚ÉŒˆ‚Ü‚Á‚Ä‚ñ‚¾‚ëjk</returns>
+        /// <summary>ãƒ™ã‚¯ãƒˆãƒ«åŒå£«ã®ä¹—ç®—</summary>
+        /// <param name="v">ãƒ™ã‚¯ãƒˆãƒ«ï¼ˆè¤‡æ•°è¨­å®šå¯èƒ½ï¼‰</param>
+        /// <returns>ä¹—ç®—ã—ãŸå¥´ã«æ±ºã¾ã£ã¦ã‚“ã ã‚jk</returns>
         Vector3 Multi(params Vector3[] v)
     {
         for (int i = 1; i < v.Length; ++i)
@@ -200,11 +200,11 @@ public partial class GameManager : MonoBehaviour
         return v[0];
     }
 
-    /// <summary>ƒ{[ƒhƒf[ƒ^óM</summary>
-    /// <param name="receivedData">óMƒf[ƒ^</param>
+    /// <summary>ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ¼ã‚¿å—ä¿¡</summary>
+    /// <param name="receivedData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedBoardData(BoardData receivedData)
     {
-        // óMƒf[ƒ^‚ğ”½‰f
+        // å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’åæ˜ 
         board = receivedData.board;
 
         boardSize = new Vector2Int(receivedData.board.width, receivedData.board.height);

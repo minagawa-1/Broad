@@ -1,12 +1,13 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[System.Serializable]
 public struct PlayerData : NetworkMessage
 {
-    public int   index;          // ƒvƒŒƒCƒ„[”Ô†
-    public Color color;          // ƒvƒŒƒCƒ„[ƒJƒ‰[
+    public int   index;          // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·
+    public Color color;          // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚«ãƒ©ãƒ¼
     
     public PlayerData(int index, Color color)
     {
@@ -14,11 +15,11 @@ public struct PlayerData : NetworkMessage
         this.color = color;
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[”Ô†İ’è</summary>
-    /// <param name="index">ƒvƒŒƒCƒ„[”Ô†</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·è¨­å®š</summary>
+    /// <param name="index">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·</param>
     public void SetIndex(int index) => this.index = index;
 
-    /// <summary>ƒvƒŒƒCƒ„[ƒJƒ‰[İ’è</summary>
-    /// <param name="color">ƒJƒ‰[</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚«ãƒ©ãƒ¼è¨­å®š</summary>
+    /// <param name="color">ã‚«ãƒ©ãƒ¼</param>
     public void SetColor(Color color) => this.color = color;
 }

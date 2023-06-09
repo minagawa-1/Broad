@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,66 +7,66 @@ using Mirror;
 public class CustomNetworkManager : NetworkManager
 {
 
-    //[Header("ƒvƒŒƒCƒ„[ƒvƒŒƒnƒuƒŠƒXƒg")]
+    //[Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ—ãƒ¬ãƒãƒ–ãƒªã‚¹ãƒˆ")]
     //[SerializeField] PlayerPrefabsList m_PlalyerPrefabsList = null;
 
-    const string m_IPAddress = "localhost";         // IPƒAƒhƒŒƒX
+    const string m_IPAddress = "localhost";         // IPã‚¢ãƒ‰ãƒ¬ã‚¹
 
-    public static List<PlayerData> playerDatas;            // ƒvƒŒƒCƒ„[ƒf[ƒ^ƒŠƒXƒg
-    public static List<NetworkConnectionToClient> clientDatas; // Ú‘±‚µ‚Ä‚¢‚éƒNƒ‰ƒCƒAƒ“ƒgƒŠƒXƒg
+    public static List<PlayerData> playerDatas;            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
+    public static List<NetworkConnectionToClient> clientDatas; // æ¥ç¶šã—ã¦ã„ã‚‹ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãƒªã‚¹ãƒˆ
 
     public override void Awake()
     {
         base.Awake();
 
-        // ƒŠƒXƒg‚Ì‰Šú‰»
+        // ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
         playerDatas = new List<PlayerData>();
         clientDatas = new List<NetworkConnectionToClient>();
 
-        // PlayerData‚ğóM‚µ‚½‚çAReceivedPlayerData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // PlayerDataã‚’å—ä¿¡ã—ãŸã‚‰ã€ReceivedPlayerDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<PlayerData>(ReceivedPlayerData);
     }
 
-    /// <summary>ƒT[ƒo[‚ÉƒNƒ‰ƒCƒAƒ“ƒg‚ªÚ‘±‚µ‚½</summary>
-    /// <param name="conn">Ú‘±‚µ‚Ä‚«‚½ƒNƒ‰ƒCƒAƒ“ƒg</param>
+    /// <summary>ã‚µãƒ¼ãƒãƒ¼ã«ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒæ¥ç¶šã—ãŸæ™‚</summary>
+    /// <param name="conn">æ¥ç¶šã—ã¦ããŸã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆ</param>
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
         base.OnServerConnect(conn);
 
-        // ƒ}ƒbƒ`ƒ“ƒOƒV[ƒ“‚Ì‚İ‚Å‚Ìˆ—
+        // ãƒãƒƒãƒãƒ³ã‚°ã‚·ãƒ¼ãƒ³ã®ã¿ã§ã®å‡¦ç†
         if (SceneManager.GetActiveScene().name == Scene.TitleScene)
         {
             if (conn != null)
             {
-                // ƒNƒ‰ƒCƒAƒ“ƒg‚ªÚ‘±‚µ‚Ä‚«‚½‚çAî•ñ‚ğ’Ç‰Á
+                // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒæ¥ç¶šã—ã¦ããŸã‚‰ã€æƒ…å ±ã‚’è¿½åŠ 
                 playerDatas.Add(new PlayerData(NetworkServer.connections.Count - 1, Color.clear));
                 clientDatas.Add(conn);
             }
 
-            // PlayerData‚Ì‘—M
+            // PlayerDataã®é€ä¿¡
             ConnectionData sendData = new ConnectionData(NetworkServer.connections.Count);
             NetworkServer.SendToAll(sendData);
         }
     }
 
-    /// <summary>ƒT[ƒo[ƒV[ƒ“Ø‚è‘Ö‚¦Œã</summary>
-    /// <param name="sceneName">ƒV[ƒ“–¼</param>
+    /// <summary>ã‚µãƒ¼ãƒãƒ¼ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆå¾Œ</summary>
+    /// <param name="sceneName">ã‚·ãƒ¼ãƒ³å</param>
     public override void OnServerSceneChanged(string sceneName)
     {
         for (int i = 0; i < playerDatas.Count; ++i)
         {
-            // ƒvƒŒƒCƒ„[F‚ğŒˆ’è‚µ‚ÄAplayerData‚É”½‰f‚³‚¹‚é
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è‰²ã‚’æ±ºå®šã—ã¦ã€playerDataã«åæ˜ ã•ã›ã‚‹
             GameSetting.instance.SetupPlayerColor();
 
-            // plalyerDatas‚Ì’†g‚ğXV‚µ‚Ä‘—M
-            playerDatas[i] = new PlayerData(i, GameSetting.instance.playerColors[i]);
+            // plalyerDatasã®ä¸­èº«ã‚’æ›´æ–°ã—ã¦é€ä¿¡
+            playerDatas[i] = new PlayerData(i, GameSetting.instance.players[i].color);
             NetworkServer.SendToAll(playerDatas[i]);
         }
 
         base.OnServerSceneChanged(sceneName);
 
-        // ƒNƒ‰ƒCƒAƒ“ƒg‚Ìƒ[ƒJƒ‹ƒvƒŒƒCƒ„[‚ª‚¢‚È‚¢‚È‚çAƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç‚Ìƒf[ƒ^‚ÅƒvƒŒƒCƒ„[¶¬‚ğ‚·‚é
-        // Registerhandler<MessageƒNƒ‰ƒX>(ŠÖ”)‚ÅAMessage‚ğóM‚µ‚½‚çw’è‚µ‚½ŠÖ”‚ğÀs‚·‚é‚æ‚¤‚É“o˜^‚·‚é
+        // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ãªã„ãªã‚‰ã€ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆã‚’ã™ã‚‹
+        // Registerhandler<Messageã‚¯ãƒ©ã‚¹>(é–¢æ•°)ã§ã€Messageã‚’å—ä¿¡ã—ãŸã‚‰æŒ‡å®šã—ãŸé–¢æ•°ã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²ã™ã‚‹
         //if (NetworkClient.localPlayer == null) NetworkServer.RegisterHandler<PlayerData>(CreatePlayer);
     }
 
@@ -86,16 +86,16 @@ public class CustomNetworkManager : NetworkManager
         if (removeData.index == conn.connectionId)
             Debug.Log("find");
 
-        // íœ‚µ‚½‚¢ƒNƒ‰ƒCƒAƒ“ƒg
+        // å‰Šé™¤ã—ãŸã„ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆ
         var removeClient = clientDatas.Find(c => c == conn);
 
-        // Ø’f‚µ‚½ƒvƒŒƒCƒ„[‚©‚çÅŒã‚ÌƒvƒŒƒCƒ„[‚Ü‚Å‚Ì”Ô†‚ğ-1‚·‚é
+        // åˆ‡æ–­ã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰æœ€å¾Œã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¾ã§ã®ç•ªå·ã‚’-1ã™ã‚‹
         for (int i = removeData.index; i < playerDatas.Count; ++i) playerDatas[i].SetIndex(playerDatas[i].index - 1);
 
-        // conn‚Éˆê’v‚·‚éPlayerData‚ğŒ©‚Â‚¯‚ÄƒŠƒXƒg‚©‚çíœ
+        // connã«ä¸€è‡´ã™ã‚‹PlayerDataã‚’è¦‹ã¤ã‘ã¦ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤
         playerDatas.Remove(removeData);
 
-        // PlayerCount‚ğÄ‘—M
+        // PlayerCountã‚’å†é€ä¿¡
         ConnectionData sendData = new ConnectionData { playerCount = NetworkServer.connections.Count };
         NetworkServer.SendToAll(sendData);
     }
@@ -104,48 +104,48 @@ public class CustomNetworkManager : NetworkManager
     {
         base.OnClientDisconnect();
 
-        // ƒ}ƒbƒ`ƒ“ƒOƒV[ƒ“‚É–ß‚é
+        // ãƒãƒƒãƒãƒ³ã‚°ã‚·ãƒ¼ãƒ³ã«æˆ»ã‚‹
         SceneManager.LoadScene(Scene.TitleScene);
     }
 
-    /// <summary>ƒNƒ‰ƒCƒAƒ“ƒg’â~</summary>
+    /// <summary>ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåœæ­¢</summary>
     public override void OnStopClient()
     {
         base.OnStopClient();
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[¶¬</summary>
-    /// <param name="connection">ƒNƒ‰ƒCƒAƒ“ƒg‚Ö‚ÌÚ‘±</param>
-    /// <param name="receptionData">óMƒf[ƒ^</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ</summary>
+    /// <param name="connection">ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¸ã®æ¥ç¶š</param>
+    /// <param name="receptionData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     //public void CreatePlayer(NetworkConnectionToClient connection, PlayerData receptionData)
     //{
-    //    // client‚ÌƒvƒŒƒCƒ„[ƒvƒŒƒnƒu‚ğ¶¬
+    //    // clientã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ—ãƒ¬ãƒãƒ–ã‚’ç”Ÿæˆ
     //    GameObject clietnPlayer = Instantiate(m_PlalyerPrefabsList.m_PlayerPrefabsList[receptionData.index].gameObject);
     //    clietnPlayer.transform.position = receptionData.position;
 
-    //    // ƒT[ƒo[‚ÉƒvƒŒƒCƒ„[‚ğ’Ç‰Á
+    //    // ã‚µãƒ¼ãƒãƒ¼ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¿½åŠ 
     //    NetworkServer.AddPlayerForConnection(connection, clietnPlayer);
     //}
 
     [Client]
     public static void Send(int index)
     {
-        // ”Ô†‚ªˆê’v‚·‚éPlayerData‚ğServer‚É‘—M
+        // ç•ªå·ãŒä¸€è‡´ã™ã‚‹PlayerDataã‚’Serverã«é€ä¿¡
         NetworkClient.Send(playerDatas.Find(p => p.index == index));
     }
 
     [Client]
     public static void Send(PlayerData data)
     {
-        // Server‚Éƒf[ƒ^‘—M
+        // Serverã«ãƒ‡ãƒ¼ã‚¿é€ä¿¡
         NetworkClient.Send(data);
     }
 
-    /// <summary>PlayerDataóM</summary>
-    /// <param name="receivedData">óMƒf[ƒ^</param>
+    /// <summary>PlayerDataå—ä¿¡</summary>
+    /// <param name="receivedData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedPlayerData(PlayerData receivedData)
     {
-        // playerColors‚ÉƒvƒŒƒCƒ„[•ª‚ÌFİ’è‚ğ‚·‚é
-        GameSetting.instance.playerColors[receivedData.index] = receivedData.color;
+        // playerColorsã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆ†ã®è‰²è¨­å®šã‚’ã™ã‚‹
+        GameSetting.instance.players[receivedData.index].color = receivedData.color;
     }
 }

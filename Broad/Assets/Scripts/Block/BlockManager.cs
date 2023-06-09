@@ -1,18 +1,18 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    [Header("¶¬‚µ‚½‚¢ƒuƒƒbƒN‚ÌƒvƒŒƒtƒ@ƒu")]
+    [Header("ç”Ÿæˆã—ãŸã„ãƒ–ãƒ­ãƒƒã‚¯ã®ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–")]
     [SerializeField] GameObject m_BlockPrefab = null;
 
-    // ƒvƒŒƒtƒ@ƒu‚Ìƒ}ƒeƒŠƒAƒ‹
+    // ãƒ—ãƒ¬ãƒ•ã‚¡ãƒ–ã®ãƒãƒ†ãƒªã‚¢ãƒ«
     Material[] m_ControlBlockMaterials = null;
     Material[] m_SetBlockMaterials = null;
 
-    // ¶¬‚µ‚½ƒuƒƒbƒN‚Ìe
+    // ç”Ÿæˆã—ãŸãƒ–ãƒ­ãƒƒã‚¯ã®è¦ª
     GameObject m_BlockParent = null;
 
     private void Start()
@@ -23,7 +23,9 @@ public class BlockManager : MonoBehaviour
 
     public void CreateMaterials()
     {
-        Color[] colors = GameSetting.instance.playerColors;
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²ã‚’å–å¾—
+        Color[] colors = new Color[GameSetting.instance.players.Length];
+        for (int i = 0; i < colors.Length; ++i) colors[i] = GameSetting.instance.players[i].color;
 
         m_ControlBlockMaterials = new Material[colors.Length];
         m_SetBlockMaterials     = new Material[colors.Length];
@@ -38,15 +40,15 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    /// <summary> ƒuƒƒbƒN‚Ì¶¬ </summary>
-    /// <param name="player"> ƒvƒŒƒCƒ„[”Ô† </param>
-    /// <param name="shape"> Œ`óƒf[ƒ^</param>
-    /// <param name="position"> À•W </param>
+    /// <summary> ãƒ–ãƒ­ãƒƒã‚¯ã®ç”Ÿæˆ </summary>
+    /// <param name="player"> ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå· </param>
+    /// <param name="shape"> å½¢çŠ¶ãƒ‡ãƒ¼ã‚¿</param>
+    /// <param name="position"> åº§æ¨™ </param>
     public void CreateBlock(int player, bool[,] shape, Vector2Int position)
     {
         Blocks blocks = new Blocks(shape, position);
 
-        // eİ’è
+        // è¦ªè¨­å®š
         GameObject parent = new GameObject("ControlBlocks");
         var cb = parent.AddComponent<ControlBlock>();
         cb.afterSetParent = m_BlockParent;
@@ -60,7 +62,7 @@ public class BlockManager : MonoBehaviour
 
         parent.transform.parent = transform;
 
-        // ControlBlocks‚ğ1mã‚É‰Ÿ‚µã‚°‚éB
+        // ControlBlocksã‚’1mä¸Šã«æŠ¼ã—ä¸Šã’ã‚‹ã€‚
         parent.transform.position = new Vector3(position.x, 1f, -position.y);
 
         if (blocks.GetWidth() % 2 == 0 && blocks.GetHeight() % 2 == 0)
@@ -71,22 +73,22 @@ public class BlockManager : MonoBehaviour
         for (int y = 0; y < blocks.GetHeight(); ++y) {
             for (int x = 0; x < blocks.GetWidth(); ++x)
             {
-                // ¶¬‚µ‚È‚¢À•W‚¾‚Á‚½‚çcontinue
+                // ç”Ÿæˆã—ãªã„åº§æ¨™ã ã£ãŸã‚‰continue
                 if (blocks.shape[x, y] == false) continue;
 
-                // ƒuƒƒbƒN‚Ì¶¬
+                // ãƒ–ãƒ­ãƒƒã‚¯ã®ç”Ÿæˆ
                 GameObject newBlock = Instantiate(m_BlockPrefab);
 
-                // e‚Ìİ’è
+                // è¦ªã®è¨­å®š
                 newBlock.transform.parent = parent.transform;
 
-                // ¶¬‚µ‚½ƒuƒƒbƒN‚Ì–¼‘OEŒ`ó“à‚Å‚ÌÀ•W‚ğİ’è
+                // ç”Ÿæˆã—ãŸãƒ–ãƒ­ãƒƒã‚¯ã®åå‰ãƒ»å½¢çŠ¶å†…ã§ã®åº§æ¨™ã‚’è¨­å®š
                 newBlock.name = "Block[" + (blockCount++) + "]";
 
-                // ˆÊ’u
+                // ä½ç½®
                 newBlock.transform.localPosition = GetBlockPosition(blocks, new Vector2Int(x, y));
 
-                // ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+                // ãƒãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
                 newBlock.GetComponent<Renderer>().material = m_ControlBlockMaterials[player - 1];
             }
         }
@@ -99,14 +101,14 @@ public class BlockManager : MonoBehaviour
     {
         var blockList = m_BlockParent.transform.GetChildren().ToList();
 
-        // ƒIƒuƒWƒFƒNƒg‚ğÀ•W‚Å¸‡ƒ\[ƒg
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åº§æ¨™ã§æ˜‡é †ã‚½ãƒ¼ãƒˆ
         blockList.Sort((a, b) => {
             int zComparison = -a.transform.position.z.CompareTo(b.transform.position.z);
             if (zComparison != 0) return zComparison;
             else return a.transform.position.x.CompareTo(b.transform.position.x);
         });
 
-        // ƒ\[ƒgŒ‹‰Ê‡‚ÉGameObject‚Ì‡˜‚ğ”½‰f
+        // ã‚½ãƒ¼ãƒˆçµæœé †ã«GameObjectã®é †åºã‚’åæ˜ 
         foreach (var obj in blockList)
             obj.transform.SetSiblingIndex(blockList.Count - 1);
     }
