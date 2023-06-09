@@ -1,50 +1,79 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
+using Mirror.Discovery;
 
-public class TitleState : MonoBehaviour
+public class TitleState : NetworkDiscovery
 {
-    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
+    [Chapter("£NetworkDiscovery")]
+    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
     [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] GameSetting m_GameSetting;
     [SerializeField] Text[] m_MatchingTexts;
 
-    [Chapter("ãã®ä»–")]
-    [Header("å¾…æ©Ÿã‚¿ã‚¤ãƒãƒ¼")]
+    [Chapter("Ú‘±î•ñ")]
+    [Header("ŠÔŠu")]
+    [SerializeField] private int m_ConnectIntervalFrame;
+    [SerializeField] private woskni.Timer m_WaitTimer;
+
+    [Header("Ú‘±s‰ñ”")]
+    [SerializeField] private int m_ConnectTryCount;
+
+    [Chapter("‚»‚Ì‘¼")]
+    [Header("‘Ò‹@ƒ^ƒCƒ}[")]
     [SerializeField] woskni.Timer m_MatchTimer;
 
-    [ReadOnly] public List<string> m_MatchPlayers = new List<string>();
+    NetworkManager m_NetworkManager;        // ƒlƒbƒgƒ[ƒNƒ}ƒl[ƒWƒƒ[
+    ServerResponse m_DiscoverdServer;       // Œ©‚Â‚¯‚½‚¢ƒT[ƒo[
+
+    CancellationTokenSource m_CancelConnectServer;      // ŒŸõ‚ÉƒLƒƒƒ“ƒZƒ‹‚ğ‚·‚é‚½‚ß‚Ìƒ\[ƒX
+    CancellationToken m_CancelConnectToken;       // ŒŸõƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“
 
     [System.Serializable]
     enum MatchState
     {
-        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
+        /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
         None,
 
-        /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹ç›´å¾Œ</summary>
+        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn’¼Œã</summary>
         StartMatch,
 
-        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
+        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
         Matching,
 
-        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢ç›´å¾Œ</summary>
-        EndMatch,
+        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~’¼Œã</summary>
+        CancelMatch,
 
-        /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
-        Matched,
+        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+        CompleteMatch,
     }
+
     MatchState m_MatchState;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        m_MatchPlayers = new List<string>();
-        m_MatchPlayers.Add("You");
+        // ConnectionData‚ğóM‚µ‚½‚çReceivedConnectData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
 
         m_GameSetting.playerNum = 1;
 
         m_MatchState = MatchState.None;
+
+        // ƒR[ƒ‹ƒoƒbƒNˆ—
+        // ƒT[ƒo[‚ªŒ©‚Â‚©‚Á‚½‚çŒÄ‚Î‚ê‚é
+        OnServerFound.AddListener(ServerResponse =>
+        {
+            // Œ©‚Â‚¯‚½ƒT[ƒo[ƒŒƒXƒ|ƒ“ƒX‚ğ“ü‚ê‚é
+            m_DiscoverdServer = ServerResponse;
+
+            // Debug.Log‚Å•\¦
+            Debug.Log("ServerFound");
+        });
     }
 
     // Update is called once per frame
@@ -52,91 +81,200 @@ public class TitleState : MonoBehaviour
     {
         switch (m_MatchState)
         {
-            case MatchState.None:       None();         break;
-            case MatchState.StartMatch: StartMatch();   break;
-            case MatchState.Matching:   Matching();     break;
-            case MatchState.EndMatch:   EndMatch();     break;
-            case MatchState.Matched:    Matched();      break;
+            case MatchState.None:           None();             break;
+            case MatchState.StartMatch:     StartMatch();       break;
+            case MatchState.Matching:       Matching();         break;
+            case MatchState.CancelMatch:    CancelMatch();      break;
+            case MatchState.CompleteMatch:  CompleteMatch();    break;
         }
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
+    /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
     void None() 
     {
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹ç›´å¾Œ</summary>
+    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn</summary>
     void StartMatch()
     {
         m_StartButtonState.DoStartMatch();
+
+        // Ú‘±ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“¶¬
+        m_CancelConnectServer = new CancellationTokenSource();
+        m_CancelConnectToken = m_CancelConnectServer.Token;
+
+        // ƒT[ƒo[ŒŸõ
+        // UniTask‚Ì”ñ“¯Šúˆ—‚ÍForget()‚ğ•t‚¯‚ÄŒÄ‚Ô
+        // ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“‚ğ“n‚·–‚ÅAawait‚ğ‚·‚é”ñ“¯Šúˆ—‚ÅCancel()‚ÌÀsƒ^ƒCƒ~ƒ“ƒO‚Åˆ—‚Ì’†’f‚ª‰Â”\
+        TryConnect(m_CancelConnectToken).Forget();
+
         m_MatchState = MatchState.Matching;
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
+    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
     void Matching()
     {
-        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ2äººä»¥ä¸Šã®ã¨ãã€è‡ªå‹•é–‹å§‹æ©Ÿèƒ½ã‚’å®Ÿè¡Œã™ã‚‹
-        if (m_GameSetting.playerNum > 1) m_MatchTimer.Update();
+        // [¦ƒfƒoƒbƒO—p] ‹­§“I‚ÉƒQ[ƒ€ƒXƒ^[ƒg
+        if(Input.GetMouseButtonDown(1)) m_MatchState = MatchState.CompleteMatch;
 
-        // Aã‚­ãƒ¼ã§äººæ•°ã‚’å¢—ã‚„ã™(ä»®)
-        if (Input.GetKeyDown(KeyCode.A))
+        // l”‚ª‚Ql–¢–‚Ìê‡‚Íreturn
+        if (m_GameSetting.playerNum < 2) return;
+
+        m_MatchTimer.Update(false);
+
+        if(m_MatchTimer.IsFinished())
         {
-            SetPlayerNum(m_GameSetting.playerNum + 1);
             m_MatchTimer.Reset();
-        }
 
-        // Dã‚­ãƒ¼ã§äººæ•°ã‚’æ¸›ã‚‰ã™(ä»®)
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetPlayerNum(m_GameSetting.playerNum - 1);
-            m_MatchTimer.Reset();
-        }
-
-        // è‡ªå‹•é–‹å§‹å‡¦ç†
-        if (m_MatchTimer.IsFinished())
-        {
-            SceneManager.Instance.LoadScene(Scene.GameMainScene);
-            m_MatchState = MatchState.Matched;
+            m_MatchState = MatchState.CompleteMatch;
         }
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢ç›´å¾Œ</summary>
-    void EndMatch()
+    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~</summary>
+    void CancelMatch()
     {
-        m_StartButtonState.DoEndMatch(SetPlayerNum);
+        m_StartButtonState.DoCancelMatch(SetPlayerNum);
+
+        // ƒT[ƒo[ŒŸõ‚ğ’â~
+        StopDiscovery();
+
+        // l”‚ª‚QlˆÈã‚Ìê‡
+        if (m_GameSetting.playerNum > 1)
+        {
+            // ƒzƒXƒgEƒNƒ‰ƒCƒAƒ“ƒg‚Ì’â~
+            NetworkManager.singleton.StopHost();
+            NetworkManager.singleton.StopClient();
+        }
+
+        // ”ñ“¯Šúˆ—‚Ì’â~
+        // TokenSorce‚ÌƒLƒƒƒ“ƒZƒ‹‚Æ”pŠü‚ğ‚·‚é
+        Cancel(m_CancelConnectServer);
+
         m_MatchState = MatchState.None;
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
-    void Matched()
+    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+    void CompleteMatch()
     {
-        // ãƒãƒƒãƒãƒ³ã‚°ãŒå®Œäº†ã—ã¦ã‹ã‚‰
-        // ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã¾ã§ã®æ•°ç§’é–“ã®å‡¦ç†
+        // 1l‚Ìê‡A2`4‚Åƒ‰ƒ“ƒ_ƒ€‚Èl”‚É‚·‚é
+        if (GameSetting.instance.playerNum <= 1) GameSetting.instance.playerNum = Random.Range(2, 5);
 
-
-
+        // ƒV[ƒ“‘JˆÚˆ—
+        Transition.Instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
     }
 
-    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ã‚’GameSettingã«åæ˜ ã•ã›ã‚‹</summary>
-    /// <param name="playerNum">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°</param>
+    /// <summary>ƒvƒŒƒCƒ„[l”‚ğGameSetting‚É”½‰f‚³‚¹‚é</summary>
+    /// <param name="playerNum">ƒvƒŒƒCƒ„[l”</param>
     void SetPlayerNum(int playerNum)
     {
-        m_GameSetting.playerNum = Mathf.Max(1, playerNum);
+        // Å’á‚Å‚à‚PlˆÈã
+        playerNum = Mathf.Max(1, playerNum);
+
+        // İ’è‚É‚Í”½‰f‚³‚¹‚é
+        m_GameSetting.playerNum = playerNum;
+
+        if (m_MatchingTexts.Length == 0 || m_NetworkManager == null) return;
 
         foreach (Text text in m_MatchingTexts)
-            text.text = $"Matching... ( {playerNum}äºº )";
+            if(text != null)text.text = $"Matching... ( {playerNum}l )";
     }
 
-    /// <summary>ãƒãƒƒãƒãƒ³ã‚°çŠ¶æ…‹ã®åˆ‡ã‚Šæ›¿ãˆ</summary>
-    public void ChangeState()
+    /// <summary>ƒT[ƒo[ŒŸõ</summary>
+    /// <async>”ñ“¯Šú<async>
+    /// <await>w’è‚µ‚½ŠÔEğŒ‚ª‘µ‚¤‚Ü‚Å‘Ò‚Â<await>
+    /// [async/await] ‚Íˆ—‚ğ”ñ“¯Šú‚És‚¤‚Ì‚Å‚Í‚È‚­A”ñ“¯Šú‚Ìˆ—‚ğ‘Ò‚Âd‘g‚İ
+    /// <param name="token">ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“</param>
+    async UniTaskVoid TryConnect(CancellationToken token)
+    {
+        // NetworkManageræ“¾
+        m_NetworkManager = NetworkManager.singleton;
+
+        // Ú‘±’§í‰ñ”
+        int tryCount = 0;
+
+        // ƒT[ƒo[ŒŸõŠJn
+        StartDiscovery();
+
+        // Server–”‚ÍAClient‚ªactive‚ÈŒÀ‚è‘±‚¯‚é
+        while (!m_NetworkManager.isNetworkActive)
+        {
+            // m_ConnectIntervalFrame‚¾‚¯‚ÌƒtƒŒ[ƒ€‚ğ’x‚ç‚¹‚ÄÀs
+            await UniTask.Delay(m_ConnectIntervalFrame, cancellationToken: token);
+
+            // ƒT[ƒo[‚ğŒ©‚Â‚¯‚½
+            // URI‚ÍURL(Webã‚É‚ ‚éƒtƒ@ƒCƒ‹‚ÌZŠ)‚Æ
+            // URN(ƒlƒbƒgƒ[ƒNã‚Ì‘¶İ‚·‚é•¶‘‚È‚Ç‚ÌƒŠƒ\[ƒX‚ğˆêˆÓ‚É¯•Ê‚·‚é‚½‚ß‚Ì¯•Êq)‚Ì‘Ì
+            if (m_DiscoverdServer.uri != null)
+            {
+                Debug.Log("Start Client");
+
+                // ƒNƒ‰ƒCƒAƒ“ƒg‚Æ‚µ‚ÄŠJn
+                // æ“¾‚µ‚½URI‚ğg‚Á‚ÄƒT[ƒo[‚ÉÚ‘±‚·‚é
+                m_NetworkManager.StartClient(m_DiscoverdServer.uri);
+
+                // ƒT[ƒo[ŒŸõ‚ğ~‚ß‚é
+                StopDiscovery();
+            }
+            else
+            {
+                Debug.Log("Try Connect...");
+
+                // ƒJƒEƒ“ƒg‚ğ‘‚â‚·
+                tryCount++;
+
+                // ŒŸõ‰ñ”‚ª‹K’è’l‚É’B‚µ‚½‚Æ‚«
+                if (tryCount > m_ConnectTryCount)
+                {
+                    Debug.Log("Start Host");
+
+                    // ƒzƒXƒg‚Æ‚µ‚ÄŠJn
+                    m_NetworkManager.StartHost();
+
+                    // ƒT[ƒo[‚ÌéŒ¾‚ğ‚·‚é
+                    // ‚±‚ê‚ğ‚µ‚È‚¢‚ÆAƒT[ƒo[‚ªŒ©‚Â‚©‚ç‚È‚¢
+                    AdvertiseServer();
+
+                    // ƒT[ƒo[ƒŒƒXƒ|ƒ“ƒX‚ª‚ ‚é‚©Debug.Log‚Å•\¦
+                    if (m_DiscoverdServer.uri != null) Debug.Log("ServerURI : exist");
+                    else Debug.Log("ServerURI : not found");
+                }
+            }
+        }
+    }
+
+    /// <summary>Ú‘±ƒf[ƒ^óM</summary>
+    /// <param name="recivedData">óMƒf[ƒ^</param>
+    void ReceivedConnectionData(ConnectionData receivedData)
+    {
+        // ƒ^ƒCƒ}[ƒŠƒZƒbƒg
+        m_MatchTimer.Reset();
+
+        // playerNum‚ÉŒ»İ‚ÌƒvƒŒƒCƒ„[”‚ğ”½‰f
+        SetPlayerNum(receivedData.playerCount);
+    }
+
+    /// <summary>ƒLƒƒƒ“ƒZƒ‹</summary>
+    /// <param name="tokenSource">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“ƒ\[ƒX</param>
+    void Cancel(CancellationTokenSource tokenSource)
+    {
+        // ©•ª‚ªƒzƒXƒg‚Å‚È‚¢‚È‚çAƒŠƒ^[ƒ“
+        if (!NetworkClient.activeHost) return;
+
+        // ƒLƒƒƒ“ƒZƒ‹
+        tokenSource.Cancel();
+
+        // ”pŠü
+        tokenSource.Dispose();
+    }
+
+    public void ChangeMatchState()
     {
         switch (m_MatchState)
         {
-            case MatchState.None:       m_MatchState = MatchState.StartMatch;   break;
-            case MatchState.StartMatch: m_MatchState = MatchState.StartMatch;   break;
-            case MatchState.Matching:   m_MatchState = MatchState.EndMatch;     break;
-            case MatchState.EndMatch:   m_MatchState = MatchState.EndMatch;     break;
-            case MatchState.Matched:    m_MatchState = MatchState.EndMatch;     break;
+            case MatchState.None:     m_MatchState = MatchState.StartMatch;  break;
+            case MatchState.Matching: m_MatchState = MatchState.CancelMatch; break;
+
+            default: break;
         }
     }
 }

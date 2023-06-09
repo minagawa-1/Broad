@@ -48,7 +48,7 @@ public class Blocks
     /// <summary>その位置に設置可能か</summary>
     /// <param name="board">ボード情報</param>
     /// <param name="player">プレイヤー番号</param>
-    public bool IsSetable(int[,] board, int player)
+    public bool IsSetable(Board board, int player)
     {
         for (int y = 0; y < GetHeight(); ++y)
         {
@@ -58,12 +58,12 @@ public class Blocks
                 if (!shape[x, y]) continue;
 
                 // 配列外参照
-                if (position.x + x < 0 || board.GetLength(0) <= position.x + x) return false;
-                if (position.y + y < 0 || board.GetLength(1) <= position.y + y) return false;
+                if (position.x + x < 0 || board.width <= position.x + x) return false;
+                if (position.y + y < 0 || board.height <= position.y + y) return false;
 
                 // 渡された座標のstateが-1もしくは同じプレイヤー番号ならfalse
-                if (board[position.x + x, position.y + y] == -1
-                 || board[position.x + x, position.y + y] == player) return false;
+                if (board.GetBoardData(position.x + x, position.y + y) == -1
+                 || board.GetBoardData(position.x + x, position.y + y) == player) return false;
             }
         }
 

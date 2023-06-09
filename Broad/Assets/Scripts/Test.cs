@@ -10,6 +10,8 @@ public class Test : MonoBehaviour
     [Header("ƒvƒŒƒCƒ„[”Ô†")]
     [SerializeField, Min(0)] int m_PlayerNum;
 
+    int m_Counter = 1;
+
     // Update is called once per frame
     void Update()
     {
@@ -23,8 +25,9 @@ public class Test : MonoBehaviour
 
             bool[,] blocks = LotteryBlocks.Lottery(blockUnits, density);
 
-            int player = m_PlayerNum == 0 ? Random.Range(1, GameSetting.instance.playerNum + 1)
-                                          : Mathf.Min(m_PlayerNum, GameSetting.instance.playerNum);
+            int player = m_PlayerNum == 0 ? m_Counter++ : Mathf.Min(m_PlayerNum, GameSetting.instance.playerNum);
+
+            if (m_Counter > GameSetting.instance.playerNum) m_Counter = 1;
 
             m_BlockManager.CreateBlock(player, blocks, pos);
         }

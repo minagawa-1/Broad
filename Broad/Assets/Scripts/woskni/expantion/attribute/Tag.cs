@@ -52,7 +52,6 @@ public class TagAttributeDrawer : PropertyDrawer
         }
     }
 }
-#endif
 
 /// <summary>レイヤーの指定</summary>
 /// <remarks>対応データ型: int, string</remarks>
@@ -60,7 +59,6 @@ public class LayerAttribute : PropertyAttribute
 {
 }
 
-#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(LayerAttribute))]
 public class LayerAttributeDrawer : PropertyDrawer
 {

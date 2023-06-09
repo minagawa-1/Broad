@@ -1,7 +1,7 @@
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-# endif
+#endif
 
 /// <summary>フィールド上にコメントを付加</summary>
 public class CommentAttribute : PropertyAttribute

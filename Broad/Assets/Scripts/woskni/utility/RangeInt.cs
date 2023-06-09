@@ -2,10 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 namespace woskni
 {
@@ -66,7 +63,6 @@ namespace woskni
         public string ToString(string format, IFormatProvider formatProvider) { return min.ToString(format, formatProvider); }
     }
 }
-
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(woskni.RangeInt))]
 public class RangeIntDrawer : PropertyDrawer

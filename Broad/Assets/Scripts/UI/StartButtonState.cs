@@ -28,13 +28,14 @@ public class StartButtonState : MonoBehaviour
     int m_InitStartTextFontSize;
     Vector3 m_InitStartTextPosition;
 
+
+
     private void Start()
     {
         m_InitStartTextFontSize = m_StartText.fontSize;
         m_InitStartTextPosition = m_StartText.rectTransform.position;
     }
 
-    /// <summary>スタートボタンを押されてマッチングを開始したときの挙動</summary>
     public void DoStartMatch()
     {
         DoFontSize(m_EasedStartTextFontSize, m_ButtonStartTime, Ease.OutCubic);
@@ -45,21 +46,16 @@ public class StartButtonState : MonoBehaviour
         m_Banner.rectTransform.DOMoveY(0f, m_BannerStartTime).SetEase(Ease.OutCubic);
     }
 
-    /// <summary>スタートボタンを押されてマッチングを終了したときの挙動</summary>
-    public void DoEndMatch(System.Action<int> action)
+    public void DoCancelMatch(System.Action<int> setPlayerNum)
     {
         DoFontSize(m_InitStartTextFontSize, m_ButtonEndTime, Ease.InCubic);
         m_MatchingText.DOPause();
-        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => action.Invoke(1));
+        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => setPlayerNum.Invoke(1));
 
         m_StartText.rectTransform.DOMove(m_InitStartTextPosition, m_ButtonEndTime).SetEase(Ease.InCubic);
         m_Banner.rectTransform.DOMoveY(-m_Banner.rectTransform.rect.height, m_BannerEndTime).SetEase(Ease.InCubic);
     }
 
-    /// <summary>フォントサイズの変動</summary>
-    /// <param name="endSize">終了時のフォントサイズ</param>
-    /// <param name="time">変動時間</param>
-    /// <param name="ease">イージングの種類</param>
     void DoFontSize(int endSize, float time, Ease ease)
     {
         DOTween.To(() => m_StartText.fontSize, size => m_StartText.fontSize = size, endSize, time).SetEase(ease);

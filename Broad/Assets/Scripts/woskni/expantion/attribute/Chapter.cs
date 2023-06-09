@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-
 public class ChapterAttribute : PropertyAttribute
 {
     public readonly string chapterName;

@@ -1,4 +1,5 @@
 using UnityEngine;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -17,7 +18,7 @@ public enum ExcessType
     Around,
 }
 
-#if UNITY_EDITOR
+
 public class ProgressBarAttribute : PropertyAttribute
 {
     public float min;
@@ -32,6 +33,7 @@ public class ProgressBarAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ProgressBarAttribute))]
 public class ProgressBarDrawer : PropertyDrawer
 {

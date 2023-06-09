@@ -10,7 +10,7 @@ public class MeshCombiner : MonoBehaviour
     /// <param name="name">結合されたGameObjectの名前</param>
     /// <param name="parent">結合されたGameObjectの親</param>
     /// <returns>結合されたGameObject</returns>
-    public GameObject Combine(GameObject[] gameObjects, string name = "NewObject", Transform parent = null)
+    public static GameObject Combine(GameObject[] gameObjects, string name = "NewObject", Transform parent = null)
     {
         // 結合するGameObjectの配列が空ならreturn
         if (gameObjects.Length <= 0) return null;
@@ -34,12 +34,11 @@ public class MeshCombiner : MonoBehaviour
         
         // メッシュを結合したメッシュとして作り直す
         MeshFilter meshFilter = newObj.AddComponent<MeshFilter>();
-        meshFilter.mesh = new Mesh();
-        meshFilter.mesh.CombineMeshes(combine);
+        meshFilter.sharedMesh = new Mesh();
+        meshFilter.sharedMesh.CombineMeshes(combine);
 
         // 作り直したメッシュを設定する
-        MeshRenderer meshRenderer = newObj.AddComponent<MeshRenderer>();
-        meshRenderer.materials = new Material[] { meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial };
+        newObj.AddComponent<MeshRenderer>().material = meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial;
 
         // 元々のオブジェクトは破棄する
         foreach (var obj in gameObjects) Destroy(obj);

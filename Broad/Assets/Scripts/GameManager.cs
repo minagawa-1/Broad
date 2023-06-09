@@ -1,10 +1,17 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Mirror;
 
+[RequireComponent(typeof(MeshCombiner))]
 public partial class GameManager : MonoBehaviour
 {
+    [Chapter("コンポーネント")]
+    [SerializeField] BlockManager m_BlockManager;
+
+    [Chapter]
     [Header("マス目用プレファブ")]
     [SerializeField] GameObject m_SquarePrefab = null;
 
@@ -20,7 +27,7 @@ public partial class GameManager : MonoBehaviour
     GameObject m_SetableParent = null;
 
     // 盤面
-    [HideInInspector] public int[,] board;
+    [HideInInspector] public Board board;
 
     // 盤面のサイズ
     [HideInInspector] public Vector2Int boardSize;
@@ -28,36 +35,57 @@ public partial class GameManager : MonoBehaviour
     // マス目サイズ
     public Vector2 m_SquareSize;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         m_BoardManagerObject = new GameObject("BoardManager");
-        m_SetableParent =  new GameObject("SetableSquares");
-        m_UnsetableParent = new GameObject("UnsetableSquares");
-
-        m_State = State.Placement;
+        m_SetableParent      = new GameObject("SetableSquares");
+        m_UnsetableParent    = new GameObject("UnsetableSquares");
 
         // 盤面管理オブジェクトを親にする
         m_SetableParent.transform.SetParent(m_BoardManagerObject.transform);
         m_UnsetableParent.transform.SetParent(m_BoardManagerObject.transform);
 
-        // 盤面の設定
-        SetupBoard();
+        // ホストのみボード情報を決める
+        if (NetworkClient.activeHost)
+        {
+            // ボードサイズをランダムに設定
+            boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
+
+            // 盤面のサイズを渡す
+            board = new Board(boardSize.x, boardSize.y);
+
+            // 設置不可マスの決定
+            board.ShaveBoard();
+
+            // 盤面情報を全クライアントに送信
+            BoardData sendData = new BoardData(board);
+            NetworkServer.SendToAll(sendData);
+        }
+
+        // BoardDataを受信したら、ReceivedBoardDataを実行するように登録
+        NetworkClient.RegisterHandler<BoardData>(ReceivedBoardData);
+
+        // 範囲内でランダムな座標を返す関数内の関数
+        Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
+            => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
     }
 
-    
+    // Start is called before the first frame update
+    void Start()
+    {
+        m_State = State.Placement;
+
+        // 盤面の設定
+        SetupBoard().Forget();
+    }
 
     // 盤面の設定
-    void SetupBoard()
+    async UniTask SetupBoard()
     {
-        // ボードサイズをランダムに設定
-        boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
+        // ボードの情報が入るまで待機
+        await UniTask.WaitUntil(() => board.data != null);
 
-        // 盤面のサイズを渡す
-        board = new int[boardSize.x, boardSize.y];
-
-        // 設置不可マスの決定
-        ShaveBoard(boardSize);
+        Debug.Log(board.data);
 
         // ボードの作成
         LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, boardSize, m_SquareSize);
@@ -70,35 +98,31 @@ public partial class GameManager : MonoBehaviour
         // 背景の作成
         CreateBackGround(m_UnsetbleSquarePrefab, boardSize);
 
+        // プレイヤー全員の情報が揃うまで待機
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length == GameSetting.instance.playerNum);
+        m_BlockManager.CreateMaterials();
+
         // 設置可能マスのメッシュの結合処理
-        StartCoroutine(CombineMeshes());
-
-        // 範囲内でランダムな座標を返す関数内の関数
-        Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
-            => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
-
-        // メッシュの結合処理
-        IEnumerator CombineMeshes()
-        {
-            yield return new WaitForEndOfFrame();
-
-            var combiner = GetComponent<MeshCombiner>();
-
-            // 設置可能マスのメッシュ結合
-            combiner.Combine(m_SetableParent.transform.GetChildren().ToGameObjects(), "SetableBoard", m_BoardManagerObject.transform);
-
-            // 設置不可マスと枠外背景のメッシュの結合
-            GameObject[] background = GameObject.Find("Background").transform.GetChildren().ToGameObjects();
-            GameObject[] unsetable = m_UnsetableParent.transform.GetChildren().ToGameObjects().Concat(background).ToArray();
-            combiner.Combine(unsetable, "UnsetableBoard", m_BoardManagerObject.transform);
-
-            // もういらないので消し飛ばす
-            Destroy(m_SetableParent);
-            Destroy(m_UnsetableParent);
-        }
+        //CombineMeshes().Forget();
     }
 
-    
+    // メッシュの結合処理
+    async UniTaskVoid CombineMeshes()
+    {
+        await UniTask.DelayFrame(1);
+
+        // 設置可能マスのメッシュ結合
+        MeshCombiner.Combine(m_SetableParent.transform.GetChildren().ToGameObjects(), "SetableBoard", m_BoardManagerObject.transform);
+
+        // 設置不可マスと枠外背景のメッシュの結合
+        GameObject[] background = GameObject.Find("Background").transform.GetChildren().ToGameObjects();
+        GameObject[] unsetable = m_UnsetableParent.transform.GetChildren().ToGameObjects().Concat(background).ToArray();
+        var us = MeshCombiner.Combine(unsetable, "UnsetableBoard", m_BoardManagerObject.transform);
+
+        // もういらないので消し飛ばす
+        Destroy(m_SetableParent);
+        Destroy(m_UnsetableParent);
+    }
 
     /// <summary>マス目を敷き詰める</summary>
     /// <param name="squarePrefab">プレファブ</param>
@@ -116,42 +140,17 @@ public partial class GameManager : MonoBehaviour
             for (int x = 0; x < boardSize.x; x++)
             {
                 // 設置状況の初期化
-                if (board[x, y] > 0) board[x, y] = 0;
+                if (board.GetBoardData(x, y) > 0) board.SetBoardData(0, x, y);
 
                 // マス目生成
-                GameObject newSquare = Instantiate(board[x, y] == 0 ? setablePrefab : unsetablePrefab);
+                GameObject newSquare = Instantiate(board.GetBoardData(x, y) == 0 ? setablePrefab : unsetablePrefab);
 
                 // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
                 newSquare.gameObject.name       = "Square[" + x + "," + y + "]";
-                newSquare.transform.parent      = board[x, y] == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
+                newSquare.transform.parent      = board.GetBoardData(x, y) == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position    = new Vector3( x, -0.1f, -y);
                 newSquare.transform.position    = Multi(newSquare.transform.position, new Vector3(squareSize.x, 1f, squareSize.y));
                 newSquare.transform.localScale  = Multi(newSquare.transform.localScale, new Vector3(squareSize.x, 1f, squareSize.y));
-            }
-        }
-    }
-
-    /// <summary>設置不可マスの決定</summary>
-    /// <remarks>パーリンノイズで決定する</remarks>
-    /// <param name="boardSize">ボードサイズ</param>
-    void ShaveBoard(Vector2Int boardSize)
-    {
-        // パーリンノイズのシード値
-        Vector2 seed = new Vector2(Random.value, Random.value) * 100f;
-
-        for(int y = 0; y < boardSize.y; ++y)
-        {
-            for(int x = 0; x < boardSize.x; ++x)
-            {
-                // パーリンノイズのサンプリングをして設置不可マスにする確率を決める
-                Vector2 value = new Vector2( x, y) * GameSetting.instance.perlinScale + seed;
-                float perlinValue = Mathf.PerlinNoise(value.x, value.y);
-
-                if (perlinValue >= GameSetting.instance.boardViability)
-                {
-                    // 設置不可にする
-                    board[x, y] = -1;
-                }
             }
         }
     }
@@ -190,14 +189,24 @@ public partial class GameManager : MonoBehaviour
         top.transform.position      = bottom.transform.position.Offset(z: -boardSize.y - top.transform.localScale.z);
     }
 
-    /// <summary>ベクトル同士の乗算</summary>
-    /// <param name="v">ベクトル（複数設定可能）</param>
-    /// <returns>乗算した奴に決まってんだろjk</returns>
-    Vector3 Multi(params Vector3[] v)
+        /// <summary>ベクトル同士の乗算</summary>
+        /// <param name="v">ベクトル（複数設定可能）</param>
+        /// <returns>乗算した奴に決まってんだろjk</returns>
+        Vector3 Multi(params Vector3[] v)
     {
         for (int i = 1; i < v.Length; ++i)
             v[0] = new Vector3(v[0].x * v[i].x, v[0].y * v[i].y, v[0].z * v[i].z);
 
         return v[0];
+    }
+
+    /// <summary>ボードデータ受信</summary>
+    /// <param name="receivedData">受信データ</param>
+    void ReceivedBoardData(BoardData receivedData)
+    {
+        // 受信データを反映
+        board = receivedData.board;
+
+        boardSize = new Vector2Int(receivedData.board.width, receivedData.board.height);
     }
 }
