@@ -1,5 +1,7 @@
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class EditorTheme
 {
@@ -10,3 +12,4 @@ public class EditorTheme
         return new Color(rgb, rgb, rgb);
     }
 }
+#endif

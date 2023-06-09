@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class CalcBroad : MonoBehaviour
 {
@@ -16,12 +17,7 @@ public class CalcBroad : MonoBehaviour
     {
         m_PlayerText.text = "";
 
-        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
-        {
-            string colorCode = ColorUtility.ToHtmlStringRGB(GameSetting.instance.playerColors[i]);
-
-            m_PlayerText.text += "<size=60><color=#" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
-        }
+        SetUpPlayerText().Forget();
     }
 
     // Update is called once per frame
@@ -33,6 +29,19 @@ public class CalcBroad : MonoBehaviour
 
         for (int i = 0; i < GameSetting.instance.playerNum; ++i)
             m_BroadValueText.text += counts[i] + " <size=50>㎡</size>\n";
+    }
+
+    async UniTaskVoid SetUpPlayerText()
+    {
+        // プレイヤー全員の情報が揃うまで待機
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length == GameSetting.instance.playerNum);
+
+        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
+        {
+            string colorCode = ColorUtility.ToHtmlStringRGB(GameSetting.instance.playerColors[i]);
+
+            m_PlayerText.text += "<size=60><color=#" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
+        }
     }
 
     int[] Calc()
@@ -49,13 +58,10 @@ public class CalcBroad : MonoBehaviour
     /// <param name="board">盤面の配列</param>
     /// <param name="player">プレイヤー番号</param>
     /// <returns>最大領域のサイズ</returns>
-    int GetLargestArea(int[,] board, int player)
+    int GetLargestArea(Board board, int player)
     {
-        int width = board.GetLength(0);
-        int height = board.GetLength(1);
-
-        int[] parent = new int[width * height]; // Union-Findの親配列
-        int[] size = new int[width * height]; // 各グループのサイズを保持する配列
+        int[] parent = new int[board.width * board.height]; // Union-Findの親配列
+        int[] size = new int[board.width * board.height]; // 各グループのサイズを保持する配列
 
         for (int i = 0; i < parent.Length; i++) {
             parent[i] = i;
@@ -66,20 +72,20 @@ public class CalcBroad : MonoBehaviour
 
         (int x, int y)[] directions = { (-1, 0), (1, 0), (0, -1), (0, 1) };
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++)
+        for (int y = 0; y < board.height; y++) {
+            for (int x = 0; x < board.width; x++)
             {
-                if (board[x, y] != player) continue;
+                if (board.GetBoardData(x, y) != player) continue;
                 
-                int index = y * width + x;
+                int index = y * board.width + x;
 
                 foreach (var direction in directions)
                 {
                     Vector2Int v = new Vector2Int(x + direction.x, y + direction.y);
 
-                    if (new RectInt(0, 0, width, height).Contains(v) && board[v.x, v.y] == player)
+                    if (new RectInt(0, 0, board.width, board.height).Contains(v) && board.GetBoardData(v.x, v.y) == player)
                     {
-                        int newIndex = v.y * width + v.x;
+                        int newIndex = v.y * board.width + v.x;
                         Union(parent, size, index, newIndex);
                     }
                 }

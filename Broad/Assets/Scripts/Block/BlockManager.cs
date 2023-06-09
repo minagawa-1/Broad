@@ -17,40 +17,24 @@ public class BlockManager : MonoBehaviour
 
     private void Start()
     {
-        // プレイヤーの人数から色を決定
-        SetupPlayerColor();
-
         m_BlockParent = new GameObject("Blocks");
         m_BlockParent.transform.SetParent(transform);
     }
 
-    void SetupPlayerColor()
+    public void CreateMaterials()
     {
-        for (int i = 0; i < GameSetting.instance.playerNum; ++i)
+        Color[] colors = GameSetting.instance.playerColors;
+
+        m_ControlBlockMaterials = new Material[colors.Length];
+        m_SetBlockMaterials     = new Material[colors.Length];
+
+        for (int i = 0; i < colors.Length; ++i)
         {
-            float h = Random.value;
-            float s = Random.Range(0.2f, 0.5f);
-            float v = Random.Range(0.9f, 1f);
-            Color color1P = Color.HSVToRGB(h, s, v);
+            m_ControlBlockMaterials[i] = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
+            m_SetBlockMaterials[i]     = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
 
-            GameSetting.instance.playerColors = color1P.GetRelativeColor(GameSetting.instance.playerNum);
-
-            CreateMaterials(GameSetting.instance.playerColors);
-        }
-
-        void CreateMaterials(Color[] colors)
-        {
-            m_ControlBlockMaterials = new Material[colors.Length];
-            m_SetBlockMaterials     = new Material[colors.Length];
-
-            for (int i = 0; i < colors.Length; ++i)
-            {
-                m_ControlBlockMaterials[i] = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
-                m_SetBlockMaterials[i]     = new Material(m_BlockPrefab.GetComponent<MeshRenderer>().sharedMaterial);
-
-                m_ControlBlockMaterials[i].color = colors[i];
-                m_SetBlockMaterials[i].color     = colors[i];
-            }
+            m_ControlBlockMaterials[i].color = colors[i];
+            m_SetBlockMaterials[i].color     = colors[i];
         }
     }
 

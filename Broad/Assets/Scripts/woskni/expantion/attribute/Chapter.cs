@@ -1,6 +1,7 @@
-using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class ChapterAttribute : PropertyAttribute
 {
@@ -17,6 +18,7 @@ public class ChapterAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ChapterAttribute))]
 public class ChapterAttributeDrawer : DecoratorDrawer
 {
@@ -66,3 +68,4 @@ public class ChapterAttributeDrawer : DecoratorDrawer
         }
     }
 }
+#endif

@@ -254,7 +254,7 @@ public class ControlBlock : MonoBehaviour
 
         for (int y = 0; y < blocks.GetHeight(); ++y)
             for (int x = 0; x < blocks.GetWidth(); ++x)
-                if (blocks.shape[x, y]) m_GameManager.board[pos.x + x, pos.y + y] = playerIndex;
+                if (blocks.shape[x, y]) m_GameManager.board.SetBoardData(playerIndex, pos.x + x, pos.y + y);
 
         Transform[] children = transform.GetChildren();
 
@@ -348,7 +348,7 @@ public class ControlBlock : MonoBehaviour
             {
                 for (int x = 0; x < m_GameManager.boardSize.x; ++x)
                 {
-                    switch (m_GameManager.board[x, y])
+                    switch (m_GameManager.board.GetBoardData(x, y))
                     {
                         case -1: debugText += "@"; break;
                         case  0: debugText += " "; break;

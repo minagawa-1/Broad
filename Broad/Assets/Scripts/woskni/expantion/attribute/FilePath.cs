@@ -1,6 +1,9 @@
 using System.IO;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>ファイルを選択してファイルパスを指定</summary>
 public class FilePathAttribute : PropertyAttribute
@@ -18,6 +21,7 @@ public class FilePathAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(FilePathAttribute))]
 public class FilePathDrawer : PropertyDrawer
 {
@@ -73,3 +77,4 @@ public class FilePathDrawer : PropertyDrawer
         }
     }
 }
+#endif

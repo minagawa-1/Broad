@@ -1,5 +1,8 @@
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>プログレスバーを超過したときの処理</summary>
 [System.Serializable]
@@ -30,6 +33,7 @@ public class ProgressBarAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ProgressBarAttribute))]
 public class ProgressBarDrawer : PropertyDrawer
 {
@@ -75,3 +79,4 @@ public class ProgressBarDrawer : PropertyDrawer
         }
     }
 }
+#endif

@@ -1,10 +1,14 @@
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class PercentageAttribute : PropertyAttribute
 {
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(PercentageAttribute))]
 public class PercentageDrawer : PropertyDrawer
 {
@@ -55,3 +59,4 @@ public class PercentageDrawer : PropertyDrawer
         return null;
     }
 }
+#endif

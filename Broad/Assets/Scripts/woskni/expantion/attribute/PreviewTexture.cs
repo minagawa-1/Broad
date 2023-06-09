@@ -1,5 +1,8 @@
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>アスペクト比率の設定種別</summary>
 public enum AspectRatioType
@@ -31,6 +34,7 @@ public class PreviewTextureAttribute : PropertyAttribute
     }
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(PreviewTextureAttribute))]
 public class PreviewTextureDrawer : PropertyDrawer
 {
@@ -202,3 +206,4 @@ public class PreviewTextureDrawer : PropertyDrawer
     /// <summary>ファイルパスを取得</summary>
     string GetFilePath(SerializedProperty property) => AssetDatabase.GetAssetPath(property.objectReferenceValue);
 }
+#endif

@@ -38,7 +38,7 @@ public partial class GameManager
 
     void Placement()
     {
-
+        
     }
 
     void Wait()

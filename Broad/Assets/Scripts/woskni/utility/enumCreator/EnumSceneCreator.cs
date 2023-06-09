@@ -1,5 +1,7 @@
 using System.Linq;
 using System.Text;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
 
@@ -26,7 +28,7 @@ public static class EnumSceneCreator
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("/// <summary>レイヤー(列挙型)</summary>");
+        builder.AppendLine("/// <summary>シーン(列挙型)</summary>");
         builder.AppendLine("public class " + class_name);
         builder.AppendLine("{");
 
@@ -61,3 +63,4 @@ public static class EnumSceneCreator
         return scenes;
     }
 }
+#endif

@@ -95,6 +95,17 @@
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
 -define:ENABLE_LEGACY_INPUT_MANAGER
+-define:MIRROR
+-define:MIRROR_57_0_OR_NEWER
+-define:MIRROR_58_0_OR_NEWER
+-define:MIRROR_65_0_OR_NEWER
+-define:MIRROR_66_0_OR_NEWER
+-define:MIRROR_2022_9_OR_NEWER
+-define:MIRROR_2022_10_OR_NEWER
+-define:MIRROR_70_0_OR_NEWER
+-define:MIRROR_71_0_OR_NEWER
+-define:MIRROR_73_OR_NEWER
+-define:MIRROR_78_OR_NEWER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"Assets/Plugins/Demigiant/DOTween/DOTween.dll"
@@ -280,6 +291,19 @@
 -r:"C:/Program Files/Unity/Hub/Editor/2021.1.15f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.XRModule.dll"
 -r:"C:/Users/GamePG/Documents/GitHub/Broad/Broad/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/AOT/Newtonsoft.Json.dll"
 -r:"C:/Users/GamePG/Documents/GitHub/Broad/Broad/Library/PackageCache/com.unity.visualscripting@1.6.1/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/kcp2k.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Mirror.Authenticators.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Mirror.Components.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Mirror.Examples.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Mirror.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Mirror.Transports.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/SimpleWebTransport.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/Telepathy.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/UniTask.Addressables.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/UniTask.DOTween.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/UniTask.Linq.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/UniTask.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aP.dag/UniTask.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aP.dag/Unity.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aP.dag/Unity.Timeline.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aP.dag/Unity.VisualScripting.Core.ref.dll"

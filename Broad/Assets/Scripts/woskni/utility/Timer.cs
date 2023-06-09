@@ -35,8 +35,11 @@ namespace woskni
         /// <summary>タイマーを終了させる</summary>
         public void Fin() => time = limit;
 
-        /// <summary>終了検知</summary>
+        /// <summary>終了済み検知</summary>
         public bool IsFinished() => time >= limit;
+
+        /// <summary>開始済み検知</summary>
+        public bool IsStarted() => time > 0f;
 
         /// <summary>デバッグログ</summary>
         public string DebugLog(bool isOutputLog = true, string name = "")

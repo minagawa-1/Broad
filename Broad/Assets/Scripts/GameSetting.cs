@@ -7,7 +7,7 @@ public class GameSetting : ScriptableObject
 {
     public static GameSetting instance;
 
-    // ScriptableObjectが初期化されるタイミングでインスタンスを設定する
+    // ScriptableObjectの初期化時にインスタンスを設定
     private void OnEnable() => instance = this;
 
     [Chapter("ゲーム情報")]
@@ -40,4 +40,18 @@ public class GameSetting : ScriptableObject
     [Header("密度")]
     [Range(0f, 1f)] public float minDensity;
     [Range(0f, 1f)] public float maxDensity;
+
+    /// <summary>プレイヤー色の初期設定</summary>
+    public void SetupPlayerColor()
+    {
+        for (int i = 0; i < instance.playerNum; ++i)
+        {
+            float h = Random.value;
+            float s = Random.Range(0.2f, 0.5f);
+            float v = Random.Range(0.9f, 1f);
+            Color color1P = Color.HSVToRGB(h, s, v);
+
+            instance.playerColors = color1P.GetRelativeColor(instance.playerNum);
+        }
+    }
 }

@@ -28,6 +28,8 @@ public class StartButtonState : MonoBehaviour
     int m_InitStartTextFontSize;
     Vector3 m_InitStartTextPosition;
 
+
+
     private void Start()
     {
         m_InitStartTextFontSize = m_StartText.fontSize;
@@ -44,11 +46,11 @@ public class StartButtonState : MonoBehaviour
         m_Banner.rectTransform.DOMoveY(0f, m_BannerStartTime).SetEase(Ease.OutCubic);
     }
 
-    public void DoEndMatch(System.Action<int> action)
+    public void DoCancelMatch(System.Action<int> setPlayerNum)
     {
         DoFontSize(m_InitStartTextFontSize, m_ButtonEndTime, Ease.InCubic);
         m_MatchingText.DOPause();
-        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => action.Invoke(1));
+        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => setPlayerNum.Invoke(1));
 
         m_StartText.rectTransform.DOMove(m_InitStartTextPosition, m_ButtonEndTime).SetEase(Ease.InCubic);
         m_Banner.rectTransform.DOMoveY(-m_Banner.rectTransform.rect.height, m_BannerEndTime).SetEase(Ease.InCubic);

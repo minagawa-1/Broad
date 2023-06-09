@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
 
@@ -45,3 +46,4 @@ public static class EnumLayerCreator
         ScriptCreator.Create(builder, path);
     }
 }
+#endif
