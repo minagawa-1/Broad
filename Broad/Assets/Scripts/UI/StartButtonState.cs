@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,17 +6,17 @@ using DG.Tweening;
 
 public class StartButtonState : MonoBehaviour
 {
-    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] Text m_StartText;
     [SerializeField] Text m_MatchingText;
     [SerializeField] Image m_Banner;
 
-    [Chapter("ƒeƒLƒXƒg‚ÌDOTween‘OŒãî•ñ")]
-    [Header("ƒeƒLƒXƒg‚ÌƒTƒCƒYEˆÊ’uî•ñ")]
+    [Chapter("ãƒ†ã‚­ã‚¹ãƒˆã®DOTweenå‰å¾Œæƒ…å ±")]
+    [Header("ãƒ†ã‚­ã‚¹ãƒˆã®ã‚µã‚¤ã‚ºãƒ»ä½ç½®æƒ…å ±")]
     [SerializeField] int m_EasedStartTextFontSize;
     [SerializeField] Vector3 m_EasedStartTextOffset;
 
-    [Chapter("‘JˆÚŠÔ")]
+    [Chapter("é·ç§»æ™‚é–“")]
     [Header("Button")]
     [SerializeField] float m_ButtonStartTime;
     [SerializeField] float m_ButtonEndTime;

@@ -1,33 +1,33 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 using System.IO;
 using System.Text;
 
 public class TextOperate : MonoBehaviour
 {
-    /// <summary>ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ</summary>
-    /// <param name="filePath">ƒtƒ@ƒCƒ‹ƒpƒX (Asset/`)</param>
-    /// <param name="text">ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚É‘‚«‚Ş•¶š—ñ</param>
+    /// <summary>ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿</summary>
+    /// <param name="filePath">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ (Asset/ï½)</param>
+    /// <param name="text">ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€æ–‡å­—åˆ—</param>
     public static void WriteFile(string filePath, string text)
     {
         FileInfo file = new FileInfo(Application.dataPath + "/" + filePath);
 
-        // ã‘‚«ƒ‚[ƒh‚ÅStreamWriter‚ğì¬
+        // ä¸Šæ›¸ããƒ¢ãƒ¼ãƒ‰ã§StreamWriterã‚’ä½œæˆ
         var writer = new StreamWriter(file.FullName, false);
 
-        // ƒeƒLƒXƒg‚ğ‘‚«‚Ş
+        // ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›¸ãè¾¼ã‚€
         writer.WriteLine(text);
 
-        // ƒtƒ‰ƒbƒVƒ…I
+        // ãƒ•ãƒ©ãƒƒã‚·ãƒ¥ï¼
         writer.Flush();
 
-        // ƒXƒgƒŠ[ƒ€‚ğ•Â‚¶‚é
+        // ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚’é–‰ã˜ã‚‹
         writer.Close();
     }
 
-    /// <summary>ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ</summary>
-    /// <param name="filePath">ƒtƒ@ƒCƒ‹ƒpƒX (Asset/`)</param>
-    /// <returns>ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚ñ‚¾•¶š—ñ</returns>
+    /// <summary>ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿</summary>
+    /// <param name="filePath">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ (Asset/ï½)</param>
+    /// <returns>ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—</returns>
     public static string ReadFile(string filePath)
     {
         FileInfo file = new FileInfo(Application.dataPath + "/" + filePath);

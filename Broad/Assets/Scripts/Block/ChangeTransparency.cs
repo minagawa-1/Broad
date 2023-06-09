@@ -1,4 +1,4 @@
-
+ï»¿
 using UnityEngine;
 using rendering = UnityEngine.Rendering;
 using rm = woskni.RenderingMode;
@@ -9,11 +9,11 @@ public class ChangeTransparency : MonoBehaviour
     public Material[] blockMaterials;
     public int player;
 
-    /// <summary>“§–¾E”¼“§–¾‚ğØ‚è‘Ö‚¦‚é</summary>
+    /// <summary>é€æ˜ãƒ»åŠé€æ˜ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹</summary>
     public void Change(ref Transform[] transforms) => Set(ref transforms, rm.GetBlendMode(blockMaterials[player - 1]) != rm.Mode.Fade);
 
-    /// <summary>“§–¾E”¼“§–¾‚É‚·‚é</summary>
-    /// <param name="transparent">true : “§–¾‚É‚·‚é<br></br>false: ”¼“§–¾‚É‚·‚é</param>
+    /// <summary>é€æ˜ãƒ»åŠé€æ˜ã«ã™ã‚‹</summary>
+    /// <param name="transparent">true : é€æ˜ã«ã™ã‚‹<br></br>false: åŠé€æ˜ã«ã™ã‚‹</param>
     public void Set(ref Transform[] transforms, bool transparent)
     {
         for (int i = 0; i < transforms.Length; ++i)

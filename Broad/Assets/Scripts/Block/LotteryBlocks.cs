@@ -1,57 +1,57 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LotteryBlocks
 {
-    // İŒv—pƒLƒƒƒ“ƒoƒX‚Ì•
+    // è¨­è¨ˆç”¨ã‚­ãƒ£ãƒ³ãƒã‚¹ã®å¹…
     public const int m_max_width = 25;
 
-    /// <summary>ƒuƒƒbƒNƒX‚Ì’Š‘I</summary>
-    /// <param name="blockUnits">ƒuƒƒbƒN”</param>
-    /// <param name="obliqueRate">–§W“x</param>
-    /// <returns>ƒuƒƒbƒNƒX‚Ì—L–³‚ğw‚·”z—ñ</returns>
+    /// <summary>ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã®æŠ½é¸</summary>
+    /// <param name="blockUnits">ãƒ–ãƒ­ãƒƒã‚¯æ•°</param>
+    /// <param name="obliqueRate">å¯†é›†åº¦</param>
+    /// <returns>ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã®æœ‰ç„¡ã‚’æŒ‡ã™é…åˆ—</returns>
     public static bool[,] Lottery(int blockUnits, float density = 0.5f)
     {
         bool[,] blocks = new bool[m_max_width, m_max_width];
 
-        // ’†S‚ÉƒuƒƒbƒN‚ğ¶¬
+        // ä¸­å¿ƒã«ãƒ–ãƒ­ãƒƒã‚¯ã‚’ç”Ÿæˆ
         blocks[m_max_width / 2, m_max_width / 2] = true;
 
-        // ƒuƒƒbƒN”z’u‚ÌŒˆ’èˆ—
+        // ãƒ–ãƒ­ãƒƒã‚¯é…ç½®ã®æ±ºå®šå‡¦ç†
         for (int i = 1; i < blockUnits; ++i)
         {
             Vector2Int pos = GetNeighborPositions(blocks, density).AtRandom();
             blocks[pos.x, pos.y] = true;
         }
 
-        // ŠO‘¤‚Ì—]•ª‚Ès—ñ‚ğƒgƒŠƒ~ƒ“ƒO‚µ‚Äreturn
+        // å¤–å´ã®ä½™åˆ†ãªè¡Œåˆ—ã‚’ãƒˆãƒªãƒŸãƒ³ã‚°ã—ã¦return
         return TrimmingBlocks.Trimming(blocks, false);
     }
 
-    /// <summary>”z’u‰Â”\‚ÈÀ•WƒŠƒXƒg‚Ìæ“¾</summary>
-    /// <param name="blocks">ƒuƒƒbƒNƒXî•ñ</param>
-    /// <param name="density">–§W—¦</param>
+    /// <summary>é…ç½®å¯èƒ½ãªåº§æ¨™ãƒªã‚¹ãƒˆã®å–å¾—</summary>
+    /// <param name="blocks">ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æƒ…å ±</param>
+    /// <param name="density">å¯†é›†ç‡</param>
     static List<Vector2Int> GetNeighborPositions(bool[,] blocks, float density)
     {
         List<Vector2Int> neighborPositions = new List<Vector2Int>();
 
-        // ƒ{[ƒh‚Ì•‚Æ‚‚³‚ğæ“¾
+        // ãƒœãƒ¼ãƒ‰ã®å¹…ã¨é«˜ã•ã‚’å–å¾—
         int width = blocks.GetLength(0);
         int height = blocks.GetLength(1);
 
-        // ƒ{[ƒh‚ÌŠeƒ}ƒX‚É‘Î‚µ‚Ä—×Ú”»’è‚ğs‚¤
+        // ãƒœãƒ¼ãƒ‰ã®å„ãƒã‚¹ã«å¯¾ã—ã¦éš£æ¥åˆ¤å®šã‚’è¡Œã†
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                // true‚Å‚È‚¢ê‡‚ÍƒXƒLƒbƒv
+                // trueã§ãªã„å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
                 if (!blocks[x, y]) continue;
 
-                // ‘a‚ÌÀ•WiÎ‚ßj
+                // ç–ã®åº§æ¨™ï¼ˆæ–œã‚ï¼‰
                 if (Random.value >= density)
                 {
-                    // ‚È‚È‚ß‚ğ‘–¸
+                    // ãªãªã‚ã‚’èµ°æŸ»
                     for (int i = -1; i <= 1; i += 2)
                     {
                         for (int j = -1; j <= 1; j += 2)
@@ -59,23 +59,23 @@ public class LotteryBlocks
                             int neighborX = x + i;
                             int neighborY = y + j;
 
-                            // ƒ{[ƒhŠO‚Ìƒ}ƒX‚ÍƒXƒLƒbƒv
+                            // ãƒœãƒ¼ãƒ‰å¤–ã®ãƒã‚¹ã¯ã‚¹ã‚­ãƒƒãƒ—
                             if (neighborX < 0 || neighborX >= width || neighborY < 0 || neighborY >= height) continue;
 
-                            // true‚·‚Å‚ÉƒuƒƒbƒN‚ª‚ ‚éê‡‚ÍƒXƒLƒbƒv
+                            // trueã™ã§ã«ãƒ–ãƒ­ãƒƒã‚¯ãŒã‚ã‚‹å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
                             if (blocks[neighborX, neighborY]) continue;
 
-                            // —×Ú‚·‚éfalse‚ğŒŸo‚µ‚½ê‡‚ÍƒŠƒXƒg‚É’Ç‰Á
+                            // éš£æ¥ã™ã‚‹falseã‚’æ¤œå‡ºã—ãŸå ´åˆã¯ãƒªã‚¹ãƒˆã«è¿½åŠ 
                             Vector2Int neighborPosition = new Vector2Int(neighborX, neighborY);
                             if (!neighborPositions.Contains(neighborPosition)) neighborPositions.Add(neighborPosition);
                         }
                     }
                 }
 
-                // –§‚ÌÀ•Wiã‰º¶‰Ej
+                // å¯†ã®åº§æ¨™ï¼ˆä¸Šä¸‹å·¦å³ï¼‰
                 else
                 {
-                    // ã‰º¶‰E‚ğ‘–¸
+                    // ä¸Šä¸‹å·¦å³ã‚’èµ°æŸ»
                     for (int i = -1; i <= 1; i++)
                     {
                         for (int j = i % 2 == 0 ? -1 : 0; j <= 1; j += 2)
@@ -83,13 +83,13 @@ public class LotteryBlocks
                             int neighborX = x + i;
                             int neighborY = y + j;
 
-                            // ƒ{[ƒhŠO‚Ìƒ}ƒX‚ÍƒXƒLƒbƒv
+                            // ãƒœãƒ¼ãƒ‰å¤–ã®ãƒã‚¹ã¯ã‚¹ã‚­ãƒƒãƒ—
                             if (neighborX < 0 || neighborX >= width || neighborY < 0 || neighborY >= height) continue;
 
-                            // true‚·‚Å‚ÉƒuƒƒbƒN‚ª‚ ‚éê‡‚ÍƒXƒLƒbƒv
+                            // trueã™ã§ã«ãƒ–ãƒ­ãƒƒã‚¯ãŒã‚ã‚‹å ´åˆã¯ã‚¹ã‚­ãƒƒãƒ—
                             if (blocks[neighborX, neighborY]) continue;
 
-                            // —×Ú‚·‚éfalse‚ğŒŸo‚µ‚½ê‡‚ÍƒŠƒXƒg‚É’Ç‰Á
+                            // éš£æ¥ã™ã‚‹falseã‚’æ¤œå‡ºã—ãŸå ´åˆã¯ãƒªã‚¹ãƒˆã«è¿½åŠ 
                             Vector2Int neighborPosition = new Vector2Int(neighborX, neighborY);
                             if (!neighborPositions.Contains(neighborPosition)) neighborPositions.Add(neighborPosition);
                         }
@@ -101,30 +101,30 @@ public class LotteryBlocks
         return neighborPositions;
     }
 
-    /// <summary>ƒgƒŠƒ~ƒ“ƒO</summary>
+    /// <summary>ãƒˆãƒªãƒŸãƒ³ã‚°</summary>
     public class TrimmingBlocks
     {
-        /// <summary>”z—ñ‚ğƒgƒŠƒ~ƒ“ƒO</summary>
-        /// <param name="array">ƒgƒŠƒ~ƒ“ƒO‚·‚é”z—ñ</param>
-        /// <param name="empty">ƒgƒŠƒ~ƒ“ƒOğŒiÁ‚·ƒAƒCƒeƒ€j</param>
-        /// <returns>—]”’‚ğÁ‚µ‚½”z—ñ</returns>
+        /// <summary>é…åˆ—ã‚’ãƒˆãƒªãƒŸãƒ³ã‚°</summary>
+        /// <param name="array">ãƒˆãƒªãƒŸãƒ³ã‚°ã™ã‚‹é…åˆ—</param>
+        /// <param name="empty">ãƒˆãƒªãƒŸãƒ³ã‚°æ¡ä»¶ï¼ˆæ¶ˆã™ã‚¢ã‚¤ãƒ†ãƒ ï¼‰</param>
+        /// <returns>ä½™ç™½ã‚’æ¶ˆã—ãŸé…åˆ—</returns>
         public static T[,] Trimming<T>(T[,] array, T empty)
         {
-            // s‚ÌŒŸ¸i‚Ğ‚Æ‚Â‚àtrue‚ª“ü‚Á‚Ä‚¢‚È‚¢s‚Ítruej
+            // è¡Œã®æ¤œæŸ»ï¼ˆã²ã¨ã¤ã‚‚trueãŒå…¥ã£ã¦ã„ãªã„è¡Œã¯trueï¼‰
             bool[] isEmptyRow = Enumerable.Range(0, array.GetLength(0))
                  .Select(row => Enumerable.Range(0, array.GetLength(1)).All(col => array[row, col].Equals(empty))).ToArray();
-            // —ñ‚ÌŒŸ¸i‚Ğ‚Æ‚Â‚àtrue‚ª“ü‚Á‚Ä‚¢‚È‚¢—ñ‚Ítruej
+            // åˆ—ã®æ¤œæŸ»ï¼ˆã²ã¨ã¤ã‚‚trueãŒå…¥ã£ã¦ã„ãªã„åˆ—ã¯trueï¼‰
             bool[] isEmptyCol = Enumerable.Range(0, array.GetLength(1))
                  .Select(col => Enumerable.Range(0, array.GetLength(0)).All(row => array[row, col].Equals(empty))).ToArray();
 
-            // íœŒã‚Ì”z—ñ‚ÌƒTƒCƒY‚ğæ“¾
+            // å‰Šé™¤å¾Œã®é…åˆ—ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
             int newRows = isEmptyRow.Count(row => !row);
             int newCols = isEmptyCol.Count(col => !col);
 
-            // íœŒã‚Ì”z—ñ‚ğì¬
+            // å‰Šé™¤å¾Œã®é…åˆ—ã‚’ä½œæˆ
             T[,] newArray = new T[newRows, newCols];
 
-            // íœŒã”z—ñ‚ğİ’è
+            // å‰Šé™¤å¾Œé…åˆ—ã‚’è¨­å®š
             int xCounter = 0;
             foreach (int x in Enumerable.Range(0, array.GetLength(0)).Where(r => !isEmptyRow[r]))
             {

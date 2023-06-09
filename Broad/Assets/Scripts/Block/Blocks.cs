@@ -1,33 +1,33 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Blocks
 {
-    // ƒuƒƒbƒN‚ÌŒ`ó
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®å½¢çŠ¶
     public bool[,] shape;
 
     public Vector2Int position;
 
     public Vector2 center;
 
-    /// <summary>ƒRƒ“ƒXƒgƒ‰ƒNƒ^</summary>
-    /// <param name="shape">Œ`óƒf[ƒ^</param>
+    /// <summary>ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿</summary>
+    /// <param name="shape">å½¢çŠ¶ãƒ‡ãƒ¼ã‚¿</param>
     public Blocks(bool[,] shape, Vector2Int position)
     {
         this.shape = shape;
 
-        // intŒ^‚ÅˆÊ’u‚ğŠi”[‚µ‚Ä‚¢‚é‚½‚ßA•K‚¸®”‚ª“ü‚é
+        // intå‹ã§ä½ç½®ã‚’æ ¼ç´ã—ã¦ã„ã‚‹ãŸã‚ã€å¿…ãšæ•´æ•°ãŒå…¥ã‚‹
         center = new Vector2(GetWidth() / 2, GetHeight() / 2);
 
-        // c‰¡‚ª‹ô”‚È‚çŠ®‘S‚É^‚ñ’†‚É‚·‚é
+        // ç¸¦æ¨ªãŒå¶æ•°ãªã‚‰å®Œå…¨ã«çœŸã‚“ä¸­ã«ã™ã‚‹
         if (GetWidth() % 2 == 0 && GetHeight() % 2 == 0) center = center.Offset(-0.5f, -0.5f);
 
         this.position = position;
     }
 
-    /// <summary>ƒuƒƒbƒN‚Ì”</summary>
+    /// <summary>ãƒ–ãƒ­ãƒƒã‚¯ã®æ•°</summary>
     public int GetBlockNum()
     {
         int counter = 0;
@@ -39,29 +39,29 @@ public class Blocks
         return counter;
     }
 
-    /// <summary>ƒuƒƒbƒNƒX‚Ì‰¡•</summary>
+    /// <summary>ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã®æ¨ªå¹…</summary>
     public int GetWidth() => shape.GetLength(0);
 
-    /// <summary>ƒuƒƒbƒNƒX‚Ìc•</summary>
+    /// <summary>ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã®ç¸¦å¹…</summary>
     public int GetHeight() => shape.GetLength(1);
 
-    /// <summary>‚»‚ÌˆÊ’u‚Éİ’u‰Â”\‚©</summary>
-    /// <param name="board">ƒ{[ƒhî•ñ</param>
-    /// <param name="player">ƒvƒŒƒCƒ„[”Ô†</param>
+    /// <summary>ãã®ä½ç½®ã«è¨­ç½®å¯èƒ½ã‹</summary>
+    /// <param name="board">ãƒœãƒ¼ãƒ‰æƒ…å ±</param>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·</param>
     public bool IsSetable(Board board, int player)
     {
         for (int y = 0; y < GetHeight(); ++y)
         {
             for (int x = 0; x < GetWidth(); ++x)
             {
-                // shape‚ÌQÆˆÊ’u‚ªfalse‚È‚çAŸ‚Éi‚Ş
+                // shapeã®å‚ç…§ä½ç½®ãŒfalseãªã‚‰ã€æ¬¡ã«é€²ã‚€
                 if (!shape[x, y]) continue;
 
-                // ”z—ñŠOQÆ
+                // é…åˆ—å¤–å‚ç…§
                 if (position.x + x < 0 || board.width <= position.x + x) return false;
                 if (position.y + y < 0 || board.height <= position.y + y) return false;
 
-                // “n‚³‚ê‚½À•W‚Ìstate‚ª-1‚à‚µ‚­‚Í“¯‚¶ƒvƒŒƒCƒ„[”Ô†‚È‚çfalse
+                // æ¸¡ã•ã‚ŒãŸåº§æ¨™ã®stateãŒ-1ã‚‚ã—ãã¯åŒã˜ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ãªã‚‰false
                 if (board.GetBoardData(position.x + x, position.y + y) == -1
                  || board.GetBoardData(position.x + x, position.y + y) == player) return false;
             }
@@ -70,31 +70,31 @@ public class Blocks
         return true;
     }
 
-    /// <summary>¶‰ñ“]</summary>
+    /// <summary>å·¦å›è»¢</summary>
     public bool[,] RotateLeft()
     {
-        // ”z—ñ‚Ì’†g‚ğ¶‰ñ“]‚³‚¹‚é
+        // é…åˆ—ã®ä¸­èº«ã‚’å·¦å›è»¢ã•ã›ã‚‹
         bool[,] newShape = new bool[GetHeight(), GetWidth()];
         for (int y = 0; y < GetHeight(); y++)
             for (int x = 0; x < GetWidth(); x++)
                 newShape[y, GetWidth() - x - 1] = shape[x, y];
 
-        // center‚ğ‰ñ“]Œã‚Ì’†SˆÊ’u‚É‚·‚é
+        // centerã‚’å›è»¢å¾Œã®ä¸­å¿ƒä½ç½®ã«ã™ã‚‹
         center = new Vector2(center.y, GetWidth() - center.x - 1);
 
         return shape = newShape;
     }
 
-    /// <summary>‰E‰ñ“]</summary>
+    /// <summary>å³å›è»¢</summary>
     public bool[,] RotateRight()
     {
-        // ”z—ñ‚Ì’†g‚ğ‰E‰ñ“]‚³‚¹‚é
+        // é…åˆ—ã®ä¸­èº«ã‚’å³å›è»¢ã•ã›ã‚‹
         bool[,] newShape = new bool[GetHeight(), GetWidth()];
         for (int y = 0; y < GetHeight(); y++)
             for (int x = 0; x < GetWidth(); x++)
                 newShape[GetHeight() - y - 1, x] = shape[x, y];
 
-        // center‚ğ‰ñ“]Œã‚Ì’†SˆÊ’u‚É‚·‚é
+        // centerã‚’å›è»¢å¾Œã®ä¸­å¿ƒä½ç½®ã«ã™ã‚‹
         center = new Vector2(GetHeight() - center.y - 1, center.x);
 
         return shape = newShape;

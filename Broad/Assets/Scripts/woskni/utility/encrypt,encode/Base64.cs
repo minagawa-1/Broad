@@ -1,13 +1,13 @@
-namespace woskni
+Ôªønamespace woskni
 {
     public class Base64Encode
     {
         public static readonly System.Text.Encoding encoding = System.Text.Encoding.UTF8;
 
-        /// <summary>Base64Ç≈ÉGÉìÉRÅ[Éh</summary>
+        /// <summary>Base64„Åß„Ç®„É≥„Ç≥„Éº„Éâ</summary>
         public static string Encode(string source) => System.Convert.ToBase64String(encoding.GetBytes(source));
 
-        /// <summary>Base64Ç≈ÉfÉRÅ[Éh</summary>
+        /// <summary>Base64„Åß„Éá„Ç≥„Éº„Éâ</summary>
         public static string Decode(string source) => encoding.GetString(System.Convert.FromBase64String(source));
     }
 }

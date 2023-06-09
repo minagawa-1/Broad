@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameObjectExpansion
 {
-	/// <summary>GameObject[]‚ğTransform[]‚É•ÏŠ·</summary>
+	/// <summary>GameObject[]ã‚’Transform[]ã«å¤‰æ›</summary>
 	public static Transform[] ToTransforms(this GameObject[] gameObjects)
 	{
 		var transforms = new Transform[gameObjects.Length];
@@ -15,10 +15,10 @@ public static class GameObjectExpansion
 		return transforms;
 	}
 
-	/// <summary>ƒŒƒCƒ„[‚ğ•ÏX</summary>
-	/// <param name="gameObject">‚¨‘O</param>
-	/// <param name="layer">ƒŒƒCƒ„[”Ô†</param>
-	/// <param name="needSetChildrens">qƒIƒuƒWƒFƒNƒg‚ÌƒŒƒCƒ„[‚à•ÏX‚·‚é‚©</param>
+	/// <summary>ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å¤‰æ›´</summary>
+	/// <param name="gameObject">ãŠå‰</param>
+	/// <param name="layer">ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·</param>
+	/// <param name="needSetChildrens">å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚‚å¤‰æ›´ã™ã‚‹ã‹</param>
 	public static void SetLayer(this GameObject gameObject, int layer, bool needSetChildrens = true)
 	{
 		if (!gameObject) return;
@@ -31,10 +31,10 @@ public static class GameObjectExpansion
 			SetLayer(childTransform.gameObject, layer, needSetChildrens);
 	}
 
-	/// <summary>ƒŒƒCƒ„[‚ğ•ÏX</summary>
-	/// <param name="gameObject">‚¨‘O</param>
-	/// <param name="layerName">ƒŒƒCƒ„[–¼</param>
-	/// <param name="needSetChildrens">qƒIƒuƒWƒFƒNƒg‚ÌƒŒƒCƒ„[‚à•ÏX‚·‚é‚©</param>
+	/// <summary>ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å¤‰æ›´</summary>
+	/// <param name="gameObject">ãŠå‰</param>
+	/// <param name="layerName">ãƒ¬ã‚¤ãƒ¤ãƒ¼å</param>
+	/// <param name="needSetChildrens">å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚‚å¤‰æ›´ã™ã‚‹ã‹</param>
 	public static void SetLayer(this GameObject gameObject, string layerName, bool needSetChildrens = true)
 	{
 		SetLayer(gameObject, LayerMask.NameToLayer(layerName), needSetChildrens);

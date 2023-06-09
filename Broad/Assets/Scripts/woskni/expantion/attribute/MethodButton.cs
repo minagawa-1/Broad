@@ -1,4 +1,4 @@
-using System.Reflection;
+ï»¿using System.Reflection;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -10,9 +10,9 @@ public class MethodButtonAttribute : PropertyAttribute
 {
     public (string method, string buttonTitle)[] m_Buttons;
 
-    /// <summary>ƒƒ\ƒbƒh‚ğÀs‚·‚éƒ{ƒ^ƒ“‚ğƒCƒ“ƒXƒyƒNƒ^‚É•\¦</summary>
-    /// <param name="method">Às‚·‚éƒƒ\ƒbƒh (—á: new string[] { ŠÖ”–¼1, ŠÖ”–¼2 })</param>
-    /// <param name="buttonTitle">ƒ{ƒ^ƒ“‚É•\¦‚·‚éƒeƒLƒXƒg (È—ª: ƒƒ\ƒbƒh–¼)</param>
+    /// <summary>ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ãƒœã‚¿ãƒ³ã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ã«è¡¨ç¤º</summary>
+    /// <param name="method">å®Ÿè¡Œã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ (ä¾‹: new string[] { é–¢æ•°å1, é–¢æ•°å2 })</param>
+    /// <param name="buttonTitle">ãƒœã‚¿ãƒ³ã«è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ (çœç•¥: ãƒ¡ã‚½ãƒƒãƒ‰å)</param>
     public MethodButtonAttribute(string[] method, string[] buttonTitle = null)
     {
         m_Buttons = new (string method, string buttonTitle)[method.Length];
@@ -36,7 +36,7 @@ public class MethodButtonDrawer : PropertyDrawer
     {
         MethodButtonAttribute buttonAttribute = attribute as MethodButtonAttribute;
 
-        // ƒ{ƒ^ƒ“‘S‘Ì‚ÌRect‚ğİ’è‚·‚é
+        // ãƒœã‚¿ãƒ³å…¨ä½“ã®Rectã‚’è¨­å®šã™ã‚‹
         Rect rect = EditorGUI.IndentedRect(position);
 
 
@@ -49,20 +49,20 @@ public class MethodButtonDrawer : PropertyDrawer
 
         for (int i = 0; i < buttonAttribute.m_Buttons.Length; ++i)
         {
-            // Šeƒ{ƒ^ƒ“‚ğ‰¡•À‚Ñ‚É•`‰æ
+            // å„ãƒœã‚¿ãƒ³ã‚’æ¨ªä¸¦ã³ã«æç”»
             Rect buttonRect = new Rect(rect.x + (i * buttonWidth), rect.y, buttonWidth - interval, rect.height);
 
             if (GUI.Button(buttonRect, buttonAttribute.m_Buttons[i].buttonTitle))
             {
                 try
                 {
-                    // ƒƒ\ƒbƒh–¼‚©‚çƒƒ\ƒbƒh‚ğæ“¾AÀs
+                    // ãƒ¡ã‚½ãƒƒãƒ‰åã‹ã‚‰ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å–å¾—ã€å®Ÿè¡Œ
                     MethodInfo method = property.serializedObject.targetObject.GetType().GetMethod(buttonAttribute.m_Buttons[i].method);
                     method.Invoke(property.serializedObject.targetObject, null);
                 }
                 catch
                 {
-                    Debug.LogError(buttonAttribute.m_Buttons[i].method + " ‚ğÀs‚Å‚«‚Ü‚¹‚ñ");
+                    Debug.LogError(buttonAttribute.m_Buttons[i].method + " ã‚’å®Ÿè¡Œã§ãã¾ã›ã‚“");
                 }
             }
         }

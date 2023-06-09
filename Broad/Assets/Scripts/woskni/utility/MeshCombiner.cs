@@ -1,24 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MeshCombiner : MonoBehaviour
 {
-    /// <summary><b>ƒƒbƒVƒ…‚ÌŒ‹‡</b></summary>
-    /// <remarks>•¡”‚ÌGameObject‚ÌƒƒbƒVƒ…‚ğŒ‹‡‚µ‚ÄA‚Ğ‚Æ‚Â‚ÌGameObject‚É‚·‚é</remarks>
-    /// <param name="gameObjects">Œ‹‡‚·‚éGameObject</param>
-    /// <param name="name">Œ‹‡‚³‚ê‚½GameObject‚Ì–¼‘O</param>
-    /// <param name="parent">Œ‹‡‚³‚ê‚½GameObject‚Ìe</param>
-    /// <returns>Œ‹‡‚³‚ê‚½GameObject</returns>
+    /// <summary><b>ãƒ¡ãƒƒã‚·ãƒ¥ã®çµåˆ</b></summary>
+    /// <remarks>è¤‡æ•°ã®GameObjectã®ãƒ¡ãƒƒã‚·ãƒ¥ã‚’çµåˆã—ã¦ã€ã²ã¨ã¤ã®GameObjectã«ã™ã‚‹</remarks>
+    /// <param name="gameObjects">çµåˆã™ã‚‹GameObject</param>
+    /// <param name="name">çµåˆã•ã‚ŒãŸGameObjectã®åå‰</param>
+    /// <param name="parent">çµåˆã•ã‚ŒãŸGameObjectã®è¦ª</param>
+    /// <returns>çµåˆã•ã‚ŒãŸGameObject</returns>
     public static GameObject Combine(GameObject[] gameObjects, string name = "NewObject", Transform parent = null)
     {
-        // Œ‹‡‚·‚éGameObject‚Ì”z—ñ‚ª‹ó‚È‚çreturn
+        // çµåˆã™ã‚‹GameObjectã®é…åˆ—ãŒç©ºãªã‚‰return
         if (gameObjects.Length <= 0) return null;
 
-        MeshFilter     [] meshFilters = new MeshFilter     [gameObjects.Length];    // Œ‹‡‘OƒIƒuƒWƒFƒNƒg’B‚ÌƒƒbƒVƒ…“™î•ñ
-        CombineInstance[] combine     = new CombineInstance[gameObjects.Length];    // Œ‹‡ŒãƒIƒuƒWƒFƒNƒg@‚ÌƒƒbƒVƒ…“™î•ñ
+        MeshFilter     [] meshFilters = new MeshFilter     [gameObjects.Length];    // çµåˆå‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé”ã®ãƒ¡ãƒƒã‚·ãƒ¥ç­‰æƒ…å ±
+        CombineInstance[] combine     = new CombineInstance[gameObjects.Length];    // çµåˆå¾Œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€€ã®ãƒ¡ãƒƒã‚·ãƒ¥ç­‰æƒ…å ±
 
-        // Œ‹‡‚ÉŒü‚¯‚ÄƒIƒuƒWƒFƒNƒg‚Ìî•ñ‚ğŠi”[‚·‚é
+        // çµåˆã«å‘ã‘ã¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹
         for (int i = 0; i < gameObjects.Length; ++i)
         {
             meshFilters[i] = gameObjects[i].GetComponent<MeshFilter>();
@@ -32,15 +32,15 @@ public class MeshCombiner : MonoBehaviour
         GameObject newObj = new GameObject(name);
         newObj.transform.SetParent(parent);
         
-        // ƒƒbƒVƒ…‚ğŒ‹‡‚µ‚½ƒƒbƒVƒ…‚Æ‚µ‚Äì‚è’¼‚·
+        // ãƒ¡ãƒƒã‚·ãƒ¥ã‚’çµåˆã—ãŸãƒ¡ãƒƒã‚·ãƒ¥ã¨ã—ã¦ä½œã‚Šç›´ã™
         MeshFilter meshFilter = newObj.AddComponent<MeshFilter>();
         meshFilter.sharedMesh = new Mesh();
         meshFilter.sharedMesh.CombineMeshes(combine);
 
-        // ì‚è’¼‚µ‚½ƒƒbƒVƒ…‚ğİ’è‚·‚é
+        // ä½œã‚Šç›´ã—ãŸãƒ¡ãƒƒã‚·ãƒ¥ã‚’è¨­å®šã™ã‚‹
         newObj.AddComponent<MeshRenderer>().material = meshFilters[0].GetComponent<MeshRenderer>().sharedMaterial;
 
-        // Œ³X‚ÌƒIƒuƒWƒFƒNƒg‚Í”jŠü‚·‚é
+        // å…ƒã€…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¯ç ´æ£„ã™ã‚‹
         foreach (var obj in gameObjects) Destroy(obj);
 
         return newObj;

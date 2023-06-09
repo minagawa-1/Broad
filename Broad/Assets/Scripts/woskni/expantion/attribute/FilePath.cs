@@ -1,19 +1,19 @@
-using System.IO;
+ï»¿using System.IO;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-/// <summary>ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚µ‚Äƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è</summary>
+/// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’æŒ‡å®š</summary>
 public class FilePathAttribute : PropertyAttribute
 {
     public FilePathType pathType { get; set; }
     public string delimiter { get; set; }
 
-    /// <summary>ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚µ‚Äƒtƒ@ƒCƒ‹ƒpƒX‚ğw’è</summary>
-    /// <param name="pathType">ƒtƒ@ƒCƒ‹ƒpƒX‚ÌŠJnˆÊ’u</param>
-    /// <param name="delimiter">ƒtƒ@ƒCƒ‹ƒpƒX‚Ì‹æØ‚è•¶š</param>
+    /// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’æŒ‡å®š</summary>
+    /// <param name="pathType">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®é–‹å§‹ä½ç½®</param>
+    /// <param name="delimiter">ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®åŒºåˆ‡ã‚Šæ–‡å­—</param>
     public FilePathAttribute(FilePathType pathType = FilePathType.RootDirectoryPath, string delimiter = "/")
     {
         this.pathType = pathType;
@@ -50,7 +50,7 @@ public class FilePathDrawer : PropertyDrawer
 
         Rect buttonRect = new Rect(position.xMax - button_width, position.y, button_width, position.height);
 
-        if (GUI.Button(buttonRect, "c"))
+        if (GUI.Button(buttonRect, "â€¦"))
         {
             string initialPath = GetInitialPath(pathType);
             string selectedPath = EditorUtility.OpenFilePanel("Select File", initialPath, string.Empty);
@@ -58,7 +58,7 @@ public class FilePathDrawer : PropertyDrawer
             {
                 path = PathConverter.Convert(selectedPath, pathType);
 
-                // ‹æØ‚è•¶š‚ªƒfƒtƒHƒ‹ƒg‚Å‚È‚¢ê‡‚Í‹æØ‚è•¶š‚ğ’uŠ·‚·‚é
+                // åŒºåˆ‡ã‚Šæ–‡å­—ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ãªã„å ´åˆã¯åŒºåˆ‡ã‚Šæ–‡å­—ã‚’ç½®æ›ã™ã‚‹
                 if(delimiter != "/") path = path.Replace("/", delimiter);
             }
         }

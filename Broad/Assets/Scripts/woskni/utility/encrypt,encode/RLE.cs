@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,26 +9,26 @@ namespace woskni
         public const string zero = "0";
         public const string one = "1";
 
-        /// <summary>ƒ‰ƒ“ƒŒƒ“ƒOƒX•„†‰»</summary>
-        /// <param name="plaintext">•½•¶ (—á: "0001110110")</param>
-        /// <returns>•„†•¶ (—á: "033121")</returns>
+        /// <summary>ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹ç¬¦å·åŒ–</summary>
+        /// <param name="plaintext">å¹³æ–‡ (ä¾‹: "0001110110")</param>
+        /// <returns>ç¬¦å·æ–‡ (ä¾‹: "033121")</returns>
         public static string Encode(string plaintext)
         {
             string encodedText = "";
 
-            // ”’l‚Ì˜A‘±‰ñ”
+            // æ•°å€¤ã®é€£ç¶šå›æ•°
             int counter = 1;
 
-            // 1‚©‚çn‚Ü‚é‘O’ñ‚È‚Ì‚ÅA0‚ªÅ‰‚Ìê‡‚Íæ“ª‚É1‚ª0ŒÂ‚Å‚ ‚é‚±‚Æ‚ğ–¾‹L‚·‚é
+            // 1ã‹ã‚‰å§‹ã¾ã‚‹å‰æãªã®ã§ã€0ãŒæœ€åˆã®å ´åˆã¯å…ˆé ­ã«1ãŒ0å€‹ã§ã‚ã‚‹ã“ã¨ã‚’æ˜è¨˜ã™ã‚‹
             if (plaintext.Substring(0, 1) == zero) encodedText += "0";
 
 
             for (int i = 1; i < plaintext.Length; ++i)
             {
-                // ‘O‚Ì”’l‚Æ“¯‚¶ê‡‚ÍƒJƒEƒ“ƒ^[‚ğ‘‚â‚·
+                // å‰ã®æ•°å€¤ã¨åŒã˜å ´åˆã¯ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’å¢—ã‚„ã™
                 if (plaintext.Substring(i, 1) == plaintext.Substring(i - 1, 1))
                     ++counter;
-                // ˆá‚¤ê‡‚Í˜A‘±”‚ğ•¶š—ñ‚ÉŠi”[‚µ‚ÄƒJƒEƒ“ƒ^[ƒŠƒZƒbƒg
+                // é•ã†å ´åˆã¯é€£ç¶šæ•°ã‚’æ–‡å­—åˆ—ã«æ ¼ç´ã—ã¦ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãƒªã‚»ãƒƒãƒˆ
                 else
                 {
                     encodedText += counter.ToString();
@@ -36,13 +36,13 @@ namespace woskni
                 }
             }
 
-            // ÅŒã‚ÌƒJƒEƒ“ƒ^[‚ğŠi”[‚µ‚Äreturn
+            // æœ€å¾Œã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’æ ¼ç´ã—ã¦return
             return encodedText + counter.ToString();
         }
 
-        /// <summary>ƒ‰ƒ“ƒŒƒ“ƒOƒX•œ†‰»</summary>
-        /// <param name="ciphertext">•„†•¶ (—á: "24151")</param>
-        /// /// <returns>•œ†•¶ (—á: "1100001000001")</returns>
+        /// <summary>ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹å¾©å·åŒ–</summary>
+        /// <param name="ciphertext">ç¬¦å·æ–‡ (ä¾‹: "24151")</param>
+        /// /// <returns>å¾©å·æ–‡ (ä¾‹: "1100001000001")</returns>
         public static string Decode(string ciphertext)
         {
             string decodedText = "";
@@ -51,7 +51,7 @@ namespace woskni
             {
                 int repeat = int.Parse(ciphertext.Substring(i, 1));
 
-                // Šï””Ô–Ú‚Ì”’l‚Í1,‹ô””Ô–Ú‚Ì”’l‚Í0 ‚Ì˜A‘±”
+                // å¥‡æ•°ç•ªç›®ã®æ•°å€¤ã¯1,å¶æ•°ç•ªç›®ã®æ•°å€¤ã¯0 ã®é€£ç¶šæ•°
                 decodedText += i % 2 == 0 ? one.Repeat(repeat) : zero.Repeat(repeat);
             }
 

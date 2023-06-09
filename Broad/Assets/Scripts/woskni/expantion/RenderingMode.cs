@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,7 +68,7 @@ namespace woskni
             return material;
         }
 
-        /// <summary>ƒuƒŒƒ“ƒhƒ‚[ƒh‚ğæ“¾</summary>
+        /// <summary>ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—</summary>
         /// <param name="material"></param>
         /// <returns></returns>
         public static Mode GetBlendMode(Material material)

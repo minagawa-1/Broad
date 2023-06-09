@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,55 +9,55 @@ namespace woskni
     [System.Serializable]
     public struct Range : IEquatable<Range>, IFormattable
     {
-        /// <summary>Å¬’l</summary>
+        /// <summary>æœ€å°å€¤</summary>
         public float min;
 
-        /// <summary>Å‘å’l</summary>
+        /// <summary>æœ€å¤§å€¤</summary>
         public float max;
 
-        /// <summary>ƒRƒ“ƒXƒgƒ‰ƒNƒ^</summary>
-        /// <param name="min">Å¬’l</param>
-        /// <param name="max">Å‘å’l</param>
+        /// <summary>ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿</summary>
+        /// <param name="min">æœ€å°å€¤</param>
+        /// <param name="max">æœ€å¤§å€¤</param>
         public Range(float min, float max) { this.max = max; this.min = min; }
 
-        /// <summary>”ÍˆÍ“àŒŸ’m</summary>
-        /// <param name="value">•‚“®¬”“_Œ^‚ÌŒŸõ’l</param>
-        /// <returns>ˆø”’l‚ª”ÍˆÍ“à‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‚©</returns>
+        /// <summary>ç¯„å›²å†…æ¤œçŸ¥</summary>
+        /// <param name="value">æµ®å‹•å°æ•°ç‚¹å‹ã®æ¤œç´¢å€¤</param>
+        /// <returns>å¼•æ•°å€¤ãŒç¯„å›²å†…ã«å«ã¾ã‚Œã¦ã„ã‚‹ã‹</returns>
         public bool IsIn(float value) => min <= value && value <= max;
 
-        /// <summary>”ÍˆÍ“à‚Ìû‘©’læ“¾</summary>
-        /// <param name="value">”ÍˆÍ“à‚Éû‘©‚³‚¹‚é”’l</param>
-        /// <returns>û‘©‚³‚ê‚½”’l</returns>
+        /// <summary>ç¯„å›²å†…ã®åæŸå€¤å–å¾—</summary>
+        /// <param name="value">ç¯„å›²å†…ã«åæŸã•ã›ã‚‹æ•°å€¤</param>
+        /// <returns>åæŸã•ã‚ŒãŸæ•°å€¤</returns>
         public float GetIn(float value) => Mathf.Max(min, Mathf.Min(value, max));
 
-        /// <summary>”ÍˆÍŠO‚Ì”­U’læ“¾</summary>
-        /// <param name="value">”ÍˆÍŠO‚É”­U‚³‚¹‚é”’l</param>
-        /// <returns>”­U‚³‚ê‚½”’l</returns>
+        /// <summary>ç¯„å›²å¤–ã®ç™ºæ•£å€¤å–å¾—</summary>
+        /// <param name="value">ç¯„å›²å¤–ã«ç™ºæ•£ã•ã›ã‚‹æ•°å€¤</param>
+        /// <returns>ç™ºæ•£ã•ã‚ŒãŸæ•°å€¤</returns>
         public float GetOut(float value) => !IsIn(value) ? value : ( value - min >= (max - min) / 2f ? max : min );
 
-        /// <summary>”ÍˆÍŠgk‚µ‚½’l‚Ìæ“¾</summary>
-        /// <param name="beforeValue">‹Œ”ÍˆÍ‚Ì’l</param>
-        /// <param name="beforeRange">‹Œ”ÍˆÍ</param>
-        /// <returns>Šgk‚µ‚½”ÍˆÍ‚Ì’l</returns>
+        /// <summary>ç¯„å›²æ‹¡ç¸®ã—ãŸå€¤ã®å–å¾—</summary>
+        /// <param name="beforeValue">æ—§ç¯„å›²ã®å€¤</param>
+        /// <param name="beforeRange">æ—§ç¯„å›²</param>
+        /// <returns>æ‹¡ç¸®ã—ãŸç¯„å›²ã®å€¤</returns>
         public float GetCompress(float beforeValue, Range beforeRange) => GetCompress(beforeValue, beforeRange.min, beforeRange.max);
 
-        /// <summary>”ÍˆÍŠgk‚µ‚½’l‚Ìæ“¾</summary>
-        /// <param name="beforeValue">‹Œ”ÍˆÍ‚Ì’l</param>
-        /// <param name="min">‹Œ”ÍˆÍ‚ÌÅ¬’l</param>
-        /// <param name="max">‹Œ”ÍˆÍ‚ÌÅ‘å’l</param>
-        /// <returns>Šgk‚µ‚½”ÍˆÍ‚Ì’l</returns>
+        /// <summary>ç¯„å›²æ‹¡ç¸®ã—ãŸå€¤ã®å–å¾—</summary>
+        /// <param name="beforeValue">æ—§ç¯„å›²ã®å€¤</param>
+        /// <param name="min">æ—§ç¯„å›²ã®æœ€å°å€¤</param>
+        /// <param name="max">æ—§ç¯„å›²ã®æœ€å¤§å€¤</param>
+        /// <returns>æ‹¡ç¸®ã—ãŸç¯„å›²ã®å€¤</returns>
         public float GetCompress(float beforeValue, float min, float max) => (this.max - this.min) * ((beforeValue - min) / (max - min)) + this.min;
 
-        /// <summary>”ÍˆÍ“à‚Ìû‘©’læ“¾(min, max‚©‚ç‚Ì·•ª‚ğc‚·)</summary>
-        /// <param name="value">”ÍˆÍ“à‚Éû‘©‚³‚¹‚é”’l</param>
-        /// <returns>û‘©‚³‚ê‚½”’l</returns>
+        /// <summary>ç¯„å›²å†…ã®åæŸå€¤å–å¾—(min, maxã‹ã‚‰ã®å·®åˆ†ã‚’æ®‹ã™)</summary>
+        /// <param name="value">ç¯„å›²å†…ã«åæŸã•ã›ã‚‹æ•°å€¤</param>
+        /// <returns>åæŸã•ã‚ŒãŸæ•°å€¤</returns>
         public float GetAround(float value) => IsIn(value) ? value : GetAround((value > max ? value - (max - min) : value + (max - min)));
 
-        /// <summary>”ÍˆÍ“à‚Ìƒ‰ƒ“ƒ_ƒ€‚È’læ“¾</summary>
-        /// <returns>—”’l</returns>
+        /// <summary>ç¯„å›²å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤å–å¾—</summary>
+        /// <returns>ä¹±æ•°å€¤</returns>
         public float Random() => UnityEngine.Random.Range(min, max);
 
-        /// <summary>ƒfƒoƒbƒOƒƒO</summary>
+        /// <summary>ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°</summary>
         public void DebugLog() => Debug.Log("min: " + min.ToString() + ", max: " + max.ToString());
 
         bool IEquatable<Range>.Equals(Range other) { return Equals(this, other); }
@@ -69,16 +69,16 @@ namespace woskni
 [CustomPropertyDrawer(typeof(woskni.Range))]
 public class RangeDrawer : PropertyDrawer
 {
-    Rect                wholeRect;  // ‘S‘Ì‚Ì•
-    float               partialSum; // QÆ’†A¡‚Ü‚Å‚ÌƒvƒƒpƒeƒB‚Ì‰¡•‚Ì‡Œv
-    SerializedProperty  property;   // ƒvƒƒpƒeƒB
+    Rect                wholeRect;  // å…¨ä½“ã®å¹…
+    float               partialSum; // å‚ç…§ä¸­ã€ä»Šã¾ã§ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®æ¨ªå¹…ã®åˆè¨ˆ
+    SerializedProperty  property;   // ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        // •‚Ìİ’è
+        // å¹…ã®è¨­å®š
         EditorGUIUtility.labelWidth = 80f + EditorGUI.indentLevel * 20f;
 
-        // ƒvƒƒpƒeƒB•\¦•”•ª‚Ìì¬
+        // ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£è¡¨ç¤ºéƒ¨åˆ†ã®ä½œæˆ
         label = EditorGUI.BeginProperty(position, label, property);
         {
             Initialize(position, property, label);
@@ -101,14 +101,14 @@ public class RangeDrawer : PropertyDrawer
         wholeRect       = EditorGUI.PrefixLabel(position, label);
     }
 
-    /// <summary>•‚ğŠ„‡‚Åw’è‚µ‚ÄƒvƒƒpƒeƒB‚ğ‚Ps‚Å•\¦</summary>
-    /// <param name="widthRate">“ü—ÍƒvƒƒpƒeƒB‚Ì•(0 to 1)</param>
-    /// <param name="propertyName">•\¦‚³‚¹‚éƒvƒƒpƒeƒB–¼</param>
-    /// <param name="label">ƒ‰ƒxƒ‹–¼</param>
-    /// <param name="labelWidth">ƒ‰ƒxƒ‹•</param>
+    /// <summary>å¹…ã‚’å‰²åˆã§æŒ‡å®šã—ã¦ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’ï¼‘è¡Œã§è¡¨ç¤º</summary>
+    /// <param name="widthRate">å…¥åŠ›ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®å¹…(0 to 1)</param>
+    /// <param name="propertyName">è¡¨ç¤ºã•ã›ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£å</param>
+    /// <param name="label">ãƒ©ãƒ™ãƒ«å</param>
+    /// <param name="labelWidth">ãƒ©ãƒ™ãƒ«å¹…</param>
     void DivideField(float widthRate, string propertyName, string label = "", float labelWidth = 0)
     {
-        // ˆø”‚ª‹K’è‚É]‚Á‚Ä‚¢‚é‚©‚ÌŠÄ¸
+        // å¼•æ•°ãŒè¦å®šã«å¾“ã£ã¦ã„ã‚‹ã‹ã®ç›£æŸ»
         Debug.Assert(0f < widthRate && widthRate <= 1f);
         Debug.Assert(!string.IsNullOrEmpty(propertyName));
         Debug.Assert(label != null);
@@ -122,7 +122,7 @@ public class RangeDrawer : PropertyDrawer
         var item = property.FindPropertyRelative(propertyName);
 
         if (item != null) EditorGUI.PropertyField(rect, item, new GUIContent(label));
-        else Debug.LogWarningFormat("ƒvƒƒpƒeƒB‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½:  '{0}' in '{1}'", propertyName, this.GetType());
+        else Debug.LogWarningFormat("ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ:  '{0}' in '{1}'", propertyName, this.GetType());
     }
 }
 #endif

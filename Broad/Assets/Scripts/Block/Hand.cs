@@ -1,88 +1,88 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>èD</summary>
+/// <summary>æ‰‹æœ­</summary>
 public class Hand
 {
     public const int m_default_max_hand_blocks = 4;
 
-    /// <summary>èD‚É“ü‚ê‚ç‚ê‚éƒuƒƒbƒNƒX‚Ì”</summary>
+    /// <summary>æ‰‹æœ­ã«å…¥ã‚Œã‚‰ã‚Œã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã®æ•°</summary>
     public int maxHandBlocks { get; private set; }
 
-    /// <summary>èD‚Ì”z—ñî•ñ</summary>
+    /// <summary>æ‰‹æœ­ã®é…åˆ—æƒ…å ±</summary>
     public Blocks[] hand { get; private set; }
 
-    /// <summary>ƒfƒbƒLƒNƒ‰ƒX</summary>
+    /// <summary>ãƒ‡ãƒƒã‚­ã‚¯ãƒ©ã‚¹</summary>
     private readonly Deck m_Deck;
 
-    /// <summary>ƒRƒ“ƒXƒgƒ‰ƒNƒ^</summary>
-    /// <param name="deck">ƒhƒ[‚·‚é‚½‚ß‚ÌƒfƒbƒL</param>
-    /// <param name="maxHandBlocks">èD‚ÌÅ‘åƒuƒƒbƒNƒX”</param>
+    /// <summary>ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿</summary>
+    /// <param name="deck">ãƒ‰ãƒ­ãƒ¼ã™ã‚‹ãŸã‚ã®ãƒ‡ãƒƒã‚­</param>
+    /// <param name="maxHandBlocks">æ‰‹æœ­ã®æœ€å¤§ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æ•°</param>
     public Hand(Deck deck, int maxHandBlocks = m_default_max_hand_blocks)
     {
         this.maxHandBlocks = maxHandBlocks;
 
-        // ƒfƒbƒL‚ÌƒRƒs[‚ğì¬‚µ‚Äæ“¾
+        // ãƒ‡ãƒƒã‚­ã®ã‚³ãƒ”ãƒ¼ã‚’ä½œæˆã—ã¦å–å¾—
         m_Deck = new Deck(deck.deck.ToArray());
 
         hand = new Blocks[maxHandBlocks];
 
-        // èD‚Ì”‚¾‚¯ƒhƒ[‚·‚é
+        // æ‰‹æœ­ã®æ•°ã ã‘ãƒ‰ãƒ­ãƒ¼ã™ã‚‹
         for (int i = 0; i < maxHandBlocks; ++i) DrawAt();
     }
 
-    /// <summary>RD‚©‚çèD‚Éƒhƒ[</summary>
-    /// <param name="index">æ“¾‚·‚éƒuƒƒbƒNƒX”Ô†</param>
-    /// <returns>ƒhƒ[‚³‚ê‚½ƒuƒƒbƒNƒX</returns>
+    /// <summary>å±±æœ­ã‹ã‚‰æ‰‹æœ­ã«ãƒ‰ãƒ­ãƒ¼</summary>
+    /// <param name="index">å–å¾—ã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ç•ªå·</param>
+    /// <returns>ãƒ‰ãƒ­ãƒ¼ã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯ã‚¹</returns>
     public Blocks DrawAt()
     {
-        // èD‚©‚ç‹ó‚¢‚Ä‚¢‚éêŠ‚ğ’T‚·
+        // æ‰‹æœ­ã‹ã‚‰ç©ºã„ã¦ã„ã‚‹å ´æ‰€ã‚’æ¢ã™
         int[] blanks = FindBlank();
 
-        // èD‚ª–”t‚È‚çƒGƒ‰[‚ğ“f‚¢‚ÄI—¹
-        Debug.Assert(blanks.Length > 0, $"èD‚ª–”t‚Å‚·Bmax: {hand.Length}");
+        // æ‰‹æœ­ãŒæº€æ¯ãªã‚‰ã‚¨ãƒ©ãƒ¼ã‚’åã„ã¦çµ‚äº†
+        Debug.Assert(blanks.Length > 0, $"æ‰‹æœ­ãŒæº€æ¯ã§ã™ã€‚max: {hand.Length}");
 
-        // RD‚©‚çƒhƒ[‚µ‚Äreturn
+        // å±±æœ­ã‹ã‚‰ãƒ‰ãƒ­ãƒ¼ã—ã¦return
         hand[blanks[0]] = m_Deck.Draw();
 
         return hand[blanks[0]];
     }
 
-    /// <summary>èD‚©‚çê‚Éo‚·</summary>
-    /// <param name="index">æ“¾‚·‚éƒuƒƒbƒNƒX”Ô†</param>
-    /// <returns>ê‚Éo‚·ƒuƒƒbƒNƒX</returns>
+    /// <summary>æ‰‹æœ­ã‹ã‚‰å ´ã«å‡ºã™</summary>
+    /// <param name="index">å–å¾—ã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ç•ªå·</param>
+    /// <returns>å ´ã«å‡ºã™ãƒ–ãƒ­ãƒƒã‚¯ã‚¹</returns>
     public Blocks PlayAt(int index)
     {
-        // ”z—ñŠOQÆ‚µ‚Ä‚¢‚ê‚ÎƒGƒ‰[‚ğ“f‚¢‚ÄI—¹
-        Debug.Assert(!hand.IsProtrude(index), $"”z—ñŠOQÆ: hand[{index}] <- Length: {hand.Length}");
+        // é…åˆ—å¤–å‚ç…§ã—ã¦ã„ã‚Œã°ã‚¨ãƒ©ãƒ¼ã‚’åã„ã¦çµ‚äº†
+        Debug.Assert(!hand.IsProtrude(index), $"é…åˆ—å¤–å‚ç…§: hand[{index}] <- Length: {hand.Length}");
 
-        // QÆ‚µ‚½èD‚ÉƒuƒƒbƒNƒX‚ª‚È‚¢ê‡‚ÍƒGƒ‰[‚ğ“f‚¢‚ÄI—¹
-        Debug.Assert(!(hand[index] == null), $"{index}”Ô–Ú‚ÌƒuƒƒbƒNƒX‚ª{null}‚Å‚·");
+        // å‚ç…§ã—ãŸæ‰‹æœ­ã«ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ãŒãªã„å ´åˆã¯ã‚¨ãƒ©ãƒ¼ã‚’åã„ã¦çµ‚äº†
+        Debug.Assert(!(hand[index] == null), $"{index}ç•ªç›®ã®ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ãŒ{null}ã§ã™");
 
-        // èD‚Ìindex”Ô–Ú‚ğ•Ô‚µ‚ÄèD‚©‚çíœ
+        // æ‰‹æœ­ã®indexç•ªç›®ã‚’è¿”ã—ã¦æ‰‹æœ­ã‹ã‚‰å‰Šé™¤
         var blocks = hand[index];
         hand[index] = null;
         return blocks;
     }
 
-    /// <summary>èD‚©‚çƒuƒƒbƒNƒXî•ñ‚ğæ“¾(ê‚É‚Ío‚³‚È‚¢)</summary>
-    /// <param name="index">æ“¾‚·‚éƒuƒƒbƒNƒX”Ô†</param>
+    /// <summary>æ‰‹æœ­ã‹ã‚‰ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æƒ…å ±ã‚’å–å¾—(å ´ã«ã¯å‡ºã•ãªã„)</summary>
+    /// <param name="index">å–å¾—ã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ç•ªå·</param>
     public Blocks GetBlocksAt(int index)
     {
-        // ”z—ñŠOQÆ‚µ‚Ä‚¢‚ê‚ÎƒGƒ‰[‚ğ“f‚¢‚ÄI—¹
-        Debug.Assert(!hand.IsProtrude(index), $"”z—ñŠOQÆ: hand[{index}] <- Length: {hand.Length}");
+        // é…åˆ—å¤–å‚ç…§ã—ã¦ã„ã‚Œã°ã‚¨ãƒ©ãƒ¼ã‚’åã„ã¦çµ‚äº†
+        Debug.Assert(!hand.IsProtrude(index), $"é…åˆ—å¤–å‚ç…§: hand[{index}] <- Length: {hand.Length}");
 
         return hand[index];
     }
 
-    /// <summary>èD‚ÉƒuƒƒbƒNƒXî•ñ‚ğİ’è</summary>
-    /// <param name="index">İ’è‚·‚éƒuƒƒbƒNƒX”Ô†</param>
-    /// <param name="blocks">İ’è‚·‚éƒuƒƒbƒNƒXî•ñ</param>
+    /// <summary>æ‰‹æœ­ã«ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æƒ…å ±ã‚’è¨­å®š</summary>
+    /// <param name="index">è¨­å®šã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ç•ªå·</param>
+    /// <param name="blocks">è¨­å®šã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹æƒ…å ±</param>
     public void SetBlocksAt(int index, Blocks blocks)
     {
-        // ”z—ñŠOQÆ‚µ‚Ä‚¢‚ê‚ÎƒGƒ‰[‚ğ“f‚¢‚ÄI—¹
-        Debug.Assert(!hand.IsProtrude(index), $"”z—ñŠOQÆ: hand[{index}] <- Length: {hand.Length}");
+        // é…åˆ—å¤–å‚ç…§ã—ã¦ã„ã‚Œã°ã‚¨ãƒ©ãƒ¼ã‚’åã„ã¦çµ‚äº†
+        Debug.Assert(!hand.IsProtrude(index), $"é…åˆ—å¤–å‚ç…§: hand[{index}] <- Length: {hand.Length}");
 
         hand[index] = blocks;
     }

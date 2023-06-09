@@ -1,13 +1,13 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public struct Board
 {
-    public int[] data;   // ƒ{[ƒhî•ñ
+    public int[] data;   // ãƒœãƒ¼ãƒ‰æƒ…å ±
 
-    public int width;   // ƒ{[ƒhî•ñ
-    public int height;   // ƒ{[ƒhî•ñ
+    public int width;   // ãƒœãƒ¼ãƒ‰æƒ…å ±
+    public int height;   // ãƒœãƒ¼ãƒ‰æƒ…å ±
 
     public Board(int width, int height)
     {
@@ -22,32 +22,32 @@ public struct Board
         data = new int[width * height];
     }
 
-    /// <summary>İ’u•s‰Âƒ}ƒX‚ÌŒˆ’è</summary>
-    /// <remarks>ƒp[ƒŠƒ“ƒmƒCƒY‚ÅŒˆ’è‚·‚é</remarks>
-    /// <param name="boardSize">ƒ{[ƒhƒTƒCƒY</param>
+    /// <summary>è¨­ç½®ä¸å¯ãƒã‚¹ã®æ±ºå®š</summary>
+    /// <remarks>ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºã§æ±ºå®šã™ã‚‹</remarks>
+    /// <param name="boardSize">ãƒœãƒ¼ãƒ‰ã‚µã‚¤ã‚º</param>
     public void ShaveBoard()
     {
-        // ƒp[ƒŠƒ“ƒmƒCƒY‚ÌƒV[ƒh’l
+        // ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºã®ã‚·ãƒ¼ãƒ‰å€¤
         Vector2 seed = new Vector2(Random.value, Random.value) * 100f;
 
         for (int y = 0; y < width; ++y)
         {
             for (int x = 0; x < height; ++x)
             {
-                // ƒp[ƒŠƒ“ƒmƒCƒY‚ÌƒTƒ“ƒvƒŠƒ“ƒO‚ğ‚µ‚Äİ’u•s‰Âƒ}ƒX‚É‚·‚éŠm—¦‚ğŒˆ‚ß‚é
+                // ãƒ‘ãƒ¼ãƒªãƒ³ãƒã‚¤ã‚ºã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã‚’ã—ã¦è¨­ç½®ä¸å¯ãƒã‚¹ã«ã™ã‚‹ç¢ºç‡ã‚’æ±ºã‚ã‚‹
                 Vector2 value = new Vector2(x, y) * GameSetting.instance.perlinScale + seed;
                 float perlinValue = Mathf.PerlinNoise(value.x, value.y);
 
                 if (perlinValue >= GameSetting.instance.boardViability)
                 {
-                    // İ’u•s‰Â‚É‚·‚é
+                    // è¨­ç½®ä¸å¯ã«ã™ã‚‹
                     SetBoardData(-1, x, y);
                 }
             }
         }
     }
 
-    /// <summary>“ñŸŒ³‚Ìƒ{[ƒhî•ñ‚ğæ“¾</summary>
+    /// <summary>äºŒæ¬¡å…ƒã®ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’å–å¾—</summary>
     public int[,] GetBoard()
     {
         int[,] deserializedBoard = new int[width, height];
@@ -64,7 +64,7 @@ public struct Board
         return deserializedBoard;
     }
 
-    /// <summary>“ñŸŒ³‚Ìƒ{[ƒhî•ñ‚ğİ’è</summary>
+    /// <summary>äºŒæ¬¡å…ƒã®ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’è¨­å®š</summary>
     public void SetBoard(int[,] deserializedBoard)
     {
         for (int y = 0; y < height; ++y)
@@ -72,23 +72,23 @@ public struct Board
                 data[y * width + x] = deserializedBoard[x, y];
     }
 
-    /// <summary>À•W‚©‚çƒ{[ƒhî•ñ‚ğæ“¾</summary>
-    /// <param name="x">xÀ•W</param>
-    /// <param name="y">yÀ•W</param>
+    /// <summary>åº§æ¨™ã‹ã‚‰ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’å–å¾—</summary>
+    /// <param name="x">xåº§æ¨™</param>
+    /// <param name="y">yåº§æ¨™</param>
     public int GetBoardData(int x, int y) => data[y * width + x];
 
-    /// <summary>À•W‚©‚çƒ{[ƒhî•ñ‚ğæ“¾</summary>
-    /// <param name="position">xÀ•W</param>
+    /// <summary>åº§æ¨™ã‹ã‚‰ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’å–å¾—</summary>
+    /// <param name="position">xåº§æ¨™</param>
     public int GetBoardData(Vector2Int position) => data[position.y * width + position.x];
 
-    /// <summary>À•W‚©‚çƒ{[ƒhî•ñ‚ğİ’è</summary>
-    /// <param name="value">ƒ{[ƒh‚Ìó‘Ô’l</param>
-    /// <param name="x">xÀ•W</param>
-    /// <param name="y">yÀ•W</param>
+    /// <summary>åº§æ¨™ã‹ã‚‰ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’è¨­å®š</summary>
+    /// <param name="value">ãƒœãƒ¼ãƒ‰ã®çŠ¶æ…‹å€¤</param>
+    /// <param name="x">xåº§æ¨™</param>
+    /// <param name="y">yåº§æ¨™</param>
     public void SetBoardData(int value, int x, int y) => data[y * width + x] = value;
 
-    /// <summary>À•W‚©‚çƒ{[ƒhî•ñ‚ğæ“¾</summary>
-    /// <param name="value">ƒ{[ƒh‚Ìó‘Ô’l</param>
-    /// <param name="position">xÀ•W</param>
+    /// <summary>åº§æ¨™ã‹ã‚‰ãƒœãƒ¼ãƒ‰æƒ…å ±ã‚’å–å¾—</summary>
+    /// <param name="value">ãƒœãƒ¼ãƒ‰ã®çŠ¶æ…‹å€¤</param>
+    /// <param name="position">xåº§æ¨™</param>
     public void SetBoardData(int value, Vector2Int position) => data[position.y * width + position.x] = value;
 }

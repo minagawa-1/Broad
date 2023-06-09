@@ -1,4 +1,4 @@
-public static class BooleanExpansion
+﻿public static class BooleanExpansion
 {
     public static int ToInt(this bool sorce) => System.Convert.ToInt32(sorce);
 

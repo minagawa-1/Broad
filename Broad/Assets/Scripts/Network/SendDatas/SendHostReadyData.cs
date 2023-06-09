@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -6,7 +6,7 @@ using Mirror;
 [System.Serializable]
 public struct HostReadyData:NetworkMessage
 {
-    public bool isHostReady;    // ƒzƒXƒg€”õƒtƒ‰ƒO
+    public bool isHostReady;    // ãƒ›ã‚¹ãƒˆæº–å‚™ãƒ•ãƒ©ã‚°
 
     public HostReadyData(bool ready)
     {

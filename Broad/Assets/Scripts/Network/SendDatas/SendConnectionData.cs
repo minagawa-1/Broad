@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -6,7 +6,7 @@ using Mirror;
 [System.Serializable]
 public struct ConnectionData : NetworkMessage
 {
-    public int playerCount;     // Ú‘±‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[”
+    public int playerCount;     // æ¥ç¶šã—ã¦ã„ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ•°
 
     public ConnectionData(int count)
     {

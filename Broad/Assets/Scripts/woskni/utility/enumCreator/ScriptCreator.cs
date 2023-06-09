@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class ScriptCreator : MonoBehaviour
 {
-    /// <summary>–³Œø•¶š‚Ìˆê——</summary>
+    /// <summary>ç„¡åŠ¹æ–‡å­—ã®ä¸€è¦§</summary>
     public static readonly string[] invalid_chars =
     {
         " ", "!", "\"", "#", "$",
@@ -20,9 +20,9 @@ public class ScriptCreator : MonoBehaviour
         ",", "<"
     };
 
-    /// <summary>ƒXƒNƒŠƒvƒg‚ğì¬</summary>
-    /// <param name="content">ƒXƒNƒŠƒvƒg“à‚Ì•¶š—ñ</param>
-    /// <param name="path">ì¬‚·‚éƒtƒ@ƒCƒ‹ƒpƒX(Assets/`)</param>
+    /// <summary>ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ä½œæˆ</summary>
+    /// <param name="content">ã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…ã®æ–‡å­—åˆ—</param>
+    /// <param name="path">ä½œæˆã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹(Assets/ï½)</param>
     public static void Create(string content, string path = "Assets/Example.cs")
     {
         var directoryName = Path.GetDirectoryName(path);
@@ -32,15 +32,15 @@ public class ScriptCreator : MonoBehaviour
         AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive);
     }
 
-    /// <summary>ƒXƒNƒŠƒvƒg‚ğì¬</summary>
-    /// <param name="content">ƒXƒNƒŠƒvƒg“à‚Ì•¶š—ñ</param>
-    /// <param name="path">ì¬‚·‚éƒtƒ@ƒCƒ‹ƒpƒX(Assets/`)</param>
+    /// <summary>ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ä½œæˆ</summary>
+    /// <param name="content">ã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…ã®æ–‡å­—åˆ—</param>
+    /// <param name="path">ä½œæˆã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹(Assets/ï½)</param>
     public static void Create(StringBuilder content, string path = "Assets/Example.cs") =>  Create(content.ToString(), path);
 
-    /// <summary>ƒNƒ‰ƒX‚ğì¬‚Å‚«‚é‚©</summary>
+    /// <summary>ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã§ãã‚‹ã‹</summary>
     public static bool CanCreate() => !EditorApplication.isPlaying && !Application.isPlaying && !EditorApplication.isCompiling;
 
-    /// <summary>–³Œø•¶š‚ğíœ</summary>
+    /// <summary>ç„¡åŠ¹æ–‡å­—ã‚’å‰Šé™¤</summary>
     public static string RemoveInvalidChars(string str)
     {
         Array.ForEach(invalid_chars, c => str = str.Replace(c, string.Empty));

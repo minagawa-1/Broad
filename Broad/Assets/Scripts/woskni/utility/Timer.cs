@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,36 +12,36 @@ namespace woskni
     [System.Serializable]
     public struct Timer : IEquatable<Timer>
     {
-        /// <summary>ƒ^ƒCƒ}[‚Ì‘¬“x”{—¦</summary>
+        /// <summary>ã‚¿ã‚¤ãƒãƒ¼ã®é€Ÿåº¦å€ç‡</summary>
         public float timeScale;
 
-        /// <summary>Œ»İ‚ÌŒo‰ß•b”</summary>
+        /// <summary>ç¾åœ¨ã®çµŒéç§’æ•°</summary>
         public float time;
 
-        /// <summary>I—¹ŠÔ(•b)</summary>
+        /// <summary>çµ‚äº†æ™‚é–“(ç§’)</summary>
         public float limit;
 
-        /// <summary>I—¹ŠÔ‚Ì‰Šúİ’è</summary>
-        /// <param name="limit">I—¹ŠÔ</param>
+        /// <summary>çµ‚äº†æ™‚é–“ã®åˆæœŸè¨­å®š</summary>
+        /// <param name="limit">çµ‚äº†æ™‚é–“</param>
         public void Setup(float limit) { time = 0.0f; this.limit = limit; timeScale = 1f; }
 
-        /// <summary>Œo‰ßŠÔ‚Ì‰Šú‰»</summary>
+        /// <summary>çµŒéæ™‚é–“ã®åˆæœŸåŒ–</summary>
         public void Reset() { time = 0.0f; timeScale = 1f; }
 
-        /// <summary>ƒ^ƒCƒ}[XV</summary>
-        /// <param name="affectScale">Time.timeScale‚Ì‰e‹¿‚ğó‚¯‚é‚©</param>
+        /// <summary>ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°</summary>
+        /// <param name="affectScale">Time.timeScaleã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹</param>
         public void Update(bool affectScale = true) => time += affectScale ? Time.deltaTime * timeScale : Time.unscaledDeltaTime * timeScale;
 
-        /// <summary>ƒ^ƒCƒ}[‚ğI—¹‚³‚¹‚é</summary>
+        /// <summary>ã‚¿ã‚¤ãƒãƒ¼ã‚’çµ‚äº†ã•ã›ã‚‹</summary>
         public void Fin() => time = limit;
 
-        /// <summary>I—¹Ï‚İŒŸ’m</summary>
+        /// <summary>çµ‚äº†æ¸ˆã¿æ¤œçŸ¥</summary>
         public bool IsFinished() => time >= limit;
 
-        /// <summary>ŠJnÏ‚İŒŸ’m</summary>
+        /// <summary>é–‹å§‹æ¸ˆã¿æ¤œçŸ¥</summary>
         public bool IsStarted() => time > 0f;
 
-        /// <summary>ƒfƒoƒbƒOƒƒO</summary>
+        /// <summary>ãƒ‡ãƒãƒƒã‚°ãƒ­ã‚°</summary>
         public string DebugLog(bool isOutputLog = true, string name = "")
         {
             if(name == "") name =  ToString();
@@ -71,14 +71,14 @@ namespace woskni
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            // limitƒvƒƒpƒeƒB‚ÌSerializedProperty‚ğæ“¾
+            // limitãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®SerializedPropertyã‚’å–å¾—
             SerializedProperty limitProperty = property.FindPropertyRelative("limit");
 
-            // ƒ‰ƒxƒ‹‚Ì•\¦
+            // ãƒ©ãƒ™ãƒ«ã®è¡¨ç¤º
             label.text += ".limit";
             EditorGUI.LabelField(position, label);
 
-            // limitƒvƒƒpƒeƒB‚Ì‚İ•\¦
+            // limitãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®ã¿è¡¨ç¤º
             Rect prefix = EditorGUI.PrefixLabel(position, label);
             limitProperty.floatValue = EditorGUI.FloatField(prefix, limitProperty.floatValue);
 

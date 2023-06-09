@@ -1,15 +1,15 @@
-using System.Linq;
+ï»¿using System.Linq;
 
 namespace woskni
 {
     /// <summary>
-    /// —ñ‹“Œ^‚ÉŠÖ‚·‚é”Ä—pƒNƒ‰ƒX
+    /// åˆ—æŒ™å‹ã«é–¢ã™ã‚‹æ±ç”¨ã‚¯ãƒ©ã‚¹
     /// </summary>
     public static class Enum
     {
-        private static readonly System.Random m_Rand = new System.Random();  // —”
+        private static readonly System.Random m_Rand = new System.Random();  // ä¹±æ•°
 
-        /// <summary>w’è‚³‚ê‚½—ñ‹“Œ^‚Ìƒ‰ƒ“ƒ_ƒ€‚È—ñ‹“q‚ğ•Ô‚·</summary>
+        /// <summary>æŒ‡å®šã•ã‚ŒãŸåˆ—æŒ™å‹ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåˆ—æŒ™å­ã‚’è¿”ã™</summary>
         public static T Random<T>()
         {
             return System.Enum.GetValues(typeof(T))
@@ -18,7 +18,7 @@ namespace woskni
                 .FirstOrDefault();
         }
 
-        /// <summary>—ñ‹“Œ^‚Ì—ñ‹“q‚Ì”‚ğ•Ô‚·</summary>
+        /// <summary>åˆ—æŒ™å‹ã®åˆ—æŒ™å­ã®æ•°ã‚’è¿”ã™</summary>
         public static int GetLength<T>()
         {
             return System.Enum.GetValues(typeof(T)).Length;

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +6,17 @@ namespace woskni
 {
     public partial class Math
     {
-        /// <summary>‘f””»’è</summary>
-        /// <param name="num">ŒŸõ’l</param>
-        /// <returns>‘f”‚©”Û‚©</returns>
+        /// <summary>ç´ æ•°åˆ¤å®š</summary>
+        /// <param name="num">æ¤œç´¢å€¤</param>
+        /// <returns>ç´ æ•°ã‹å¦ã‹</returns>
         public static bool IsPrime(long num)
         {
-            // ‚RˆÈ‰ºE‹ô”‚Íæ‚É”»’f
+            // ï¼“ä»¥ä¸‹ãƒ»å¶æ•°ã¯å…ˆã«åˆ¤æ–­
             if (num < 2) return false;
             if (num == 2 || num == 3) return true;
             if (num % 2 == 0 || num % 3 == 0) return false;
 
-            // 5ˆÈã‚Ì‘f”‚Í‘S‚Ä6n}1
+            // 5ä»¥ä¸Šã®ç´ æ•°ã¯å…¨ã¦6nÂ±1
             int sqrtNum = (int)System.Math.Sqrt(num);
             for (int i = 6; i <= sqrtNum; i += 6)
                 if (num % i - 1 == 0 || num % (i + 1) == 0)
@@ -25,14 +25,14 @@ namespace woskni
             return true;
         }
 
-        /// <summary>ŠKæ</summary>
-        /// <param name="num">‰½”Ô–Ú‚ÌŠKæ‚©(0 to)</param>
+        /// <summary>éšä¹—</summary>
+        /// <param name="num">ä½•ç•ªç›®ã®éšä¹—ã‹(0 to)</param>
         /// <returns>num!</returns>
         public static int Factorial(int num) => num <= 1 ? 1 : num * Factorial(num - 1);
 
-        /// <summary>w’è”Ô–Ú‚Ìƒƒ‹ƒZƒ“ƒk”‚ğ•Ô‚·</summary>
-        /// <remarks>ƒƒ‹ƒZƒ“ƒk”: 2‚Ìnæ - 1</remarks>
-        /// <param name="num">‰½”Ô–Ú‚Ìƒƒ‹ƒZƒ“ƒk”‚ğæ“¾‚·‚é‚© (0 to)</param>
+        /// <summary>æŒ‡å®šç•ªç›®ã®ãƒ¡ãƒ«ã‚»ãƒ³ãƒŒæ•°ã‚’è¿”ã™</summary>
+        /// <remarks>ãƒ¡ãƒ«ã‚»ãƒ³ãƒŒæ•°: 2ã®nä¹— - 1</remarks>
+        /// <param name="num">ä½•ç•ªç›®ã®ãƒ¡ãƒ«ã‚»ãƒ³ãƒŒæ•°ã‚’å–å¾—ã™ã‚‹ã‹ (0 to)</param>
         public static int Mersenne(int num) => num < 0 ? -1 : (int)System.Math.Pow(2, num) - 1;
     }
 }

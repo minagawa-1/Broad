@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Deck
 {
-    /// <summary>ƒfƒbƒL</summary>
+    /// <summary>ãƒ‡ãƒƒã‚­</summary>
     public List<Blocks> deck { get; private set; }
 
-    /// <summary>ƒRƒ“ƒXƒgƒ‰ƒNƒ^</summary>
-    /// <param name="multiBlocks">RD‚É“ü‚ê‚éƒuƒƒbƒNƒX</param>
+    /// <summary>ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿</summary>
+    /// <param name="multiBlocks">å±±æœ­ã«å…¥ã‚Œã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹</param>
     public Deck(params Blocks[] multiBlocks)
     {
         deck = new List<Blocks>();
@@ -21,15 +21,15 @@ public class Deck
         deck.AddRange(blocks);
     }
 
-    /// <summary>RD‚©‚çƒhƒ[</summary>
-    /// <param name="index">æ“¾‚·‚éƒuƒƒbƒNƒX”Ô†</param>
-    /// <returns>ƒhƒ[‚³‚ê‚½ƒuƒƒbƒNƒX</returns>
+    /// <summary>å±±æœ­ã‹ã‚‰ãƒ‰ãƒ­ãƒ¼</summary>
+    /// <param name="index">å–å¾—ã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ç•ªå·</param>
+    /// <returns>ãƒ‰ãƒ­ãƒ¼ã•ã‚ŒãŸãƒ–ãƒ­ãƒƒã‚¯ã‚¹</returns>
     public Blocks Draw()
     {
-        // RD‚ÉƒuƒƒbƒNƒX‚ª‚È‚¢ê‡‚Ínull‚ğ•Ô‚·
+        // å±±æœ­ã«ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ãŒãªã„å ´åˆã¯nullã‚’è¿”ã™
         if (deck.Count == 0) return null;
 
-        // RD‚Ì0”Ô–Ú‚ğíœ‚µ‚Äreturn
+        // å±±æœ­ã®0ç•ªç›®ã‚’å‰Šé™¤ã—ã¦return
         var blocks = deck[0];           
         deck.RemoveAt(0);
 

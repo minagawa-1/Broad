@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PlayerPrefabsList")]
 public class PlayerPrefabsList : ScriptableObject
 {
-    // ƒvƒŒƒCƒ„[ƒvƒŒƒnƒuƒŠƒXƒg
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ—ãƒ¬ãƒãƒ–ãƒªã‚¹ãƒˆ
     public GameObject[] m_PlayerPrefabsList = null;
 }

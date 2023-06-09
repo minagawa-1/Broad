@@ -1,4 +1,4 @@
-using System.Threading;
+ï»¿using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -8,266 +8,266 @@ using Mirror.Discovery;
 
 public class CustomNetworkDiscovery : NetworkDiscovery
 {
-    [Header("ƒ}ƒ‹ƒ`ƒvƒŒƒCŠJn—pƒ{ƒ^ƒ“")]
+    [Header("ãƒãƒ«ãƒãƒ—ãƒ¬ã‚¤é–‹å§‹ç”¨ãƒœã‚¿ãƒ³")]
     [SerializeField] Button m_MultiPlayButton = null;
-    [Header("–ß‚é—pƒ{ƒ^ƒ“")]
+    [Header("æˆ»ã‚‹ç”¨ãƒœã‚¿ãƒ³")]
     [SerializeField] Button m_BackButton = null;
-    [Header("ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“")]
+    [Header("ã‚²ãƒ¼ãƒ é–‹å§‹ãƒœã‚¿ãƒ³")]
     [SerializeField] Button m_PlayButton = null;
 
-    [Header("ƒvƒŒƒCl”Šm”F—pƒeƒLƒXƒg")]
+    [Header("ãƒ—ãƒ¬ã‚¤äººæ•°ç¢ºèªç”¨ãƒ†ã‚­ã‚¹ãƒˆ")]
     [SerializeField] Text m_PlayerCountText = null;
-    [Header("Ú‘±ŠJn—pƒeƒLƒXƒg")]
+    [Header("æ¥ç¶šé–‹å§‹ç”¨ãƒ†ã‚­ã‚¹ãƒˆ")]
     [SerializeField] Text m_ConnectionStateText = null;
-    [Header("ƒvƒŒƒCƒ„[”Ô†—pƒeƒLƒXƒg")]
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ç”¨ãƒ†ã‚­ã‚¹ãƒˆ")]
     [SerializeField] Text m_PlayerIndexText = null;
 
-    [Header("Ú‘±ŠÔŠu")]
+    [Header("æ¥ç¶šé–“éš”")]
     [SerializeField] private int m_ConnectIntervalTime;
-    [Header("‘Ò‹@ŠÔ")]
+    [Header("å¾…æ©Ÿæ™‚é–“")]
     [SerializeField] private int m_WaitTime;
-    [Header("Ú‘±s‰ñ”")]
+    [Header("æ¥ç¶šè©¦è¡Œå›æ•°")]
     [SerializeField] private int m_ConnectTryCount;
 
-    [Header("ƒQ[ƒ€ƒƒCƒ“ƒV[ƒ“–¼")]
+    [Header("ã‚²ãƒ¼ãƒ ãƒ¡ã‚¤ãƒ³ã‚·ãƒ¼ãƒ³å")]
     [SerializeField, Scene] string m_GameMainSceneName = null;
-    [Header("©“®ƒV[ƒ“Ø‚è‘Ö‚¦ŠÔ")]
+    [Header("è‡ªå‹•ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆæ™‚é–“")]
     [SerializeField] private int m_AutSceneChangeTime;
 
-    CustomNetworkManager m_CNetworkManager;   // ƒJƒXƒ^ƒ€ƒlƒbƒgƒ[ƒNƒ}ƒl[ƒWƒƒ[
-    NetworkManager m_NetworkManager;        // ƒlƒbƒgƒ[ƒNƒ}ƒl[ƒWƒƒ[
-    ServerResponse m_DiscoverdServer;       // Œ©‚Â‚¯‚½‚¢ƒT[ƒo[
+    CustomNetworkManager m_CNetworkManager;   // ã‚«ã‚¹ã‚¿ãƒ ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+    NetworkManager m_NetworkManager;        // ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+    ServerResponse m_DiscoverdServer;       // è¦‹ã¤ã‘ãŸã„ã‚µãƒ¼ãƒãƒ¼
 
-    CancellationTokenSource m_CancelConnectServer;      // ŒŸõ‚ÉƒLƒƒƒ“ƒZƒ‹‚ğ‚·‚é‚½‚ß‚Ìƒ\[ƒX
-    CancellationToken m_CancelConnectToken;       // ŒŸõƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“
+    CancellationTokenSource m_CancelConnectServer;      // æ¤œç´¢æ™‚ã«ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚’ã™ã‚‹ãŸã‚ã®ã‚½ãƒ¼ã‚¹
+    CancellationToken m_CancelConnectToken;       // æ¤œç´¢ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³
 
-    CancellationTokenSource m_CancelChangeScene;        // ƒV[ƒ“Ø‚è‘Ö‚¦ƒLƒƒƒ“ƒZƒ‹ƒ\[ƒX
-    CancellationToken m_CancelChangeSceneToken;   // ƒV[ƒ“Ø‚è‘Ö‚¦ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“
+    CancellationTokenSource m_CancelChangeScene;        // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚­ãƒ£ãƒ³ã‚»ãƒ«ã‚½ãƒ¼ã‚¹
+    CancellationToken m_CancelChangeSceneToken;   // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³
 
-    // ƒNƒ‰ƒCƒAƒ“ƒg‚ÌÚ‘±ó‘Ô‚ªWAITINGó‘Ô‚É•\¦‚·‚é
+    // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®æ¥ç¶šçŠ¶æ…‹ãŒWAITINGçŠ¶æ…‹ã«è¡¨ç¤ºã™ã‚‹
     const string connection_status_client_waiting = "Waiting start...";
 
-    // ƒzƒXƒg‚ÌÚ‘±ó‘Ô‚ªWAITINGó‘Ô‚É•\¦‚·‚é
+    // ãƒ›ã‚¹ãƒˆã®æ¥ç¶šçŠ¶æ…‹ãŒWAITINGçŠ¶æ…‹ã«è¡¨ç¤ºã™ã‚‹
     const string connection_status_host_waiting = "Waiting other player...";
 
-    // Ú‘±ó‘Ô‚ªSUCCESSó‘Ô‚É•\¦‚·‚é
+    // æ¥ç¶šçŠ¶æ…‹ãŒSUCCESSçŠ¶æ…‹ã«è¡¨ç¤ºã™ã‚‹
     const string connection_status_success = "Success!";
 
-    bool m_isHostReady;                 // ƒzƒXƒg€”õŠ®—¹ƒtƒ‰ƒO
-    int m_CurrentPlayerCount = 0;             // ƒvƒŒƒCƒ„[”
+    bool m_isHostReady;                 // ãƒ›ã‚¹ãƒˆæº–å‚™å®Œäº†ãƒ•ãƒ©ã‚°
+    int m_CurrentPlayerCount = 0;             // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ•°
 
-    /// <summary>íœ</summary>
+    /// <summary>å‰Šé™¤</summary>
     private void OnDestroy()
     {
-        // ƒV[ƒ“‘JˆÚ‚È‚Ç‚ÉƒT[ƒo[ŒŸõ‚ğ’â~
+        // ã‚·ãƒ¼ãƒ³é·ç§»æ™‚ãªã©ã«ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢ã‚’åœæ­¢
         StopDiscovery();
     }
 
     private void Awake()
     {
-        // HostReadyData‚ğóM‚µ‚½‚çAReceivedReadyData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // HostReadyDataã‚’å—ä¿¡ã—ãŸã‚‰ã€ReceivedReadyDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<HostReadyData>(ReceivedReadyData);
 
-        // ConnectionData‚ğóM‚µ‚½‚çReceivedConnectData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // ConnectionDataã‚’å—ä¿¡ã—ãŸã‚‰ReceivedConnectDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
 
-        // PlayerData‚ğóM‚µ‚½‚çReceivedPlayerData‚ğÀs‚·‚é‚æ‚¤‚É“o˜^
+        // PlayerDataã‚’å—ä¿¡ã—ãŸã‚‰ReceivedPlayerDataã‚’å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ç™»éŒ²
         NetworkClient.RegisterHandler<PlayerData>(ReceivedPlayerData);
 
-        // NetworkManager‚ğ’T‚µ‚ÄACustomNetworkManager‚ğæ“¾
+        // NetworkManagerã‚’æ¢ã—ã¦ã€CustomNetworkManagerã‚’å–å¾—
         m_CNetworkManager = GameObject.Find("NetworkManager").GetComponent<CustomNetworkManager>();
 
-        // ƒR[ƒ‹ƒoƒbƒNˆ—
-        // ƒT[ƒo[‚ªŒ©‚Â‚©‚Á‚½‚çŒÄ‚Î‚ê‚é
+        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‡¦ç†
+        // ã‚µãƒ¼ãƒãƒ¼ãŒè¦‹ã¤ã‹ã£ãŸã‚‰å‘¼ã°ã‚Œã‚‹
         OnServerFound.AddListener(ServerResponse =>
         {
-            // Œ©‚Â‚¯‚½ƒT[ƒo[‚ğ“ü‚ê‚é
+            // è¦‹ã¤ã‘ãŸã‚µãƒ¼ãƒãƒ¼ã‚’å…¥ã‚Œã‚‹
             m_DiscoverdServer = ServerResponse;
 
-            // Debug.Log‚Å•\¦
+            // Debug.Logã§è¡¨ç¤º
             Debug.Log("ServerFound");
         });
 
-        // MultiPlayButton‚ª‰Ÿ‚³‚ê‚½‚çŒÄ‚Ô
+        // MultiPlayButtonãŒæŠ¼ã•ã‚ŒãŸã‚‰å‘¼ã¶
         m_MultiPlayButton.onClick.AddListener(() =>
         {
             Debug.Log("Search Connection");
 
-            // Šeƒ{ƒ^ƒ“‚Ì•\¦E”ñ•\¦‚ğØ‚è‘Ö‚¦‚é
+            // å„ãƒœã‚¿ãƒ³ã®è¡¨ç¤ºãƒ»éè¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
             m_BackButton.gameObject.SetActive(true);
             m_MultiPlayButton.gameObject.SetActive(false);
 
-            // ŠeƒeƒLƒXƒg‚Ì•\¦
+            // å„ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤º
             m_ConnectionStateText.gameObject.SetActive(true);
             m_PlayerCountText.gameObject.SetActive(true);
             m_PlayerIndexText.gameObject.SetActive(true);
 
-            // ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“—pƒ\[ƒXæ“¾
+            // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³ç”¨ã‚½ãƒ¼ã‚¹å–å¾—
             m_CancelConnectServer = new CancellationTokenSource();
-            // ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“¶¬
+            // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³ç”Ÿæˆ
             m_CancelConnectToken = m_CancelConnectServer.Token;
 
-            // ƒV[ƒ“Ø‚è‘Ö‚¦ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“¶¬
+            // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³ç”Ÿæˆ
             m_CancelChangeScene = new CancellationTokenSource();
             m_CancelChangeSceneToken = m_CancelChangeScene.Token;
 
-            // ƒT[ƒo[ŒŸõ
-            // UniTask‚Ì”ñ“¯Šúˆ—‚ÍForget()‚ğ•t‚¯‚ÄŒÄ‚Ô
-            // ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“‚ğ“n‚·–‚ÅAawait‚ğ‚·‚é”ñ“¯Šúˆ—‚ÅCancel()‚ÌÀsƒ^ƒCƒ~ƒ“ƒO‚Åˆ—‚Ì’†’f‚ª‰Â”\
+            // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢
+            // UniTaskã®éåŒæœŸå‡¦ç†ã¯Forget()ã‚’ä»˜ã‘ã¦å‘¼ã¶
+            // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³ã‚’æ¸¡ã™äº‹ã§ã€awaitã‚’ã™ã‚‹éåŒæœŸå‡¦ç†ã§Cancel()ã®å®Ÿè¡Œã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§å‡¦ç†ã®ä¸­æ–­ãŒå¯èƒ½
             TryConnect(m_CancelConnectToken).Forget();
         });
 
-        // BuckButton‚ª‰Ÿ‚³‚ê‚½
+        // BuckButtonãŒæŠ¼ã•ã‚ŒãŸ
         m_BackButton.onClick.AddListener(() =>
         {
             Debug.Log("Cancel");
 
-            // ƒT[ƒo[ŒŸõ‚ğ’â~
+            // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢ã‚’åœæ­¢
             StopDiscovery();
 
-            // ƒzƒXƒg’â~
+            // ãƒ›ã‚¹ãƒˆåœæ­¢
             NetworkManager.singleton.StopHost();
-            // ƒNƒ‰ƒCƒAƒ“ƒg’â~
+            // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåœæ­¢
             NetworkManager.singleton.StopClient();
 
-            // ”ñ“¯Šúˆ—‚Ì’â~
-            // TokenSorce‚ÌƒLƒƒƒ“ƒZƒ‹‚Æ”pŠü‚ğ‚·‚é
+            // éåŒæœŸå‡¦ç†ã®åœæ­¢
+            // TokenSorceã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã¨å»ƒæ£„ã‚’ã™ã‚‹
             Cancel(m_CancelConnectServer);
 
             Cancel(m_CancelChangeScene);
         });
 
-        // PlayButton‚ª‰Ÿ‚³‚ê‚½
+        // PlayButtonãŒæŠ¼ã•ã‚ŒãŸ
         m_PlayButton.onClick.AddListener(() =>
         {
             Debug.Log("Ready Ok");
 
-            // ƒzƒXƒg€”õƒf[ƒ^İ’è
+            // ãƒ›ã‚¹ãƒˆæº–å‚™ãƒ‡ãƒ¼ã‚¿è¨­å®š
             HostReadyData readyData = new HostReadyData() { isHostReady = true };
-            // ‘SƒNƒ‰ƒCƒAƒ“ƒg‚É‘—M
+            // å…¨ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã«é€ä¿¡
             NetworkServer.SendToAll(readyData);
 
-            // m_PlayButton‚ğ”ñ•\¦
+            // m_PlayButtonã‚’éè¡¨ç¤º
             m_PlayButton.gameObject.SetActive(false);
         });
     }
 
-    /// <summary>ƒT[ƒo[ŒŸõ</summary>
-    /// <async>”ñ“¯Šú<async>
-    /// <await>w’è‚µ‚½ŠÔEğŒ‚ª‘µ‚¤‚Ü‚Å‘Ò‚Â<await>
-    /// [async/await] ‚Íˆ—‚ğ”ñ“¯Šú‚És‚¤‚Ì‚Å‚Í‚È‚­A”ñ“¯Šú‚Ìˆ—‚ğ‘Ò‚Âd‘g‚İ
-    /// <param name="token">ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“</param>
+    /// <summary>ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢</summary>
+    /// <async>éåŒæœŸ<async>
+    /// <await>æŒ‡å®šã—ãŸæ™‚é–“ãƒ»æ¡ä»¶ãŒæƒã†ã¾ã§å¾…ã¤<await>
+    /// [async/await] ã¯å‡¦ç†ã‚’éåŒæœŸã«è¡Œã†ã®ã§ã¯ãªãã€éåŒæœŸã®å‡¦ç†ã‚’å¾…ã¤ä»•çµ„ã¿
+    /// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³</param>
     async UniTaskVoid TryConnect(CancellationToken token)
     {
-        // NetworkManageræ“¾
+        // NetworkManagerå–å¾—
         m_NetworkManager = NetworkManager.singleton;
 
-        // Ú‘±’§í‰ñ”
+        // æ¥ç¶šæŒ‘æˆ¦å›æ•°
         int tryCount = 0;
 
-        // ƒT[ƒo[ŒŸõŠJn
+        // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢é–‹å§‹
         StartDiscovery();
 
-        // Server–”‚ÍAClient‚ªactive‚ÈŒÀ‚è‘±‚¯‚é
+        // Serveråˆã¯ã€ClientãŒactiveãªé™ã‚Šç¶šã‘ã‚‹
         while (!m_NetworkManager.isNetworkActive)
         {
-            // connect_interval_time•ª’x‚ç‚¹‚ÄÀs
+            // connect_interval_timeåˆ†é…ã‚‰ã›ã¦å®Ÿè¡Œ
             await UniTask.Delay(m_ConnectIntervalTime, cancellationToken: token);
 
-            // ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½‚çAƒŠƒ^[ƒ“
+            // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚ŒãŸã‚‰ã€ãƒªã‚¿ãƒ¼ãƒ³
             if (token.IsCancellationRequested)
             {
-                // —áŠOƒXƒ[‚ğ“Š‚°‚é
+                // ä¾‹å¤–ã‚¹ãƒ­ãƒ¼ã‚’æŠ•ã’ã‚‹
                 token.ThrowIfCancellationRequested();
                 return;
             }
-            // ƒT[ƒo[‚ğŒ©‚Â‚¯‚½
-            // URI‚ÍURL(Webã‚É‚ ‚éƒtƒ@ƒCƒ‹‚ÌZŠ)‚Æ
-            // URN(ƒlƒbƒgƒ[ƒNã‚Ì‘¶İ‚·‚é•¶‘‚È‚Ç‚ÌƒŠƒ\[ƒX‚ğˆêˆÓ‚É¯•Ê‚·‚é‚½‚ß‚Ì¯•Êq)‚Ì‘Ì
+            // ã‚µãƒ¼ãƒãƒ¼ã‚’è¦‹ã¤ã‘ãŸ
+            // URIã¯URL(Webä¸Šã«ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ä½æ‰€)ã¨
+            // URN(ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ä¸Šã®å­˜åœ¨ã™ã‚‹æ–‡æ›¸ãªã©ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ä¸€æ„ã«è­˜åˆ¥ã™ã‚‹ãŸã‚ã®è­˜åˆ¥å­)ã®ç·ç§°
             if (m_DiscoverdServer.uri != null)
             {
                 Debug.Log("Start Client");
 
-                // æ“¾‚µ‚½URI‚ğg‚Á‚ÄƒNƒ‰ƒCƒAƒ“ƒg‚Æ‚µ‚ÄŠJn‚·‚é
+                // å–å¾—ã—ãŸURIã‚’ä½¿ã£ã¦ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¨ã—ã¦é–‹å§‹ã™ã‚‹
                 m_NetworkManager.StartClient(m_DiscoverdServer.uri);
 
-                // ƒNƒ‰ƒCƒAƒ“ƒg‘Ò‹@’†ƒeƒLƒXƒg‚ğ“ü‚ê‚é
+                // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå¾…æ©Ÿä¸­ãƒ†ã‚­ã‚¹ãƒˆã‚’å…¥ã‚Œã‚‹
                 m_ConnectionStateText.text = connection_status_client_waiting;
 
-                // ƒT[ƒo[ŒŸõ‚ğ~‚ß‚é
+                // ã‚µãƒ¼ãƒãƒ¼æ¤œç´¢ã‚’æ­¢ã‚ã‚‹
                 StopDiscovery();
 
-                // ƒzƒXƒg‚Ì€”õ‚ª®‚¤‚Ü‚Å‘Ò‹@
+                // ãƒ›ã‚¹ãƒˆã®æº–å‚™ãŒæ•´ã†ã¾ã§å¾…æ©Ÿ
                 await UniTask.WaitUntil(() => m_isHostReady, cancellationToken: token);
 
-                // ƒLƒƒƒ“ƒZƒ‹—v‹‚³‚ê‚½‚©
+                // ã‚­ãƒ£ãƒ³ã‚»ãƒ«è¦æ±‚ã•ã‚ŒãŸã‹
                 if (token.IsCancellationRequested) token.ThrowIfCancellationRequested();
 
-                // Ú‘±¬Œ÷—pƒeƒLƒXƒg‚ÉØ‚è‘Ö‚¦
+                // æ¥ç¶šæˆåŠŸç”¨ãƒ†ã‚­ã‚¹ãƒˆã«åˆ‡ã‚Šæ›¿ãˆ
                 m_ConnectionStateText.text = connection_status_success;
             }
             else
             {
                 Debug.Log("Try Connect...");
 
-                // ƒJƒEƒ“ƒg‚ğ‘‚â‚·
+                // ã‚«ã‚¦ãƒ³ãƒˆã‚’å¢—ã‚„ã™
                 tryCount++;
 
-                // ƒJƒEƒ“ƒg‚ªconnect_try_count‚ğ’´‚¦‚½
+                // ã‚«ã‚¦ãƒ³ãƒˆãŒconnect_try_countã‚’è¶…ãˆãŸ
                 if (tryCount > m_ConnectTryCount)
                 {
                     Debug.Log("Start Host");
 
-                    // ƒzƒXƒg‚Æ‚µ‚ÄŠJn
+                    // ãƒ›ã‚¹ãƒˆã¨ã—ã¦é–‹å§‹
                     m_NetworkManager.StartHost();
 
-                    // ƒT[ƒo[‚ÌéŒ¾‚ğ‚·‚é
-                    // ‚±‚ê‚ğ‚µ‚È‚¢‚ÆAƒT[ƒo[‚ªŒ©‚Â‚©‚ç‚È‚¢
+                    // ã‚µãƒ¼ãƒãƒ¼ã®å®£è¨€ã‚’ã™ã‚‹
+                    // ã“ã‚Œã‚’ã—ãªã„ã¨ã€ã‚µãƒ¼ãƒãƒ¼ãŒè¦‹ã¤ã‹ã‚‰ãªã„
                     AdvertiseServer();
 
-                    // ƒT[ƒo[ƒŒƒXƒ|ƒ“ƒX‚ª‚ ‚é‚©Debug.Log‚Å•\¦
+                    // ã‚µãƒ¼ãƒãƒ¼ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒã‚ã‚‹ã‹Debug.Logã§è¡¨ç¤º
                     if (m_DiscoverdServer.uri != null) Debug.Log("ServerURI : NotNull");
                     else Debug.Log("ServerURI : null");
 
-                    // ƒzƒXƒg‘Ò‹@’†ƒeƒLƒXƒg‚ÉØ‚è‘Ö‚¦
+                    // ãƒ›ã‚¹ãƒˆå¾…æ©Ÿä¸­ãƒ†ã‚­ã‚¹ãƒˆã«åˆ‡ã‚Šæ›¿ãˆ
                     m_ConnectionStateText.text = connection_status_host_waiting;
 
-                    // ƒzƒXƒg‚Ì€”õ‚ª®‚¤‚Ü‚Å‘Ò‹@
+                    // ãƒ›ã‚¹ãƒˆã®æº–å‚™ãŒæ•´ã†ã¾ã§å¾…æ©Ÿ
                     await UniTask.WaitUntil(() => m_isHostReady, cancellationToken: token);
 
-                    // Ú‘±¬Œ÷—pƒeƒLƒXƒg‚ÉØ‚è‘Ö‚¦
+                    // æ¥ç¶šæˆåŠŸç”¨ãƒ†ã‚­ã‚¹ãƒˆã«åˆ‡ã‚Šæ›¿ãˆ
                     m_ConnectionStateText.text = connection_status_success;
 
-                    // wait_time•ª‘Ò‹@
+                    // wait_timeåˆ†å¾…æ©Ÿ
                     await UniTask.Delay(m_WaitTime, cancellationToken: token);
 
                     if (token.IsCancellationRequested) token.ThrowIfCancellationRequested();
 
-                    // ƒV[ƒ“•ÏX
+                    // ã‚·ãƒ¼ãƒ³å¤‰æ›´
                     m_NetworkManager.ServerChangeScene(m_GameMainSceneName);
                 }
             }
         }
     }
 
-    /// <summary>©“®ƒV[ƒ“Ø‚è‘Ö‚¦</summary>
-    /// <param name="cahangeTime">Ø‚è‘Ö‚¦ŠÔ</param>
-    /// <param name="token">ƒLƒƒƒ“ƒZƒ‹—pƒg[ƒNƒ“</param>
+    /// <summary>è‡ªå‹•ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ</summary>
+    /// <param name="cahangeTime">åˆ‡ã‚Šæ›¿ãˆæ™‚é–“</param>
+    /// <param name="token">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ç”¨ãƒˆãƒ¼ã‚¯ãƒ³</param>
     async UniTaskVoid AutChangeScene(int cahangeTime, CancellationToken token)
     {
-        // ƒzƒXƒg‚¶‚á‚È‚¢‚È‚çAƒŠƒ^[ƒ“
+        // ãƒ›ã‚¹ãƒˆã˜ã‚ƒãªã„ãªã‚‰ã€ãƒªã‚¿ãƒ¼ãƒ³
         if (!NetworkClient.activeHost) return;
 
-        // ŠÔ‚É‚È‚é‚Ü‚Å‘Ò‹@
+        // æ™‚é–“ã«ãªã‚‹ã¾ã§å¾…æ©Ÿ
         await UniTask.Delay(cahangeTime, cancellationToken: token);
 
-        // ƒvƒŒƒCƒ„[l”‚ª2l‚æ‚è­‚È‚¢
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ãŒ2äººã‚ˆã‚Šå°‘ãªã„
         if ( m_CurrentPlayerCount < 2)
         {
-            // PlayButton‚ğ”ñactive‚É‚·‚é
+            // PlayButtonã‚’éactiveã«ã™ã‚‹
             m_PlayButton.gameObject.SetActive(false);
 
-            // ƒV[ƒ“•ÏX‚ğƒLƒƒƒ“ƒZƒ‹
+            // ã‚·ãƒ¼ãƒ³å¤‰æ›´ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
             Cancel(m_CancelChangeScene);
 
             if (token.IsCancellationRequested)
@@ -277,7 +277,7 @@ public class CustomNetworkDiscovery : NetworkDiscovery
             }
         }
 
-        // ƒV[ƒ“•ÏX
+        // ã‚·ãƒ¼ãƒ³å¤‰æ›´
         m_NetworkManager.ServerChangeScene(m_GameMainSceneName);
     }
 
@@ -286,58 +286,58 @@ public class CustomNetworkDiscovery : NetworkDiscovery
 
     }
 
-    /// <summary>ƒzƒXƒg‚ª€”õ‚Å‚«‚½‚©‚Ìƒf[ƒ^‚ğóM</summary>
-    /// <param name="reciveData">óMƒf[ƒ^</param>
+    /// <summary>ãƒ›ã‚¹ãƒˆãŒæº–å‚™ã§ããŸã‹ã®ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡</summary>
+    /// <param name="reciveData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedReadyData(HostReadyData reciveData)
     {
-        // €”õo—ˆ‚½‚©‚Ìƒtƒ‰ƒO‚ğ‘ã“ü
+        // æº–å‚™å‡ºæ¥ãŸã‹ã®ãƒ•ãƒ©ã‚°ã‚’ä»£å…¥
         m_isHostReady = reciveData.isHostReady;
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[”Ô†•\¦</summary>
-    /// <param name="recivedData">óMƒf[ƒ^</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·è¡¨ç¤º</summary>
+    /// <param name="recivedData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedConnectionData(ConnectionData receivedData)
     {
         if (m_PlayButton == null) return;
 
         m_CurrentPlayerCount = receivedData.playerCount;
 
-        // ƒvƒŒƒCƒ„[l”‚ğ•\¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ã‚’è¡¨ç¤º
         m_PlayerCountText.text = m_CurrentPlayerCount + "/" + m_NetworkManager.maxConnections;
 
-        // ©•ª‚ªƒzƒXƒg‚©‚ÂƒvƒŒƒCƒ„[l”‚ª2lˆÈã
+        // è‡ªåˆ†ãŒãƒ›ã‚¹ãƒˆã‹ã¤ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ãŒ2äººä»¥ä¸Š
         if (NetworkClient.activeHost && m_CurrentPlayerCount >= 2)
         {
-            // PlayButton‚ğactive‚É‚·‚é
+            // PlayButtonã‚’activeã«ã™ã‚‹
             m_PlayButton.gameObject.SetActive(true);
 
-            // ©“®‚ÅƒV[ƒ“•ÏXŠJn
+            // è‡ªå‹•ã§ã‚·ãƒ¼ãƒ³å¤‰æ›´é–‹å§‹
             AutChangeScene(m_AutSceneChangeTime, m_CancelChangeSceneToken).Forget();
         }
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[”Ô†‚ğ•\¦</summary>
-    /// <param name="receivedData">óMƒf[ƒ^</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’è¡¨ç¤º</summary>
+    /// <param name="receivedData">å—ä¿¡ãƒ‡ãƒ¼ã‚¿</param>
     void ReceivedPlayerData(PlayerData receivedData)
     {
-        // ƒzƒXƒg‚ª‚¢‚È‚¢‚È‚ç‰½‚à‚µ‚È‚¢
+        // ãƒ›ã‚¹ãƒˆãŒã„ãªã„ãªã‚‰ä½•ã‚‚ã—ãªã„
         if (m_PlayButton == null) return;
 
-        // ƒvƒŒƒCƒ„[”Ô†‚ğ•\¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‚’è¡¨ç¤º
         m_PlayerIndexText.text = $"You {receivedData.index}P";
     }
 
-    /// <summary>ƒLƒƒƒ“ƒZƒ‹</summary>
-    /// <param name="tokenSource">ƒLƒƒƒ“ƒZƒ‹ƒg[ƒNƒ“ƒ\[ƒX</param>
+    /// <summary>ã‚­ãƒ£ãƒ³ã‚»ãƒ«</summary>
+    /// <param name="tokenSource">ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒˆãƒ¼ã‚¯ãƒ³ã‚½ãƒ¼ã‚¹</param>
     void Cancel(CancellationTokenSource tokenSource)
     {
-        // ©•ª‚ªƒzƒXƒg‚Å‚È‚¢‚È‚çAƒŠƒ^[ƒ“
+        // è‡ªåˆ†ãŒãƒ›ã‚¹ãƒˆã§ãªã„ãªã‚‰ã€ãƒªã‚¿ãƒ¼ãƒ³
         if (!NetworkClient.activeHost) return;
 
-        // ƒLƒƒƒ“ƒZƒ‹
+        // ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         tokenSource.Cancel();
 
-        // ”pŠü
+        // å»ƒæ£„
         tokenSource.Dispose();
     }
 }

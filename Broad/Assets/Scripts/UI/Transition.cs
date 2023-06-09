@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -10,11 +10,11 @@ public class Transition : MonoBehaviour
 {
     public static Transition Instance { get; private set; }
 
-    public const float basis_fade_time = 0.5f; // ƒtƒF[ƒh‚ÌŠÔ
+    public const float basis_fade_time = 0.5f; // ãƒ•ã‚§ãƒ¼ãƒ‰ã®æ™‚é–“
 
     public woskni.Timer fadeTimer;
 
-    private CanvasGroup fadeCanvasGroup; // ƒtƒF[ƒh—p‚ÌCanvasGroup
+    private CanvasGroup fadeCanvasGroup; // ãƒ•ã‚§ãƒ¼ãƒ‰ç”¨ã®CanvasGroup
 
     private void Awake()
     {
@@ -50,11 +50,11 @@ public class Transition : MonoBehaviour
         CanvasScaler canvasScaler = canvasObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-        canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height); // ‰¼‘z‚Ì‰æ–ÊƒTƒCƒY
+        canvasScaler.referenceResolution = new Vector2(Screen.width, Screen.height); // ä»®æƒ³ã®ç”»é¢ã‚µã‚¤ã‚º
 
         canvasObject.AddComponent<GraphicRaycaster>();
 
-        // ƒpƒlƒ‹
+        // ãƒ‘ãƒãƒ«
         GameObject panelObject = new GameObject("FadePanel");
         {
             panelObject.transform.SetParent(canvasObject.transform);
@@ -80,24 +80,24 @@ public class Transition : MonoBehaviour
     {
         if (fadeTimer.IsStarted()) return;
 
-        // ƒtƒF[ƒhƒCƒ“
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
         fadeTimer.Setup(fadeInTime);
 
         fadeCanvasGroup.alpha = 0f;
-        fadeCanvasGroup.DOFade(1f, fadeInTime); // ƒtƒF[ƒhƒCƒ“ŠJn
+        fadeCanvasGroup.DOFade(1f, fadeInTime); // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³é–‹å§‹
 
         await UniTask.WaitUntil(() => IsFadeFinished());
 
-        // ƒtƒF[ƒhƒAƒEƒg
+        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
         DOTween.Clear();
 
         fadeCanvasGroup.alpha = 1f;
-        fadeCanvasGroup.DOFade(0f, fadeOutTime); // ƒtƒF[ƒhƒAƒEƒgŠJn
+        fadeCanvasGroup.DOFade(0f, fadeOutTime); // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆé–‹å§‹
 
-        //// ƒzƒXƒg‚ªƒV[ƒ“‘JˆÚ‚ğŠ®—¹‚³‚¹‚é‚Ü‚Å‘Ò‹@
+        //// ãƒ›ã‚¹ãƒˆãŒã‚·ãƒ¼ãƒ³é·ç§»ã‚’å®Œäº†ã•ã›ã‚‹ã¾ã§å¾…æ©Ÿ
         //await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name != Scene.GameMainScene || NetworkClient.activeHost);
 
-        // ƒV[ƒ“‘JˆÚ
+        // ã‚·ãƒ¼ãƒ³é·ç§»
         if(NetworkClient.activeHost) networkManager.ServerChangeScene(sceneName);
     }
 

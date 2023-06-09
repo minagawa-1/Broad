@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>ƒtƒ@ƒCƒ‹ƒpƒX‚ÌŠJnˆÊ’u</summary>
+/// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®é–‹å§‹ä½ç½®</summary>
 [System.Serializable]
 public enum FilePathType
 {
-    /// <summary>ƒ‹[ƒgƒfƒBƒŒƒNƒgƒŠ‚©‚ç‚Ìƒtƒ@ƒCƒ‹ƒpƒX(—áFC:/`/example.txt)</summary>
+    /// <summary>ãƒ«ãƒ¼ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹(ä¾‹ï¼šC:/ï½/example.txt)</summary>
     RootDirectoryPath,
 
-    /// <summary>ƒvƒƒWƒFƒNƒg‚ÌAssetsƒtƒHƒ‹ƒ_‚©‚ç‚Ìƒtƒ@ƒCƒ‹ƒpƒX(—áFAssets/`/example.txt)</summary>
+    /// <summary>ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®Assetsãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹(ä¾‹ï¼šAssets/ï½/example.txt)</summary>
     AssetsPath,
 
-    /// <summary>ƒtƒ@ƒCƒ‹‚»‚Ì‚à‚Ì(—áFexample.txt)</summary>
+    /// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ãã®ã‚‚ã®(ä¾‹ï¼šexample.txt)</summary>
     CurrentDirectoryPath,
 }
 

@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class TranformExpansion
 {
-	/// <summary>qƒIƒuƒWƒFƒNƒg‚ğæ“¾i”ñÄ‹A“Ij</summary>
-	/// <remarks>‘·ˆÈ~‚Íæ“¾‚µ‚È‚¢Bæ“¾‚µ‚½‚¢ê‡‚ÍGetComponentsInChildren</remarks>
+	/// <summary>å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ï¼ˆéå†å¸°çš„ï¼‰</summary>
+	/// <remarks>å­«ä»¥é™ã¯å–å¾—ã—ãªã„ã€‚å–å¾—ã—ãŸã„å ´åˆã¯GetComponentsInChildren</remarks>
 	public static Transform[] GetChildren(this Transform transform)
 	{
 		var list = new List<Transform>();
@@ -15,12 +15,12 @@ public static class TranformExpansion
 		return list.ToArray();
 	}
 
-	/// <summary>ÅãˆÊ‚Ìe‚ğæ“¾</summary>
-	/// <remarks>Ä‹NŠÖ”‚É‚æ‚Á‚Äe‚ğæ“¾‚µ‘±‚¯‚é</remarks>
+	/// <summary>æœ€ä¸Šä½ã®è¦ªã‚’å–å¾—</summary>
+	/// <remarks>å†èµ·é–¢æ•°ã«ã‚ˆã£ã¦è¦ªã‚’å–å¾—ã—ç¶šã‘ã‚‹</remarks>
 	public static Transform GetRootParent(this Transform transform)
 		=> transform.parent == null ? transform : transform.parent.GetRootParent();
 
-	/// <summary>Transform[]‚ğGameObject[]‚É•ÏŠ·</summary>
+	/// <summary>Transform[]ã‚’GameObject[]ã«å¤‰æ›</summary>
 	public static GameObject[] ToGameObjects(this Transform[] transforms)
     {
 		var gameObjects = new GameObject[transforms.Length];

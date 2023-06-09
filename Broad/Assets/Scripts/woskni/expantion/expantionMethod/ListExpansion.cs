@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 
 public static class ListExpansion
 {
-    /// <summary>ƒ‰ƒ“ƒ_ƒ€‚È—v‘f‚ğ’Šo</summary>
+    /// <summary>ãƒ©ãƒ³ãƒ€ãƒ ãªè¦ç´ ã‚’æŠ½å‡º</summary>
 	public static T AtRandom<T>(this List<T> list) => list[UnityEngine.Random.Range(0, list.Count)];
 
-    /// <summary>ƒŠƒXƒg“à‚ğƒVƒƒƒbƒtƒ‹‚·‚é</summary>
+    /// <summary>ãƒªã‚¹ãƒˆå†…ã‚’ã‚·ãƒ£ãƒƒãƒ•ãƒ«ã™ã‚‹</summary>
     public static void Shuffle<T>(this IList<T> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -18,7 +18,7 @@ public static class ListExpansion
         }
     }
 
-    /// <summary>”z—ñŠOQÆŒŸ’m</summary>
-    /// <param name="index">QÆ‚·‚é”Ô†</param>
+    /// <summary>é…åˆ—å¤–å‚ç…§æ¤œçŸ¥</summary>
+    /// <param name="index">å‚ç…§ã™ã‚‹ç•ªå·</param>
     public static bool IsProtrude<T>(this IList<T> list, int index) => index >= list.Count || index < 0;
 }

@@ -1,17 +1,17 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
 
-/// <summary>ƒ^ƒO–¼‚ğ—ñ‹“Œ^‚ÅŠÇ—‚·‚éƒNƒ‰ƒX‚ğì¬‚·‚éƒXƒNƒŠƒvƒg</summary>
+/// <summary>ã‚¿ã‚°åã‚’åˆ—æŒ™å‹ã§ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ</summary>
 public static class EnumLayerCreator
 {
     private const string class_name = "Layer";
-    private const string command = "Tools/Create/EnumLayer";  // ƒRƒ}ƒ“ƒh–¼
-    private const string path = "Assets/Scripts/woskni/utility/enumCreator/EnumLayer.cs"; // ƒtƒ@ƒCƒ‹ƒpƒX
+    private const string command = "Tools/Create/EnumLayer";  // ã‚³ãƒãƒ³ãƒ‰å
+    private const string path = "Assets/Scripts/woskni/utility/enumCreator/EnumLayer.cs"; // ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
 
-    /// <summary>ƒ^ƒO–¼‚ğ’è”‚ÅŠÇ—‚·‚éƒNƒ‰ƒX‚ğì¬‚µ‚Ü‚·</summary>
+    /// <summary>ã‚¿ã‚°åã‚’å®šæ•°ã§ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã¾ã™</summary>
     [MenuItem(command)]
     public static void Create()
     {
@@ -19,15 +19,15 @@ public static class EnumLayerCreator
 
         CreateScript();
 
-        EditorUtility.DisplayDialog(command, $"{class_name}ƒNƒ‰ƒX‚Ìì¬Š®—¹F\n({path})", "OK");
+        EditorUtility.DisplayDialog(command, $"{class_name}ã‚¯ãƒ©ã‚¹ã®ä½œæˆå®Œäº†ï¼š\n({path})", "OK");
     }
 
-    /// <summary>ƒXƒNƒŠƒvƒg‚Ì\’zˆ—</summary>
+    /// <summary>ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®æ§‹ç¯‰å‡¦ç†</summary>
     public static void CreateScript()
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("/// <summary>ƒV[ƒ“(—ñ‹“Œ^)</summary>");
+        builder.AppendLine("/// <summary>ã‚·ãƒ¼ãƒ³(åˆ—æŒ™å‹)</summary>");
         builder.AppendLine("public class " + class_name);
         builder.AppendLine("{");
 

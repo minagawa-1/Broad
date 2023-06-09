@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-/// <summary>ƒvƒƒOƒŒƒXƒo[‚ğ’´‰ß‚µ‚½‚Æ‚«‚Ìˆ—</summary>
+/// <summary>ãƒ—ãƒ­ã‚°ãƒ¬ã‚¹ãƒãƒ¼ã‚’è¶…éã—ãŸã¨ãã®å‡¦ç†</summary>
 [System.Serializable]
 public enum ExcessType
 {
-    /// <summary>–³ˆ—</summary>
+    /// <summary>ç„¡å‡¦ç†</summary>
     None,
 
-    /// <summary>”ÍˆÍ“à‚ÉŒÅ’è</summary>
+    /// <summary>ç¯„å›²å†…ã«å›ºå®š</summary>
     Clamp,
 
-    /// <summary>‰ßè•ª‚ğü‰ñ‚³‚¹‚é</summary>
+    /// <summary>éå‰°åˆ†ã‚’å‘¨å›ã•ã›ã‚‹</summary>
     Around,
 }
 
@@ -52,7 +52,7 @@ public class ProgressBarDrawer : PropertyDrawer
             case SerializedPropertyType.Integer: value = property.intValue;    break;
 
             default:
-                string warningText = $"{property.propertyType}‚Í–¢‘Î‰‚Å‚·B‘Î‰: float, int";
+                string warningText = $"{property.propertyType}ã¯æœªå¯¾å¿œã§ã™ã€‚å¯¾å¿œ: float, int";
                 EditorGUI.LabelField(position, label.text, warningText);
                 return;
         }

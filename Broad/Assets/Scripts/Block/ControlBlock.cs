@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,48 +11,48 @@ public class ControlBlock : MonoBehaviour
 
 // public:
 
-    // ƒuƒƒbƒNî•ñ
+    // ãƒ–ãƒ­ãƒƒã‚¯æƒ…å ±
     public Blocks blocks;
 
-    // ƒvƒŒƒCƒ„[”Ô†
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·
     public int playerIndex;
 
-    ///<summary>İ’uŒã‚ÌƒIƒuƒWƒFƒNƒg</summary>
+    ///<summary>è¨­ç½®å¾Œã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</summary>
     public GameObject afterSetParent;
 
-    ///<summary>İ’uŒã‚Ìƒ}ƒeƒŠƒAƒ‹</summary>
+    ///<summary>è¨­ç½®å¾Œã®ãƒãƒ†ãƒªã‚¢ãƒ«</summary>
     public Material afterSetMaterial;
 
 // private:
 
-    /// <summary> ƒuƒƒbƒN‚Ìó‘Ô</summary>
+    /// <summary> ãƒ–ãƒ­ãƒƒã‚¯ã®çŠ¶æ…‹</summary>
     enum BlocksState
     {
-        /// <summary> ‘Ò‹@ </summary>
+        /// <summary> å¾…æ©Ÿ </summary>
         Wait,
-        /// <summary> ˆÚ“® </summary>
+        /// <summary> ç§»å‹• </summary>
         Move,
-        /// <summary> U“® </summary>
+        /// <summary> æŒ¯å‹• </summary>
         Vibrate,
-        /// <summary> İ’u </summary>
+        /// <summary> è¨­ç½® </summary>
         Set,
-        /// <summary> ‰ñ“] </summary>
+        /// <summary> å›è»¢ </summary>
         Rotate,
     }
 
-    // ƒuƒƒbƒN‚Ìó‘Ô
+    // ãƒ–ãƒ­ãƒƒã‚¯ã®çŠ¶æ…‹
     BlocksState m_BlocksState = BlocksState.Wait;
 
-    // GameManagerƒRƒ“ƒ|[ƒlƒ“ƒg
+    // GameManagerã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
     GameManager m_GameManager = null;
     BlockManager m_BlockManager = null;
 
-    // ‘€ì‰Â”\‚©
+    // æ“ä½œå¯èƒ½ã‹
     bool m_IsOperatable = true;
 
     woskni.Timer m_KeyRepeatTimer;
 
-    // ˆÚ“®•ûŒü
+    // ç§»å‹•æ–¹å‘
     Vector2Int m_MoveDirection;
     float      m_RotateDirection;
 
@@ -71,7 +71,7 @@ public class ControlBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // BlockState‚É‰‚¶‚½ŠÖ”‚ğŒÄ‚Ô
+        // BlockStateã«å¿œã˜ãŸé–¢æ•°ã‚’å‘¼ã¶
         switch (m_BlocksState)
         {
             case BlocksState.Wait:      WaitState();    break;
@@ -84,21 +84,21 @@ public class ControlBlock : MonoBehaviour
 
     void WaitState()
     {
-        // XƒL[ ‚ÅAƒuƒƒbƒNƒX‚ğ”¼“§–¾‚É‚·‚é
+        // Xã‚­ãƒ¼ ã§ã€ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã‚’åŠé€æ˜ã«ã™ã‚‹
         if (Input.GetKeyDown(KeyCode.X))
         {
             var children = transform.GetChildren();
             GetComponent<ChangeTransparency>().Change(ref children);
         }
 
-        // ZƒL[ ‚© EnterƒL[ ‚ÅAƒuƒƒbƒNƒX‚ğİ’u
+        // Zã‚­ãƒ¼ ã‹ Enterã‚­ãƒ¼ ã§ã€ãƒ–ãƒ­ãƒƒã‚¯ã‚¹ã‚’è¨­ç½®
         if (woskni.KeyBoard.GetOrKeyDown(KeyCode.Z, KeyCode.Return))
         {
-            // İ’u”»’è‚ğ‚µ‚Ätrue‚È‚çBlocksState‚ğSet‚É•ÏX
+            // è¨­ç½®åˆ¤å®šã‚’ã—ã¦trueãªã‚‰BlocksStateã‚’Setã«å¤‰æ›´
             if (blocks.IsSetable( m_GameManager.board, playerIndex))
                 m_BlocksState = BlocksState.Set;
 
-            // İ’u‚ª‚Å‚«‚È‚¢ê‡‚ÍU“®
+            // è¨­ç½®ãŒã§ããªã„å ´åˆã¯æŒ¯å‹•
             else
             {
                 m_BlocksState = BlocksState.Vibrate;
@@ -109,14 +109,14 @@ public class ControlBlock : MonoBehaviour
         if (KeyRepeat(KeyCode.Q)) ChangeRotateState(-90f);
         if (KeyRepeat(KeyCode.E)) ChangeRotateState( 90f);
 
-        // ã‰º¶‰E‚ÌˆÚ“®ˆ—iEase.OutCubicE‘Š‘ÎˆÚ“®)
+        // ä¸Šä¸‹å·¦å³ã®ç§»å‹•å‡¦ç†ï¼ˆEase.OutCubicãƒ»ç›¸å¯¾ç§»å‹•)
         if (KeyRepeat(KeyCode.UpArrow   , KeyCode.W)) ChangeMoveState(Vector2Int.up);
         if (KeyRepeat(KeyCode.LeftArrow , KeyCode.A)) ChangeMoveState(Vector2Int.left);
         if (KeyRepeat(KeyCode.DownArrow , KeyCode.S)) ChangeMoveState(Vector2Int.down);
         if (KeyRepeat(KeyCode.RightArrow, KeyCode.D)) ChangeMoveState(Vector2Int.right);
 
 
-        // ó‘Ô‚ğ•ÏX (BlocksState.Rotate)
+        // çŠ¶æ…‹ã‚’å¤‰æ›´ (BlocksState.Rotate)
         void ChangeRotateState(float rotate)
         {
             m_RotateDirection = rotate;
@@ -124,7 +124,7 @@ public class ControlBlock : MonoBehaviour
             m_BlocksState = BlocksState.Rotate;
         }
 
-        // ó‘Ô‚ğ•ÏX (BlocksState.Move)
+        // çŠ¶æ…‹ã‚’å¤‰æ›´ (BlocksState.Move)
         void ChangeMoveState(Vector2Int move)
         {
             m_MoveDirection = move;
@@ -135,63 +135,63 @@ public class ControlBlock : MonoBehaviour
             if (move == Vector2Int.down ) num = 2;
             if (move == Vector2Int.right) num = 3;
 
-            // “ü—Í‚³‚ê‚½•ûŒü‚Ì•ÇŒŸ’m‚ğ‚µ‚Äó‘Ô‚ğ•Ï‚¦‚é
+            // å…¥åŠ›ã•ã‚ŒãŸæ–¹å‘ã®å£æ¤œçŸ¥ã‚’ã—ã¦çŠ¶æ…‹ã‚’å¤‰ãˆã‚‹
             m_BlocksState = IsCollisionMoveLimit()[num] ? BlocksState.Vibrate : BlocksState.Move;
         }
     }
 
-    /// <summary> ˆÚ“®ó‘Ô </summary>
+    /// <summary> ç§»å‹•çŠ¶æ…‹ </summary>
     void MoveState()
     {
-        // ˆÚ“®ˆ—
+        // ç§»å‹•å‡¦ç†
         Move(m_MoveDirection, m_move_time);
     }
 
-    /// <summary> U“®ó‘Ô </summary>
+    /// <summary> æŒ¯å‹•çŠ¶æ…‹ </summary>
     void VibrateState()
     {
         Vector3 vibrateRate = new Vector3(m_MoveDirection.x, 0.2f, m_MoveDirection.y);
 
-        // U“®ˆ—
+        // æŒ¯å‹•å‡¦ç†
         if (m_IsOperatable) transform.Vibrate(0.2f, vibrateRate, m_move_interval);
 
-        // ‘€ì•s”\‚É‚·‚é
+        // æ“ä½œä¸èƒ½ã«ã™ã‚‹
         m_IsOperatable = false;
 
-        // U“®I—¹ŒŸ’m
+        // æŒ¯å‹•çµ‚äº†æ¤œçŸ¥
         if (!transform.IsVibrating())
         {
-            // ˆÚ“®‰Â”\‚É‚µAˆÚ“®•ûŒü‚ğƒ[ƒ‚É‚·‚é
+            // ç§»å‹•å¯èƒ½ã«ã—ã€ç§»å‹•æ–¹å‘ã‚’ã‚¼ãƒ­ã«ã™ã‚‹
             m_IsOperatable = true;
             m_MoveDirection = Vector2Int.zero;
 
-            // State‚ğWait‚É–ß‚µ‚Äreturn
+            // Stateã‚’Waitã«æˆ»ã—ã¦return
             m_BlocksState = BlocksState.Wait;
             return;
         }
     }
 
-    /// <summary> İ’uó‘Ô </summary>
+    /// <summary> è¨­ç½®çŠ¶æ…‹ </summary>
     void SetState()
     {
-        // ‘€ì•s”\‚È‚çI—¹
+        // æ“ä½œä¸èƒ½ãªã‚‰çµ‚äº†
         if (!m_IsOperatable) return;
 
-        // ‘€ì•s”\‚É‚·‚é
+        // æ“ä½œä¸èƒ½ã«ã™ã‚‹
         m_IsOperatable = false;
 
-        // ƒC[ƒWƒ“ƒO (I—¹ŒãA”Õ–Ê‚É”½‰f‚³‚¹‚ÄI—¹)
+        // ã‚¤ãƒ¼ã‚¸ãƒ³ã‚° (çµ‚äº†å¾Œã€ç›¤é¢ã«åæ˜ ã•ã›ã¦çµ‚äº†)
         transform.DOMoveY(0f, m_move_interval).SetEase(Ease.InQuart).OnComplete(() =>
             {
-                // İ’uˆ—
+                // è¨­ç½®å‡¦ç†
                 Set();
 
-                // İ’uó‘Ô‚É‚·‚é
+                // è¨­ç½®çŠ¶æ…‹ã«ã™ã‚‹
                 m_IsOperatable = true;
             });
     }
 
-    /// <summary>‰ñ“]ó‘Ô</summary>
+    /// <summary>å›è»¢çŠ¶æ…‹</summary>
     void RotateState()
     {
         if (!m_IsOperatable) return;
@@ -203,7 +203,7 @@ public class ControlBlock : MonoBehaviour
         transform.DOLocalRotate(rot, m_move_interval, RotateMode.FastBeyond360).SetEase(Ease.OutCubic)
             .SetRelative().OnComplete(() =>
             {
-                // ”z—ñ‚Ì‰ñ“]ˆ—
+                // é…åˆ—ã®å›è»¢å‡¦ç†
                 if (m_RotateDirection < 0f) blocks.RotateLeft();
                 if (m_RotateDirection > 0f) blocks.RotateRight();
 
@@ -211,26 +211,26 @@ public class ControlBlock : MonoBehaviour
 
                 OutputDebugText(false, "blockShape[,].txt");
 
-                // ˆÚ“®‰Â”\‚É‚µAˆÚ“®•ûŒü‚ğƒ[ƒ‚É‚·‚é
+                // ç§»å‹•å¯èƒ½ã«ã—ã€ç§»å‹•æ–¹å‘ã‚’ã‚¼ãƒ­ã«ã™ã‚‹
                 m_IsOperatable = true;
                 m_RotateDirection = 0f;
 
-                // State‚ğWait‚É–ß‚·
+                // Stateã‚’Waitã«æˆ»ã™
                 m_BlocksState = BlocksState.Wait;
             });
     }
 
-    /// <summary>ˆÚ“®ˆ—</summary>
-    /// <param name="move">ˆÚ“®—Êiƒ}ƒX”j</param>
+    /// <summary>ç§»å‹•å‡¦ç†</summary>
+    /// <param name="move">ç§»å‹•é‡ï¼ˆãƒã‚¹æ•°ï¼‰</param>
     void Move(Vector2Int move = new Vector2Int(), float moveTime = 0.1f)
     {
-        // ˆÚ“®’†‚Í‰½‚à‚¹‚¸I—¹
+        // ç§»å‹•ä¸­ã¯ä½•ã‚‚ã›ãšçµ‚äº†
         if (!m_IsOperatable) return;
 
-        // ˆÚ“®
+        // ç§»å‹•
         bool[] isCollision = IsCollisionMoveLimit();
 
-        // ‘€ì•s”\‚É‚·‚é
+        // æ“ä½œä¸èƒ½ã«ã™ã‚‹
         m_IsOperatable = false;
 
         transform.DOLocalMove(GetVector3Board(move), moveTime).SetEase(Ease.OutCubic).SetRelative()
@@ -238,16 +238,16 @@ public class ControlBlock : MonoBehaviour
             {
                 blocks.position = GetBoardPosition(transform.position);
 
-                // ˆÚ“®‰Â”\‚É‚µAˆÚ“®•ûŒü‚ğƒ[ƒ‚É‚·‚é
+                // ç§»å‹•å¯èƒ½ã«ã—ã€ç§»å‹•æ–¹å‘ã‚’ã‚¼ãƒ­ã«ã™ã‚‹
                 m_IsOperatable = true;
                 m_MoveDirection = Vector2Int.zero;
 
-                // State‚ğWait‚É–ß‚·
+                // Stateã‚’Waitã«æˆ»ã™
                 m_BlocksState = BlocksState.Wait;
             });
     }
 
-    /// <summary> İ’uˆ— </summary>
+    /// <summary> è¨­ç½®å‡¦ç† </summary>
     private void Set()
     {
         var pos = GetBoardPosition(transform.position);
@@ -258,7 +258,7 @@ public class ControlBlock : MonoBehaviour
 
         Transform[] children = transform.GetChildren();
 
-        // ƒuƒƒbƒN‚Ì”¼“§–¾‰»‚ğ‰ğœ
+        // ãƒ–ãƒ­ãƒƒã‚¯ã®åŠé€æ˜åŒ–ã‚’è§£é™¤
         GetComponent<ChangeTransparency>().Set(ref children, false);
 
         for (int i = 0; i < children.Length; ++i)
@@ -272,17 +272,17 @@ public class ControlBlock : MonoBehaviour
 
             string name = "Block[" + boardPos.x + ", " + boardPos.y + "]";
 
-            // Œ³X‚»‚Ì”Õ–Ê‚É‚¢‚½ƒuƒƒbƒN‚ğ”jŠü‚·‚é
+            // å…ƒã€…ãã®ç›¤é¢ã«ã„ãŸãƒ–ãƒ­ãƒƒã‚¯ã‚’ç ´æ£„ã™ã‚‹
             GameObject oldBlock = GameObject.Find(name);
             if (oldBlock) Destroy(oldBlock);
 
-            // ƒIƒuƒWƒFƒNƒg–¼‚ğ”Õ–ÊÀ•W‚Ì–¼‘O‚É•ÏX‚·‚é
+            // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’ç›¤é¢åº§æ¨™ã®åå‰ã«å¤‰æ›´ã™ã‚‹
             children[i].name = name;
 
-            // e‚ğ•Ï‚¦‚é
+            // è¦ªã‚’å¤‰ãˆã‚‹
             children[i].transform.SetParent(afterSetParent.transform);
 
-            // ƒ}ƒeƒŠƒAƒ‹‚ğİ’uŒã‚Ì‚à‚Ì‚É•ÏX
+            // ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’è¨­ç½®å¾Œã®ã‚‚ã®ã«å¤‰æ›´
             children[i].GetComponent<Renderer>().material = afterSetMaterial;
         }
 
@@ -290,13 +290,13 @@ public class ControlBlock : MonoBehaviour
 
         OutputDebugText(true, "board[,].txt");
 
-        // ƒRƒ“ƒgƒ[ƒ‹—pƒIƒuƒWƒFƒNƒg‚ğ”jŠü
+        // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç ´æ£„
         Destroy(gameObject);
     }
 
-    /// <summary>Vector3‚ğ”Õ–ÊÀ•W‚É•ÏŠ·</summary>
-    /// <param name="position">‚RŸŒ³À•W</param>
-    /// <returns>”Õ–Ê‚Ì‚QŸŒ³À•W</returns>
+    /// <summary>Vector3ã‚’ç›¤é¢åº§æ¨™ã«å¤‰æ›</summary>
+    /// <param name="position">ï¼“æ¬¡å…ƒåº§æ¨™</param>
+    /// <returns>ç›¤é¢ã®ï¼’æ¬¡å…ƒåº§æ¨™</returns>
     Vector2Int GetBoardPosition(Vector3 pos)
     {
         var posBoard = new Vector2Int((int)pos.x, (int)-pos.z);
@@ -306,35 +306,35 @@ public class ControlBlock : MonoBehaviour
         return posBoard.Offset(offsetX, offsetY);
     }
 
-    /// <summary>”Õ–ÊÀ•W‚ğVector3‚É•ÏŠ·</summary>
-    /// <param name="pos">”Õ–Ê‚Ì‚QŸŒ³À•W</param>
-    /// <returns>‚RŸŒ³À•W</returns>
+    /// <summary>ç›¤é¢åº§æ¨™ã‚’Vector3ã«å¤‰æ›</summary>
+    /// <param name="pos">ç›¤é¢ã®ï¼’æ¬¡å…ƒåº§æ¨™</param>
+    /// <returns>ï¼“æ¬¡å…ƒåº§æ¨™</returns>
     Vector3 GetVector3Board(Vector2Int pos)
     {
         return new Vector3(m_GameManager.m_SquareSize.x * pos.x, 0f, m_GameManager.m_SquareSize.y * pos.y);
     }
 
-    /// <summary>ƒL[ƒŠƒs[ƒgˆ—</summary>
-    /// <param name="key">”»’è‚·‚éƒL[</param>
-    /// <returns>‰Ÿ‚µ‚½uŠÔ‚Æ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚Ìˆê’èŠÔŠu‚Étrue</returns>
+    /// <summary>ã‚­ãƒ¼ãƒªãƒ”ãƒ¼ãƒˆå‡¦ç†</summary>
+    /// <param name="key">åˆ¤å®šã™ã‚‹ã‚­ãƒ¼</param>
+    /// <returns>æŠ¼ã—ãŸç¬é–“ã¨æŠ¼ã—ã¦ã„ã‚‹é–“ã®ä¸€å®šé–“éš”ã«true</returns>
     bool KeyRepeat(params KeyCode[] key)
     {
-        // ƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Îƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg‚µ‚Äfalse‚ğ•Ô‚·
+        // ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ãªã‘ã‚Œã°ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆã—ã¦falseã‚’è¿”ã™
         if (!woskni.KeyBoard.GetOrKey(key)) {
             m_KeyRepeatTimer.Reset();
             return false;
         }
 
-        // ƒ^ƒCƒ}[XV
+        // ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
         m_KeyRepeatTimer.Update();
 
-        // ƒŠƒs[ƒgŠÔŠu‚É’B‚µ‚½‚Æ‚«ƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg‚µ‚Ätrue‚ğ•Ô‚·B
+        // ãƒªãƒ”ãƒ¼ãƒˆé–“éš”ã«é”ã—ãŸã¨ãã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆã—ã¦trueã‚’è¿”ã™ã€‚
         if (m_KeyRepeatTimer.IsFinished()) {
             m_KeyRepeatTimer.Reset();
             return true;
         }
 
-        // ‚Ç‚¿‚ç‚Å‚à‚È‚¯‚ê‚ÎA‰Ÿ‚µ‚½uŠÔ‚ğŒŸ’m
+        // ã©ã¡ã‚‰ã§ã‚‚ãªã‘ã‚Œã°ã€æŠ¼ã—ãŸç¬é–“ã‚’æ¤œçŸ¥
         return woskni.KeyBoard.GetOrKeyDown(key);
     }
 
@@ -350,9 +350,9 @@ public class ControlBlock : MonoBehaviour
                 {
                     switch (m_GameManager.board.GetBoardData(x, y))
                     {
-                        case -1: debugText += "@"; break;
-                        case  0: debugText += " "; break;
-                        default: debugText += "¡"; break;
+                        case -1: debugText += "ã€€"; break;
+                        case  0: debugText += "â–¡"; break;
+                        default: debugText += "â– "; break;
                     }
                 }
 
@@ -367,13 +367,13 @@ public class ControlBlock : MonoBehaviour
             {
                 for (int x = 0; x < blocks.GetWidth(); ++x)
                 {
-                    // center•\¦
+                    // centerè¡¨ç¤º
                     if (!isEven && new Vector2(x, y) == blocks.center) { 
-                        debugText += blocks.shape[x, y] ? "œ" : "›";
+                        debugText += blocks.shape[x, y] ? "â—" : "â—‹";
                         continue;
                     }
 
-                    debugText += blocks.shape[x, y] ? "¡" : "E";
+                    debugText += blocks.shape[x, y] ? "â– " : "ãƒ»";
                 }
 
                 debugText += "\n";
@@ -383,26 +383,26 @@ public class ControlBlock : MonoBehaviour
         TextOperate.WriteFile(filePath, debugText);
     }
 
-    /// <summary> •ÇŒŸ’m </summary>
-    /// <returns>•Ç‚Ì—L–³@[0]: ã, [1]: ¶, [2]: ‰º, [3]: ‰E</returns>
+    /// <summary> å£æ¤œçŸ¥ </summary>
+    /// <returns>å£ã®æœ‰ç„¡ã€€[0]: ä¸Š, [1]: å·¦, [2]: ä¸‹, [3]: å³</returns>
     private bool[] IsCollisionMoveLimit()
     {
-        // “–‚½‚è”»’è—p”z—ñ
+        // å½“ãŸã‚Šåˆ¤å®šç”¨é…åˆ—
         bool[] isCollision = new bool[4];
 
-        // ˆÚ“®ŒÀŠE
-        Vector2 limitLeftTop = Vector2.zero - blocks.center;                  // ¶ã
-        Vector2 limitRightBottom = m_GameManager.boardSize - blocks.center;   // ‰E‰º
+        // ç§»å‹•é™ç•Œ
+        Vector2 limitLeftTop = Vector2.zero - blocks.center;                  // å·¦ä¸Š
+        Vector2 limitRightBottom = m_GameManager.boardSize - blocks.center;   // å³ä¸‹
 
         if (blocks.GetWidth()  % 2 == 1) limitRightBottom.x -= 1;
         if (blocks.GetHeight() % 2 == 1) limitRightBottom.y -= 1;
 
         if (blocks.GetWidth() % 2 == 0 && blocks.GetHeight() % 2 == 0) limitRightBottom -= Vector2.one;
 
-        isCollision[0] = transform.position.z >=  limitLeftTop.y;       // ã
-        isCollision[1] = transform.position.x <= -limitLeftTop.x;       // ¶
-        isCollision[2] = transform.position.z <= -limitRightBottom.y;   // ‰º
-        isCollision[3] = transform.position.x >=  limitRightBottom.x;   // ‰E
+        isCollision[0] = transform.position.z >=  limitLeftTop.y;       // ä¸Š
+        isCollision[1] = transform.position.x <= -limitLeftTop.x;       // å·¦
+        isCollision[2] = transform.position.z <= -limitRightBottom.y;   // ä¸‹
+        isCollision[3] = transform.position.x >=  limitRightBottom.x;   // å³
 
         return isCollision;
     }

@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
 public struct BoardData : NetworkMessage
 {
-    public Board board;   // ƒ{[ƒhî•ñ
+    public Board board;   // ãƒœãƒ¼ãƒ‰æƒ…å ±
 
     public BoardData(Board board)
     {

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using DG.Tweening;
 
 
@@ -6,11 +6,11 @@ public static class Vibration
 {
     static Tweener m_Tweener = null;
 
-    /// <summary>U“®ˆ—</summary>
-    /// <param name="intensity">U“®‚Ì‹­“x</param>
-    /// <param name="rate">U“®—¦</param>
-    /// <param name="time">U“®ŠÔ</param>
-    /// <param name="ease">U“®‚Ìí•Ê(DG.Tweening.Ease)</param>
+    /// <summary>æŒ¯å‹•å‡¦ç†</summary>
+    /// <param name="intensity">æŒ¯å‹•ã®å¼·åº¦</param>
+    /// <param name="rate">æŒ¯å‹•ç‡</param>
+    /// <param name="time">æŒ¯å‹•æ™‚é–“</param>
+    /// <param name="ease">æŒ¯å‹•ã®ç¨®åˆ¥(DG.Tweening.Ease)</param>
     public static Tweener Vibrate(this Transform transform, float intensity, Vector3 rate, float time, Ease ease = Ease.Linear)
     {
         if (transform.IsVibrating()) return m_Tweener;
@@ -30,7 +30,7 @@ public static class Vibration
         return m_Tweener;
     }
 
-    /// <summary>U“®’†‚©(VibrateŠÖ”‚ğÀs’†‚©)</summary>
+    /// <summary>æŒ¯å‹•ä¸­ã‹(Vibrateé–¢æ•°ã‚’å®Ÿè¡Œä¸­ã‹)</summary>
     public static bool IsVibrating(this Transform transform)
     {
         if (transform == null)      return false;
@@ -40,9 +40,9 @@ public static class Vibration
         return true;
     }
 
-    /// <summary>ƒxƒNƒgƒ‹“¯m‚ÌæZ</summary>
-    /// <param name="v">ƒxƒNƒgƒ‹(•¡”w’è‰Â”\)</param>
-    /// <returns>æZ‚³‚ê‚½ƒxƒNƒgƒ‹</returns>
+    /// <summary>ãƒ™ã‚¯ãƒˆãƒ«åŒå£«ã®ä¹—ç®—</summary>
+    /// <param name="v">ãƒ™ã‚¯ãƒˆãƒ«(è¤‡æ•°æŒ‡å®šå¯èƒ½)</param>
+    /// <returns>ä¹—ç®—ã•ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«</returns>
     static Vector3 Multiple(params Vector3[] v)
     {
         for (int i = 1; i < v.Length; ++i) v[0] = new Vector3(v[0].x * v[i].x, v[0].y * v[i].y, v[0].z * v[i].z);

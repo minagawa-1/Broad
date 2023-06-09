@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +11,8 @@ public class NameAttribute : PropertyAttribute
 {
     public readonly string label;
 
-    /// <summary>ƒtƒB[ƒ‹ƒh–¼‚Ì•\¦‚ğ•ÏX</summary>
-    /// <param name="label">•\¦‚³‚¹‚é•¶š—ñ</param>
+    /// <summary>ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã®è¡¨ç¤ºã‚’å¤‰æ›´</summary>
+    /// <param name="label">è¡¨ç¤ºã•ã›ã‚‹æ–‡å­—åˆ—</param>
     public NameAttribute(string label = "") => this.label = label;
 }
 
@@ -21,22 +21,22 @@ public class NameAttribute : PropertyAttribute
 [CustomPropertyDrawer(typeof(NameAttribute))]
 public class LabelAttributeDrawer : PropertyDrawer
 {
-    /// <summary>ƒGƒfƒBƒ^ã‚É”½‰f‚³‚¹‚é</summary>
-    /// <param name="position">•\¦ˆÊ’u</param>
-    /// <param name="property">ƒvƒƒpƒeƒB</param>
-    /// <param name="label">•¶š“à—e</param>
+    /// <summary>ã‚¨ãƒ‡ã‚£ã‚¿ä¸Šã«åæ˜ ã•ã›ã‚‹</summary>
+    /// <param name="position">è¡¨ç¤ºä½ç½®</param>
+    /// <param name="property">ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£</param>
+    /// <param name="label">æ–‡å­—å†…å®¹</param>
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         label.text = ((NameAttribute)attribute).label;
 
-        // ƒGƒfƒBƒ^ã‚Ì•\¦‚ğ‚±‚±‚Å•ÏŠ·
+        // ã‚¨ãƒ‡ã‚£ã‚¿ä¸Šã®è¡¨ç¤ºã‚’ã“ã“ã§å¤‰æ›
         EditorGUI.PropertyField(position, property, label, true);
     }
 
-    /// <summary>ƒvƒƒpƒeƒB©‘Ì‚Ì‚‚³‚ğæ“¾</summary>
-    /// <param name="property">ƒvƒƒpƒeƒB</param>
-    /// <param name="label">•¶š“à—e</param>
-    /// <returns>ƒvƒƒpƒeƒB©‘Ì‚Ì‚‚³</returns>
+    /// <summary>ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£è‡ªä½“ã®é«˜ã•ã‚’å–å¾—</summary>
+    /// <param name="property">ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£</param>
+    /// <param name="label">æ–‡å­—å†…å®¹</param>
+    /// <returns>ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£è‡ªä½“ã®é«˜ã•</returns>
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         return EditorGUI.GetPropertyHeight(property, true);

@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +7,8 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-/// <summary>ƒ^ƒO‚Ìw’è</summary>
-/// <remarks>‘Î‰ƒf[ƒ^Œ^: int, string</remarks>
+/// <summary>ã‚¿ã‚°ã®æŒ‡å®š</summary>
+/// <remarks>å¯¾å¿œãƒ‡ãƒ¼ã‚¿å‹: int, string</remarks>
 public class TagAttribute : PropertyAttribute
 {
 }
@@ -19,10 +19,10 @@ public class TagAttributeDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        // string[]Œ^‚Æint[]Œ^ˆÈŠO‚ÍŒx‚ğ•\¦‚µ‚ÄI—¹
+        // string[]å‹ã¨int[]å‹ä»¥å¤–ã¯è­¦å‘Šã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         if (property.propertyType != SerializedPropertyType.Integer && property.propertyType != SerializedPropertyType.String)
         {
-            string warningText = $"{property.propertyType}‚Í–¢‘Î‰‚Å‚·B‘Î‰: int[], string[]";
+            string warningText = $"{property.propertyType}ã¯æœªå¯¾å¿œã§ã™ã€‚å¯¾å¿œ: int[], string[]";
             EditorGUI.LabelField(position, label.text, warningText);
             return;
         }
@@ -36,7 +36,7 @@ public class TagAttributeDrawer : PropertyDrawer
             default: break;
         }
 
-        // 0 ` tags.Length “à‚Éû‚ß‚é
+        // 0 ï½ tags.Length å†…ã«åã‚ã‚‹
         index = Mathf.Max(0, Mathf.Min(index, tags.Length - 1));
 
         EditorGUI.BeginChangeCheck();
@@ -53,8 +53,8 @@ public class TagAttributeDrawer : PropertyDrawer
     }
 }
 
-/// <summary>ƒŒƒCƒ„[‚Ìw’è</summary>
-/// <remarks>‘Î‰ƒf[ƒ^Œ^: int, string</remarks>
+/// <summary>ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŒ‡å®š</summary>
+/// <remarks>å¯¾å¿œãƒ‡ãƒ¼ã‚¿å‹: int, string</remarks>
 public class LayerAttribute : PropertyAttribute
 {
 }
@@ -64,10 +64,10 @@ public class LayerAttributeDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        // stringŒ^‚ÆintŒ^ˆÈŠO‚ÍŒx‚ğ•\¦‚µ‚ÄI—¹
+        // stringå‹ã¨intå‹ä»¥å¤–ã¯è­¦å‘Šã‚’è¡¨ç¤ºã—ã¦çµ‚äº†
         if (property.propertyType != SerializedPropertyType.Integer && property.propertyType != SerializedPropertyType.String)
         {
-            string warningText = $"{property.propertyType}‚Í–¢‘Î‰‚Å‚·B‘Î‰: int, string";
+            string warningText = $"{property.propertyType}ã¯æœªå¯¾å¿œã§ã™ã€‚å¯¾å¿œ: int, string";
             EditorGUI.LabelField(position, label.text, warningText);
             return;
         }
@@ -82,7 +82,7 @@ public class LayerAttributeDrawer : PropertyDrawer
             default:                                                                                         break;
         }
 
-        // 0 ` tags.Length “à‚Éû‚ß‚é
+        // 0 ï½ tags.Length å†…ã«åã‚ã‚‹
         index = Mathf.Max(0, Mathf.Min(index, layers.Length - 1));
 
         EditorGUI.BeginChangeCheck();

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,134 +6,134 @@ namespace woskni
 {
     public class KeyBoard : MonoBehaviour
     {
-        /// <summary>Ši”[ãŒÀ”</summary>
+        /// <summary>æ ¼ç´ä¸Šé™æ•°</summary>
         private const int m_max_store_command = 16;
 
-        /// <summary>“ü—Í‚³‚ê‚½ƒRƒ}ƒ“ƒh‚ğŠi”[‚·‚éƒŠƒXƒg</summary>
+        /// <summary>å…¥åŠ›ã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰ã‚’æ ¼ç´ã™ã‚‹ãƒªã‚¹ãƒˆ</summary>
         public static List<KeyCode> commandList;
 
-        /// <summary>•¡”ƒL[‚ÌORŒŸ’m</summary>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‚¢‚¸‚ê‚©‚ª‰Ÿ‚µ‚Ü‚ê‚Ä‚¢‚éŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ORæ¤œçŸ¥</summary>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®ã„ãšã‚Œã‹ãŒæŠ¼ã—è¾¼ã¾ã‚Œã¦ã„ã‚‹é–“</returns>
         public static bool GetOrKey(params KeyCode[] keys)
         {
-            // ‘–¸‚µ‚Äˆê’v‚·‚é‚à‚Ì‚ª‚ ‚ê‚Îtrue‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã™ã‚‹ã‚‚ã®ãŒã‚ã‚Œã°trueã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (Input.GetKey(kc)) return true;
 
             return false;
         }
 
-        /// <summary>•¡”ƒL[‚ÌORŒŸ’m</summary>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‚¢‚¸‚ê‚©‚ª‰Ÿ‚µ‚Ü‚ê‚½uŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ORæ¤œçŸ¥</summary>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®ã„ãšã‚Œã‹ãŒæŠ¼ã—è¾¼ã¾ã‚ŒãŸç¬é–“</returns>
         public static bool GetOrKeyDown(params KeyCode[] keys)
         {
-            // ‘–¸‚µ‚Äˆê’v‚·‚é‚à‚Ì‚ª‚ ‚ê‚Îtrue‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã™ã‚‹ã‚‚ã®ãŒã‚ã‚Œã°trueã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (Input.GetKeyDown(kc)) return true;
 
             return false;
         }
 
-        /// <summary>•¡”ƒL[‚ÌORŒŸ’m</summary>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‚¢‚¸‚ê‚©‚Ì‰Ÿ‚µ‚İ‚ª‰ğœ‚³‚ê‚½uŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ORæ¤œçŸ¥</summary>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®ã„ãšã‚Œã‹ã®æŠ¼ã—è¾¼ã¿ãŒè§£é™¤ã•ã‚ŒãŸç¬é–“</returns>
         public static bool GetOrKeyUp(params KeyCode[] keys)
         {
-            // ‘–¸‚µ‚Äˆê’v‚·‚é‚à‚Ì‚ª‚ ‚ê‚Îtrue‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã™ã‚‹ã‚‚ã®ãŒã‚ã‚Œã°trueã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (Input.GetKeyUp(kc)) return true;
 
             return false;
         }
 
-        /// <summary>•¡”ƒL[‚ÌORŒŸ’m</summary>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‘S‚Ä‚ª‰Ÿ‚µ‚Ü‚ê‚Ä‚¢‚éŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ORæ¤œçŸ¥</summary>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®å…¨ã¦ãŒæŠ¼ã—è¾¼ã¾ã‚Œã¦ã„ã‚‹é–“</returns>
         public static bool GetAndKey(params KeyCode[] keys)
         {
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (!Input.GetKey(kc)) return false;
 
             return true;
         }
 
-        /// <summary>•¡”ƒL[‚ÌANDŒŸ’m</summary>
-        /// <param name="key">ƒgƒŠƒK[‚Æ‚È‚éƒL[</param>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‘S‚Ä‚ª‰Ÿ‚µ‚Ü‚ê‚½uŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ANDæ¤œçŸ¥</summary>
+        /// <param name="key">ãƒˆãƒªã‚¬ãƒ¼ã¨ãªã‚‹ã‚­ãƒ¼</param>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®å…¨ã¦ãŒæŠ¼ã—è¾¼ã¾ã‚ŒãŸç¬é–“</returns>
         public static bool GetAndKeyDown(KeyCode key, params KeyCode[] keys)
         {
-            // ƒgƒŠƒK[‚Æ‚È‚éƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            // ãƒˆãƒªã‚¬ãƒ¼ã¨ãªã‚‹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
             if (!Input.GetKeyDown(key)) return false;
 
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (!Input.GetKey(kc)) return false;
 
             return true;
         }
 
-        /// <summary>•¡”ƒL[‚ÌANDŒŸ’m</summary>
-        /// <param name="key">ƒgƒŠƒK[‚Æ‚È‚éƒL[</param>
-        /// <param name="keys">‰Ÿ’†ƒL[</param>
-        /// <returns>ˆø”‚ÌƒL[‚Ì‘S‚Ä‚Ì‰Ÿ‚µ‚İ‚ª‰ğœ‚³‚ê‚½uŠÔ</returns>
+        /// <summary>è¤‡æ•°ã‚­ãƒ¼ã®ANDæ¤œçŸ¥</summary>
+        /// <param name="key">ãƒˆãƒªã‚¬ãƒ¼ã¨ãªã‚‹ã‚­ãƒ¼</param>
+        /// <param name="keys">æŠ¼è¾¼ä¸­ã‚­ãƒ¼</param>
+        /// <returns>å¼•æ•°ã®ã‚­ãƒ¼ã®å…¨ã¦ã®æŠ¼ã—è¾¼ã¿ãŒè§£é™¤ã•ã‚ŒãŸç¬é–“</returns>
         public static bool GetAndKeyUp(KeyCode key, params KeyCode[] keys)
         {
-            // ƒgƒŠƒK[‚Æ‚È‚éƒL[‚ª—£‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            // ãƒˆãƒªã‚¬ãƒ¼ã¨ãªã‚‹ã‚­ãƒ¼ãŒé›¢ã•ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
             if (!Input.GetKeyDown(key)) return false;
 
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             foreach (KeyCode kc in keys)
                 if (!Input.GetKey(kc)) return false;
 
             return true;
         }
 
-        /// <summary>ƒRƒ}ƒ“ƒh“ü—ÍŒŸ’m</summary>
-        /// <param name="keys">ƒRƒ}ƒ“ƒh‚Ì‡”Ô</param>
-        /// <returns>ƒRƒ}ƒ“ƒh‚ª¬—§‚µ‚Ä‚¢‚é‚©</returns>
+        /// <summary>ã‚³ãƒãƒ³ãƒ‰å…¥åŠ›æ¤œçŸ¥</summary>
+        /// <param name="keys">ã‚³ãƒãƒ³ãƒ‰ã®é †ç•ª</param>
+        /// <returns>ã‚³ãƒãƒ³ãƒ‰ãŒæˆç«‹ã—ã¦ã„ã‚‹ã‹</returns>
         public static bool IsCommandedKey(params KeyCode[] keys)
         {
-            // ÅŒã‚ÌƒRƒ}ƒ“ƒhƒL[‚ªs‚í‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            // æœ€å¾Œã®ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¼ãŒè¡Œã‚ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
             if (!Input.GetKey(keys[keys.Length - 1])) return false;
 
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             for (int i = 0; i < keys.Length - 1; ++i)
                 if (commandList[keys.Length - i] != keys[i]) return false;
 
             return true;
         }
 
-        /// <summary>ƒRƒ}ƒ“ƒh“ü—ÍŒŸ’m</summary>
-        /// <param name="keys">ƒRƒ}ƒ“ƒh‚Ì‡”Ô</param>
-        /// <returns>ƒRƒ}ƒ“ƒh‚ª¬—§‚µ‚Ä‚¢‚é‚©</returns>
+        /// <summary>ã‚³ãƒãƒ³ãƒ‰å…¥åŠ›æ¤œçŸ¥</summary>
+        /// <param name="keys">ã‚³ãƒãƒ³ãƒ‰ã®é †ç•ª</param>
+        /// <returns>ã‚³ãƒãƒ³ãƒ‰ãŒæˆç«‹ã—ã¦ã„ã‚‹ã‹</returns>
         public static bool IsCommandedKeyDown(params KeyCode[] keys)
         {
-            // ÅŒã‚ÌƒRƒ}ƒ“ƒhƒL[‚ªs‚í‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            // æœ€å¾Œã®ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¼ãŒè¡Œã‚ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
             if (!Input.GetKeyDown(keys[keys.Length - 1])) return false;
 
             if (commandList.Count >= 5)
                 Debug.Log("");
 
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             for (int i = 0; i < keys.Length - 1; ++i)
                 if (commandList[keys.Length - i] != keys[i]) return false;
 
             return true;
         }
 
-        /// <summary>ƒRƒ}ƒ“ƒh“ü—ÍŒŸ’m</summary>
-        /// <param name="keys">ƒRƒ}ƒ“ƒh‚Ì‡”Ô</param>
-        /// <returns>ƒRƒ}ƒ“ƒh‚ª¬—§‚µ‚Ä‚¢‚é‚©</returns>
+        /// <summary>ã‚³ãƒãƒ³ãƒ‰å…¥åŠ›æ¤œçŸ¥</summary>
+        /// <param name="keys">ã‚³ãƒãƒ³ãƒ‰ã®é †ç•ª</param>
+        /// <returns>ã‚³ãƒãƒ³ãƒ‰ãŒæˆç«‹ã—ã¦ã„ã‚‹ã‹</returns>
         public static bool IsCommandedKeyUp(params KeyCode[] keys)
         {
-            // ÅŒã‚ÌƒRƒ}ƒ“ƒhƒL[‚ªs‚í‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+            // æœ€å¾Œã®ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¼ãŒè¡Œã‚ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
             if (!Input.GetKeyUp(keys[keys.Length - 1])) return false;
 
-            // ‘–¸‚µ‚Äˆê’v‚µ‚È‚¢‚à‚Ì‚ª‚ ‚ê‚Îfalse‚ğ•Ô‚·
+            // èµ°æŸ»ã—ã¦ä¸€è‡´ã—ãªã„ã‚‚ã®ãŒã‚ã‚Œã°falseã‚’è¿”ã™
             for (int i = 0; i < keys.Length - 1; ++i)
                 if (commandList[keys.Length - i] != keys[i]) return false;
 
@@ -142,7 +142,7 @@ namespace woskni
 
         public static void LogCommandList(int num)
         {
-            string arrow = " © ";
+            string arrow = " â† ";
             string text = "Command: ";
             
             for (int i = 0; i < Mathf.Min(num, commandList.Count); ++i)
@@ -159,16 +159,16 @@ namespace woskni
 
         private void Update()
         {
-            // KeyCode‚Ì‘–¸
+            // KeyCodeã®èµ°æŸ»
             if(Input.anyKeyDown){
                 foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
                 {
                     if (!Input.GetKeyDown(key)) continue;
 
-                    // æ“ª‚ÉŠi”[
+                    // å…ˆé ­ã«æ ¼ç´
                     commandList.Insert(0, key);
 
-                    // Ši”[ãŒÀ”‚ğ’´‚¦‚½‚çÅŒÃ‚ÌŠi”[ƒL[‚ğíœ
+                    // æ ¼ç´ä¸Šé™æ•°ã‚’è¶…ãˆãŸã‚‰æœ€å¤ã®æ ¼ç´ã‚­ãƒ¼ã‚’å‰Šé™¤
                     if (commandList.Count > m_max_store_command)
                         commandList.RemoveAt(m_max_store_command - 1);
 

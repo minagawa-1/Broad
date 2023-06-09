@@ -1,32 +1,32 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-/// <summary>ƒAƒXƒyƒNƒg”ä—¦‚Ìİ’èí•Ê</summary>
+/// <summary>ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ç‡ã®è¨­å®šç¨®åˆ¥</summary>
 public enum AspectRatioType
 {
-    /// <summary>Š®‘S‚É˜g“à‚É‚·‚é</summary>
+    /// <summary>å®Œå…¨ã«æ å†…ã«ã™ã‚‹</summary>
     None,
 
-    /// <summary>˜g‚Ì’†‚ÅƒAƒXƒyƒNƒg”ä‚ğŒÅ’è‚·‚é</summary>
+    /// <summary>æ ã®ä¸­ã§ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’å›ºå®šã™ã‚‹</summary>
     FixedInFrame,
 
-    /// <summary>˜g‚²‚ÆƒAƒXƒyƒNƒg”ä‚ğŒÅ’è‚·‚é</summary>
+    /// <summary>æ ã”ã¨ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã‚’å›ºå®šã™ã‚‹</summary>
     AllFixed
 }
 
-/// <summary>‰æ‘œ‚ğƒvƒŒƒrƒ…[•\¦</summary>
+/// <summary>ç”»åƒã‚’ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤º</summary>
 public class PreviewTextureAttribute : PropertyAttribute
 {
     public Vector2 scale;
     public AspectRatioType aspectType;
 
-    /// <summary>‰æ‘œ‚ğƒvƒŒƒrƒ…[•\¦</summary>
-    /// <param name="width">ƒvƒŒƒrƒ…[‚·‚é‰æ‘œ‚Ì‰¡•</param>
-    /// <param name="height">ƒvƒŒƒrƒ…[‚·‚é‰æ‘œ‚Ìc•</param>
-    /// <param name="fixAspect">ƒAƒXƒyƒNƒg”ä—¦‚Ì•Û</param>
+    /// <summary>ç”»åƒã‚’ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤º</summary>
+    /// <param name="width">ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã™ã‚‹ç”»åƒã®æ¨ªå¹…</param>
+    /// <param name="height">ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã™ã‚‹ç”»åƒã®ç¸¦å¹…</param>
+    /// <param name="fixAspect">ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ç‡ã®ä¿æŒ</param>
     public PreviewTextureAttribute(float scaleX = 1f, float scaleY = 1f, AspectRatioType aspectType = AspectRatioType.AllFixed)
     {
         scale = new Vector2(scaleX, scaleY);
@@ -55,7 +55,7 @@ public class PreviewTextureDrawer : PropertyDrawer
     {
         if (!ShouldShowPreview())
         {
-            string warning = $"{property.propertyType}‚Í–¢‘Î‰‚Å‚·B\n‘Î‰: Texture, Texture2D, Sprite";
+            string warning = $"{property.propertyType}ã¯æœªå¯¾å¿œã§ã™ã€‚\nå¯¾å¿œ: Texture, Texture2D, Sprite";
 
             EditorGUI.LabelField(position, warning);
             position.y += EditorGUIUtility.singleLineHeight * 0.5f * warning.HitCount("\n");
@@ -67,10 +67,10 @@ public class PreviewTextureDrawer : PropertyDrawer
 
         EditorGUI.BeginProperty(position, label, property);
 
-        // ƒvƒŒƒrƒ…[‚·‚éƒeƒNƒXƒ`ƒƒ‚Ìæ“¾
+        // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®å–å¾—
         Texture2D texture = GetPreviewTexture(property);
 
-        // ƒvƒŒƒrƒ…[‚ğ•`‰æ
+        // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚’æç”»
         if (texture != null)
         {
             Vector2 scale = new Vector2(ptAttribute.scale.x * default_size.x, ptAttribute.scale.y * default_size.y);
@@ -78,7 +78,7 @@ public class PreviewTextureDrawer : PropertyDrawer
             float x = EditorGUIUtility.labelWidth / 2f;
             float y = position.yMin + GetPropertyHeight(property, label) / 2f + EditorGUIUtility.singleLineHeight + spacing;
 
-            // ƒAƒXƒyƒNƒg”ä
+            // ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
             ScaleMode scaleMode;
             switch (ptAttribute.aspectType)
             {
@@ -88,7 +88,7 @@ public class PreviewTextureDrawer : PropertyDrawer
                 default:                            scaleMode = ScaleMode.StretchToFill; break;
             }
 
-            // AllFixed‚È‚çA˜g‚²‚Æscale.y‚ğ”ä—¦‚É‡‚í‚¹‚é
+            // AllFixedãªã‚‰ã€æ ã”ã¨scale.yã‚’æ¯”ç‡ã«åˆã‚ã›ã‚‹
             if (ptAttribute.aspectType == AspectRatioType.AllFixed)
             {
                 if     (texture.width > texture.height) scale.y *= (float)texture.height / (float)texture.width;
@@ -96,10 +96,10 @@ public class PreviewTextureDrawer : PropertyDrawer
             }
                 
 
-            // ƒvƒŒƒrƒ…[•\¦‚ÌƒTƒCƒY‚ğİ’è
+            // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤ºã®ã‚µã‚¤ã‚ºã‚’è¨­å®š
             Rect previewRect = new Rect(x - scale.x / 2f, y - scale.y / 2f, scale.x, scale.y);
 
-            // ŠO˜g‚Ìì¬
+            // å¤–æ ã®ä½œæˆ
             for (int i = line.Length - 1; i >= 0; --i)
                 EditorGUI.DrawRect(AddScaleRect(previewRect, line[i].distance), line[i].color);
 
@@ -110,7 +110,7 @@ public class PreviewTextureDrawer : PropertyDrawer
 
             float inputFieldY = position.yMin + EditorGUIUtility.singleLineHeight;
 
-            // “ü—ÍƒtƒB[ƒ‹ƒh‚Ì•`‰æ
+            // å…¥åŠ›ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®æç”»
             EditorGUI.PropertyField(new Rect(position.x + EditorGUIUtility.labelWidth, inputFieldY
                                            , position.width - EditorGUIUtility.labelWidth
                                            , field_height), property, GUIContent.none);
@@ -138,18 +138,18 @@ public class PreviewTextureDrawer : PropertyDrawer
 
         bool shouldShowPreview = ShouldShowPreview() && GetPreviewTexture(property) != null;
 
-        // •`‰æ‚Å‚«‚éê‡‚Í•`‰æc•‚ğA‚Å‚«‚È‚¢ê‡‚Íˆês•‚ğ•Ô‚·
+        // æç”»ã§ãã‚‹å ´åˆã¯æç”»ç¸¦å¹…ã‚’ã€ã§ããªã„å ´åˆã¯ä¸€è¡Œå¹…ã‚’è¿”ã™
         return shouldShowPreview ? default_size.y * ptAttribute.scale.y + field_height + spacing
                                    : field_height;
     }
 
-    /// <summary>ƒvƒŒƒrƒ…[‚·‚é‰æ‘œ‚ğæ“¾</summary>
-    /// <param name="property">ƒvƒƒpƒeƒB</param>
+    /// <summary>ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã™ã‚‹ç”»åƒã‚’å–å¾—</summary>
+    /// <param name="property">ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£</param>
     Texture2D GetPreviewTexture(SerializedProperty property)
     {
         if (!property.objectReferenceValue) return null;
 
-        // ObjectReferenceValue ‚ğ Texture2DŒ^ ‚É•ÏŠ·‚µ‚Ä•Ô‚·
+        // ObjectReferenceValue ã‚’ Texture2Då‹ ã«å¤‰æ›ã—ã¦è¿”ã™
         switch (fieldInfo.FieldType)
         {
             case System.Type textureType when textureType == typeof(Texture) || textureType == typeof(Texture[]):
@@ -162,8 +162,8 @@ public class PreviewTextureDrawer : PropertyDrawer
         }
     }
 
-    /// <summary>ƒvƒŒƒrƒ…[‰Â”\‚©</summary>
-    /// <param name="property">ƒvƒƒpƒeƒB</param>
+    /// <summary>ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼å¯èƒ½ã‹</summary>
+    /// <param name="property">ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£</param>
     bool ShouldShowPreview()
     {
         switch (fieldInfo.FieldType)
@@ -177,9 +177,9 @@ public class PreviewTextureDrawer : PropertyDrawer
         }
     }
 
-    /// <summary>‹Ï“™‚ÉŠg‘å‚µ‚½”ÍˆÍ‚ğ•Ô‚·</summary>
-    /// <param name="oldRect">Šg‘å‘O‚Ì”ÍˆÍ</param>
-    /// <param name="addWidth">Šg‘å‚·‚é‹——£</param>
+    /// <summary>å‡ç­‰ã«æ‹¡å¤§ã—ãŸç¯„å›²ã‚’è¿”ã™</summary>
+    /// <param name="oldRect">æ‹¡å¤§å‰ã®ç¯„å›²</param>
+    /// <param name="addWidth">æ‹¡å¤§ã™ã‚‹è·é›¢</param>
     Rect AddScaleRect(Rect oldRect, float addWidth)
     {
         float x      = oldRect.xMin   - addWidth;
@@ -200,10 +200,10 @@ public class PreviewTextureDrawer : PropertyDrawer
         return currentY + EditorGUIUtility.singleLineHeight;
     }
 
-    /// <summary>ƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğæ“¾</summary>
+    /// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’å–å¾—</summary>
     long GetFileSize(SerializedProperty property) => new System.IO.FileInfo(GetFilePath(property)).Length;
 
-    /// <summary>ƒtƒ@ƒCƒ‹ƒpƒX‚ğæ“¾</summary>
+    /// <summary>ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’å–å¾—</summary>
     string GetFilePath(SerializedProperty property) => AssetDatabase.GetAssetPath(property.objectReferenceValue);
 }
 #endif

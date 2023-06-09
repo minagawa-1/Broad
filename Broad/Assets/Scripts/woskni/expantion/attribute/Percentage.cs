@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,10 +18,10 @@ public class PercentageDrawer : PropertyDrawer
     {
         EditorGUI.BeginProperty(position, label, property);
 
-        // ƒvƒƒpƒeƒB‚Ì’l‚ğæ“¾
+        // ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®å€¤ã‚’å–å¾—
         float value = property.floatValue;
 
-        // “ü—ÍƒtƒB[ƒ‹ƒh‚Ìó‘Ô‚ğæ“¾(null‚ª•Ô‚³‚ê‚½‚ç‚»‚Ì‚Ü‚Ü)
+        // å…¥åŠ›ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®çŠ¶æ…‹ã‚’å–å¾—(nullãŒè¿”ã•ã‚ŒãŸã‚‰ãã®ã¾ã¾)
         isEditing = HandleInputEvents(position, property) ?? isEditing;
 
         if (!isEditing)
@@ -41,7 +41,7 @@ public class PercentageDrawer : PropertyDrawer
     {
         Event e = Event.current;
 
-        // ¶ƒNƒŠƒbƒN‚ğ‚µ‚½uŠÔ
+        // å·¦ã‚¯ãƒªãƒƒã‚¯ã‚’ã—ãŸç¬é–“
         if (e.type == EventType.MouseDown && e.button == 0)
         {
             if (position.Contains(e.mousePosition)) return true;
@@ -49,7 +49,7 @@ public class PercentageDrawer : PropertyDrawer
             GUI.changed = true;
             return false;
         }
-        // EnterƒL[‚ğ‰Ÿ‚µ‚½uŠÔ
+        // Enterã‚­ãƒ¼ã‚’æŠ¼ã—ãŸç¬é–“
         else if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Return)
         {
             GUI.changed = true;

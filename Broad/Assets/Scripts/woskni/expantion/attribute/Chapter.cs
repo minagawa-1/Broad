@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,9 +8,9 @@ public class ChapterAttribute : PropertyAttribute
     public readonly string chapterName;
     public readonly float space;
 
-    /// <summary>‹æØ‚èü‚Ì•t‰Á</summary>
-    /// <param name="comment">‹æØ‚èü‚Éæ‚¹‚é•¶š</param>
-    /// <param name="space">ã‚ÌƒtƒB[ƒ‹ƒh‚ÆƒRƒƒ“ƒg‚Ì—]”’•</param>
+    /// <summary>åŒºåˆ‡ã‚Šç·šã®ä»˜åŠ </summary>
+    /// <param name="comment">åŒºåˆ‡ã‚Šç·šã«ä¹—ã›ã‚‹æ–‡å­—</param>
+    /// <param name="space">ä¸Šã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¨ã‚³ãƒ¡ãƒ³ãƒˆã®ä½™ç™½å¹…</param>
     public ChapterAttribute(string chapterName = "", float space = 20f)
     {
         this.chapterName = chapterName;
@@ -40,7 +40,7 @@ public class ChapterAttributeDrawer : DecoratorDrawer
         Rect contentPosition = EditorGUI.PrefixLabel(position, GUIContent.none);
         contentPosition.height = EditorGUIUtility.singleLineHeight;
 
-        // •¶š—ñ‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğŒvZ‚µA•`‰æ‚·‚é
+        // æ–‡å­—åˆ—ã®ä½ç½®ã¨ã‚µã‚¤ã‚ºã‚’è¨ˆç®—ã—ã€æç”»ã™ã‚‹
         Rect labelPosition = new Rect(contentPosition.x, contentPosition.y, contentPosition.width, contentPosition.height);
 
         if (!string.IsNullOrEmpty(chapterAttribute.chapterName))
@@ -51,7 +51,7 @@ public class ChapterAttributeDrawer : DecoratorDrawer
             Rect chapterLabelPosition = new Rect(contentPosition.x + label_indent, labelPosition.y + chapterAttribute.space, chapterLabelSize.x, labelPosition.height);
             EditorGUI.LabelField(chapterLabelPosition, chapterAttribute.chapterName, chapterStyle);
 
-            // ü‚ğ•¶š—ñ‚Ì—¼˜e‚É•`‰æ
+            // ç·šã‚’æ–‡å­—åˆ—ã®ä¸¡è„‡ã«æç”»
             float lineY = labelPosition.y + labelPosition.height * 0.5f - line_height * 0.5f + chapterAttribute.space;
 
             Rect leftLinePosition = new Rect(contentPosition.x, lineY, chapterLabelPosition.x - contentPosition.x, line_height);
@@ -62,7 +62,7 @@ public class ChapterAttributeDrawer : DecoratorDrawer
         }
         else
         {
-            // •¶š—ñ‚ª‘¶İ‚µ‚È‚¢ê‡‚Í’Pˆê‚Ìü‚ğ•`‰æ
+            // æ–‡å­—åˆ—ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯å˜ä¸€ã®ç·šã‚’æç”»
             Rect linePosition = new Rect(contentPosition.x, labelPosition.y + labelPosition.height + chapterAttribute.space, contentPosition.width, line_height);
             EditorGUI.DrawRect(linePosition, color.SetHSV(v: 0.6f));
         }

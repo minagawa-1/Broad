@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-/// <summary>ƒtƒB[ƒ‹ƒhã‚ÉƒRƒƒ“ƒg‚ğ•t‰Á</summary>
+/// <summary>ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ä¸Šã«ã‚³ãƒ¡ãƒ³ãƒˆã‚’ä»˜åŠ </summary>
 public class CommentAttribute : PropertyAttribute
 {
     public readonly string comment;
     public readonly float space;
 
-    /// <summary>ƒtƒB[ƒ‹ƒhã‚ÉƒRƒƒ“ƒg‚ğ•t‰Á</summary>
-    /// <param name="comment">ƒRƒƒ“ƒgƒeƒLƒXƒg</param>
-    /// <param name="space">ã‚ÌƒtƒB[ƒ‹ƒh‚ÆƒRƒƒ“ƒg‚Ì—]”’•</param>
+    /// <summary>ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ä¸Šã«ã‚³ãƒ¡ãƒ³ãƒˆã‚’ä»˜åŠ </summary>
+    /// <param name="comment">ã‚³ãƒ¡ãƒ³ãƒˆãƒ†ã‚­ã‚¹ãƒˆ</param>
+    /// <param name="space">ä¸Šã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¨ã‚³ãƒ¡ãƒ³ãƒˆã®ä½™ç™½å¹…</param>
     public CommentAttribute(string comment = "", float space = 20f)
     {
         this.comment = comment;
@@ -32,14 +32,14 @@ public class CommentAttributeDrawer : DecoratorDrawer
     {
         var commentAttribute = attribute as CommentAttribute;
 
-        // ‚È‚É‚àŠÜ‚Ü‚ê‚Ä‚¢‚È‚¯‚ê‚ÎAˆês•ª‚Ì‚‚³
+        // ãªã«ã‚‚å«ã¾ã‚Œã¦ã„ãªã‘ã‚Œã°ã€ä¸€è¡Œåˆ†ã®é«˜ã•
         if (commentAttribute == null) return base.GetHeight() + EditorGUIUtility.singleLineHeight;
 
-        // ‰üs‚ğl—¶‚µ‚ÄAƒRƒƒ“ƒg‚Ì‚‚³‚ğŒvZ
+        // æ”¹è¡Œã‚’è€ƒæ…®ã—ã¦ã€ã‚³ãƒ¡ãƒ³ãƒˆã®é«˜ã•ã‚’è¨ˆç®—
         var commentLines = commentAttribute.comment.Split('\n');
         var lineCount = commentLines.Length;
 
-        // (‚Ps•ª‚Ì‚‚³ * s”‚ğ’Ç‰Á) + space
+        // (ï¼‘è¡Œåˆ†ã®é«˜ã• * è¡Œæ•°ã‚’è¿½åŠ ) + space
         return base.GetHeight() + EditorGUIUtility.singleLineHeight * lineCount + commentAttribute.space;
     }
 
@@ -48,7 +48,7 @@ public class CommentAttributeDrawer : DecoratorDrawer
         var commentAttribute = attribute as CommentAttribute;
         if (commentAttribute == null) return;
 
-        // ƒRƒƒ“ƒg‚Ì˜gü‚ğ•`‰æ
+        // ã‚³ãƒ¡ãƒ³ãƒˆã®æ ç·šã‚’æç”»
         var commentRect = position;
         commentRect.yMin += commentAttribute.space;
 
@@ -58,7 +58,7 @@ public class CommentAttributeDrawer : DecoratorDrawer
         commentRect.xMax -= background_indent;
         DrawCommentBackground(commentRect);
 
-        // ƒRƒƒ“ƒg‚ÌƒeƒLƒXƒg‚ğ•`‰æ
+        // ã‚³ãƒ¡ãƒ³ãƒˆã®ãƒ†ã‚­ã‚¹ãƒˆã‚’æç”»
         commentRect.xMin += label_margin + text_indent;
         commentRect.xMax -= label_margin + text_indent;
         EditorGUI.LabelField(commentRect, commentAttribute.comment);
@@ -72,18 +72,18 @@ public class CommentAttributeDrawer : DecoratorDrawer
         Color exposedColor    = editorColor.SetHSV(v: (editorColor.GetValue() + 0.05f));
         Color shadedColor     = editorColor.SetHSV(v: (editorColor.GetValue() - 0.10f));
 
-        // ”wŒi‚Ì•`‰æ
+        // èƒŒæ™¯ã®æç”»
         EditorGUI.DrawRect(position, backgroundColor);
 
-        // ˜gü‚Ì•`‰æ
+        // æ ç·šã®æç”»
         var borderRect = position;
-        borderRect.width += line_width;  // ‰¡•‚ğ’²®
-        borderRect.height += line_width; // ‚‚³‚ğ’²®
+        borderRect.width += line_width;  // æ¨ªå¹…ã‚’èª¿æ•´
+        borderRect.height += line_width; // é«˜ã•ã‚’èª¿æ•´
 
-        EditorGUI.DrawRect(new Rect(borderRect.x                , borderRect.y                  , borderRect.width  , line_width        ), shadedColor ); // ã•Ó‚Ì˜gü
-        EditorGUI.DrawRect(new Rect(borderRect.x                , borderRect.yMax - line_width  , borderRect.width  , line_width        ), exposedColor); // ‰º•Ó‚Ì˜gü
-        EditorGUI.DrawRect(new Rect(borderRect.x    - line_width, borderRect.y                  , line_width        , borderRect.height ), shadedColor ); // ¶•Ó‚Ì˜gü
-        EditorGUI.DrawRect(new Rect(borderRect.xMax - line_width, borderRect.y                  , line_width        , borderRect.height ), exposedColor); // ‰E•Ó‚Ì˜gü
+        EditorGUI.DrawRect(new Rect(borderRect.x                , borderRect.y                  , borderRect.width  , line_width        ), shadedColor ); // ä¸Šè¾ºã®æ ç·š
+        EditorGUI.DrawRect(new Rect(borderRect.x                , borderRect.yMax - line_width  , borderRect.width  , line_width        ), exposedColor); // ä¸‹è¾ºã®æ ç·š
+        EditorGUI.DrawRect(new Rect(borderRect.x    - line_width, borderRect.y                  , line_width        , borderRect.height ), shadedColor ); // å·¦è¾ºã®æ ç·š
+        EditorGUI.DrawRect(new Rect(borderRect.xMax - line_width, borderRect.y                  , line_width        , borderRect.height ), exposedColor); // å³è¾ºã®æ ç·š
     }
 }
 #endif

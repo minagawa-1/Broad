@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class LongExpansion
 {
-    /// <summary>’l‚ğƒtƒH[ƒ}ƒbƒg</summary>
-    /// <param name="fileSize">Œ³‚ÌƒTƒCƒY</param>
-    /// <returns>—á: 1263000 => 1.26M</returns>
+    /// <summary>å€¤ã‚’ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ</summary>
+    /// <param name="fileSize">å…ƒã®ã‚µã‚¤ã‚º</param>
+    /// <returns>ä¾‹: 1263000 => 1.26M</returns>
     public static string FormatSize(this long sourceSize, bool isUpper = true)
     {
         string[] sizeSuffixes = { "", "K", "M", "G", "T", "P" };
         const int unit = 1024;
 
-        // ƒ[ƒZ‚ğ‰ñ”ğ
+        // ã‚¼ãƒ­ç®—ã‚’å›é¿
         if (sourceSize == 0) return "0";
 
         sourceSize = (long)Mathf.Abs(sourceSize);

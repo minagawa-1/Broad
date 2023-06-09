@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -10,8 +10,8 @@ public class ShowIfAttribute : PropertyAttribute
 {
     public string condition { get; }
 
-    /// <summary>ğŒ•t‚«•\¦(ğŒ‚ªtrue‚Ì‚Æ‚«‚Ì‚İƒtƒB[ƒ‹ƒh‚ğ•\¦‚·‚é)</summary>
-    /// <param name="condition">ğŒ</param>
+    /// <summary>æ¡ä»¶ä»˜ãè¡¨ç¤º(æ¡ä»¶ãŒtrueã®ã¨ãã®ã¿ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’è¡¨ç¤ºã™ã‚‹)</summary>
+    /// <param name="condition">æ¡ä»¶</param>
     public ShowIfAttribute(string condition)
     {
         this.condition = condition;
@@ -38,11 +38,11 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
     {
         string condition = (attribute as ShowIfAttribute).condition;
 
-        // ‹ó”’œ‹
+        // ç©ºç™½é™¤å»
         condition = condition.Replace(" ", "");
-        condition = condition.Replace("@", "");
+        condition = condition.Replace("ã€€", "");
 
-        // ‰‰Zq‚Å•ªŠ„
+        // æ¼”ç®—å­ã§åˆ†å‰²
         // ( ) * / % + - == != >= > <= < ! && ||
         string pattern = @"(\(|\)|\*|/|%|\+|-|==|!=|>=|>|<=|<|!|&&|\|\|)";
         string[] tokens = System.Text.RegularExpressions.Regex.Split(condition, pattern);
@@ -59,10 +59,10 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
 
             foreach (string token in tokens)
             {
-                // ’†g‚ª‚È‚¢ê‡‚Ícontinue
+                // ä¸­èº«ãŒãªã„å ´åˆã¯continue
                 if(string.IsNullOrEmpty(token) || token == " ") continue;
 
-                // ‚©‚Á‚±
+                // ã‹ã£ã“
                 if (token == "(")
                 {
                     operatorStack.Push(token);
@@ -75,10 +75,10 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                         ProcessOperator(property, op, operandStack);
                     }
 
-                    operatorStack.Pop(); // "(" ‚ğæ‚èœ‚­
+                    operatorStack.Pop(); // "(" ã‚’å–ã‚Šé™¤ã
                 }
 
-                // ‰‰Zq
+                // æ¼”ç®—å­
                 else if (IsOperator(token))
                 {
                     while (operatorStack.Count > 0 && IsOperator(operatorStack.Peek())
@@ -91,17 +91,17 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                     operatorStack.Push(token);
                 }
 
-                // ƒIƒyƒ‰ƒ“ƒh
+                // ã‚ªãƒšãƒ©ãƒ³ãƒ‰
                 else
                 {
                     if (float.TryParse(token, out float floatValue)) operandStack.Push(floatValue);
                     else if (int.TryParse(token, out int intValue))  operandStack.Push(intValue);
                     else
                     {
-                        // ƒtƒB[ƒ‹ƒh–¼‚Æ‚µ‚Ä‰ğß‚³‚ê‚éê‡
+                        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã¨ã—ã¦è§£é‡ˆã•ã‚Œã‚‹å ´åˆ
                         var p = property.serializedObject.FindProperty(token);
 
-                        // ƒtƒB[ƒ‹ƒh‚ª”­Œ©‚Å‚«‚È‚¢ê‡‚ÍAproperty‚Ìƒƒ“ƒoƒAƒNƒZƒXw’èq‚ğ’T‚·
+                        // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒç™ºè¦‹ã§ããªã„å ´åˆã¯ã€propertyã®ãƒ¡ãƒ³ãƒã‚¢ã‚¯ã‚»ã‚¹æŒ‡å®šå­ã‚’æ¢ã™
                         if (p == null && property.propertyPath.Contains("."))
                         {
                             string path = property.propertyPath.Substring(0, property.propertyPath.LastIndexOf('.') + 1);
@@ -109,7 +109,7 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                             p = property.serializedObject.FindProperty(path + token);
                         }
 
-                        // ‚»‚ê‚Å‚àƒtƒB[ƒ‹ƒh‚ª”­Œ©‚Å‚«‚È‚¢ê‡‚ÍA•¶š—ñ‚Æ‚µ‚Ä”»’è‚·‚é
+                        // ãã‚Œã§ã‚‚ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒç™ºè¦‹ã§ããªã„å ´åˆã¯ã€æ–‡å­—åˆ—ã¨ã—ã¦åˆ¤å®šã™ã‚‹
                         if (p == null) operandStack.Push(token);
 
                         else operandStack.Push(GetFieldValue(p));
@@ -134,8 +134,8 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                    token == "==" || token == "!=" || token == ">"  || token == ">=" || token == "<"  || token == "<=";
         }
 
-        /// <summary>‰‰Zq‚Ì—Dæ‡ˆÊ æ“¾</summary>
-        /// <param name="op">ŒŸõ‚·‚é‰‰Zq</param>
+        /// <summary>æ¼”ç®—å­ã®å„ªå…ˆé †ä½ å–å¾—</summary>
+        /// <param name="op">æ¤œç´¢ã™ã‚‹æ¼”ç®—å­</param>
         static int GetPriority(string op)
         {
             switch (op)
@@ -165,21 +165,21 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
 
         static void ProcessOperator(SerializedProperty property, string op, Stack<object> operandStack)
         {
-        // ”Û’è‰‰Zq
+        // å¦å®šæ¼”ç®—å­
             if (op == "!")
             {
                 bool operand = System.Convert.ToBoolean(operandStack.Pop());
                 operandStack.Push(!operand);
             }
 
-        // ‰ÁZEŒ¸ZEæZEœZEè—]‰‰Zq
+        // åŠ ç®—ãƒ»æ¸›ç®—ãƒ»ä¹—ç®—ãƒ»é™¤ç®—ãƒ»å‰°ä½™æ¼”ç®—å­
             else if (op == "+")
             {
                 object right = operandStack.Pop();
                 object left = operandStack.Pop();
                 object result;
 
-                // •¶š—ñ‚Ìê‡‚Í•¶š—ñŒ‹‡ˆ—E”’l‚Ìê‡‚Í‰ÁZ
+                // æ–‡å­—åˆ—ã®å ´åˆã¯æ–‡å­—åˆ—çµåˆå‡¦ç†ãƒ»æ•°å€¤ã®å ´åˆã¯åŠ ç®—
                 if (left is string || right is string) result = System.Convert.ToString(left) + System.Convert.ToString(right);
                 else                                   result = System.Convert.ToDouble(left) + System.Convert.ToDouble(right);
 
@@ -210,7 +210,7 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                 operandStack.Push(System.Convert.ToDouble(left) % System.Convert.ToDouble(right));
             }
 
-        // ”äŠr‰‰Zq
+        // æ¯”è¼ƒæ¼”ç®—å­
             else if (op == "==")
             {
                 object right = operandStack.Pop();
@@ -249,7 +249,7 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                 operandStack.Push(Compare(left, right) <= 0);
             }
 
-        // ˜_—ÏE˜_—˜a
+        // è«–ç†ç©ãƒ»è«–ç†å’Œ
             else if (op == "&&")
             {
                 bool right = System.Convert.ToBoolean(operandStack.Pop());
@@ -263,14 +263,14 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
                 operandStack.Push(left || right);
             }
 
-        // ‚»‚Ì‘¼
+        // ãã®ä»–
             else
-                throw new System.Exception("–¢’è‹`‚Ì‰‰Zq: " + op);
+                throw new System.Exception("æœªå®šç¾©ã®æ¼”ç®—å­: " + op);
         }
 
         static object GetFieldValue(SerializedProperty property)
         {
-            // ’è‹`‚³‚ê‚Ä‚¢‚È‚¢ƒf[ƒ^Œ^‚Ìê‡‚ÍAƒƒ“ƒoƒAƒNƒZƒX‚Ìe–¼‚Æ”»’f‚·‚é
+            // å®šç¾©ã•ã‚Œã¦ã„ãªã„ãƒ‡ãƒ¼ã‚¿å‹ã®å ´åˆã¯ã€ãƒ¡ãƒ³ãƒã‚¢ã‚¯ã‚»ã‚¹ã®è¦ªåã¨åˆ¤æ–­ã™ã‚‹
             switch (property.propertyType)
             {
                 case SerializedPropertyType.Integer:    return property.intValue;
@@ -320,9 +320,9 @@ public class ConditionalShowAttributeDrawer : PropertyDrawer
             if (type1 == typeof(bool) || type2 == typeof(bool))
             return System.Convert.ToBoolean(left) == System.Convert.ToBoolean(right) ? 0 : -1;
 
-            // ‚»‚Ì‘¼‚Ìƒf[ƒ^Œ^‚É‚æ‚é”äŠr
+            // ãã®ä»–ã®ãƒ‡ãƒ¼ã‚¿å‹ã«ã‚ˆã‚‹æ¯”è¼ƒ
             else
-                throw new System.InvalidOperationException($"‘Î‰‚µ‚Ä‚¢‚Ü‚¹‚ñ: {type1}");
+                throw new System.InvalidOperationException($"å¯¾å¿œã—ã¦ã„ã¾ã›ã‚“: {type1}");
         }
     }
 }

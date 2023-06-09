@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,22 +9,22 @@ using UnityEditor;
 
 public class DebugHotKey : EditorWindow
 {
-    /// <summary>ƒGƒfƒBƒ^Ä¶EƒŠƒ[ƒh</summary>
-    /// <remarks>F5ƒL[</remarks>
+    /// <summary>ã‚¨ãƒ‡ã‚£ã‚¿å†ç”Ÿãƒ»ãƒªãƒ­ãƒ¼ãƒ‰</summary>
+    /// <remarks>F5ã‚­ãƒ¼</remarks>
     [MenuItem("Woskni/Editor/Play _F5")]
     public static void PlayEditor()
     {
-        // Ä¶
+        // å†ç”Ÿ
         if (!EditorApplication.isPlaying)
             EditorApplication.isPlaying = true;
 
-        // ƒŠƒ[ƒh
+        // ãƒªãƒ­ãƒ¼ãƒ‰
         else
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
-    /// <summary>ƒGƒfƒBƒ^’â~</summary>
-    /// <remarks>Ctrl + F5ƒL[</remarks>
+    /// <summary>ã‚¨ãƒ‡ã‚£ã‚¿åœæ­¢</summary>
+    /// <remarks>Ctrl + F5ã‚­ãƒ¼</remarks>
     [MenuItem("Woskni/Editor/Stop %F5")]
     public static void StopEditor()
     {
@@ -32,8 +32,8 @@ public class DebugHotKey : EditorWindow
             EditorApplication.isPlaying = false;
     }
 
-    /// <summary>ƒGƒfƒBƒ^ˆê’â~</summary>
-    /// <remarks>Shift + F5ƒL[</remarks>
+    /// <summary>ã‚¨ãƒ‡ã‚£ã‚¿ä¸€æ™‚åœæ­¢</summary>
+    /// <remarks>Shift + F5ã‚­ãƒ¼</remarks>
     [MenuItem("Woskni/Editor/Pause #F5")]
     public static void PauseEditor()
     {
