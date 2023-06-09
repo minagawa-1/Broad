@@ -3,8 +3,5 @@ root = true
 # .cs(C#スクリプト)ファイルすべてに適用
 [*.cs]
 
-# インデントのスタイル設定 (tab/space)
-indent_style = tab
-
 # 文字コード設定（latin1/utf-8/utf-8-bom/utf-16be/utf-16le/...）
 charset = utf-8-bom

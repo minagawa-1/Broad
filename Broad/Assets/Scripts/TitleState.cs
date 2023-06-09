@@ -1,17 +1,17 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TitleState : MonoBehaviour
 {
-    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] GameSetting m_GameSetting;
     [SerializeField] Text[] m_MatchingTexts;
 
-    [Chapter("‚»‚Ì‘¼")]
-    [Header("‘Ò‹@ƒ^ƒCƒ}[")]
+    [Chapter("ãã®ä»–")]
+    [Header("å¾…æ©Ÿã‚¿ã‚¤ãƒãƒ¼")]
     [SerializeField] woskni.Timer m_MatchTimer;
 
     [ReadOnly] public List<string> m_MatchPlayers = new List<string>();
@@ -19,19 +19,19 @@ public class TitleState : MonoBehaviour
     [System.Serializable]
     enum MatchState
     {
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
         None,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn’¼Œã</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹ç›´å¾Œ</summary>
         StartMatch,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
         Matching,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~’¼Œã</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢ç›´å¾Œ</summary>
         EndMatch,
 
-        /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+        /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
         Matched,
     }
     MatchState m_MatchState;
@@ -60,39 +60,39 @@ public class TitleState : MonoBehaviour
         }
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO‚µ‚Ä‚¢‚È‚¢</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ã—ã¦ã„ãªã„</summary>
     void None() 
     {
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠJn’¼Œã</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°é–‹å§‹ç›´å¾Œ</summary>
     void StartMatch()
     {
         m_StartButtonState.DoStartMatch();
         m_MatchState = MatchState.Matching;
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­</summary>
     void Matching()
     {
-        // ƒvƒŒƒCƒ„[‚ª2lˆÈã‚Ì‚Æ‚«A©“®ŠJn‹@”\‚ğÀs‚·‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ2äººä»¥ä¸Šã®ã¨ãã€è‡ªå‹•é–‹å§‹æ©Ÿèƒ½ã‚’å®Ÿè¡Œã™ã‚‹
         if (m_GameSetting.playerNum > 1) m_MatchTimer.Update();
 
-        // AƒL[‚Ål”‚ğ‘‚â‚·(‰¼)
+        // Aã‚­ãƒ¼ã§äººæ•°ã‚’å¢—ã‚„ã™(ä»®)
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetPlayerNum(m_GameSetting.playerNum + 1);
             m_MatchTimer.Reset();
         }
 
-        // DƒL[‚Ål”‚ğŒ¸‚ç‚·(‰¼)
+        // Dã‚­ãƒ¼ã§äººæ•°ã‚’æ¸›ã‚‰ã™(ä»®)
         if (Input.GetKeyDown(KeyCode.D))
         {
             SetPlayerNum(m_GameSetting.playerNum - 1);
             m_MatchTimer.Reset();
         }
 
-        // ©“®ŠJnˆ—
+        // è‡ªå‹•é–‹å§‹å‡¦ç†
         if (m_MatchTimer.IsFinished())
         {
             SceneManager.Instance.LoadScene(Scene.GameMainScene);
@@ -100,34 +100,34 @@ public class TitleState : MonoBehaviour
         }
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒO’†~’¼Œã</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°ä¸­æ­¢ç›´å¾Œ</summary>
     void EndMatch()
     {
         m_StartButtonState.DoEndMatch(SetPlayerNum);
         m_MatchState = MatchState.None;
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒOŠ®—¹</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°å®Œäº†</summary>
     void Matched()
     {
-        // ƒ}ƒbƒ`ƒ“ƒO‚ªŠ®—¹‚µ‚Ä‚©‚ç
-        // ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ğƒ[ƒh‚·‚é‚Ü‚Å‚Ì”•bŠÔ‚Ìˆ—
+        // ãƒãƒƒãƒãƒ³ã‚°ãŒå®Œäº†ã—ã¦ã‹ã‚‰
+        // ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ã¾ã§ã®æ•°ç§’é–“ã®å‡¦ç†
 
 
 
     }
 
-    /// <summary>ƒvƒŒƒCƒ„[l”‚ğGameSetting‚É”½‰f‚³‚¹‚é</summary>
-    /// <param name="playerNum">ƒvƒŒƒCƒ„[l”</param>
+    /// <summary>ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°ã‚’GameSettingã«åæ˜ ã•ã›ã‚‹</summary>
+    /// <param name="playerNum">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼äººæ•°</param>
     void SetPlayerNum(int playerNum)
     {
         m_GameSetting.playerNum = Mathf.Max(1, playerNum);
 
         foreach (Text text in m_MatchingTexts)
-            text.text = $"Matching... ( {playerNum}l )";
+            text.text = $"Matching... ( {playerNum}äºº )";
     }
 
-    /// <summary>ƒ}ƒbƒ`ƒ“ƒOó‘Ô‚ÌØ‚è‘Ö‚¦</summary>
+    /// <summary>ãƒãƒƒãƒãƒ³ã‚°çŠ¶æ…‹ã®åˆ‡ã‚Šæ›¿ãˆ</summary>
     public void ChangeState()
     {
         switch (m_MatchState)

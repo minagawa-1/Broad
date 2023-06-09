@@ -63,7 +63,6 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ListExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\EditorTheme.cs" />
-    <Compile Include="Assets\Scripts\Block\HandBlocks.cs" />
     <Compile Include="Assets\Scripts\woskni\control\KeyBoard.cs" />
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTag.cs" />
@@ -115,9 +114,11 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\FilePath.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayer.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\StringExpansion.cs" />
+    <Compile Include="Assets\Scripts\Block\Deck.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Range.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Tag.cs" />
     <Compile Include="Assets\Scripts\UI\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Block\Hand.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\VectorExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\BoolExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
