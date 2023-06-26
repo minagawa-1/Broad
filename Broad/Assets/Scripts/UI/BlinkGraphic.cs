@@ -21,11 +21,15 @@ public class BlinkGraphic : MonoBehaviour
 
     void BlinkUp()
     {
+        if (GameSetting.instance.playersColor.Length > 0) return;
+
         m_Graphic.DOFade(1f, m_BlinkTime).SetEase(Ease.OutQuart).OnComplete(() => BlinkDown());
     }
-        
+
     void BlinkDown()
     {
+        if (GameSetting.instance.playersColor.Length > 0) return;
+
         m_Graphic.DOFade(0f, m_BlinkTime).SetEase(Ease.InQuart).OnComplete(() => BlinkUp());
     }
 }

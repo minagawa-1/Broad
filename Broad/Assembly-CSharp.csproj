@@ -65,8 +65,11 @@
     <Compile Include="Assets\Scripts\PlayerPrefabsList.cs" />
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTag.cs" />
+    <Compile Include="Assets\Scripts\Network\SendDatas\SendColorData.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
+    <Compile Include="Assets\Scripts\UI\BlocksUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\Screenshot.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Vibration.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Timer.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\BooleanExpansion.cs" />
@@ -84,14 +87,19 @@
     <Compile Include="Assets\Scripts\Block\BlockManager.cs" />
     <Compile Include="Assets\Scripts\Board\Board.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ColorExpansion.cs" />
+    <Compile Include="Assets\Scripts\UI\HandUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayerCreator.cs" />
+    <Compile Include="Assets\Scripts\LoadState.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\RangeInt.cs" />
+    <Compile Include="Assets\Scripts\UI\MoveButton.cs" />
+    <Compile Include="Assets\Scripts\UI\DonutChip.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Comment.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ReadOnly.cs" />
     <Compile Include="Assets\Scripts\woskni\math\Round.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\LongExpansion.cs" />
     <Compile Include="Assets\Scripts\TitleState.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendPlayerData.cs" />
+    <Compile Include="Assets\Scripts\UI\ExtendButton.cs" />
     <Compile Include="Assets\Scripts\Network\CustomNetworkDiscovery.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\RLE.cs" />
     <Compile Include="Assets\Scripts\DFR.cs" />
@@ -110,6 +118,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\TranformExpansion.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendConnectionData.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\MeshCombiner.cs" />
+    <Compile Include="Assets\Scripts\Network\SendDatas\SendReadyData.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendBoardData.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\TextOperate.cs" />
     <Compile Include="Assets\Scripts\UI\CalcBroad.cs" />
@@ -121,13 +130,13 @@
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\StringExpansion.cs" />
     <Compile Include="Assets\Scripts\Block\Deck.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Range.cs" />
-    <Compile Include="Assets\Scripts\Network\SendDatas\SendHostReadyData.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Tag.cs" />
     <Compile Include="Assets\Scripts\Block\Hand.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\VectorExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\BoolExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
+    <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -776,6 +785,9 @@
     </Reference>
     <Reference Include="VSSettingsProvider">
       <HintPath>Library\ScriptAssemblies\VSSettingsProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UniTask.DOTween">
       <HintPath>Library\ScriptAssemblies\UniTask.DOTween.dll</HintPath>

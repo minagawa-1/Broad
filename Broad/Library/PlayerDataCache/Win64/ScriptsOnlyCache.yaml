@@ -5,18 +5,23 @@ ScriptsOnlyBuild:
     - BlockManager
     - CalcBroad
     - CustomNetworkManager
+    - DFR
+    - DonutChart
     - GameManager
     - GameSetting
+    - HandUI
     - MeshCombiner
+    - MoveButton
     - StartButtonState
     - SynchronizeAlpha
-    - Test
     - TitleState
     - Transition
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
     Mirror.Transports.dll:
     - Mirror.TelepathyTransport
+    Mirror.dll:
+    - Mirror.NetworkIdentity
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     UnityEditor.TestRunner.dll:
@@ -62,27 +67,27 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 3092}
+      Script: {instanceID: 1516}
     - Class: 114
-      Script: {instanceID: 4094}
+      Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 4310}
+      Script: {instanceID: 2674}
     - Class: 114
-      Script: {instanceID: 5668}
+      Script: {instanceID: 4256}
     - Class: 114
-      Script: {instanceID: 7106}
+      Script: {instanceID: 4576}
     - Class: 114
-      Script: {instanceID: 7448}
+      Script: {instanceID: 5046}
     - Class: 114
-      Script: {instanceID: 7988}
+      Script: {instanceID: 5716}
     - Class: 114
-      Script: {instanceID: 8358}
+      Script: {instanceID: 6060}
     - Class: 114
-      Script: {instanceID: 8608}
+      Script: {instanceID: 6616}
     - Class: 114
-      Script: {instanceID: 8874}
+      Script: {instanceID: 7512}
     - Class: 114
-      Script: {instanceID: 9118}
+      Script: {instanceID: 8546}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -90,6 +95,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -99,7 +106,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 258
       Script: {instanceID: 0}
-    Assets/Scenes/TitleScene.unity:
+    Assets/Scenes/LoadScene.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -120,42 +127,81 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    Assets/Scenes/TitleScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 3008}
+      Script: {instanceID: 1516}
     - Class: 114
-      Script: {instanceID: 3052}
+      Script: {instanceID: 1518}
     - Class: 114
-      Script: {instanceID: 3224}
+      Script: {instanceID: 1614}
     - Class: 114
-      Script: {instanceID: 3288}
+      Script: {instanceID: 1654}
     - Class: 114
-      Script: {instanceID: 4094}
+      Script: {instanceID: 1786}
     - Class: 114
-      Script: {instanceID: 4310}
+      Script: {instanceID: 1850}
     - Class: 114
-      Script: {instanceID: 4628}
+      Script: {instanceID: 2674}
     - Class: 114
-      Script: {instanceID: 5010}
+      Script: {instanceID: 3210}
     - Class: 114
-      Script: {instanceID: 5068}
+      Script: {instanceID: 3596}
     - Class: 114
-      Script: {instanceID: 5608}
+      Script: {instanceID: 3654}
     - Class: 114
-      Script: {instanceID: 6654}
+      Script: {instanceID: 4196}
     - Class: 114
-      Script: {instanceID: 7106}
+      Script: {instanceID: 4640}
     - Class: 114
-      Script: {instanceID: 7448}
+      Script: {instanceID: 5262}
     - Class: 114
-      Script: {instanceID: 7460}
+      Script: {instanceID: 5716}
     - Class: 114
-      Script: {instanceID: 7988}
+      Script: {instanceID: 5940}
     - Class: 114
-      Script: {instanceID: 8358}
+      Script: {instanceID: 6060}
     - Class: 114
-      Script: {instanceID: 9080}
+      Script: {instanceID: 6072}
     - Class: 114
-      Script: {instanceID: 9782}
+      Script: {instanceID: 6616}
+    - Class: 114
+      Script: {instanceID: 6990}
+    - Class: 114
+      Script: {instanceID: 7242}
+    - Class: 114
+      Script: {instanceID: 7718}
+    - Class: 114
+      Script: {instanceID: 8426}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -177,6 +223,24 @@ ScriptsOnlyBuild:
   scriptHashData:
   - hash:
       serializedVersion: 2
+      Hash: ae83e830e7a90c0aff918c4c2e520825
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: GraphicRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: a6e561615949734e9f12f9b61661f43e
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Image
+  - hash:
+      serializedVersion: 2
+      Hash: bcaee4c2a83047257b5f47d6ed264b75
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Toggle
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UIElements
@@ -187,12 +251,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.MultipleMatch
     className: MatchGUI
-  - hash:
-      serializedVersion: 2
-      Hash: a6e561615949734e9f12f9b61661f43e
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Image
   - hash:
       serializedVersion: 2
       Hash: b73b5e45af500db4f1429b8f18f0ff94
@@ -207,7 +265,7 @@ ScriptsOnlyBuild:
     className: NetworkDiscoveryHUD
   - hash:
       serializedVersion: 2
-      Hash: bfd7b71fb54867d1e51490e9aaf2d574
+      Hash: 876dfe61c1fa68b89689622cb15d6d3c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -345,7 +403,7 @@ ScriptsOnlyBuild:
     className: UnityOnJointBreakMessageListener
   - hash:
       serializedVersion: 2
-      Hash: ed3428b6bb033558e6078de5e3657e1a
+      Hash: 86dda03e0fa28ba56ead81703bb87bfc
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ControlBlock
@@ -373,6 +431,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnBecameVisibleMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 9b9d2055662d05d24cd8a2cac8584ca5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BlocksUI
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -433,12 +497,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror.Experimental
     className: NetworkLerpRigidbody
-  - hash:
-      serializedVersion: 2
-      Hash: ae83e830e7a90c0aff918c4c2e520825
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: GraphicRaycaster
   - hash:
       serializedVersion: 2
       Hash: f40fedccd4adbc76605bea6d67537e4b
@@ -621,7 +679,7 @@ ScriptsOnlyBuild:
     className: Player
   - hash:
       serializedVersion: 2
-      Hash: f22903c9369908a7e10372507e16e279
+      Hash: 7f9dac66589c25d801ddf764010c77b6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CustomNetworkManager
@@ -723,7 +781,7 @@ ScriptsOnlyBuild:
     className: GUIConsole
   - hash:
       serializedVersion: 2
-      Hash: f0756055762445c2403d1bae38c665bc
+      Hash: 7a533ae7309f11a7fd40bd009542a8bf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetting
@@ -735,7 +793,7 @@ ScriptsOnlyBuild:
     className: UnityOnCollisionStay2DMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 1fa960e8bca7d458d39ea63663c8c4cd
+      Hash: 8723e681c3792e1bad1283d9911b5f0f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlockManager
@@ -831,6 +889,12 @@ ScriptsOnlyBuild:
     className: CCUNetworkManager
   - hash:
       serializedVersion: 2
+      Hash: 34da1a46c7d8eb02abd981bd92b53ec7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HandUI
+  - hash:
+      serializedVersion: 2
       Hash: 35643f4001faea1b762b780d770b105e
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror.Experimental
@@ -915,6 +979,12 @@ ScriptsOnlyBuild:
     className: ActivationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 6faeda878b88e5251af10155e7466e18
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MoveButton
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -925,6 +995,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GridLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: ad2cf264f5abde2a8a734f42a89e9fe6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DonutChip
   - hash:
       serializedVersion: 2
       Hash: 314e23eec67b8715d6e57ad385d05ba0
@@ -999,12 +1075,6 @@ ScriptsOnlyBuild:
     className: TitleState
   - hash:
       serializedVersion: 2
-      Hash: bcaee4c2a83047257b5f47d6ed264b75
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Toggle
-  - hash:
-      serializedVersion: 2
       Hash: fa24b65e7a5295906a4cae6f29cdcbfe
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.Tanks
@@ -1051,6 +1121,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_FontAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 75351eadf299db6d98357f5c711ed2ad
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ExtendButton
   - hash:
       serializedVersion: 2
       Hash: aa4e3303a7da9a51ec05475e937e5f7d
@@ -1149,7 +1225,7 @@ ScriptsOnlyBuild:
     className: RoomGUI
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 67467dfba8e0cd73e03fc8c083d3c578
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DFR
@@ -1485,7 +1561,7 @@ ScriptsOnlyBuild:
     className: TextOperate
   - hash:
       serializedVersion: 2
-      Hash: bdfc7035deb81fbeecc7d94cb7e9608c
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CalcBroad
@@ -1533,7 +1609,7 @@ ScriptsOnlyBuild:
     className: ControlTrack
   - hash:
       serializedVersion: 2
-      Hash: ad0fd81614bcc1b5bab803e27eda2c4f
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Test
@@ -1677,6 +1753,12 @@ ScriptsOnlyBuild:
     className: UnityOnToggleValueChangedMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 07ce7aa9a08510185cfa12e0314938ce
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DonutChart
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
@@ -1705,8 +1787,15 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 5085c149ae898c11398927898b806b9c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LoadState
   platform: 19
   scenePathNames:
   - Assets/Scenes/TitleScene.unity
+  - Assets/Scenes/LoadScene.unity
   - Assets/Scenes/GameMainScene.unity
   playerPath: C:/Users/GamePG/Documents/GitHub/Broad/Broad/Exe/Broad.exe

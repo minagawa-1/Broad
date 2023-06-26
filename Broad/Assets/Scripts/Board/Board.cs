@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public struct Board
 {
@@ -52,7 +53,6 @@ public struct Board
     {
         int[,] deserializedBoard = new int[width, height];
 
-        // 74(6,3) => 3, 6
         for (var i = 0; i < width * height; i++)
         {
             int x = i / deserializedBoard.GetLength(1);
@@ -64,12 +64,37 @@ public struct Board
         return deserializedBoard;
     }
 
+    /// <summary>二次元のボード情報を取得</summary>
+    public bool[,] GetBoolBoard()
+    {
+        bool[,] deserializedBoard = new bool[width, height];
+
+        for (var i = 0; i < width * height; i++)
+        {
+            int x = i / deserializedBoard.GetLength(1);
+            int y = i % deserializedBoard.GetLength(1);
+
+            if (data[i] == 0) deserializedBoard[x, y] = false;
+            else deserializedBoard[x, y] = true;
+        }
+
+        return deserializedBoard;
+    }
+
     /// <summary>二次元のボード情報を設定</summary>
     public void SetBoard(int[,] deserializedBoard)
     {
         for (int y = 0; y < height; ++y)
             for (int x = 0; x < width; ++x)
                 data[y * width + x] = deserializedBoard[x, y];
+    }
+
+    /// <summary>二次元のボード情報を設定</summary>
+    public void SetBoard(bool[,] deserializedBoard)
+    {
+        for (int y = 0; y < height; ++y)
+            for (int x = 0; x < width; ++x)
+                data[y * width + x] = deserializedBoard[x, y] ? 1 : 0;
     }
 
     /// <summary>座標からボード情報を取得</summary>

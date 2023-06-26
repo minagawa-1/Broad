@@ -333,6 +333,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.Linq.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"

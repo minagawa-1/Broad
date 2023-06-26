@@ -9,8 +9,8 @@ public class BlockManager : MonoBehaviour
     [SerializeField] GameObject m_BlockPrefab = null;
 
     // プレファブのマテリアル
-    Material[] m_ControlBlockMaterials = null;
-    Material[] m_SetBlockMaterials = null;
+    public Material[] m_ControlBlockMaterials = null;
+    public Material[] m_SetBlockMaterials = null;
 
     // 生成したブロックの親
     GameObject m_BlockParent = null;
@@ -24,8 +24,7 @@ public class BlockManager : MonoBehaviour
     public void CreateMaterials()
     {
         // プレイヤーの色を取得
-        Color[] colors = new Color[GameSetting.instance.players.Length];
-        for (int i = 0; i < colors.Length; ++i) colors[i] = GameSetting.instance.players[i].color;
+        Color[] colors = GameSetting.instance.playersColor;
 
         m_ControlBlockMaterials = new Material[colors.Length];
         m_SetBlockMaterials     = new Material[colors.Length];
@@ -51,7 +50,7 @@ public class BlockManager : MonoBehaviour
         // 親設定
         GameObject parent = new GameObject("ControlBlocks");
         var cb = parent.AddComponent<ControlBlock>();
-        cb.afterSetParent = m_BlockParent;
+        cb.afterSetParent = m_BlockParent.transform;
         cb.afterSetMaterial = m_SetBlockMaterials[player - 1];
         cb.blocks = blocks;
         cb.playerIndex = player;
@@ -65,13 +64,13 @@ public class BlockManager : MonoBehaviour
         // ControlBlocksを1m上に押し上げる。
         parent.transform.position = new Vector3(position.x, 1f, -position.y);
 
-        if (blocks.GetWidth() % 2 == 0 && blocks.GetHeight() % 2 == 0)
+        if (blocks.width % 2 == 0 && blocks.height % 2 == 0)
             parent.transform.position = parent.transform.position.Offset(-0.5f, 0f, -0.5f);
 
         int blockCount = 0;
 
-        for (int y = 0; y < blocks.GetHeight(); ++y) {
-            for (int x = 0; x < blocks.GetWidth(); ++x)
+        for (int y = 0; y < blocks.height; ++y) {
+            for (int x = 0; x < blocks.width; ++x)
             {
                 // 生成しない座標だったらcontinue
                 if (blocks.shape[x, y] == false) continue;

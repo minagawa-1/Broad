@@ -66,7 +66,7 @@ public class CustomNetworkDiscovery : NetworkDiscovery
     private void Awake()
     {
         // HostReadyDataを受信したら、ReceivedReadyDataを実行するように登録
-        NetworkClient.RegisterHandler<HostReadyData>(ReceivedReadyData);
+        NetworkClient.RegisterHandler<ReadyData>(ReceivedReadyData);
 
         // ConnectionDataを受信したらReceivedConnectDataを実行するように登録
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
@@ -143,7 +143,7 @@ public class CustomNetworkDiscovery : NetworkDiscovery
             Debug.Log("Ready Ok");
 
             // ホスト準備データ設定
-            HostReadyData readyData = new HostReadyData() { isHostReady = true };
+            ReadyData readyData = new ReadyData() { isReady = true };
             // 全クライアントに送信
             NetworkServer.SendToAll(readyData);
 
@@ -288,10 +288,10 @@ public class CustomNetworkDiscovery : NetworkDiscovery
 
     /// <summary>ホストが準備できたかのデータを受信</summary>
     /// <param name="reciveData">受信データ</param>
-    void ReceivedReadyData(HostReadyData reciveData)
+    void ReceivedReadyData(ReadyData reciveData)
     {
         // 準備出来たかのフラグを代入
-        m_isHostReady = reciveData.isHostReady;
+        m_isHostReady = reciveData.isReady;
     }
 
     /// <summary>プレイヤー番号表示</summary>

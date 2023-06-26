@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Mirror;
+using Cysharp.Threading.Tasks;
 
 public class ControlBlock : MonoBehaviour
 {
@@ -18,7 +20,7 @@ public class ControlBlock : MonoBehaviour
     public int playerIndex;
 
     ///<summary>設置後のオブジェクト</summary>
-    public GameObject afterSetParent;
+    public Transform afterSetParent;
 
     ///<summary>設置後のマテリアル</summary>
     public Material afterSetMaterial;
@@ -43,9 +45,11 @@ public class ControlBlock : MonoBehaviour
     // ブロックの状態
     BlocksState m_BlocksState = BlocksState.Wait;
 
-    // GameManagerコンポーネント
-    GameManager m_GameManager = null;
-    BlockManager m_BlockManager = null;
+    // コンポーネント
+    CustomNetworkManager m_NetworkManager = null;
+    GameManager          m_GameManager    = null;
+    BlockManager         m_BlockManager   = null;
+    DonutChart           m_DonutChart     = null;
 
     // 操作可能か
     bool m_IsOperatable = true;
@@ -56,16 +60,15 @@ public class ControlBlock : MonoBehaviour
     Vector2Int m_MoveDirection;
     float      m_RotateDirection;
 
+    bool m_DecisionSetInfo;   // 設置位置を決定したかどうか
+
     // Start is called before the first frame update
     void Start()
     {
-        m_GameManager = GameObject.Find(nameof(GameManager)).GetComponent<GameManager>();
-        m_BlockManager = GameObject.Find(nameof(BlockManager)).GetComponent<BlockManager>();
+        // ReadyDataを受信したらClientReceivedReadyDataを実行するように登録
+        NetworkClient.ReplaceHandler<ReadyData>(ClientReceivedReadyData);
 
-        m_KeyRepeatTimer.Setup(m_move_interval);
-        m_BlocksState = BlocksState.Wait;
-
-        m_MoveDirection = Vector2Int.zero;
+        Setup().Forget();
     }
 
     // Update is called once per frame
@@ -82,6 +85,24 @@ public class ControlBlock : MonoBehaviour
         }
     }
 
+    /// <summary>準備</summary>
+    async UniTask Setup()
+    {
+        // playersColorが設定されるまで待つ
+        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 0);
+
+        // コンポーネント取得(GameManagerはプレファブから生成したものなので名前で検索をかける)
+        m_NetworkManager    = GameObject.Find(nameof(NetworkManager)).GetComponent<CustomNetworkManager>();
+        m_GameManager       = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
+        m_BlockManager      = GameObject.Find(nameof(BlockManager)).GetComponent<BlockManager>();
+        m_DonutChart        = GameObject.Find($"Canvas/{nameof(DonutChart)}").GetComponent<DonutChart>();
+
+        m_KeyRepeatTimer.Setup(m_move_interval);
+        m_BlocksState = BlocksState.Wait;
+
+        m_MoveDirection = Vector2Int.zero;
+    }
+
     void WaitState()
     {
         // Xキー で、ブロックスを半透明にする
@@ -95,7 +116,7 @@ public class ControlBlock : MonoBehaviour
         if (woskni.KeyBoard.GetOrKeyDown(KeyCode.Z, KeyCode.Return))
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
-            if (blocks.IsSetable( m_GameManager.board, playerIndex))
+            if (blocks.IsSetable(GameManager.board, playerIndex))
                 m_BlocksState = BlocksState.Set;
 
             // 設置ができない場合は振動
@@ -184,10 +205,7 @@ public class ControlBlock : MonoBehaviour
         transform.DOMoveY(0f, m_move_interval).SetEase(Ease.InQuart).OnComplete(() =>
             {
                 // 設置処理
-                Set();
-
-                // 設置状態にする
-                m_IsOperatable = true;
+                Set().Forget();
             });
     }
 
@@ -248,13 +266,79 @@ public class ControlBlock : MonoBehaviour
     }
 
     /// <summary> 設置処理 </summary>
-    private void Set()
+    async UniTask Set()
     {
-        var pos = GetBoardPosition(transform.position);
 
-        for (int y = 0; y < blocks.GetHeight(); ++y)
-            for (int x = 0; x < blocks.GetWidth(); ++x)
-                if (blocks.shape[x, y]) m_GameManager.board.SetBoardData(playerIndex, pos.x + x, pos.y + y);
+//////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 現在のターンでの設置データ
+        bool[,] currentTurnSetData = new bool[GameManager.boardSize.x, GameManager.boardSize.y];
+
+        // ブロックを設置しようとしているボード座標にtrueを入れる
+        for (int y = 0; y < blocks.height; ++y)
+            for (int x = 0; x < blocks.width; ++x)
+                if (blocks.shape[x, y]) currentTurnSetData[blocks.position.x + x, blocks.position.y + y] = true;
+
+        // 設置データから現在のターンのボードデータを作って送信
+        Board board = new Board(GameManager.boardSize.x, GameManager.boardSize.y);
+        board.SetBoard(currentTurnSetData);
+
+        BoardData boardData = new BoardData(board, playerIndex);
+        NetworkClient.Send(boardData);
+
+///////////////// ▼ホストの処理▼ /////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 自分がホスト
+        if (NetworkClient.activeHost)
+        {
+            // プレイヤー全員の盤面情報が揃うまで待機
+            await UniTask.WaitUntil(() => m_GameManager.boardsData.Count == NetworkServer.connections.Count);
+
+            // RidDuplicateを呼ぶ準備(タプルデータに直す)
+            (int player, bool[,] set)[] setData = new (int player, bool[,] set)[m_GameManager.boardsData.Count];
+            for (int i = 0; i < setData.Length; ++i)
+                setData[i] = (m_GameManager.boardsData[i].index, m_GameManager.boardsData[i].board.GetBoolBoard());
+
+            // 重複除去
+            m_GameManager.RidDuplicate(setData);
+
+            // boardsDataを初期化
+            m_GameManager.boardsData = new List<BoardData>();
+        }
+
+///////////////// ▼クライアントの処理▼ ////////////////////////////////////////////////////////////////////////////////////////
+
+        // 新しい盤面情報を受信できるまで待機
+        await UniTask.WaitUntil(() => m_GameManager.isReceived);
+
+        // isReceivedをfalseにすることで使いまわせるようにする
+        m_GameManager.isReceived = false;
+
+        // 現在の盤面に足りないブロックの生成
+        m_GameManager.ComplementBoard(GameManager.board.GetBoard(), GameManager.oldBoard.GetBoard());
+
+        // 準備完了したことをホストに伝える
+        ReadyData readyData = new ReadyData(true);
+        NetworkClient.Send(readyData);
+
+///////////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
+
+        // 自身がホスト
+        if (NetworkClient.activeHost)
+        {
+            // クライアント全員の準備が完了できるまで待機
+            await UniTask.WaitUntil(() => m_NetworkManager.readyCount == NetworkServer.connections.Count);
+
+            m_NetworkManager.readyCount = 0;
+
+            ReadyData ready = new ReadyData(true);
+            NetworkServer.SendToAll(ready);
+        }
+
+///////////////// ▼クライアントの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
+
+        // ホストから許可が降りるまで待機
+        await UniTask.WaitUntil(() => m_DecisionSetInfo);
 
         Transform[] children = transform.GetChildren();
 
@@ -268,7 +352,7 @@ public class ControlBlock : MonoBehaviour
             int x = (int)( local.x + blocks.center.x + 0.51f);
             int y = (int)(-local.z + blocks.center.y + 0.51f);
 
-            var boardPos = pos + new Vector2Int(x, y);
+            var boardPos = blocks.position + new Vector2Int(x, y);
 
             string name = "Block[" + boardPos.x + ", " + boardPos.y + "]";
 
@@ -280,10 +364,13 @@ public class ControlBlock : MonoBehaviour
             children[i].name = name;
 
             // 親を変える
-            children[i].transform.SetParent(afterSetParent.transform);
+            children[i].transform.SetParent(afterSetParent);
 
             // マテリアルを設置後のものに変更
             children[i].GetComponent<Renderer>().material = afterSetMaterial;
+
+            // ドーナツチャートのUI
+            m_DonutChart.UpdateDonut();
         }
 
         m_BlockManager.SortBlocks();
@@ -292,6 +379,9 @@ public class ControlBlock : MonoBehaviour
 
         // コントロール用オブジェクトを破棄
         Destroy(gameObject);
+
+        // 操作可能にする
+        m_IsOperatable = true;
     }
 
     /// <summary>Vector3を盤面座標に変換</summary>
@@ -300,8 +390,8 @@ public class ControlBlock : MonoBehaviour
     Vector2Int GetBoardPosition(Vector3 pos)
     {
         var posBoard = new Vector2Int((int)pos.x, (int)-pos.z);
-        int offsetX = (int)(-blocks.center.x * m_GameManager.m_SquareSize.x);
-        int offsetY = (int)(-blocks.center.y * m_GameManager.m_SquareSize.y);
+        int offsetX = (int)(-blocks.center.x);
+        int offsetY = (int)(-blocks.center.y);
 
         return posBoard.Offset(offsetX, offsetY);
     }
@@ -311,7 +401,7 @@ public class ControlBlock : MonoBehaviour
     /// <returns>３次元座標</returns>
     Vector3 GetVector3Board(Vector2Int pos)
     {
-        return new Vector3(m_GameManager.m_SquareSize.x * pos.x, 0f, m_GameManager.m_SquareSize.y * pos.y);
+        return new Vector3(pos.x, 0f, pos.y);
     }
 
     /// <summary>キーリピート処理</summary>
@@ -344,11 +434,11 @@ public class ControlBlock : MonoBehaviour
 
         if (boardDebug)
         {
-            for (int y = 0; y < m_GameManager.boardSize.y; ++y)
+            for (int y = 0; y < GameManager.boardSize.y; ++y)
             {
-                for (int x = 0; x < m_GameManager.boardSize.x; ++x)
+                for (int x = 0; x < GameManager.boardSize.x; ++x)
                 {
-                    switch (m_GameManager.board.GetBoardData(x, y))
+                    switch (GameManager.board.GetBoardData(x, y))
                     {
                         case -1: debugText += "　"; break;
                         case  0: debugText += "□"; break;
@@ -361,11 +451,11 @@ public class ControlBlock : MonoBehaviour
         }
         else
         {
-            bool isEven = blocks.GetWidth() % 2 == 0 && blocks.GetHeight() % 2 == 0;
+            bool isEven = blocks.width % 2 == 0 && blocks.height % 2 == 0;
 
-            for (int y = 0; y < blocks.GetHeight(); ++y)
+            for (int y = 0; y < blocks.height; ++y)
             {
-                for (int x = 0; x < blocks.GetWidth(); ++x)
+                for (int x = 0; x < blocks.width; ++x)
                 {
                     // center表示
                     if (!isEven && new Vector2(x, y) == blocks.center) { 
@@ -392,12 +482,12 @@ public class ControlBlock : MonoBehaviour
 
         // 移動限界
         Vector2 limitLeftTop = Vector2.zero - blocks.center;                  // 左上
-        Vector2 limitRightBottom = m_GameManager.boardSize - blocks.center;   // 右下
+        Vector2 limitRightBottom = GameManager.boardSize - blocks.center;   // 右下
 
-        if (blocks.GetWidth()  % 2 == 1) limitRightBottom.x -= 1;
-        if (blocks.GetHeight() % 2 == 1) limitRightBottom.y -= 1;
+        if (blocks.width  % 2 == 1) limitRightBottom.x -= 1;
+        if (blocks.height % 2 == 1) limitRightBottom.y -= 1;
 
-        if (blocks.GetWidth() % 2 == 0 && blocks.GetHeight() % 2 == 0) limitRightBottom -= Vector2.one;
+        if (blocks.width % 2 == 0 && blocks.height % 2 == 0) limitRightBottom -= Vector2.one;
 
         isCollision[0] = transform.position.z >=  limitLeftTop.y;       // 上
         isCollision[1] = transform.position.x <= -limitLeftTop.x;       // 左
@@ -405,5 +495,10 @@ public class ControlBlock : MonoBehaviour
         isCollision[3] = transform.position.x >=  limitRightBottom.x;   // 右
 
         return isCollision;
+    }
+
+    void ClientReceivedReadyData(ReadyData receivedData)
+    {
+        if (receivedData.isReady) m_DecisionSetInfo = true;
     }
 }

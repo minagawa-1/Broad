@@ -19,10 +19,10 @@ public class Blocks
         this.shape = shape;
 
         // int型で位置を格納しているため、必ず整数が入る
-        center = new Vector2(GetWidth() / 2, GetHeight() / 2);
+        center = new Vector2(width / 2, height / 2);
 
         // 縦横が偶数なら完全に真ん中にする
-        if (GetWidth() % 2 == 0 && GetHeight() % 2 == 0) center = center.Offset(-0.5f, -0.5f);
+        if (width % 2 == 0 && height % 2 == 0) center = center.Offset(-0.5f, -0.5f);
 
         this.position = position;
     }
@@ -32,27 +32,27 @@ public class Blocks
     {
         int counter = 0;
 
-        for (int y = 0; y < GetHeight(); ++y)
-            for (int x = 0; x < GetWidth(); ++x)
+        for (int y = 0; y < height; ++y)
+            for (int x = 0; x < width; ++x)
                 if (shape[x, y]) counter++;
 
         return counter;
     }
 
     /// <summary>ブロックスの横幅</summary>
-    public int GetWidth() => shape.GetLength(0);
+    public int width => shape.GetLength(0);
 
     /// <summary>ブロックスの縦幅</summary>
-    public int GetHeight() => shape.GetLength(1);
+    public int height => shape.GetLength(1);
 
     /// <summary>その位置に設置可能か</summary>
     /// <param name="board">ボード情報</param>
     /// <param name="player">プレイヤー番号</param>
     public bool IsSetable(Board board, int player)
     {
-        for (int y = 0; y < GetHeight(); ++y)
+        for (int y = 0; y < height; ++y)
         {
-            for (int x = 0; x < GetWidth(); ++x)
+            for (int x = 0; x < width; ++x)
             {
                 // shapeの参照位置がfalseなら、次に進む
                 if (!shape[x, y]) continue;
@@ -74,13 +74,13 @@ public class Blocks
     public bool[,] RotateLeft()
     {
         // 配列の中身を左回転させる
-        bool[,] newShape = new bool[GetHeight(), GetWidth()];
-        for (int y = 0; y < GetHeight(); y++)
-            for (int x = 0; x < GetWidth(); x++)
-                newShape[y, GetWidth() - x - 1] = shape[x, y];
+        bool[,] newShape = new bool[height, width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                newShape[y, width - x - 1] = shape[x, y];
 
         // centerを回転後の中心位置にする
-        center = new Vector2(center.y, GetWidth() - center.x - 1);
+        center = new Vector2(center.y, width - center.x - 1);
 
         return shape = newShape;
     }
@@ -89,13 +89,13 @@ public class Blocks
     public bool[,] RotateRight()
     {
         // 配列の中身を右回転させる
-        bool[,] newShape = new bool[GetHeight(), GetWidth()];
-        for (int y = 0; y < GetHeight(); y++)
-            for (int x = 0; x < GetWidth(); x++)
-                newShape[GetHeight() - y - 1, x] = shape[x, y];
+        bool[,] newShape = new bool[height, width];
+        for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
+                newShape[height - y - 1, x] = shape[x, y];
 
         // centerを回転後の中心位置にする
-        center = new Vector2(GetHeight() - center.y - 1, center.x);
+        center = new Vector2(height - center.y - 1, center.x);
 
         return shape = newShape;
     }

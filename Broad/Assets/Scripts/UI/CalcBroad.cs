@@ -6,50 +6,54 @@ using Cysharp.Threading.Tasks;
 
 public class CalcBroad : MonoBehaviour
 {
-    [Header("コンポーネント")]
-    [SerializeField] Text m_PlayerText;
-    [SerializeField] Text m_BroadValueText;
-    [SerializeField] GameManager m_GameManager;
-    [SerializeField] BlockManager m_BlockManager;
+    //[Header("コンポーネント")]
+    //[SerializeField] Text m_PlayerText;
+    //[SerializeField] Text m_BroadValueText;
+    //[SerializeField] BlockManager m_BlockManager;
 
-    // Start is called before the first frame update
-    void Start()
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    m_PlayerText.text = "";
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    // Calcを呼ぶ
+    //    CallCalc().Forget();
+    //}
+
+    //public async UniTaskVoid SetupPlayerText()
+    //{
+    //    for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
+    //    {
+    //        // players[i]のcolorに色が入るまで待機
+    //        await UniTask.WaitUntil(() => GameSetting.instance.playersColor[i] != Color.clear);
+    //        string colorCode = GameSetting.instance.playersColor[i].ToHex();
+
+    //        m_PlayerText.text += "<size=60><color=" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
+    //    }
+    //}
+
+    //async UniTaskVoid CallCalc()
+    //{
+    //    await UniTask.WaitUntil(() => GameManager.boardSize != Vector2.zero);
+
+    //    int[] counts = Calc();
+
+    //    m_BroadValueText.text = "";
+
+    //    for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
+    //        m_BroadValueText.text += counts[i] + " <size=50>㎡</size>\n";
+    //}
+
+    public static int[] Calc()
     {
-        m_PlayerText.text = "";
+        int[] counts = new int[GameSetting.instance.playersColor.Length];
 
-        SetUpPlayerText().Forget();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        int[] counts = Calc();
-
-        m_BroadValueText.text = "";
-
-        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
-            m_BroadValueText.text += counts[i] + " <size=50>㎡</size>\n";
-    }
-
-    async UniTaskVoid SetUpPlayerText()
-    {
-        // プレイヤー全員の情報が揃うまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.players[0].color != Color.clear);
-
-        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
-        {
-            string colorCode = GameSetting.instance.players[i].color.ToHex();
-
-            m_PlayerText.text += "<size=60><color=" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
-        }
-    }
-
-    int[] Calc()
-    {
-        int[] counts = new int[GameSetting.instance.players.Length];
-
-        for (int i = 0; i < GameSetting.instance.players.Length; ++i)
-            counts[i] = GetLargestArea(m_GameManager.board, i + 1);
+        for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
+            counts[i] = GetLargestArea(GameManager.board, i + 1);
 
         return counts;
     }
@@ -58,7 +62,7 @@ public class CalcBroad : MonoBehaviour
     /// <param name="board">盤面の配列</param>
     /// <param name="player">プレイヤー番号</param>
     /// <returns>最大領域のサイズ</returns>
-    int GetLargestArea(Board board, int player)
+    static int GetLargestArea(Board board, int player)
     {
         int[] parent = new int[board.width * board.height]; // Union-Findの親配列
         int[] size = new int[board.width * board.height]; // 各グループのサイズを保持する配列
@@ -101,7 +105,7 @@ public class CalcBroad : MonoBehaviour
     /// <param name="parent">親を格納した配列</param>
     /// <param name="index">親を探す要素のインデックス</param>
     /// <returns>要素の親</returns>
-    int Find(int[] parent, int index)
+    static int Find(int[] parent, int index)
     {
         int root = index;
 
@@ -124,7 +128,7 @@ public class CalcBroad : MonoBehaviour
     /// <param name="size">各グループのサイズを格納した配列</param>
     /// <param name="index1">結合する要素の1つ目のインデックス</param>
     /// <param name="index2">結合する要素の2つ目のインデックス</param>
-    void Union(int[] parent, int[] size, int index1, int index2)
+    static void Union(int[] parent, int[] size, int index1, int index2)
     {
         int root1 = Find(parent, index1);
         int root2 = Find(parent, index2);

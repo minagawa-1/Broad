@@ -28,8 +28,6 @@ public class StartButtonState : MonoBehaviour
     int m_InitStartTextFontSize;
     Vector3 m_InitStartTextPosition;
 
-
-
     private void Start()
     {
         m_InitStartTextFontSize = m_StartText.fontSize;

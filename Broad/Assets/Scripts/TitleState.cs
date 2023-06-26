@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,11 +57,14 @@ public class TitleState : NetworkDiscovery
 
     void Awake()
     {
-        // ConnectionDataを受信したらReceivedConnectDataを実行するように登録
+        // 各メッセージデータを受信したら対応した関数を実行するように登録
+        NetworkClient.RegisterHandler<PlayerData>(ReceivedPlalyerData);
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
+        NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
 
-        m_GameSetting.players = new PlayerData[1];
-        m_GameSetting.players[0] = new PlayerData(0, Color.clear);
+        // GameSettingのplayersColorの初期化
+        m_GameSetting.playersColor = new Color[1];
+        m_GameSetting.playersColor[0] = Color.clear;
 
         m_MatchState = MatchState.None;
 
@@ -81,16 +85,16 @@ public class TitleState : NetworkDiscovery
     {
         switch (m_MatchState)
         {
-            case MatchState.None:           None();             break;
-            case MatchState.StartMatch:     StartMatch();       break;
-            case MatchState.Matching:       Matching();         break;
-            case MatchState.CancelMatch:    CancelMatch();      break;
-            case MatchState.CompleteMatch:  CompleteMatch();    break;
+            case MatchState.None: None(); break;
+            case MatchState.StartMatch: StartMatch(); break;
+            case MatchState.Matching: Matching(); break;
+            case MatchState.CancelMatch: CancelMatch(); break;
+            case MatchState.CompleteMatch: CompleteMatch(); break;
         }
     }
 
     /// <summary>マッチングしていない</summary>
-    void None() 
+    void None()
     {
     }
 
@@ -115,16 +119,19 @@ public class TitleState : NetworkDiscovery
     void Matching()
     {
         // [※デバッグ用] 強制的にゲームスタート
-        if(Input.GetMouseButtonDown(1)) m_MatchState = MatchState.CompleteMatch;
+        if (Input.GetMouseButtonDown(1)) m_MatchState = MatchState.CompleteMatch;
 
         // 人数が２人未満の場合はreturn
-        if (m_GameSetting.players.Length < 2) return;
+        if (NetworkServer.connections.Count < 2) return;
 
         m_MatchTimer.Update(false);
 
-        if(m_MatchTimer.IsFinished())
+        if (m_MatchTimer.IsFinished())
         {
             m_MatchTimer.Reset();
+
+            // プレイヤーカラー設定
+            SetupPlayerColor().Forget();
 
             m_MatchState = MatchState.CompleteMatch;
         }
@@ -139,7 +146,7 @@ public class TitleState : NetworkDiscovery
         StopDiscovery();
 
         // 人数が２人以上の場合
-        if (m_GameSetting.players.Length > 1)
+        if (m_GameSetting.playersColor.Length > 1)
         {
             // ホスト・クライアントの停止
             NetworkManager.singleton.StopHost();
@@ -156,10 +163,6 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング完了</summary>
     void CompleteMatch()
     {
-        // 1人の場合、2～4でランダムな人数にする
-        if (GameSetting.instance.players.Length <= 1)
-            GameSetting.instance.players = new PlayerData[Random.Range(2, 5)];
-
         // シーン遷移処理
         Transition.Instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
     }
@@ -171,13 +174,31 @@ public class TitleState : NetworkDiscovery
         // 最低でも１人以上
         playerNum = Mathf.Max(1, playerNum);
 
-        // 設定には反映させる
-        GameSetting.instance.players = new PlayerData[playerNum];
-
         if (m_MatchingTexts.Length == 0 || m_NetworkManager == null) return;
 
         foreach (Text text in m_MatchingTexts)
-            if(text != null)text.text = $"Matching... ( {playerNum}人 )";
+            if (text != null) text.text = $"Matching... ( {playerNum}人 )";
+    }
+
+    /// <summary>プレイヤーカラーの設定</summary>
+    async UniTask SetupPlayerColor()
+    {
+        if (NetworkClient.activeHost)
+        {
+            float h = Random.value;
+            float s = Random.Range(0.2f, 0.5f);
+            float v = Random.Range(0.9f, 1f);
+            Color color1P = Color.HSVToRGB(h, s, v);
+
+            // 1Pから相対的に離れた色相の色配列を取得
+            GameSetting.instance.playersColor = color1P.GetRelativeColor(NetworkServer.connections.Count);
+
+            // ColorDataをクライアント全員に送信
+            ColorData color = new ColorData(GameSetting.instance.playersColor);
+            NetworkServer.SendToAll(color);
+        }
+
+        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 1);
     }
 
     /// <summary>サーバー検索</summary>
@@ -200,7 +221,7 @@ public class TitleState : NetworkDiscovery
         while (!m_NetworkManager.isNetworkActive)
         {
             // (m_ConnectInterval)ms分待機して実行
-            await UniTask.Delay(m_ConnectInterval, cancellationToken: token);
+            await UniTask.DelayFrame(m_ConnectInterval, cancellationToken: token);
 
             // サーバーを見つけた
             // URIはURL(Web上にあるファイルの住所)と
@@ -243,6 +264,15 @@ public class TitleState : NetworkDiscovery
         }
     }
 
+    /// <summary>プレイヤーデータ受信</summary>
+    /// <param name="receivedData">受信データ</param>
+    void ReceivedPlalyerData(PlayerData receivedData)
+    {
+        m_GameSetting.selfIndex = receivedData.index + 1;
+
+        Debug.Log("Received MyIndex!");
+    }
+
     /// <summary>接続データ受信</summary>
     /// <param name="recivedData">受信データ</param>
     void ReceivedConnectionData(ConnectionData receivedData)
@@ -252,6 +282,14 @@ public class TitleState : NetworkDiscovery
 
         // playerNumに現在のプレイヤー数を反映
         SetPlayerNum(receivedData.playerCount);
+    }
+
+    /// <summary>カラーデータ受信</summary>
+    /// <param name="receivedData">受信データ</param>
+    void ReceivedColorData(ColorData receivedData)
+    {
+        // 受信したデータをplayersColorに入れる
+        GameSetting.instance.playersColor = receivedData.color;
     }
 
     /// <summary>キャンセル</summary>
@@ -272,7 +310,7 @@ public class TitleState : NetworkDiscovery
     {
         switch (m_MatchState)
         {
-            case MatchState.None:     m_MatchState = MatchState.StartMatch;  break;
+            case MatchState.None: m_MatchState = MatchState.StartMatch; break;
             case MatchState.Matching: m_MatchState = MatchState.CancelMatch; break;
 
             default: break;

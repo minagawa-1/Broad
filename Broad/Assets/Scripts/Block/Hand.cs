@@ -5,8 +5,6 @@ using UnityEngine;
 /// <summary>手札</summary>
 public class Hand
 {
-    public const int m_default_max_hand_blocks = 4;
-
     /// <summary>手札に入れられるブロックスの数</summary>
     public int maxHandBlocks { get; private set; }
 
@@ -19,7 +17,7 @@ public class Hand
     /// <summary>コンストラクタ</summary>
     /// <param name="deck">ドローするためのデッキ</param>
     /// <param name="maxHandBlocks">手札の最大ブロックス数</param>
-    public Hand(Deck deck, int maxHandBlocks = m_default_max_hand_blocks)
+    public Hand(Deck deck, int maxHandBlocks = 4)
     {
         this.maxHandBlocks = maxHandBlocks;
 

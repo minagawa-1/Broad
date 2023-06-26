@@ -94,9 +94,6 @@ public class Transition : MonoBehaviour
         fadeCanvasGroup.alpha = 1f;
         fadeCanvasGroup.DOFade(0f, fadeOutTime); // フェードアウト開始
 
-        //// ホストがシーン遷移を完了させるまで待機
-        //await UniTask.WaitUntil(() => SceneManager.GetActiveScene().name != Scene.GameMainScene || NetworkClient.activeHost);
-
         // シーン遷移
         if(NetworkClient.activeHost) networkManager.ServerChangeScene(sceneName);
     }

@@ -12,4 +12,7 @@ public class Scene
 
 	/// <summary>TitleScene</summary>
 	public const string TitleScene = "TitleScene";
+
+	/// <summary>LoadScene</summary>
+	public const string LoadScene = "LoadScene";
 }

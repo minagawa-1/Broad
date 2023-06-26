@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [CreateAssetMenu]
 public class GameSetting : ScriptableObject
@@ -12,8 +13,9 @@ public class GameSetting : ScriptableObject
 
     [Chapter("ゲーム情報")]
 
-    [Header("プレイヤーの色")]
-    public PlayerData[] players;
+    [Header("プレイヤーの情報")]
+    public int selfIndex = 0;
+    public Color[] playersColor;
 
     [Chapter("盤面情報")]
 
@@ -37,19 +39,4 @@ public class GameSetting : ScriptableObject
     [Header("密度")]
     [Range(0f, 1f)] public float minDensity;
     [Range(0f, 1f)] public float maxDensity;
-
-    /// <summary>プレイヤー色の初期設定</summary>
-    public void SetupPlayerColor()
-    {
-        float h = Random.value;
-        float s = Random.Range(0.2f, 0.5f);
-        float v = Random.Range(0.9f, 1f);
-        Color color1P = Color.HSVToRGB(h, s, v);
-
-        // 1Pから相対的に離れた色相の色配列を取得
-        var colors = color1P.GetRelativeColor(instance.players.Length);
-
-        // 生成した相対色をプレイヤー情報に設定
-        for (int i = 0; i < instance.players.Length; ++i) instance.players[i].color = colors[i];
-    }
 }

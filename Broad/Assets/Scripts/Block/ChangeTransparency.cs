@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using rendering = UnityEngine.Rendering;
 using rm = woskni.RenderingMode;
 

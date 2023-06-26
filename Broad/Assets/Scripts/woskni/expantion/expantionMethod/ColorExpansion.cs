@@ -80,12 +80,16 @@ public static class ColorExpansion
     public static Color[] GetRelativeColor(this Color color, int num)
     {
         Color[] colors = new Color[num];
+
         float hue = color.GetHue();
         float hueStep = 1f / num;
 
         for (int i = 0; i < num; i++)
         {
-            hue += hue > 1f ? hueStep - 1f : hueStep;
+            hue += hueStep;
+
+            if (hue >= 1f) hue -= 1f;
+
             colors[i] = color.SetHSV(h: hue);
         }
 
