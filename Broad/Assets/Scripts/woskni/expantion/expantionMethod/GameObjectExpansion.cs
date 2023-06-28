@@ -15,6 +15,14 @@ public static class GameObjectExpansion
 		return transforms;
 	}
 
+	/// <summary>コンポーネントを取得（ない場合はアタッチして返す）</summary>
+	public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
+	{
+		T component = gameObject.GetComponent<T>();
+
+		return component != null ? component : gameObject.AddComponent<T>();
+    }
+
 	/// <summary>レイヤーを変更</summary>
 	/// <param name="gameObject">お前</param>
 	/// <param name="layer">レイヤー番号</param>

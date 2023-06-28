@@ -53,16 +53,6 @@ public class HandUI : MonoBehaviour
         }
     }
 
-    Blocks Lottery()
-    {
-        int units = Random.Range(GameSetting.instance.minBlockUnits, GameSetting.instance.maxBlockUnits + 1);
-        float density = Random.Range(GameSetting.instance.minDensity, GameSetting.instance.maxDensity);
-
-        Vector2Int pos = new Vector2Int(5, 5);
-
-        return new Blocks(LotteryBlocks.Lottery(units, density), pos);
-    }
-
     async UniTask BuildButton()
     {
         // playersColorの中身が入るまで待機
@@ -117,4 +107,6 @@ public class HandUI : MonoBehaviour
             m_ButtonList[num].DoMove(m_ButtonList[num].basisPosition, Ease.InOutCubic);
         }
     }
+
+    Blocks Lottery() => new Blocks(LotteryBlocks.Lottery(), new Vector2Int(5, 5));
 }

@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638230770490497394
-    m_Hash: 1569326040
+      ticks: 638233637321747887
+    m_Hash: 2711717318
   m_LockFileStatus:
     m_FilePath: C:/Users/GamePG/Documents/GitHub/Broad/Broad/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638230770490566962
-    m_Hash: 1792148414
+      ticks: 638233637321747887
+    m_Hash: 1347056237
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -3086,10 +3086,12 @@ m_ResolvedPackages:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
     compatible:
     - 1.0.6
     - 2.0.2
     - 2.0.3
+    - 2.0.4
     verified: 1.0.6
   dependencies: []
   resolvedDependencies: []
