@@ -56,27 +56,11 @@ public class CustomNetworkManager : NetworkManager
         base.OnServerSceneChanged(sceneName);
     }
 
-    public override void OnClientSceneChanged()
-    {
-        // GameMainSceneのみの処理
-        if (SceneManager.GetActiveScene().name == Scene.GameMainScene)
-        {
-            // シーンを切り替えたら準備完了データを送信
-            ReadyData sendData = new ReadyData(true);
-            NetworkClient.Send(sendData);
-        }
-
-        Debug.Log("Client Scene Changed!");
-
-        base.OnClientSceneChanged();
-    }
-
+    /// <summary>クライアントからの接続が切れた</summary>
+    /// <param name="conn">接続が切れたクライアント情報</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         var removeData = playersData.Find(p => p.index == conn.connectionId);
-
-        if (removeData.index == conn.connectionId)
-            Debug.Log("find");
 
         // 削除したいクライアント
         var removeClient = clientsData.Find(c => c == conn);
@@ -110,7 +94,7 @@ public class CustomNetworkManager : NetworkManager
     {
         // isReadyがtrueならカウントを増やす
         if (receivedData.isReady) readyCount++;
-        Debug.Log("Are You Ready? : " + receivedData.isReady);
-        Debug.Log("ReadyCount : " + readyCount);
+
+        Debug.Log("Ready Count : " + readyCount);
     }
 }

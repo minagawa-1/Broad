@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,34 +35,32 @@ public class BlocksUI : MonoBehaviour
 
     public void SetupUI(Blocks blocks, Color playerColor, Vector3 buttonPosition)
     {
-        // ’PƒuƒƒbƒN‚Ì‰æ‘œƒTƒCƒY
+        // å˜ãƒ–ãƒ­ãƒƒã‚¯ã®ç”»åƒã‚µã‚¤ã‚º
         var blockSize = new Vector2Int(m_BlockSprite.texture.width, m_BlockSprite.texture.height);
 
-        // Rawm_Image‚Éİ’è‚·‚é‰æ‘œ
-        var glowTexture = new Texture2D(blocks.width * blockSize.x, blocks.height * blockSize.y);
+        // Rawm_Imageã«è¨­å®šã™ã‚‹ç”»åƒ
+        var texture = new Texture2D(blocks.width * blockSize.x, blocks.height * blockSize.y);
 
-        // ”wŒiF‚Í“§–¾‚É‚·‚é
-        Color32[] pixels = glowTexture.GetPixels32();
+        // èƒŒæ™¯è‰²ã¯é€æ˜ã«ã™ã‚‹
+        Color32[] pixels = texture.GetPixels32();
         for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.clear;
-        glowTexture.SetPixels32(pixels);
+        texture.SetPixels32(pixels);
 
-        // ƒtƒBƒ‹ƒ^[ƒ‚[ƒh‚Ìİ’è
-        glowTexture.filterMode = FilterMode.Point;
+        // ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ãƒ¢ãƒ¼ãƒ‰ã®è¨­å®š
+        texture.filterMode = FilterMode.Point;
 
-        // ƒTƒCƒYİ’è
+        // ã‚µã‚¤ã‚ºè¨­å®š
         float limitSize = Mathf.Max(3, blocks.width, blocks.height);
         float dispBlocksSize = (handUI.buttonGroupWidth / (float)handUI.maxHandBlocks) / limitSize;
 
         m_Image.rectTransform.sizeDelta = new Vector2(blocks.width * dispBlocksSize, blocks.height * dispBlocksSize);
         
 
-        // ˆÊ’u
+        // ä½ç½®
         m_Image.rectTransform.position = buttonPosition;
 
-        // ‰æ‘œî•ñ
+        // ç”»åƒæƒ…å ±
         Color[] spritePixels = m_BlockSprite.texture.GetPixels();
-
-
 
         int cnt = 0;
 
@@ -70,23 +68,28 @@ public class BlocksUI : MonoBehaviour
         {
             for (int x = 0; x < blocks.width; ++x)
             {
+
                 if (!blocks.shape[x, y]) continue;
 
-                glowTexture.SetPixels(x * blockSize.x, y * blockSize.y, blockSize.x, blockSize.x, spritePixels);
+                texture.SetPixels(x * blockSize.x
+                                , (blocks.height - y - 1) * blockSize.y
+                                , blockSize.x
+                                , blockSize.y
+                                , spritePixels);
 
                 if (++cnt > blocks.GetBlockNum()) break;
             }
         }
 
-        // ‰æ‘œî•ñ‚ğŒˆ’è‚µ‚ÄŠi”[
-        glowTexture.Apply();
-        m_Image.sprite = Sprite.Create(glowTexture, new Rect(0, 0, glowTexture.width, glowTexture.height), Vector2.zero);
+        // ç”»åƒæƒ…å ±ã‚’æ±ºå®šã—ã¦æ ¼ç´
+        texture.Apply();
+        m_Image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
-        // Šg‘å—¦‚ÆF‚ğİ’è
+        // æ‹¡å¤§ç‡ã¨è‰²ã‚’è¨­å®š
         m_Image.rectTransform.localScale = new Vector2(scale, scale);
         m_Image.color = playerColor;
 
-        // ‰e‚ÌƒIƒtƒZƒbƒg’l
+        // å½±ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤
         Vector2 offset = m_Image.rectTransform.sizeDelta / new Vector2(blocks.width, blocks.height);
         m_Shadow.effectDistance = new Vector2(offset.x * m_ShadowDistance.x, offset.y * m_ShadowDistance.y);
     }

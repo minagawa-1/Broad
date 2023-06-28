@@ -23,8 +23,8 @@ public partial class GameManager : MonoBehaviour
     [SerializeField] Vector3 m_FurthestCameraOffset;
 
     [Header("コンポーネント")]
-    [SerializeField] BlockManager            m_BlockManager      = null;     // ブロックマネージャー
-    [SerializeField] CalcBroad               m_CalcBroad         = null;     // つながっているブロックの数を計算
+    [SerializeField] BlockManager m_BlockManager = null;     // ブロックマネージャー
+    [SerializeField] CalcBroad    m_CalcBroad    = null;     // つながっているブロックの数を計算
 
     // ネットワークマネージャー
     CustomNetworkManager m_NetworkManager    = null;
@@ -45,8 +45,6 @@ public partial class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Start Awake!");
-
         // サーバー側がデータを受信したときに対応した関数を実行するように登録
         NetworkServer.ReplaceHandler<BoardData>(ServerReceivedBoardData);
 
@@ -64,10 +62,12 @@ public partial class GameManager : MonoBehaviour
         m_SetableParent.transform.SetParent(m_BoardManagerObject.transform);
         m_UnsetableParent.transform.SetParent(m_BoardManagerObject.transform);
 
+        // GameMainに到着したことをホストに伝える
+        ReadyData readyData = new ReadyData(true);
+        NetworkClient.Send(readyData);
+
         // リストを初期化
         boardsData = new List<BoardData>();
-
-        Debug.Log("Finish Awake!");
     }
 
     private void Start()
@@ -87,7 +87,14 @@ public partial class GameManager : MonoBehaviour
         // ホストのみボード設定をする
         if (NetworkClient.activeHost)
         {
-            Debug.Log("Server SetupBoard");
+            // 以下の条件のいずれかに一致するまで待機
+            // ① プレイヤー全員が準備完了する
+            // ② プレイヤーの人数が１人
+            await UniTask.WaitUntil(() => m_NetworkManager.readyCount == NetworkServer.connections.Count ||
+                                            NetworkServer.connections.Count < 2);
+
+            // readyCountのリセット
+            m_NetworkManager.readyCount = 0;
 
             // ボードサイズをランダムに設定
             boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
@@ -101,18 +108,12 @@ public partial class GameManager : MonoBehaviour
             // 全クライアントにボード情報を送信
             BoardData sendData = new BoardData { board = board };
             NetworkServer.SendToAll(sendData);
-
-            Debug.Log(board.data);
         }
 
 ///////////////// ▼クライアントの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
 
-        Debug.Log("Client SetupBoard");
-
         // ボードの情報が入るまで待機
         await UniTask.WaitUntil(() => board.data != null);
-
-        Debug.Log(board.data);
 
         // ボードの作成
         LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, boardSize);
@@ -187,29 +188,40 @@ public partial class GameManager : MonoBehaviour
     /// <param name="newBoard">新しい盤面情報</param>
     /// <param name="oldBoard">古い盤面情報</param>
     /// <param name="settablePrefab">ブロックプレファブ</param>
-    public void ComplementBoard( int[,] newBoard, int[,] oldBoard)
+    public void ComplementBoard(int[,] afterBoard, int[,] beforeBoard)
     {
         for (int y = 0; y < boardSize.y; ++y)
+        {
             for (int x = 0; x < boardSize.x; ++x)
             {
-                // newBoardとoldBoardで情報が一致しない場合
-                if (newBoard[x, y] != oldBoard[x, y])
-                {
-                    // 一致しない値取得
-                    int index = newBoard[x, y];
+                // 設置しない盤・設置できない盤の場合はcontinue
+                if (afterBoard[x, y] <= 0) continue;
 
-                    // プレファブの生成
-                    GameObject newBlock = Instantiate(m_BlockPrefab);
+                // このターンでの[x, y]座標において、設置情報に変化がない場合はcontinue
+                if (afterBoard[x, y] == beforeBoard[x, y]) continue;
 
-                    // 名前・親オブジェクト・座標・マテリアルを設定
-                    newBlock.gameObject.name = "Block[" + x + "," + y + "]";
-                    newBlock.transform.parent = m_SetableParent.transform;
-                    newBlock.transform.position = new Vector3(x, 0f, -y);
-                    newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[index];
-                    newBlock.transform.position = newBlock.transform.position;
-                    newBlock.transform.localScale = newBlock.transform.localScale;
-                }
+                Debug.Log("X : " + x);
+                Debug.Log("Y : " + y);
+
+                Debug.Log("newBoard : " + afterBoard[x, y]);
+                Debug.Log("oldBoard : " + beforeBoard[x, y]);
+
+                // 一致しない値取得
+                int index = afterBoard[x, y];
+
+                // プレファブの生成
+                GameObject newBlock = Instantiate(m_BlockPrefab);
+
+                // 名前・親オブジェクト・座標・マテリアルを設定
+                newBlock.gameObject.name = "Block[" + x + "," + y + "]";
+                newBlock.transform.parent = m_SetableParent.transform;
+                newBlock.transform.position = new Vector3(x, 0f, -y);
+                newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[index - 1];
+                newBlock.transform.position = newBlock.transform.position;
+                newBlock.transform.localScale = newBlock.transform.localScale;
+                
             }
+        }
     }
 
     /// <summary>重複除去</summary>
@@ -227,10 +239,9 @@ public partial class GameManager : MonoBehaviour
             for (int x = 0; x < setData[0].set.GetLength(0); x++)
             {
                 // 座標に対して設置申請を出しているplayer番号を抽出
-                int[] players = setData.Where(d => d.set[x, y] == true).Select(d => d.player).ToArray();
+                int[] players = setData.Where(d => d.set[x, y]).Select(d => d.player).ToArray();
 
-                // 2人以上だった場合は0を、
-                // 1人だった場合はplayer番号
+                // その座標の設置申請が2人以上だった場合は0を、 1人だった場合はplayer番号を代入
                 switch (players.Length)
                 {
                     case 0:                                 break;
@@ -310,7 +321,7 @@ public partial class GameManager : MonoBehaviour
         // 盤面のサイズを取得
         boardSize = new Vector2Int(receivedData.board.width, receivedData.board.height);
 
-        Debug.Log("Received BoardData!");
+        Debug.Log("board : " + board.data);
     }
 
     // 範囲内でランダムな座標を返す関数

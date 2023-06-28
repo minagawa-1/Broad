@@ -172,6 +172,7 @@ MonoBehaviour:
   m_FurthestCameraOffset: {x: 0, y: 4, z: -4}
   m_BlockManager: {fileID: 442827331}
   m_CalcBroad: {fileID: 1678821120}
+  m_GameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
   isReceived: 0
 --- !u!114 &429558200
 MonoBehaviour:
@@ -544,6 +545,7 @@ MonoBehaviour:
   buttonGroupWidth: 1600
   maxDeckBlocks: 16
   maxHandBlocks: 4
+  m_BlockManager: {fileID: 442827331}
 --- !u!222 &1520345860
 CanvasRenderer:
   m_ObjectHideFlags: 0

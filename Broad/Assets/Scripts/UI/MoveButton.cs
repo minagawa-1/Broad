@@ -74,6 +74,12 @@ public class MoveButton : Button
         if (move) DoMove(basisPosition, action: () => interactable = false);
         else interactable = false;
     }
+
+    /// <summary>操作可能にする</summary>
+    public void Interactate()
+    {
+        interactable = true;
+    }
 }
 
 #if UNITY_EDITOR

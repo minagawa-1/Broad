@@ -328,7 +328,6 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/GameSetting.cs"
 "Assets/Scripts/GameState.cs"
-"Assets/Scripts/LoadState.cs"
 "Assets/Scripts/Network/CustomNetworkDiscovery.cs"
 "Assets/Scripts/Network/CustomNetworkManager.cs"
 "Assets/Scripts/Network/SendDatas/SendBoardData.cs"

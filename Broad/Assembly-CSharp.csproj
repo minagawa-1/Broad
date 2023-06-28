@@ -89,7 +89,6 @@
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ColorExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\HandUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayerCreator.cs" />
-    <Compile Include="Assets\Scripts\LoadState.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\RangeInt.cs" />
     <Compile Include="Assets\Scripts\UI\MoveButton.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChip.cs" />

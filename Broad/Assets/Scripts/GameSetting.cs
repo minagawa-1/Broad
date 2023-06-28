@@ -9,6 +9,9 @@ public class GameSetting : ScriptableObject
     public static GameSetting instance;
 
     // ScriptableObjectの初期化時にインスタンスを設定
+    private void Awake() => instance = this;
+
+    // ScriptableObjectの初期化時にインスタンスを設定
     private void OnEnable() => instance = this;
 
     [Chapter("ゲーム情報")]

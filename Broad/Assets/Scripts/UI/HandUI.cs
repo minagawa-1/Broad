@@ -25,16 +25,19 @@ public class HandUI : MonoBehaviour
     public int maxDeckBlocks;
     public int maxHandBlocks;
 
+    [Chapter("コンポーネント")]
+    [SerializeField] BlockManager m_BlockManager;
+
     Deck m_Deck;
     Hand m_Hand;
 
-    List<MoveButton> m_ButtonList;
+    MoveButton[] m_MoveButtons;
 
     // Start is called before the first frame update
     void Awake()
     {
         Blocks[] deck = new Blocks[maxDeckBlocks];
-        m_ButtonList = new List<MoveButton>();
+        m_MoveButtons = new MoveButton[maxHandBlocks];
 
         for (int i = 0; i < maxDeckBlocks; ++i) deck[i] = Lottery();
 
@@ -42,15 +45,6 @@ public class HandUI : MonoBehaviour
         m_Hand = new Hand(m_Deck, maxHandBlocks);
 
         BuildButton().Forget();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            int num = Random.Range(0, maxHandBlocks);
-            ReplaceHand(num);
-        }
     }
 
     Blocks Lottery()
@@ -100,21 +94,50 @@ public class HandUI : MonoBehaviour
             blocksUITrandform.position = blocksUITrandform.position.Offset
                 (rectTransform.sizeDelta.x / 2f, rectTransform.sizeDelta.y / 2f);
 
-            m_ButtonList.Add(button);
+            m_MoveButtons[i] = button;
+        }
+
+        // OnClick時の挙動設定
+        for(int i = 0; i < maxHandBlocks; ++i) {
+            int handIndex = i;
+            m_MoveButtons[i].onClick.AddListener(() => DrawHandToBoard(handIndex));
         }
     }
 
-    void ReplaceHand(int num)
+    /// <summary>盤面にブロックスを生成するUI処理</summary>
+    public void DrawHandToBoard(int handIndex)
     {
-        Debug.Log(num);
+        Vector2Int pos = GameManager.boardSize / 2;
 
-        m_ButtonList[num].DoMove(new Vector2(m_ButtonList[num].basisPosition.x, 0f), Ease.InOutCubic, Replace);
+        Debug.Log("山札の数: " + m_Deck.deck.Count);
+        Debug.Log("手札の数: " + m_Hand.hand.Length);
+
+        m_BlockManager.CreateBlock(GameSetting.instance.selfIndex, m_Hand.PlayAt(handIndex).shape, pos);
+
+        // すべてのボタンを操作不能にする
+        for(int i = 0; i < maxHandBlocks; ++i) m_MoveButtons[i].Uninteractate();
+    }
+
+    /// <summary>山札からドローするUI処理</summary>
+    /// <param name="num">ドロー先の手札UIの番号</param>
+    public void DrawDeckToHand(int handIndex)
+    {
+        m_MoveButtons[handIndex].DoMove(new Vector2(m_MoveButtons[handIndex].basisPosition.x, 0f), Ease.InOutCubic, Replace);
 
         void Replace()
         {
-            m_Hand.SetBlocksAt(num, m_Deck.Draw());
+            m_Hand.SetBlocksAt(handIndex, m_Deck.Draw());
 
-            m_ButtonList[num].DoMove(m_ButtonList[num].basisPosition, Ease.InOutCubic);
+            m_MoveButtons[handIndex].DoMove(m_MoveButtons[handIndex].basisPosition, Ease.InOutCubic);
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            // すべてのボタンを操作可能にする
+            for (int i = 0; i < maxHandBlocks; ++i) m_MoveButtons[i].Interactate();
         }
     }
 }

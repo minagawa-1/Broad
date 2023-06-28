@@ -56,7 +56,7 @@ public class Hand
         Debug.Assert(!hand.IsProtrude(index), $"配列外参照: hand[{index}] <- Length: {hand.Length}");
 
         // 参照した手札にブロックスがない場合はエラーを吐いて終了
-        Debug.Assert(!(hand[index] == null), $"{index}番目のブロックスが{null}です");
+        Debug.Assert(!(hand[index] == null), $"{index}番目のブロックスがNullです");
 
         // 手札のindex番目を返して手札から削除
         var blocks = hand[index];

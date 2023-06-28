@@ -36,6 +36,8 @@ public class ControlBlock : MonoBehaviour
         Move,
         /// <summary> 振動 </summary>
         Vibrate,
+        /// <summary>他のプレイヤーの設置を待機</summary>
+        WaitOther,
         /// <summary> 設置 </summary>
         Set,
         /// <summary> 回転 </summary>
@@ -77,11 +79,12 @@ public class ControlBlock : MonoBehaviour
         // BlockStateに応じた関数を呼ぶ
         switch (m_BlocksState)
         {
-            case BlocksState.Wait:      WaitState();    break;
-            case BlocksState.Move:      MoveState();    break;
-            case BlocksState.Vibrate:   VibrateState(); break;
-            case BlocksState.Set:       SetState();     break;
-            case BlocksState.Rotate:    RotateState();  break;
+            case BlocksState.Wait:      WaitState();      break;
+            case BlocksState.Move:      MoveState();      break;
+            case BlocksState.Vibrate:   VibrateState();   break;
+            case BlocksState.WaitOther: WaitOtherState(); break;
+            case BlocksState.Set:       SetState();       break;
+            case BlocksState.Rotate:    RotateState();    break;
         }
     }
 
@@ -93,7 +96,7 @@ public class ControlBlock : MonoBehaviour
 
         // コンポーネント取得(GameManagerはプレファブから生成したものなので名前で検索をかける)
         m_NetworkManager    = GameObject.Find(nameof(NetworkManager)).GetComponent<CustomNetworkManager>();
-        m_GameManager       = GameObject.Find("GameManager(Clone)").GetComponent<GameManager>();
+        m_GameManager       = GameObject.Find(nameof(GameManager)).GetComponent<GameManager>();
         m_BlockManager      = GameObject.Find(nameof(BlockManager)).GetComponent<BlockManager>();
         m_DonutChart        = GameObject.Find($"Canvas/{nameof(DonutChart)}").GetComponent<DonutChart>();
 
@@ -117,7 +120,7 @@ public class ControlBlock : MonoBehaviour
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
             if (blocks.IsSetable(GameManager.board, playerIndex))
-                m_BlocksState = BlocksState.Set;
+                m_BlocksState = BlocksState.WaitOther;
 
             // 設置ができない場合は振動
             else
@@ -192,8 +195,8 @@ public class ControlBlock : MonoBehaviour
         }
     }
 
-    /// <summary> 設置状態 </summary>
-    void SetState()
+    /// <summary>他プレイヤー待機状態</summary>
+    void WaitOtherState()
     {
         // 操作不能なら終了
         if (!m_IsOperatable) return;
@@ -201,11 +204,17 @@ public class ControlBlock : MonoBehaviour
         // 操作不能にする
         m_IsOperatable = false;
 
+        WaitOther().Forget();
+    }
+
+    /// <summary> 設置状態 </summary>
+    void SetState()
+    {
         // イージング (終了後、盤面に反映させて終了)
         transform.DOMoveY(0f, m_move_interval).SetEase(Ease.InQuart).OnComplete(() =>
             {
                 // 設置処理
-                Set().Forget();
+                Set();
             });
     }
 
@@ -265,10 +274,9 @@ public class ControlBlock : MonoBehaviour
             });
     }
 
-    /// <summary> 設置処理 </summary>
-    async UniTask Set()
+    /// <summary>プレイヤー全員が設置・設置後の処理が出来るまで待機</summary>
+    async UniTask WaitOther()
     {
-
 //////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 現在のターンでの設置データ
@@ -295,7 +303,8 @@ public class ControlBlock : MonoBehaviour
             await UniTask.WaitUntil(() => m_GameManager.boardsData.Count == NetworkServer.connections.Count);
 
             // RidDuplicateを呼ぶ準備(タプルデータに直す)
-            (int player, bool[,] set)[] setData = new (int player, bool[,] set)[m_GameManager.boardsData.Count];
+            var setData = new (int player, bool[,] set)[NetworkServer.connections.Count];
+
             for (int i = 0; i < setData.Length; ++i)
                 setData[i] = (m_GameManager.boardsData[i].index, m_GameManager.boardsData[i].board.GetBoolBoard());
 
@@ -340,6 +349,13 @@ public class ControlBlock : MonoBehaviour
         // ホストから許可が降りるまで待機
         await UniTask.WaitUntil(() => m_DecisionSetInfo);
 
+        // StateをSetに切り替える
+        m_BlocksState = BlocksState.Set;
+    }
+
+    /// <summary> 設置処理 </summary>
+    void Set()
+    {
         Transform[] children = transform.GetChildren();
 
         // ブロックの半透明化を解除

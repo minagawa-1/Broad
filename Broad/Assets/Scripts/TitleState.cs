@@ -13,8 +13,8 @@ public class TitleState : NetworkDiscovery
 {
     [Chapter("▲NetworkDiscovery")]
     [Header("コンポーネント")]
-    [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] GameSetting m_GameSetting;
+    [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] Text[] m_MatchingTexts;
 
     [Chapter("接続情報")]
@@ -63,8 +63,7 @@ public class TitleState : NetworkDiscovery
         NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
 
         // GameSettingのplayersColorの初期化
-        m_GameSetting.playersColor = new Color[1];
-        m_GameSetting.playersColor[0] = Color.clear;
+        m_GameSetting.playersColor = new Color[0];
 
         m_MatchState = MatchState.None;
 
@@ -74,9 +73,6 @@ public class TitleState : NetworkDiscovery
         {
             // 見つけたサーバーレスポンスを入れる
             m_DiscoverdServer = ServerResponse;
-
-            // Debug.Logで表示
-            Debug.Log("ServerFound");
         });
     }
 
@@ -130,9 +126,6 @@ public class TitleState : NetworkDiscovery
         {
             m_MatchTimer.Reset();
 
-            // プレイヤーカラー設定
-            SetupPlayerColor().Forget();
-
             m_MatchState = MatchState.CompleteMatch;
         }
     }
@@ -163,6 +156,9 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング完了</summary>
     void CompleteMatch()
     {
+        // ホストはプレイヤーカラー設定
+        if (m_GameSetting.playersColor.Length == 0) SetupPlayerColor().Forget();
+
         // シーン遷移処理
         Transition.Instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
     }
@@ -183,7 +179,8 @@ public class TitleState : NetworkDiscovery
     /// <summary>プレイヤーカラーの設定</summary>
     async UniTask SetupPlayerColor()
     {
-        if (NetworkClient.activeHost)
+        // ホストのみ色の設定をする
+        if (NetworkClient.activeHost || NetworkServer.connections.Count < 2)
         {
             float h = Random.value;
             float s = Random.Range(0.2f, 0.5f);
@@ -191,14 +188,15 @@ public class TitleState : NetworkDiscovery
             Color color1P = Color.HSVToRGB(h, s, v);
 
             // 1Pから相対的に離れた色相の色配列を取得
-            GameSetting.instance.playersColor = color1P.GetRelativeColor(NetworkServer.connections.Count);
+            m_GameSetting.playersColor = color1P.GetRelativeColor(NetworkServer.connections.Count);
 
             // ColorDataをクライアント全員に送信
-            ColorData color = new ColorData(GameSetting.instance.playersColor);
+            ColorData color = new ColorData(m_GameSetting.playersColor);
             NetworkServer.SendToAll(color);
         }
 
-        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 1);
+        // 自身のplayersColorに値が入るまで待機
+        await UniTask.WaitUntil(() => m_GameSetting.playersColor.Length > 0);
     }
 
     /// <summary>サーバー検索</summary>
@@ -223,13 +221,15 @@ public class TitleState : NetworkDiscovery
             // (m_ConnectInterval)ms分待機して実行
             await UniTask.DelayFrame(m_ConnectInterval, cancellationToken: token);
 
+            // サーバーレスポンスがあるかDebug.Logで表示
+            if (m_DiscoverdServer.uri != null) Debug.Log("ServerURI : exist");
+            else Debug.Log("ServerURI : not found");
+
             // サーバーを見つけた
             // URIはURL(Web上にあるファイルの住所)と
             // URN(ネットワーク上の存在する文書などのリソースを一意に識別するための識別子)の総称
             if (m_DiscoverdServer.uri != null)
             {
-                Debug.Log("Start Client");
-
                 // クライアントとして開始
                 // 取得したURIを使ってサーバーに接続する
                 m_NetworkManager.StartClient(m_DiscoverdServer.uri);
@@ -239,26 +239,18 @@ public class TitleState : NetworkDiscovery
             }
             else
             {
-                Debug.Log("Try Connect...");
-
                 // カウントを増やす
                 tryCount++;
 
                 // 検索回数が規定値に達したとき
                 if (tryCount > m_ConnectTryCount)
                 {
-                    Debug.Log("Start Host");
-
                     // ホストとして開始
                     m_NetworkManager.StartHost();
 
                     // サーバーの宣言をする
                     // これをしないと、サーバーが見つからない
                     AdvertiseServer();
-
-                    // サーバーレスポンスがあるかDebug.Logで表示
-                    if (m_DiscoverdServer.uri != null) Debug.Log("ServerURI : exist");
-                    else Debug.Log("ServerURI : not found");
                 }
             }
         }
@@ -269,8 +261,6 @@ public class TitleState : NetworkDiscovery
     void ReceivedPlalyerData(PlayerData receivedData)
     {
         m_GameSetting.selfIndex = receivedData.index + 1;
-
-        Debug.Log("Received MyIndex!");
     }
 
     /// <summary>接続データ受信</summary>
@@ -289,7 +279,7 @@ public class TitleState : NetworkDiscovery
     void ReceivedColorData(ColorData receivedData)
     {
         // 受信したデータをplayersColorに入れる
-        GameSetting.instance.playersColor = receivedData.color;
+        m_GameSetting.playersColor = receivedData.color;
     }
 
     /// <summary>キャンセル</summary>
