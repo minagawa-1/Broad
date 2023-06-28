@@ -140,4 +140,6 @@ public class HandUI : MonoBehaviour
             for (int i = 0; i < maxHandBlocks; ++i) m_MoveButtons[i].Interactate();
         }
     }
+
+    Blocks Lottery() => new Blocks(LotteryBlocks.Lottery(), new Vector2Int(5, 5));
 }

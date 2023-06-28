@@ -7,12 +7,15 @@ public class LotteryBlocks
     // 設計用キャンバスの幅
     public const int m_max_width = 25;
 
-    /// <summary>ブロックスの抽選</summary>
+    /// <summary>ブロックスの抽選（引数なしの場合はGameSettingに準拠）</summary>
     /// <param name="blockUnits">ブロック数</param>
     /// <param name="obliqueRate">密集度</param>
     /// <returns>ブロックスの有無を指す配列</returns>
-    public static bool[,] Lottery(int blockUnits, float density = 0.5f)
+    public static bool[,] Lottery(int? blockUnits = null, float? density = null)
     {
+        blockUnits ??= Random.Range(GameSetting.instance.minBlockUnits, GameSetting.instance.maxBlockUnits + 1);
+        float newDensity = density ?? Random.Range(GameSetting.instance.minDensity   , GameSetting.instance.maxDensity);
+
         bool[,] blocks = new bool[m_max_width, m_max_width];
 
         // 中心にブロックを生成
@@ -21,7 +24,7 @@ public class LotteryBlocks
         // ブロック配置の決定処理
         for (int i = 1; i < blockUnits; ++i)
         {
-            Vector2Int pos = GetNeighborPositions(blocks, density).AtRandom();
+            Vector2Int pos = GetNeighborPositions(blocks, newDensity).AtRandom();
             blocks[pos.x, pos.y] = true;
         }
 
