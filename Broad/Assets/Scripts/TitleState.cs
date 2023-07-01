@@ -32,7 +32,7 @@ public class TitleState : NetworkDiscovery
     ServerResponse m_DiscoverdServer;       // 見つけたいサーバー
 
     CancellationTokenSource m_CancelConnectServer;      // 検索時にキャンセルをするためのソース
-    CancellationToken m_CancelConnectToken;       // 検索キャンセルトークン
+    CancellationToken       m_CancelConnectToken;       // 検索キャンセルトークン
 
     [System.Serializable]
     enum MatchState
@@ -133,18 +133,17 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング中止時</summary>
     void CancelMatch()
     {
+        if (!NetworkClient.active) return;
+
         m_StartButtonState.DoCancelMatch(SetPlayerNum);
 
         // サーバー検索を停止
         StopDiscovery();
 
-        // 人数が２人以上の場合
-        if (m_GameSetting.playersColor.Length > 1)
-        {
-            // ホスト・クライアントの停止
-            NetworkManager.singleton.StopHost();
-            NetworkManager.singleton.StopClient();
-        }
+        NetworkManager.singleton.StopHost();
+
+        // 接続していたサーバーのURIを破棄
+        m_DiscoverdServer.uri = null;
 
         // 非同期処理の停止
         // TokenSorceのキャンセルと廃棄をする
@@ -234,6 +233,8 @@ public class TitleState : NetworkDiscovery
                 // 取得したURIを使ってサーバーに接続する
                 m_NetworkManager.StartClient(m_DiscoverdServer.uri);
 
+                Debug.Log("Start Client");
+
                 // サーバー検索を止める
                 StopDiscovery();
             }
@@ -251,35 +252,37 @@ public class TitleState : NetworkDiscovery
                     // サーバーの宣言をする
                     // これをしないと、サーバーが見つからない
                     AdvertiseServer();
+
+                    Debug.Log("Start Host");
                 }
             }
         }
     }
 
-    /// <summary>プレイヤーデータ受信</summary>
-    /// <param name="receivedData">受信データ</param>
-    void ReceivedPlalyerData(PlayerData receivedData)
+    /// <summary>ホストからプレイヤーデータ受信</summary>
+    /// <param name="playerData">プレイヤーデータ</param>
+    void ReceivedPlalyerData(PlayerData playerData)
     {
-        m_GameSetting.selfIndex = receivedData.index + 1;
+        m_GameSetting.selfIndex = playerData.index + 1;
     }
 
-    /// <summary>接続データ受信</summary>
-    /// <param name="recivedData">受信データ</param>
-    void ReceivedConnectionData(ConnectionData receivedData)
+    /// <summary>ホストから接続データ受信</summary>
+    /// <param name="connectionData">接続データ</param>
+    void ReceivedConnectionData(ConnectionData connectionData)
     {
         // タイマーリセット
         m_MatchTimer.Reset();
 
         // playerNumに現在のプレイヤー数を反映
-        SetPlayerNum(receivedData.playerCount);
+        SetPlayerNum(connectionData.playerCount);
     }
 
     /// <summary>カラーデータ受信</summary>
-    /// <param name="receivedData">受信データ</param>
-    void ReceivedColorData(ColorData receivedData)
+    /// <param name="colorData">受信データ</param>
+    void ReceivedColorData(ColorData colorData)
     {
         // 受信したデータをplayersColorに入れる
-        m_GameSetting.playersColor = receivedData.color;
+        m_GameSetting.playersColor = colorData.color;
     }
 
     /// <summary>キャンセル</summary>

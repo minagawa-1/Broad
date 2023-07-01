@@ -64,19 +64,14 @@ public struct Board
         return deserializedBoard;
     }
 
-    /// <summary>二次元のボード情報を取得</summary>
+    /// <summary>二次元のボード情報をbool型に変換したものを取得</summary>
     public bool[,] GetBoolBoard()
     {
         bool[,] deserializedBoard = new bool[width, height];
 
-        for (var i = 0; i < width * height; i++)
-        {
-            int x = i / deserializedBoard.GetLength(1);
-            int y = i % deserializedBoard.GetLength(1);
-
-            if (data[i] == 0) deserializedBoard[x, y] = false;
-            else deserializedBoard[x, y] = true;
-        }
+        for (int y = 0; y < height; ++y)
+            for (int x = 0; x < width; ++x)
+                if (GetBoardData(x, y) == 1) deserializedBoard[x, y] = true;
 
         return deserializedBoard;
     }
@@ -86,7 +81,7 @@ public struct Board
     {
         for (int y = 0; y < height; ++y)
             for (int x = 0; x < width; ++x)
-                data[y * width + x] = deserializedBoard[x, y];
+                data[x * height + y] = deserializedBoard[x, y];
     }
 
     /// <summary>二次元のボード情報を設定</summary>
@@ -94,26 +89,26 @@ public struct Board
     {
         for (int y = 0; y < height; ++y)
             for (int x = 0; x < width; ++x)
-                data[y * width + x] = deserializedBoard[x, y] ? 1 : 0;
+                data[x * height + y] = deserializedBoard[x, y] ? 1 : 0;
     }
 
     /// <summary>座標からボード情報を取得</summary>
     /// <param name="x">x座標</param>
     /// <param name="y">y座標</param>
-    public int GetBoardData(int x, int y) => data[y * width + x];
+    public int GetBoardData(int x, int y) => data[x * height + y];
 
     /// <summary>座標からボード情報を取得</summary>
     /// <param name="position">x座標</param>
-    public int GetBoardData(Vector2Int position) => data[position.y * width + position.x];
+    public int GetBoardData(Vector2Int position) => data[position.x * height + position.y];
 
     /// <summary>座標からボード情報を設定</summary>
     /// <param name="value">ボードの状態値</param>
     /// <param name="x">x座標</param>
     /// <param name="y">y座標</param>
-    public void SetBoardData(int value, int x, int y) => data[y * width + x] = value;
+    public void SetBoardData(int value, int x, int y) => data[x * height + y] = value;
 
     /// <summary>座標からボード情報を取得</summary>
     /// <param name="value">ボードの状態値</param>
     /// <param name="position">x座標</param>
-    public void SetBoardData(int value, Vector2Int position) => data[position.y * width + position.x] = value;
+    public void SetBoardData(int value, Vector2Int position) => data[position.x * height + position.y] = value;
 }

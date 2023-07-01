@@ -65,31 +65,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1516}
+      Script: {instanceID: 1490}
     - Class: 114
-      Script: {instanceID: 1518}
+      Script: {instanceID: 1492}
     - Class: 114
-      Script: {instanceID: 1678}
+      Script: {instanceID: 1628}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2650}
     - Class: 114
-      Script: {instanceID: 4282}
+      Script: {instanceID: 4234}
     - Class: 114
-      Script: {instanceID: 4602}
+      Script: {instanceID: 4554}
     - Class: 114
-      Script: {instanceID: 5074}
+      Script: {instanceID: 5024}
     - Class: 114
-      Script: {instanceID: 5744}
+      Script: {instanceID: 5694}
     - Class: 114
-      Script: {instanceID: 6088}
+      Script: {instanceID: 6038}
     - Class: 114
-      Script: {instanceID: 6644}
+      Script: {instanceID: 6594}
     - Class: 114
-      Script: {instanceID: 7270}
+      Script: {instanceID: 7220}
     - Class: 114
-      Script: {instanceID: 7540}
+      Script: {instanceID: 7490}
     - Class: 114
-      Script: {instanceID: 8574}
+      Script: {instanceID: 8524}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -130,43 +130,43 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1516}
+      Script: {instanceID: 1490}
     - Class: 114
-      Script: {instanceID: 1518}
+      Script: {instanceID: 1492}
     - Class: 114
-      Script: {instanceID: 1638}
+      Script: {instanceID: 1588}
     - Class: 114
-      Script: {instanceID: 1810}
+      Script: {instanceID: 1760}
     - Class: 114
-      Script: {instanceID: 1874}
+      Script: {instanceID: 1824}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2650}
     - Class: 114
-      Script: {instanceID: 3236}
+      Script: {instanceID: 3188}
     - Class: 114
-      Script: {instanceID: 3622}
+      Script: {instanceID: 3574}
     - Class: 114
-      Script: {instanceID: 3680}
+      Script: {instanceID: 3632}
     - Class: 114
-      Script: {instanceID: 4222}
+      Script: {instanceID: 4174}
     - Class: 114
-      Script: {instanceID: 5290}
+      Script: {instanceID: 5240}
     - Class: 114
-      Script: {instanceID: 5744}
+      Script: {instanceID: 5694}
     - Class: 114
-      Script: {instanceID: 5968}
+      Script: {instanceID: 5918}
     - Class: 114
-      Script: {instanceID: 6088}
+      Script: {instanceID: 6038}
     - Class: 114
-      Script: {instanceID: 6100}
+      Script: {instanceID: 6050}
     - Class: 114
-      Script: {instanceID: 6644}
+      Script: {instanceID: 6594}
     - Class: 114
-      Script: {instanceID: 7018}
+      Script: {instanceID: 6968}
     - Class: 114
-      Script: {instanceID: 7746}
+      Script: {instanceID: 7696}
     - Class: 114
-      Script: {instanceID: 8454}
+      Script: {instanceID: 8404}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -230,7 +230,7 @@ ScriptsOnlyBuild:
     className: NetworkDiscoveryHUD
   - hash:
       serializedVersion: 2
-      Hash: 732f32492a24deb921f8bbe380597cc1
+      Hash: 9ba83e8d20ff40257119ee5c1a2173bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -644,7 +644,7 @@ ScriptsOnlyBuild:
     className: Player
   - hash:
       serializedVersion: 2
-      Hash: 4244691b3f36a9b817f549cbabfc08cb
+      Hash: 36bd33a8eec505fd3d8474fcdc531217
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CustomNetworkManager
@@ -758,7 +758,7 @@ ScriptsOnlyBuild:
     className: UnityOnCollisionStay2DMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 8723e681c3792e1bad1283d9911b5f0f
+      Hash: 4b41c5fe8f672be2f1fa0ce87e4ec6c1
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlockManager

@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\Timer.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\BooleanExpansion.cs" />
     <Compile Include="Assets\Scripts\Block\ChangeTransparency.cs" />
+    <Compile Include="Assets\Scripts\Network\SendDatas\SendDuplicateData.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\MethodButton.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTagCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ProgressBar.cs" />

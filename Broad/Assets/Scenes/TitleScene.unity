@@ -912,8 +912,7 @@ MonoBehaviour:
     dynamicAdjustmentTolerance: 1
     deliveryTimeEmaDuration: 2
   timeInterpolationGui: 0
-  playersData: []
-  readyCount: 0
+  playerDataList: []
 --- !u!4 &870132997
 Transform:
   m_ObjectHideFlags: 0
