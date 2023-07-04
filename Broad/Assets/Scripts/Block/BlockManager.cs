@@ -43,9 +43,9 @@ public class BlockManager : MonoBehaviour
     /// <param name="player"> プレイヤー番号 </param>
     /// <param name="shape"> 形状データ</param>
     /// <param name="position"> 座標 </param>
-    public void CreateBlock(int player, bool[,] shape, Vector2Int position)
+    public void CreateBlock(int player, bool[,] shape, Vector2Int position, float density)
     {
-        Blocks blocks = new Blocks(shape, position);
+        Blocks blocks = new Blocks(shape, position, density);
 
         // 親設定
         GameObject parent = new GameObject("ControlBlocks");

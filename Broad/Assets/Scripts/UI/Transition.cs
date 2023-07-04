@@ -8,19 +8,19 @@ using Mirror;
 
 public class Transition : MonoBehaviour
 {
-    public static Transition Instance { get; private set; }
+    public static Transition instance { get; private set; }
 
     public const float basis_fade_time = 0.5f; // フェードの時間
 
     public woskni.Timer fadeTimer;
 
-    private CanvasGroup fadeCanvasGroup; // フェード用のCanvasGroup
+    public CanvasGroup fadeCanvasGroup { get; private set; } // フェード用のCanvasGroup
 
     private void Awake()
     {
         fadeTimer.Setup(basis_fade_time);
 
-        if (Instance == null) Instance = this;
+        if (instance == null) instance = this;
         else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
@@ -45,7 +45,9 @@ public class Transition : MonoBehaviour
 
         Canvas canvas = canvasObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 255;
+
+        // ドロップダウンリストが標準で30000なので、それを上回るsortingOrderを設定
+        canvas.sortingOrder = 30001;
 
         CanvasScaler canvasScaler = canvasObject.AddComponent<CanvasScaler>();
         canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;

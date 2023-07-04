@@ -19,7 +19,7 @@ public class DebugHotKey : EditorWindow
             + "\n[F5]シーン再生・リロード ([ctrl+F5]: シーン停止, [shift+F5]: シーン一時停止"
             + "\n[F6]FPS出力"
             + "\n[F7]"
-            + "\n[F8]"
+            + "\n[F8]セーブデータ出力"
             + "\n[F9]スクリーンショットの撮影";
 
         Debug.Log(help);
@@ -50,6 +50,9 @@ public class DebugHotKey : EditorWindow
     /// <summary>Debug.Log(FPS)</summary>
     [MenuItem("Woskni/Editor/FPS出力 _F6")] 
     public static void LogHPS() { Debug.Log($"FPS: {1f / Time.deltaTime}"); }
+
+    [MenuItem("Woskni/Editor/セーブデータ出力 _F8")]
+    public static void LogSaveData() { SaveSystem.ConfirmData(); }
 
     /// <summary>スクリーンショット撮影</summary>
     [MenuItem("Woskni/Editor/スクリーンショットの撮影 _F9")]

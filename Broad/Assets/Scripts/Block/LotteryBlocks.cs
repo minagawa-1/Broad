@@ -11,7 +11,7 @@ public class LotteryBlocks
     /// <param name="blockUnits">ブロック数</param>
     /// <param name="obliqueRate">密集度</param>
     /// <returns>ブロックスの有無を指す配列</returns>
-    public static bool[,] Lottery(int? blockUnits = null, float? density = null)
+    public static Blocks Lottery(int? blockUnits = null, float? density = null)
     {
         blockUnits ??= Random.Range(GameSetting.instance.minBlockUnits, GameSetting.instance.maxBlockUnits + 1);
         float newDensity = density ?? Random.Range(GameSetting.instance.minDensity   , GameSetting.instance.maxDensity);
@@ -29,7 +29,7 @@ public class LotteryBlocks
         }
 
         // 外側の余分な行列をトリミングしてreturn
-        return TrimmingBlocks.Trimming(blocks, false);
+        return new Blocks(TrimmingBlocks.Trimming(blocks, false), new Vector2Int(-1, -1), newDensity);
     }
 
     /// <summary>配置可能な座標リストの取得</summary>

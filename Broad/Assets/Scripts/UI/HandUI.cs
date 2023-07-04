@@ -39,22 +39,12 @@ public class HandUI : MonoBehaviour
         Blocks[] deck = new Blocks[maxDeckBlocks];
         m_MoveButtons = new MoveButton[maxHandBlocks];
 
-        for (int i = 0; i < maxDeckBlocks; ++i) deck[i] = Lottery();
+        for (int i = 0; i < maxDeckBlocks; ++i) deck[i] = LotteryBlocks.Lottery();
 
         m_Deck = new Deck(deck);
         m_Hand = new Hand(m_Deck, maxHandBlocks);
 
         BuildButton().Forget();
-    }
-
-    Blocks Lottery()
-    {
-        int units = Random.Range(GameSetting.instance.minBlockUnits, GameSetting.instance.maxBlockUnits + 1);
-        float density = Random.Range(GameSetting.instance.minDensity, GameSetting.instance.maxDensity);
-
-        Vector2Int pos = new Vector2Int(5, 5);
-
-        return new Blocks(LotteryBlocks.Lottery(units, density), pos);
     }
 
     async UniTask BuildButton()
@@ -112,7 +102,9 @@ public class HandUI : MonoBehaviour
         Debug.Log("山札の数: " + m_Deck.deck.Count);
         Debug.Log("手札の数: " + m_Hand.hand.Length);
 
-        m_BlockManager.CreateBlock(GameSetting.instance.selfIndex, m_Hand.PlayAt(handIndex).shape, pos);
+        var blocks = m_Hand.PlayAt(handIndex);
+
+        m_BlockManager.CreateBlock(GameSetting.instance.selfIndex, blocks.shape, pos, blocks.density);
 
         // すべてのボタンを操作不能にする
         for(int i = 0; i < maxHandBlocks; ++i) m_MoveButtons[i].Uninteractate();
@@ -140,6 +132,4 @@ public class HandUI : MonoBehaviour
             for (int i = 0; i < maxHandBlocks; ++i) m_MoveButtons[i].Interactate();
         }
     }
-
-    Blocks Lottery() => new Blocks(LotteryBlocks.Lottery(), new Vector2Int(5, 5));
 }
