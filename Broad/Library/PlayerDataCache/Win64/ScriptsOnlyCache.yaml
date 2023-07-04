@@ -65,6 +65,7 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+<<<<<<< HEAD
       Script: {instanceID: 1490}
     - Class: 114
       Script: {instanceID: 1492}
@@ -90,6 +91,33 @@ ScriptsOnlyBuild:
       Script: {instanceID: 7490}
     - Class: 114
       Script: {instanceID: 8524}
+=======
+      Script: {instanceID: 1516}
+    - Class: 114
+      Script: {instanceID: 1518}
+    - Class: 114
+      Script: {instanceID: 1678}
+    - Class: 114
+      Script: {instanceID: 2700}
+    - Class: 114
+      Script: {instanceID: 4282}
+    - Class: 114
+      Script: {instanceID: 4602}
+    - Class: 114
+      Script: {instanceID: 5074}
+    - Class: 114
+      Script: {instanceID: 5744}
+    - Class: 114
+      Script: {instanceID: 6088}
+    - Class: 114
+      Script: {instanceID: 6644}
+    - Class: 114
+      Script: {instanceID: 7270}
+    - Class: 114
+      Script: {instanceID: 7540}
+    - Class: 114
+      Script: {instanceID: 8574}
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -130,6 +158,7 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+<<<<<<< HEAD
       Script: {instanceID: 1490}
     - Class: 114
       Script: {instanceID: 1492}
@@ -167,6 +196,45 @@ ScriptsOnlyBuild:
       Script: {instanceID: 7696}
     - Class: 114
       Script: {instanceID: 8404}
+=======
+      Script: {instanceID: 1516}
+    - Class: 114
+      Script: {instanceID: 1518}
+    - Class: 114
+      Script: {instanceID: 1638}
+    - Class: 114
+      Script: {instanceID: 1810}
+    - Class: 114
+      Script: {instanceID: 1874}
+    - Class: 114
+      Script: {instanceID: 2700}
+    - Class: 114
+      Script: {instanceID: 3236}
+    - Class: 114
+      Script: {instanceID: 3622}
+    - Class: 114
+      Script: {instanceID: 3680}
+    - Class: 114
+      Script: {instanceID: 4222}
+    - Class: 114
+      Script: {instanceID: 5290}
+    - Class: 114
+      Script: {instanceID: 5744}
+    - Class: 114
+      Script: {instanceID: 5968}
+    - Class: 114
+      Script: {instanceID: 6088}
+    - Class: 114
+      Script: {instanceID: 6100}
+    - Class: 114
+      Script: {instanceID: 6644}
+    - Class: 114
+      Script: {instanceID: 7018}
+    - Class: 114
+      Script: {instanceID: 7746}
+    - Class: 114
+      Script: {instanceID: 8454}
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -230,7 +298,11 @@ ScriptsOnlyBuild:
     className: NetworkDiscoveryHUD
   - hash:
       serializedVersion: 2
+<<<<<<< HEAD
       Hash: 9ba83e8d20ff40257119ee5c1a2173bb
+=======
+      Hash: 732f32492a24deb921f8bbe380597cc1
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -644,7 +716,11 @@ ScriptsOnlyBuild:
     className: Player
   - hash:
       serializedVersion: 2
+<<<<<<< HEAD
       Hash: 36bd33a8eec505fd3d8474fcdc531217
+=======
+      Hash: 4244691b3f36a9b817f549cbabfc08cb
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CustomNetworkManager
@@ -758,7 +834,11 @@ ScriptsOnlyBuild:
     className: UnityOnCollisionStay2DMessageListener
   - hash:
       serializedVersion: 2
+<<<<<<< HEAD
       Hash: 4b41c5fe8f672be2f1fa0ce87e4ec6c1
+=======
+      Hash: 8723e681c3792e1bad1283d9911b5f0f
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BlockManager

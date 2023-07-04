@@ -333,7 +333,10 @@
 "Assets/Scripts/Network/SendDatas/SendBoardData.cs"
 "Assets/Scripts/Network/SendDatas/SendColorData.cs"
 "Assets/Scripts/Network/SendDatas/SendConnectionData.cs"
+<<<<<<< HEAD
 "Assets/Scripts/Network/SendDatas/SendDuplicateData.cs"
+=======
+>>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
 "Assets/Scripts/Network/SendDatas/SendPlayerData.cs"
 "Assets/Scripts/Network/SendDatas/SendReadyData.cs"
 "Assets/Scripts/PlayerPrefabsList.cs"
