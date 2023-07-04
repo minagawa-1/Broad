@@ -252,10 +252,12 @@ public class ControlBlock : MonoBehaviour
             int y = (int)(-local.z + blocks.center.y + 0.51f);
 
             var boardPos = blocks.position + new Vector2Int(x, y);
-            string name = "Block[" + boardPos.x + ", " + boardPos.y + "]";
+            string name = $"Block[{boardPos.x}, {boardPos.y}]";
+
+            Debug.Log($"name: {name}");
 
             // 元々その盤面にいたブロックを破棄する
-            GameObject oldBlock = GameObject.Find(name);
+            GameObject oldBlock = GameObject.Find($"BlockManager/Blocks/{name}");
             if (oldBlock) Destroy(oldBlock);
 
             for (int n = 0; n < m_DuplicatePositions.Length; ++n)
@@ -263,13 +265,10 @@ public class ControlBlock : MonoBehaviour
                 Debug.Log("duplicate position : " + m_DuplicatePositions[n]);
 
                 // 競合しているブロックスは設置後に破壊する
-                if (m_DuplicatePositions[n] == new Vector2Int((int)children[i].transform.position.x, (int)-children[i].transform.position.z))
-                {
-                    Debug.Log("child position" + children[i].position);
-
+                if (m_DuplicatePositions[n] == new Vector2Int(boardPos.x, boardPos.y))
                     children[n].transform.DOMoveY(8f, 1f).SetDelay(0.25f).SetEase(Ease.OutCirc)
                         .OnComplete(() => Destroy(children[i].gameObject));
-                }
+
                 // 座標が一致しなかったらイージングはせず破棄
                 else if (n == m_DuplicatePositions.Length - 1) Destroy(children[i].gameObject);
             }
