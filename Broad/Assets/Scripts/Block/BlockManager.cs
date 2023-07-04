@@ -13,7 +13,7 @@ public class BlockManager : MonoBehaviour
     public Material[] m_SetBlockMaterials = null;
 
     // 生成したブロックの親
-    GameObject m_BlockParent = null;
+    public GameObject m_BlockParent = null;
 
     private void Start()
     {

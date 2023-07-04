@@ -333,6 +333,7 @@
 "Assets/Scripts/Network/SendDatas/SendBoardData.cs"
 "Assets/Scripts/Network/SendDatas/SendColorData.cs"
 "Assets/Scripts/Network/SendDatas/SendConnectionData.cs"
+"Assets/Scripts/Network/SendDatas/SendDuplicateData.cs"
 "Assets/Scripts/Network/SendDatas/SendPlayerData.cs"
 "Assets/Scripts/Network/SendDatas/SendReadyData.cs"
 "Assets/Scripts/PlayerPrefabsList.cs"
