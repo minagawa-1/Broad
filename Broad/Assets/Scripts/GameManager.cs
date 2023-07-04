@@ -178,7 +178,7 @@ public partial class GameManager : MonoBehaviour
                 GameObject newSquare = Instantiate(board.GetBoardData(x, y) == 0 ? setablePrefab : unsetablePrefab);
 
                 // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
-                newSquare.gameObject.name = $"Square[{x}, {y}]";
+                newSquare.gameObject.name = "Square[" + x + "," + y + "]";
                 newSquare.transform.parent = board.GetBoardData(x, y) == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position = new Vector3(x, -0.1f, -y);
                 newSquare.transform.position = newSquare.transform.position;
@@ -212,7 +212,7 @@ public partial class GameManager : MonoBehaviour
                 GameObject newBlock = Instantiate(m_BlockPrefab);
 
                 // 名前・親オブジェクト・座標・マテリアルを設定
-                newBlock.gameObject.name = $"Block[{x}, {y}]";
+                newBlock.gameObject.name = "Block[" + x + "," + y + "]";
                 newBlock.transform.parent = m_BlockManager.m_BlockParent.transform;
                 newBlock.transform.position = new Vector3Int(x, 1, -y);
                 newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[index - 1];
