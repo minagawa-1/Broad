@@ -8,76 +8,59 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ButtonBlocksUI : MonoBehaviour
 {
+    [ReadOnly] public int index;
+
     [Name("ブロックスの拡大率")]
     [SerializeField] float m_Scale = 1f;
 
     [Header("コンポーネント")]
     [SerializeField] RectTransform m_ButtonRectTransform;
+    public Text blockIndexText;
+    public Text blockNumText;
 
     [HideInInspector] public RectTransform rectTransform;
-    [HideInInspector] public Image image;
+    [HideInInspector] public RectTransform buttonTransform;
+    [HideInInspector] public Button        button;
+    [HideInInspector] public Image         image;
 
-    Blocks m_Blocks;
+    public Blocks blocks;
 
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        buttonTransform = transform.parent.GetComponent<RectTransform>();
+        button = transform.parent.GetComponent<Button>();
         image = GetComponent<Image>();
     }
+
     public void Setup(Blocks blocks, Sprite blockSprite)
     {
-        m_Blocks = blocks;
+        blockIndexText.text = (index + 1).ToString();
 
-        // 単ブロックの画像サイズ
-        var blockSize = new Vector2Int(blockSprite.texture.width, blockSprite.texture.height);
+        // ブロックスが未設定なら終了
+        if (blocks == null) return;
 
-        // Rawm_Imageに設定する画像
-        var glowTexture = new Texture2D(m_Blocks.width * blockSize.x, m_Blocks.height * blockSize.y);
+        this.blocks = blocks;
 
-        // 背景色は透明にする
-        Color32[] pixels = glowTexture.GetPixels32();
-        for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.clear;
-        glowTexture.SetPixels32(pixels);
+        // "コ"のフォントサイズを取得
+        var fontSize = System.Text.RegularExpressions.Regex.Match(blockNumText.text, @"<size=(\d+)>").Groups[1].Value;
 
-        // フィルターモードの設定
-        glowTexture.filterMode = FilterMode.Point;
+        // ブロック数テキストの設定
+        blockNumText.text = $"{blocks.GetBlockNum()}<size={fontSize}>コ</size>";
 
         // サイズ設定
-        float limitSize = Mathf.Max(3, m_Blocks.width, m_Blocks.height);
+        float limitSize = Mathf.Max(3, this.blocks.width, this.blocks.height);
         float dispBlocksSize = m_ButtonRectTransform.sizeDelta.x / limitSize;
 
-        image.rectTransform.sizeDelta = new Vector2(m_Blocks.width * dispBlocksSize, m_Blocks.height * dispBlocksSize);
+        image.rectTransform.sizeDelta = new Vector2(this.blocks.width * dispBlocksSize, this.blocks.height * dispBlocksSize);
 
+        Texture2D texture = this.blocks.GetBlocksTexture(blockSprite);
 
-        // 位置
-        image.rectTransform.position = m_ButtonRectTransform.rect.center;
-
-        // 画像情報
-        Color[] spritePixels = blockSprite.texture.GetPixels();
-
-
-
-        int cnt = 0;
-
-        for (int y = 0; y < m_Blocks.height; ++y)
-        {
-            for (int x = 0; x < m_Blocks.width; ++x)
-            {
-                if (!m_Blocks.shape[x, y]) continue;
-
-                glowTexture.SetPixels(x * blockSize.x, y * blockSize.y, blockSize.x, blockSize.x, spritePixels);
-
-                if (++cnt > m_Blocks.GetBlockNum()) break;
-            }
-        }
-
-        // 画像情報を決定して格納
-        glowTexture.Apply();
-        image.sprite = Sprite.Create(glowTexture, new Rect(0, 0, glowTexture.width, glowTexture.height), Vector2.zero);
+        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
         // 拡大率と色を設定
         image.rectTransform.localScale = new Vector2(m_Scale, m_Scale);
-        image.color = GameSetting.instance.playersColor[GameSetting.instance.selfIndex];
+        image.color = GameSetting.instance.playersColor[GameSetting.instance.selfIndex - 1];
     }
 
     public void SetupShadow(Vector2 distance, Color? color = null)
@@ -85,7 +68,7 @@ public class ButtonBlocksUI : MonoBehaviour
         Shadow shadow = image.gameObject.GetOrAddComponent<Shadow>();
 
         // 影のオフセット値
-        Vector2 offset = image.rectTransform.sizeDelta / new Vector2(m_Blocks.width, m_Blocks.height);
+        Vector2 offset = image.rectTransform.sizeDelta / new Vector2(blocks.width, blocks.height);
         shadow.effectDistance = new Vector2(offset.x * distance.x, offset.y * distance.y);
 
         // 影の色

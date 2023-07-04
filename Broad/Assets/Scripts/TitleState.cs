@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Mirror;
 using Mirror.Discovery;
 
@@ -16,6 +14,11 @@ public class TitleState : NetworkDiscovery
     [SerializeField] GameSetting m_GameSetting;
     [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] Text[] m_MatchingTexts;
+    [SerializeField] Button m_DeckButton;
+
+    [Header("シーン遷移用に保持するコンポーネント")]
+    [SerializeField] AudioListener m_AudioListener;
+    [SerializeField] UnityEngine.EventSystems.EventSystem m_EventSystem;
 
     [Chapter("接続情報")]
     [Header("間隔(ms)")]
@@ -57,13 +60,20 @@ public class TitleState : NetworkDiscovery
 
     void Awake()
     {
+        SaveSystem.Load();
+
         // 各メッセージデータを受信したら対応した関数を実行するように登録
         NetworkClient.RegisterHandler<PlayerData>(ReceivedPlalyerData);
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
         NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
 
         // GameSettingのplayersColorの初期化
-        m_GameSetting.playersColor = new Color[0];
+        if (m_GameSetting.playersColor.Length == 0 || m_GameSetting.playersColor[0].a == 0f)
+        {
+            m_GameSetting.selfIndex       = 0;
+            m_GameSetting.playersColor    = new Color[1];
+            m_GameSetting.playersColor[0] = SaveSystem.saveData.lastColor;
+        }
 
         m_MatchState = MatchState.None;
 
@@ -81,17 +91,28 @@ public class TitleState : NetworkDiscovery
     {
         switch (m_MatchState)
         {
-            case MatchState.None: None(); break;
-            case MatchState.StartMatch: StartMatch(); break;
-            case MatchState.Matching: Matching(); break;
-            case MatchState.CancelMatch: CancelMatch(); break;
-            case MatchState.CompleteMatch: CompleteMatch(); break;
+            case MatchState.None:           None();          break;
+            case MatchState.StartMatch:     StartMatch();    break;
+            case MatchState.Matching:       Matching();      break;
+            case MatchState.CancelMatch:    CancelMatch();   break;
+            case MatchState.CompleteMatch:  CompleteMatch(); break;
         }
     }
 
     /// <summary>マッチングしていない</summary>
     void None()
     {
+        // Altキー検知
+        if (Keyboard.current.leftAltKey.isPressed || Keyboard.current.rightAltKey.isPressed)
+        {
+            // Alt + R
+            if (Keyboard.current.rKey.wasPressedThisFrame)
+            {
+                // データを初期化してデバッグログに残す
+                SaveSystem.Reset();
+                SaveSystem.ConfirmData();
+            }
+        }
     }
 
     /// <summary>マッチング開始時</summary>
@@ -115,7 +136,8 @@ public class TitleState : NetworkDiscovery
     void Matching()
     {
         // [※デバッグ用] 強制的にゲームスタート
-        if (Input.GetMouseButtonDown(1)) m_MatchState = MatchState.CompleteMatch;
+        if (Gamepad.current.buttonNorth.isPressed || Mouse.current.rightButton.isPressed)
+            m_MatchState = MatchState.CompleteMatch;
 
         // 人数が２人未満の場合はreturn
         if (NetworkServer.connections.Count < 2) return;
@@ -160,7 +182,7 @@ public class TitleState : NetworkDiscovery
         if (m_GameSetting.playersColor.Length == 0) SetupPlayerColor().Forget();
 
         // シーン遷移処理
-        Transition.Instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
+        Transition.instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
     }
 
     /// <summary>プレイヤー人数をGameSettingに反映させる</summary>
@@ -305,5 +327,22 @@ public class TitleState : NetworkDiscovery
 
             default: break;
         }
+    }
+
+    public void OpenDeckScene()
+    {
+        if (m_MatchState >= MatchState.CompleteMatch) return;
+
+        m_EventSystem.enabled = false;
+        m_AudioListener.enabled = false;
+
+        SceneManager.LoadSceneAsync(Scene.DeckScene, LoadSceneMode.Additive);
+    }
+
+    public void OnClosedDeckScene()
+    {
+        m_EventSystem.firstSelectedGameObject = m_DeckButton.gameObject;
+        m_EventSystem.enabled = true;
+        m_AudioListener.enabled = true;
     }
 }

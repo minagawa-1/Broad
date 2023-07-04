@@ -24,7 +24,6 @@ public partial class GameManager : MonoBehaviour
 
     [Header("コンポーネント")]
     [SerializeField] BlockManager m_BlockManager = null;     // ブロックマネージャー
-    [SerializeField] CalcBroad    m_CalcBroad    = null;     // つながっているブロックの数を計算
 
     // ネットワークマネージャー
     CustomNetworkManager m_NetworkManager    = null;
