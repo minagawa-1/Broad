@@ -15,9 +15,11 @@ public class SwitchingUIs : MonoBehaviour
     [Header("動かすためのデッキ・ブロックリストのRectTransform")]
     public RectTransform decksTransform;
     public RectTransform blocksListTransform;
-    [SerializeField] DeckListUI m_DeckListUI;
+    [SerializeField] RectTransform m_LeftDeckGroup;
+    [SerializeField] RectTransform m_RightDeckGroup;
     [SerializeField] Vector2 m_DecksMoveDirection;
     [SerializeField] Vector2 m_BlocksListMoveDirection;
+    [SerializeField] Vector2 m_DecksButtonScaleDirection;
 
     [Header("シーン遷移用に保持するコンポーネント")]
     [SerializeField] AudioListener m_AudioListener;
@@ -74,11 +76,17 @@ public class SwitchingUIs : MonoBehaviour
     {
         decksTransform     .DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         blocksListTransform.DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+
+        m_LeftDeckGroup .DOSizeDelta(-m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        m_RightDeckGroup.DOSizeDelta(-m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
     }
 
     public void DoRight()
     {
         decksTransform     .DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         blocksListTransform.DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+
+        m_LeftDeckGroup .DOSizeDelta(m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        m_RightDeckGroup.DOSizeDelta(m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
     }
 }
