@@ -36,14 +36,14 @@ public partial class GameManager : MonoBehaviour
 
     public List<BoardData> orderBoardDataList;          // ターン内での各プレイヤーの設置申請情報
 
-    public static  Board board;             // 盤面
-    public static  Board oldBoard;          // 前のターンの盤面
+    public static Board board;             // 盤面
+    public static Board oldBoard;          // 前のターンの盤面
 
     public static Vector2Int boardSize;     // 盤面のサイズ
 
     public int readyCount = 0;   // 準備完了したプレイヤーの数
 
-    public bool    isReceived;              // データを受信できたか
+    public bool isReceived;              // データを受信できたか
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public partial class GameManager : MonoBehaviour
     private async UniTaskVoid LayOutBoard()
     {
 
-/////////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////
 
         // ホストのみボード設定をする
         if (NetworkClient.activeHost)
@@ -113,7 +113,7 @@ public partial class GameManager : MonoBehaviour
             NetworkServer.SendToAll(sendData);
         }
 
-///////////////// ▼クライアントの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
+        ///////////////// ▼クライアントの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
 
         // ボードの情報が入るまで待機
         await UniTask.WaitUntil(() => board.data != null);
@@ -130,7 +130,7 @@ public partial class GameManager : MonoBehaviour
         CreateBackGround(m_UnsetbleSquarePrefab, boardSize);
 
         // playersColorの中身が入るまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 0);
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
 
         m_BlockManager.CreateMaterials();
 
@@ -178,7 +178,7 @@ public partial class GameManager : MonoBehaviour
                 GameObject newSquare = Instantiate(board.GetBoardData(x, y) == 0 ? setablePrefab : unsetablePrefab);
 
                 // 新しく生成したオブジェクトの名前・親・座標・スケールを設定する
-                newSquare.gameObject.name = "Square[" + x + "," + y + "]";
+                newSquare.gameObject.name = $"Square[{x}, {y}]";
                 newSquare.transform.parent = board.GetBoardData(x, y) == 0 ? m_SetableParent.transform : m_UnsetableParent.transform;
                 newSquare.transform.position = new Vector3(x, -0.1f, -y);
                 newSquare.transform.position = newSquare.transform.position;
@@ -261,6 +261,7 @@ public partial class GameManager : MonoBehaviour
 
         // 判定後のボードデータを作る
         Board checkedBoard = new Board(boardSize.x ,boardSize.y);
+
         checkedBoard.SetBoard(newBoard);
 
         // プレイヤー全員に判定後のボード情報を送信

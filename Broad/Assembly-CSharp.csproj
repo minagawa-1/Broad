@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTagCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Network\CustomNetworkManager.cs" />
+    <Compile Include="Assets\Scripts\ContrastCamera.cs" />
     <Compile Include="Assets\Scripts\Block\LotteryBlocks.cs" />
     <Compile Include="Assets\Scripts\woskni\math\MathOther.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ChangeActiveSelection.cs" />
@@ -112,7 +113,9 @@
     <Compile Include="Assets\Scripts\UI\SelectCursor.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\DebugHotKey.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumLength.cs" />
+    <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumSceneCreator.cs" />
+    <Compile Include="Assets\Scripts\Network\SendDatas\SendDuplicateData.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\Base64.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\PreviewTexture.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Percentage.cs" />
@@ -144,8 +147,6 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\DeckListUI.cs" />
-    <Compile Include="Assets\Scripts\ContrastCamera.cs" />
-    <Compile Include="Assets\Scripts\SaveSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

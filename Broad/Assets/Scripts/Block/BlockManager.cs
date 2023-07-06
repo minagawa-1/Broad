@@ -24,7 +24,7 @@ public class BlockManager : MonoBehaviour
     public void CreateMaterials()
     {
         // プレイヤーの色を取得
-        Color[] colors = GameSetting.instance.playersColor;
+        Color[] colors = GameSetting.instance.playerColors;
 
         m_ControlBlockMaterials = new Material[colors.Length];
         m_SetBlockMaterials     = new Material[colors.Length];

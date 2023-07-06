@@ -50,9 +50,9 @@ public class HandUI : MonoBehaviour
     async UniTask BuildButton()
     {
         // playersColorの中身が入るまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 0);
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
 
-        Color playerColor = GameSetting.instance.playersColor[GameSetting.instance.selfIndex - 1];
+        Color playerColor = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
 
         for (int i = 0; i < maxHandBlocks; ++i)
         {

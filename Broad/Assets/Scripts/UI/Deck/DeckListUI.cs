@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class DeckListUI : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class DeckListUI : MonoBehaviour
     [SerializeField] VerticalLayoutGroup m_ContentLeft;
     [SerializeField] VerticalLayoutGroup m_ContentRight;
     [SerializeField] Button              m_ReturnButton;
+    [SerializeField] SwitchingUIs        m_SwitchingUIs;
 
     [HideInInspector] public ButtonBlocksUI[] deckUIs;
 
@@ -41,7 +44,6 @@ public class DeckListUI : MonoBehaviour
     void AddContent(int index)
     {
         var blocksUI = Instantiate(m_ButtonPrefab).GetComponentInChildren<ButtonBlocksUI>();
-        blocksUI.index = index;
         blocksUI.transform.parent.name = $"Blocks[{index}]";
 
         bool isLeft = (float)index / GameSetting.deck_blocks < 0.5f;
@@ -68,17 +70,45 @@ public class DeckListUI : MonoBehaviour
     /// <param name="index">押されたボタンの番号</param>
     public void OnDecisionBlocks(int index)
     {
+        // イージング処理中はreturn
+        if (DOTween.IsTweening(m_SwitchingUIs.decksTransform)) return;
+
+        // ブロックスの番号を取得して格納
         selectBlocksIndex = index;
 
-        Debug.Log($"Selection: Blocks[{index + 1}]");
+        m_SwitchingUIs.DoRight();
 
-        EventSystem.current.SetSelectedGameObject(deckUIs[m_BlocksListUI.editingDeckIndex].button.gameObject);
+        SetBlocks(m_BlocksListUI.editingDeckIndex, selectBlocksIndex);
 
         SaveSystem.Save();
     }
 
+    void SetBlocks(int deckIndex, int blocksIndex)
+    {
+        // 設定するブロックス情報
+        var blocks = m_BlocksListUI.blocksList[blocksIndex].blocks;
+
+        // デッキ内の同じ番号のブロックスを列挙
+        var duplicates = deckUIs.Where(ui => ui.blocks.index == blocks.index).ToArray();
+
+        Debug.Log(duplicates.Length);
+
+        // 入れ替え (もともとデッキに入っていたブロックスと入れ替え)
+        for(int i = 0; i < duplicates.Length; ++i)
+        {
+            Debug.Log(duplicates[i].blocks.index);
+
+            duplicates[i].Setup(deckUIs[deckIndex].blocks, m_BlockSprite);
+            duplicates[i].SetupShadow(m_ShadowDistance);
+        }
+
+        deckUIs[deckIndex].Setup(blocks, m_BlockSprite);
+        deckUIs[deckIndex].SetupShadow(m_ShadowDistance);
+
+        EventSystem.current.SetSelectedGameObject(deckUIs[deckIndex].button.gameObject);
+    }
+
     /// <summary>現在、どのブロックスを選択しているか</summary>
-    /// <returns></returns>
     public ButtonBlocksUI GetSelection()
     {
         if (EventSystem.current == null) return null;

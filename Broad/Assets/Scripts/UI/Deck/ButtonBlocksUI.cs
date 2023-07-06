@@ -8,8 +8,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ButtonBlocksUI : MonoBehaviour
 {
-    [ReadOnly] public int index;
-
     [Name("ブロックスの拡大率")]
     [SerializeField] float m_Scale = 1f;
 
@@ -35,10 +33,11 @@ public class ButtonBlocksUI : MonoBehaviour
 
     public void Setup(Blocks blocks, Sprite blockSprite)
     {
-        blockIndexText.text = (index + 1).ToString();
+        blockIndexText.text = (blocks.index + 1).ToString();
 
         // ブロックスが未設定なら終了
         if (blocks == null) return;
+        if (blocks.shape.Length == 0) return;
 
         this.blocks = blocks;
 
@@ -60,7 +59,7 @@ public class ButtonBlocksUI : MonoBehaviour
 
         // 拡大率と色を設定
         image.rectTransform.localScale = new Vector2(m_Scale, m_Scale);
-        image.color = GameSetting.instance.playersColor[GameSetting.instance.selfIndex - 1];
+        image.color = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
     }
 
     public void SetupShadow(Vector2 distance, Color? color = null)

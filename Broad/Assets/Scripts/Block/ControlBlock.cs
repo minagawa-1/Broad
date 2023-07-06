@@ -111,7 +111,7 @@ public class ControlBlock : MonoBehaviour
     async UniTask Setup()
     {
         // playersColorが設定されるまで待つ
-        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 0);
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
 
         // コンポーネント取得
         m_NetworkManager    = GameObject.Find(nameof(NetworkManager)).GetComponent<CustomNetworkManager>();
@@ -236,7 +236,7 @@ public class ControlBlock : MonoBehaviour
     /// <summary> 設置状態 </summary>
     void SetState()
     {
-        if(m_IsSet) Set(this.GetCancellationTokenOnDestroy()).Preserve();
+        if (m_IsSet) Set(this.GetCancellationTokenOnDestroy()).Preserve();
     }
 
     void DiscardState()
@@ -255,7 +255,7 @@ public class ControlBlock : MonoBehaviour
             string name = "Block[" + boardPos.x + ", " + boardPos.y + "]";
 
             // 元々その盤面にいたブロックを破棄する
-            GameObject oldBlock = GameObject.Find(name);
+            GameObject oldBlock = GameObject.Find($"BlockManager/Blocks/{name}");
             if (oldBlock) Destroy(oldBlock);
 
             for (int n = 0; n < m_DuplicatePositions.Length; ++n)

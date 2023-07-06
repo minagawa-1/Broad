@@ -15,24 +15,24 @@ public partial class BlocksListUI : MonoBehaviour
     [Header("影の距離")]
     [SerializeField] Vector2 m_ShadowDistance;
 
-    [Header("ゲームパッドでのスクロール倍率")]
-    [SerializeField, Range(0f, 1f)] float m_GamePadScrollRate = 0.1f;
+    [Header("ゲームパッドでのスクロール速度")]
+    [SerializeField] float m_GamePadScrollRate = 1.5f;
     [SerializeField] float m_ScrollFollowTime = 0.2f;
 
     [Space(20)]
     [Header("コンポーネント・プレファブ")]
-    [SerializeField] GameObject m_ButtonPrefab;
-    [SerializeField] DeckListUI m_DeckListUI;
+    [SerializeField] GameObject      m_ButtonPrefab;
+    [SerializeField] DeckListUI      m_DeckListUI;
     [SerializeField] GridLayoutGroup m_Content;
-    [SerializeField] Scrollbar m_Scrollbar;
-    [SerializeField] ScrollRect m_ScrollRect;
+    [SerializeField] Scrollbar       m_Scrollbar;
+    [SerializeField] ScrollRect      m_ScrollRect;
+    [SerializeField] SwitchingUIs    m_SwitchingUIs;
 
     [HideInInspector] public List<ButtonBlocksUI> blocksList;
 
     [ReadOnly] public int editingDeckIndex = 0;
 
     RectTransform m_ScrollRectTransform;
-    RectTransform m_ContentRectTransform;
 
     ButtonBlocksUI lastSelectedButton;
 
@@ -41,7 +41,6 @@ public partial class BlocksListUI : MonoBehaviour
     {
         blocksList = new List<ButtonBlocksUI>();
         m_ScrollRectTransform = m_ScrollRect.GetComponent<RectTransform>();
-        m_ContentRectTransform = m_Content.GetComponent<RectTransform>();
 
         // ボタンの配置
         for (int i = 0; i < SaveSystem.saveData.blocksList.Count; ++i) blocksList.Add(AddContent());
@@ -55,12 +54,13 @@ public partial class BlocksListUI : MonoBehaviour
         var selection = GetSelection();
 
         if (selection == null) return;
+        if (Gamepad.current == null) return;
 
         float y = Gamepad.current.rightStick.ReadValue().y;
 
-        // スクロール処理
-        if (y < 0f) m_ScrollRect.verticalNormalizedPosition = Mathf.Lerp(m_ScrollRect.verticalNormalizedPosition, y, m_GamePadScrollRate * 0.01f);
-        if (y > 0f) m_ScrollRect.verticalNormalizedPosition = Mathf.Lerp(m_ScrollRect.verticalNormalizedPosition, y + 1f, m_GamePadScrollRate * 0.01f);
+        // スクロール処理 (デッドゾーン: 0.05)
+        if (y < -0.05f) m_ScrollRect.verticalNormalizedPosition = Mathf.Lerp(m_ScrollRect.verticalNormalizedPosition, y, m_GamePadScrollRate * Time.deltaTime);
+        if (y >  0.05f) m_ScrollRect.verticalNormalizedPosition = Mathf.Lerp(m_ScrollRect.verticalNormalizedPosition, y + 1f, m_GamePadScrollRate * Time.deltaTime);
 
         // FollowRectのDOTween処理中はreturnして終了
         if (DOTween.IsTweening(m_Content)) return;
@@ -81,10 +81,13 @@ public partial class BlocksListUI : MonoBehaviour
         int index = blocksList.Count;
 
         var blocksUI = Instantiate(m_ButtonPrefab).GetComponentInChildren<ButtonBlocksUI>();
-        blocksUI.index = index;
         blocksUI.transform.parent.name = $"Blocks[{index}]";
         blocksUI.transform.parent.SetParent(m_Content.transform);
 
+        // 位置を上方向に調整
+        blocksUI.rectTransform.anchoredPosition = new Vector2(0f, 10f);
+
+        // セーブデータからブロックスを取得
         Blocks blocks = SaveSystem.saveData.blocksList[index];
         if (blocks != null)
         {
@@ -92,9 +95,10 @@ public partial class BlocksListUI : MonoBehaviour
             blocksUI.SetupShadow(m_ShadowDistance);
         }
 
+        // ボタンを押したときブロックスの決定をさせる
         blocksUI.button.onClick.AddListener(() => m_DeckListUI.OnDecisionBlocks(index));
 
-        blocksUI.rectTransform.anchoredPosition = new Vector2(0f, 10f);
+        
 
         return blocksUI;
     }
@@ -165,11 +169,14 @@ public partial class BlocksListUI : MonoBehaviour
     /// <param name="index">押されたボタンの番号</param>
     public void OnSelectDeck(int index)
     {
+        // イージング処理中はreturn
+        if (DOTween.IsTweening(m_SwitchingUIs.blocksListTransform)) return;
+
         editingDeckIndex = index;
 
-        Debug.Log($"Selection: Deck[{index + 1}]");
+        m_SwitchingUIs.DoLeft();
 
-        var obj = blocksList.Find(b => b.index == m_DeckListUI.selectBlocksIndex).button.gameObject;
+        var obj = blocksList[m_DeckListUI.selectBlocksIndex].button.gameObject;
         EventSystem.current.SetSelectedGameObject(obj);
     }
 
