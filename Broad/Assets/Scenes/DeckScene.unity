@@ -1379,16 +1379,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d53ba0435134743bee54bb88d1f479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CreateNum: 32
   m_BlockSprite: {fileID: 21300000, guid: 02b7794073a5b4c4c801a0752738c7e9, type: 3}
   m_ShadowDistance: {x: 0.125, y: -0.125}
-  m_GamePadScrollRate: 0.1
+  m_GamePadScrollRate: 1.5
   m_ScrollFollowTime: 0.2
   m_ButtonPrefab: {fileID: 684440388027911157, guid: fa768c179c62aab4ca330eff985ce80d, type: 3}
   m_DeckListUI: {fileID: 2018427306}
   m_Content: {fileID: 984388857}
   m_Scrollbar: {fileID: 1362830952}
   m_ScrollRect: {fileID: 611881665}
+  m_SwitchingUIs: {fileID: 760394710}
   blocksList: []
   editingDeckIndex: 0
   m_Dropdown: {fileID: 251741861}
@@ -1738,6 +1738,10 @@ MonoBehaviour:
   m_SwitchTime: 0.33
   m_OpenEase: 12
   m_CloseEase: 11
+  decksTransform: {fileID: 2018427302}
+  blocksListTransform: {fileID: 907641348}
+  m_DecksMoveDirection: {x: 500, y: 0}
+  m_BlocksListMoveDirection: {x: 500, y: 0}
   m_AudioListener: {fileID: 1728687950}
   m_EventSystem: {fileID: 471990892}
 --- !u!1 &840411968
@@ -1965,7 +1969,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -60, y: 370}
-  m_SizeDelta: {x: 1245, y: 820}
+  m_SizeDelta: {x: 720, y: 820}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &907641349
 MonoBehaviour:
@@ -3367,7 +3371,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 60, y: -60}
-  m_SizeDelta: {x: 500, y: -240}
+  m_SizeDelta: {x: 1000, y: -240}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2018427304
 MonoBehaviour:
@@ -3426,5 +3430,6 @@ MonoBehaviour:
   m_ContentLeft: {fileID: 1280934917}
   m_ContentRight: {fileID: 16510283}
   m_ReturnButton: {fileID: 1991248425}
-  blocksList: []
+  m_SwitchingUIs: {fileID: 760394710}
+  deckUIs: []
   selectBlocksIndex: 0

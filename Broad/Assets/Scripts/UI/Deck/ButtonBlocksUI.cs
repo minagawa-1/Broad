@@ -8,8 +8,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class ButtonBlocksUI : MonoBehaviour
 {
-    [ReadOnly] public int index;
-
     [Name("ブロックスの拡大率")]
     [SerializeField] float m_Scale = 1f;
 
@@ -35,10 +33,11 @@ public class ButtonBlocksUI : MonoBehaviour
 
     public void Setup(Blocks blocks, Sprite blockSprite)
     {
-        blockIndexText.text = (index + 1).ToString();
+        blockIndexText.text = (blocks.index + 1).ToString();
 
         // ブロックスが未設定なら終了
         if (blocks == null) return;
+        if (blocks.shape.Length == 0) return;
 
         this.blocks = blocks;
 

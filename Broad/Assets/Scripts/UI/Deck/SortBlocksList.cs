@@ -35,11 +35,17 @@ public partial class BlocksListUI
         // 降順設定の場合は並びを反転させる
         blocksList.Reverse();
 
-        // 選択位置も反転する
-        // m_DeckListUI.selectBlocksIndex = blocksList.Count - m_DeckListUI.selectBlocksIndex;
-
         // リストの順番に合わせて並べ替える
-        for (int i = 0; i < blocksList.Count; ++i) blocksList[i].transform.parent.SetSiblingIndex(i);
+        for (int i = 0; i < blocksList.Count; ++i)
+        {
+            blocksList[i].transform.parent.SetSiblingIndex(i);
+
+            int index = i;
+
+            // クリック時コールバックのインデックスを再設定
+            blocksList[i].button.onClick.RemoveAllListeners();
+            blocksList[i].button.onClick.AddListener(() => m_DeckListUI.OnDecisionBlocks(index));
+        }
 
         // カーソル移動先の再設定
         SetupNavigation();
@@ -63,15 +69,24 @@ public partial class BlocksListUI
         if (!asc) blocksList.Reverse();
 
         // リストの順番に合わせて並べ替える
-        for (int i = 0; i < blocksList.Count; ++i) blocksList[i].transform.parent.SetSiblingIndex(i);
+        for (int i = 0; i < blocksList.Count; ++i)
+        {
+            blocksList[i].transform.parent.SetSiblingIndex(i);
 
-        // カーソル移動先の再設定
-        SetupNavigation();
+            int index = i;
+
+            // クリック時コールバックのインデックスを再設定
+            blocksList[i].button.onClick.RemoveAllListeners();
+            blocksList[i].button.onClick.AddListener(() => m_DeckListUI.OnDecisionBlocks(index));
+        }
+
+            // カーソル移動先の再設定
+            SetupNavigation();
     }
 
     /// <summary>番号 順にソート</summary>
     /// <param name="asc">昇順か否か</param>
-    public void SortIndex() => blocksList.Sort((a, b) => a.index - b.index);
+    public void SortIndex() => blocksList.Sort((a, b) => a.blocks.index - b.blocks.index);
 
     /// <summary>ブロック数 順にソート</summary>
     /// <param name="asc">昇順か否か</param>

@@ -12,6 +12,13 @@ public class SwitchingUIs : MonoBehaviour
     [SerializeField] Ease m_OpenEase;
     [SerializeField] Ease m_CloseEase;
 
+    [Header("動かすためのデッキ・ブロックリストのRectTransform")]
+    public RectTransform decksTransform;
+    public RectTransform blocksListTransform;
+    [SerializeField] DeckListUI m_DeckListUI;
+    [SerializeField] Vector2 m_DecksMoveDirection;
+    [SerializeField] Vector2 m_BlocksListMoveDirection;
+
     [Header("シーン遷移用に保持するコンポーネント")]
     [SerializeField] AudioListener m_AudioListener;
     [SerializeField] UnityEngine.EventSystems.EventSystem m_EventSystem;
@@ -61,5 +68,17 @@ public class SwitchingUIs : MonoBehaviour
 
                 SceneManager.UnloadSceneAsync(Scene.DeckScene);
             });
+    }
+
+    public void DoLeft()
+    {
+        decksTransform     .DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        blocksListTransform.DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+    }
+
+    public void DoRight()
+    {
+        decksTransform     .DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        blocksListTransform.DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
     }
 }
