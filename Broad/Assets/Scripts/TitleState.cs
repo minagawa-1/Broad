@@ -292,7 +292,7 @@ public class TitleState : NetworkDiscovery
     /// <param name="playerData">プレイヤーデータ</param>
     void ReceivedPlalyerData(PlayerData playerData)
     {
-        m_GameSetting.selfIndex = receivedData.index;
+        m_GameSetting.selfIndex = playerData.index;
     }
 
     /// <summary>ホストから接続データ受信</summary>
@@ -311,7 +311,7 @@ public class TitleState : NetworkDiscovery
     void ReceivedColorData(ColorData colorData)
     {
         // 受信したデータをplayersColorに入れる
-        m_GameSetting.playerColors = receivedData.color;
+        m_GameSetting.playerColors = colorData.color;
     }
 
     /// <summary>キャンセル</summary>

@@ -105,7 +105,7 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
--define:ENABLE_LEGACY_INPUT_MANAGER
+-define:ENABLE_INPUT_SYSTEM
 -define:MIRROR
 -define:MIRROR_57_0_OR_NEWER
 -define:MIRROR_58_0_OR_NEWER
@@ -335,6 +335,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UniTask.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"
@@ -360,6 +361,7 @@
 "Assets/Scripts/Block/Hand.cs"
 "Assets/Scripts/Block/LotteryBlocks.cs"
 "Assets/Scripts/Board/Board.cs"
+"Assets/Scripts/ContrastCamera.cs"
 "Assets/Scripts/DFR.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/GameSetting.cs"
@@ -369,13 +371,11 @@
 "Assets/Scripts/Network/SendDatas/SendBoardData.cs"
 "Assets/Scripts/Network/SendDatas/SendColorData.cs"
 "Assets/Scripts/Network/SendDatas/SendConnectionData.cs"
-<<<<<<< HEAD
 "Assets/Scripts/Network/SendDatas/SendDuplicateData.cs"
-=======
->>>>>>> parent of 89927bcc (デッキ構築シーンの更新)
 "Assets/Scripts/Network/SendDatas/SendPlayerData.cs"
 "Assets/Scripts/Network/SendDatas/SendReadyData.cs"
 "Assets/Scripts/PlayerPrefabsList.cs"
+"Assets/Scripts/SaveSystem.cs"
 "Assets/Scripts/Test.cs"
 "Assets/Scripts/TitleState.cs"
 "Assets/Scripts/UI/BlinkGraphic.cs"
@@ -383,12 +383,15 @@
 "Assets/Scripts/UI/CalcBroad.cs"
 "Assets/Scripts/UI/Deck/BlocksListUI.cs"
 "Assets/Scripts/UI/Deck/ButtonBlocksUI.cs"
+"Assets/Scripts/UI/Deck/DeckListUI.cs"
 "Assets/Scripts/UI/Deck/SortBlocksList.cs"
+"Assets/Scripts/UI/Deck/SwitchingUIs.cs"
 "Assets/Scripts/UI/DonutChart.cs"
 "Assets/Scripts/UI/DonutChip.cs"
 "Assets/Scripts/UI/ExtendButton.cs"
 "Assets/Scripts/UI/HandUI.cs"
 "Assets/Scripts/UI/MoveButton.cs"
+"Assets/Scripts/UI/SelectCursor.cs"
 "Assets/Scripts/UI/StartButtonState.cs"
 "Assets/Scripts/UI/SynchronizeAlpha.cs"
 "Assets/Scripts/UI/Transition.cs"
@@ -414,6 +417,7 @@
 "Assets/Scripts/woskni/expantion/expantionMethod/ListExpansion.cs"
 "Assets/Scripts/woskni/expantion/expantionMethod/LongExpansion.cs"
 "Assets/Scripts/woskni/expantion/expantionMethod/StringExpansion.cs"
+"Assets/Scripts/woskni/expantion/expantionMethod/TextExpansion.cs"
 "Assets/Scripts/woskni/expantion/expantionMethod/TranformExpansion.cs"
 "Assets/Scripts/woskni/expantion/expantionMethod/VectorExpansion.cs"
 "Assets/Scripts/woskni/expantion/RenderingMode.cs"
