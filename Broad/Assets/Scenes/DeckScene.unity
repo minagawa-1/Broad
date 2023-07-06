@@ -157,7 +157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.75, y: 0}
   m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 0}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &16510283
 MonoBehaviour:
@@ -1740,8 +1740,11 @@ MonoBehaviour:
   m_CloseEase: 11
   decksTransform: {fileID: 2018427302}
   blocksListTransform: {fileID: 907641348}
+  m_LeftDeckGroup: {fileID: 1280934916}
+  m_RightDeckGroup: {fileID: 16510282}
   m_DecksMoveDirection: {x: 500, y: 0}
   m_BlocksListMoveDirection: {x: 500, y: 0}
+  m_DecksButtonScaleDirection: {x: 250, y: 0}
   m_AudioListener: {fileID: 1728687950}
   m_EventSystem: {fileID: 471990892}
 --- !u!1 &840411968
@@ -2444,7 +2447,7 @@ RectTransform:
   m_AnchorMin: {x: 0.25, y: 0}
   m_AnchorMax: {x: 0.25, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 0}
+  m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1280934917
 MonoBehaviour:
