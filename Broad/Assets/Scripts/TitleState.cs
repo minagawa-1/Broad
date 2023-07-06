@@ -67,12 +67,12 @@ public class TitleState : NetworkDiscovery
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
         NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
 
-        // GameSettingのplayersColorの初期化
-        if (m_GameSetting.playersColor.Length == 0 || m_GameSetting.playersColor[0].a == 0f)
+        // GameSettingの初期化
+        if (m_GameSetting.playerColors.Length == 0 || m_GameSetting.playerColors[0].a == 0f)
         {
             m_GameSetting.selfIndex       = 0;
-            m_GameSetting.playersColor    = new Color[1];
-            m_GameSetting.playersColor[0] = SaveSystem.saveData.lastColor;
+            m_GameSetting.playerColors = new Color[1];
+            m_GameSetting.playerColors[0] = SaveSystem.saveData.lastColor;
         }
 
         m_MatchState = MatchState.None;
@@ -89,6 +89,8 @@ public class TitleState : NetworkDiscovery
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(m_MatchState);
+
         switch (m_MatchState)
         {
             case MatchState.None:           None();          break;
@@ -126,7 +128,7 @@ public class TitleState : NetworkDiscovery
 
         // サーバー検索
         // UniTaskの非同期処理はForget()を付けて呼ぶ
-        // キャンセル用トークンを渡す事で、awaitをする非同期処理でCancel()の実行タイミングで処理の中断が可能
+        // キャンセル用トークンを渡す事で、awaitをしているタイミングでCancel()をすると処理の中断が可能
         TryConnect(m_CancelConnectToken).Forget();
 
         m_MatchState = MatchState.Matching;
@@ -135,9 +137,10 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング中</summary>
     void Matching()
     {
+        if (Gamepad.current != null && Gamepad.current.buttonNorth.isPressed) m_MatchState = MatchState.CompleteMatch;
+
         // [※デバッグ用] 強制的にゲームスタート
-        if (Gamepad.current.buttonNorth.isPressed || Mouse.current.rightButton.isPressed)
-            m_MatchState = MatchState.CompleteMatch;
+        if (Mouse.current != null && Mouse.current.rightButton.isPressed) m_MatchState = MatchState.CompleteMatch;
 
         // 人数が２人未満の場合はreturn
         if (NetworkServer.connections.Count < 2) return;
@@ -155,18 +158,19 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング中止時</summary>
     void CancelMatch()
     {
+        if (!NetworkClient.active) return;
+
+        Debug.Log("Matching Cancel!");
+
         m_StartButtonState.DoCancelMatch(SetPlayerNum);
 
         // サーバー検索を停止
         StopDiscovery();
 
-        // 人数が２人以上の場合
-        if (m_GameSetting.playersColor.Length > 1)
-        {
-            // ホスト・クライアントの停止
-            NetworkManager.singleton.StopHost();
-            NetworkManager.singleton.StopClient();
-        }
+        NetworkManager.singleton.StopHost();
+
+        // 接続していたサーバーのURIを破棄
+        m_DiscoverdServer.uri = null;
 
         // 非同期処理の停止
         // TokenSorceのキャンセルと廃棄をする
@@ -179,7 +183,7 @@ public class TitleState : NetworkDiscovery
     void CompleteMatch()
     {
         // ホストはプレイヤーカラー設定
-        if (m_GameSetting.playersColor.Length == 0) SetupPlayerColor().Forget();
+        if (m_GameSetting.playerColors.Length == 0) SetupPlayerColor().Forget();
 
         // シーン遷移処理
         Transition.instance.LoadScene(Scene.GameMainScene, m_NetworkManager);
@@ -210,15 +214,15 @@ public class TitleState : NetworkDiscovery
             Color color1P = Color.HSVToRGB(h, s, v);
 
             // 1Pから相対的に離れた色相の色配列を取得
-            m_GameSetting.playersColor = color1P.GetRelativeColor(NetworkServer.connections.Count);
+            m_GameSetting.playerColors = color1P.GetRelativeColor(NetworkServer.connections.Count);
 
             // ColorDataをクライアント全員に送信
-            ColorData color = new ColorData(m_GameSetting.playersColor);
+            ColorData color = new ColorData(m_GameSetting.playerColors);
             NetworkServer.SendToAll(color);
         }
 
         // 自身のplayersColorに値が入るまで待機
-        await UniTask.WaitUntil(() => m_GameSetting.playersColor.Length > 0);
+        await UniTask.WaitUntil(() => m_GameSetting.playerColors.Length > 0);
     }
 
     /// <summary>サーバー検索</summary>
@@ -258,6 +262,8 @@ public class TitleState : NetworkDiscovery
 
                 // サーバー検索を止める
                 StopDiscovery();
+
+                Debug.Log("Start Client");
             }
             else
             {
@@ -273,6 +279,8 @@ public class TitleState : NetworkDiscovery
                     // サーバーの宣言をする
                     // これをしないと、サーバーが見つからない
                     AdvertiseServer();
+
+                    Debug.Log("Start Host");
                 }
             }
         }
@@ -282,7 +290,7 @@ public class TitleState : NetworkDiscovery
     /// <param name="receivedData">受信データ</param>
     void ReceivedPlalyerData(PlayerData receivedData)
     {
-        m_GameSetting.selfIndex = receivedData.index + 1;
+        m_GameSetting.selfIndex = receivedData.index;
     }
 
     /// <summary>接続データ受信</summary>
@@ -301,7 +309,7 @@ public class TitleState : NetworkDiscovery
     void ReceivedColorData(ColorData receivedData)
     {
         // 受信したデータをplayersColorに入れる
-        m_GameSetting.playersColor = receivedData.color;
+        m_GameSetting.playerColors = receivedData.color;
     }
 
     /// <summary>キャンセル</summary>

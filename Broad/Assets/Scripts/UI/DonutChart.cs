@@ -39,13 +39,13 @@ public class DonutChart : MonoBehaviour
     async UniTask Initialize()
     {
         // playersColorの中身が入るまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.playersColor.Length > 0);
+        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
 
         int[] result = CalcBroad.Calc();
 
-        for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
+        for (int i = 0; i < GameSetting.instance.playerColors.Length; ++i)
         {
-            Add(i, result[i], color: GameSetting.instance.playersColor[i]);
+            Add(i, result[i], color: GameSetting.instance.playerColors[i]);
         }
 
         float basisAngle = Random.Range(0f, 360f);

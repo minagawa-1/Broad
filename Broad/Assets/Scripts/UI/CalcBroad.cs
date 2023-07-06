@@ -50,9 +50,9 @@ public class CalcBroad : MonoBehaviour
 
     public static int[] Calc()
     {
-        int[] counts = new int[GameSetting.instance.playersColor.Length];
+        int[] counts = new int[GameSetting.instance.playerColors.Length];
 
-        for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
+        for (int i = 0; i < GameSetting.instance.playerColors.Length; ++i)
             counts[i] = GetLargestArea(GameManager.board, i + 1);
 
         return counts;

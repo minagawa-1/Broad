@@ -55,6 +55,7 @@ public partial class BlocksListUI : MonoBehaviour
         var selection = GetSelection();
 
         if (selection == null) return;
+        if (Gamepad.current == null) return;
 
         float y = Gamepad.current.rightStick.ReadValue().y;
 

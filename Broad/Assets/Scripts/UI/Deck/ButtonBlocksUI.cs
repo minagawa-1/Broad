@@ -60,7 +60,7 @@ public class ButtonBlocksUI : MonoBehaviour
 
         // 拡大率と色を設定
         image.rectTransform.localScale = new Vector2(m_Scale, m_Scale);
-        image.color = GameSetting.instance.playersColor[GameSetting.instance.selfIndex - 1];
+        image.color = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
     }
 
     public void SetupShadow(Vector2 distance, Color? color = null)
