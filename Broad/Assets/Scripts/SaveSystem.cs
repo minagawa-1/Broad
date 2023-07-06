@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -90,16 +91,21 @@ public class SaveSystem
         saveData = new SaveData();
         saveData.blocksList.Clear();
 
-        int blocksNum = UnityEngine.Random.Range(4, 15);
-        for(int i = 0; i < blocksNum; ++i) saveData.blocksList.Add(LotteryBlocks.Lottery());
-
-        saveData.deck = new Blocks[GameSetting.deck_blocks];
-
-        for (int i = 0; i < GameSetting.deck_blocks; ++i)
+        int blocksNum = UnityEngine.Random.Range(17, 35);
+        for (int i = 0; i < blocksNum; ++i)
         {
-            saveData.deck[i] = i < blocksNum ? saveData.blocksList[i] : null;
+            saveData.blocksList.Add(LotteryBlocks.Lottery());
+            saveData.blocksList.Last().index = i;
         }
 
+        // デッキ情報の再設定
+        saveData.deck = new Blocks[GameSetting.deck_blocks];
+
+        // ブロックスリストのブロックスをデッキに設定しておく
+        for (int i = 0; i < GameSetting.deck_blocks; ++i)
+            saveData.deck[i] = i < blocksNum ? saveData.blocksList[i] : null;
+
+        // 前回のカラーはランダムに設定
         saveData.lastColor = GameSetting.instance.GetRandomColor();
 
         Save();
@@ -115,12 +121,16 @@ public class SaveSystem
     {
         // Shape情報は二次元配列のため、シリアライズする
 
-        for (int i = 0; i < saveData.deck.Length; ++i) 
-            if(saveData.deck[i] != null)
+        for (int i = 0; i < saveData.deck.Length; ++i)
+            if (saveData.deck[i] != null) {
                 saveData.deck[i].serializedShape = JsonConvert.SerializeObject(saveData.deck[i].shape);
+                saveData.deck[i].index = i;
+            }
         
         for (int i = 0; i < saveData.blocksList.Count; ++i)
-            if (saveData.blocksList[i] != null)
+            if (saveData.blocksList[i] != null) {
                 saveData.blocksList[i].serializedShape = JsonConvert.SerializeObject(saveData.blocksList[i].shape);
+                saveData.blocksList[i].index = i;
+            }
     }
 }

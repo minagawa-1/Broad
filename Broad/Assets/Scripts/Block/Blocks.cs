@@ -7,9 +7,13 @@ using UnityEngine;
 [System.Serializable]
 public class Blocks
 {
-    /// <summary>形状</summary>
+    /// <summary>ブロックスの番号</summary>
+    public int index = -1;
+
+    /// <summary>形状情報</summary>
     public bool[,] shape;
 
+    /// <summary>文字列としてシリアライズした形状情報</summary>
     public string serializedShape;
 
     /// <summary>盤面座標(左上基準)</summary>

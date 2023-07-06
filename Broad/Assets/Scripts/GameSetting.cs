@@ -8,11 +8,11 @@ public class GameSetting : ScriptableObject
 {
     public static GameSetting instance;
 
-    // ScriptableObjectの初期化時にインスタンスを設定
-    private void Awake() => instance = this;
+    // GameSetting がアクティブになった瞬間
+    private void OnEnable()  { if (!instance) instance = this; }
 
-    // ScriptableObjectの初期化時にインスタンスを設定
-    private void OnEnable() => instance = this;
+    // GameSetting が非アクティブになった瞬間・ゲームの実行時
+    private void OnDisable() { if (!instance) instance = this; }
 
 // 定数
 
