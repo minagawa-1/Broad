@@ -5,6 +5,10 @@ using UnityEngine;
 
 public static  class StringExpansion
 {
+    /// <summary>指定回数分、文字列を繰り返す</summary>
+    /// <param name="text">元となる文字列</param>
+    /// <param name="count">繰り返し回数</param>
+    /// <returns>繰り返された文字列</returns>
     public static string Repeat(this string text, int count)
     {
         // 連続回数が1回未満なら空を返す
@@ -21,6 +25,30 @@ public static  class StringExpansion
     /// <summary>ヒット数を取得</summary>
     /// <param name="search">検索文字列</param>
     public static int HitCount(this string text, string search) => new Regex(Regex.Escape(search)).Matches(text).Count;
+
+    /// <summary>全角に変換する</summary>
+    /// <param name="halfText">半角の文字列</param>
+    public static string ToFullWidth(this string halfText)
+    {
+        string fullWidthStr = null;
+
+        // 半角の文字コードに加算して全角にする
+        for (int i = 0; i < halfText.Length; i++) fullWidthStr += (char)(halfText[i] + 65248);
+
+        return fullWidthStr;
+    }
+
+    /// <summary>半角に変換する</summary>
+    /// <param name="fullText">全角の文字列</param>
+    static public string ConvertToHalfWidth(this string fullText)
+    {
+        string halfWidthStr = null;
+
+        // 全角の文字コードに減算して半角にする
+        for (int i = 0; i < fullText.Length; i++) halfWidthStr += (char)(fullText[i] - 65248);
+
+        return halfWidthStr;
+    }
 
     /// <summary>指定桁数まで文字埋め(文字列の前に埋める)</summary>
     /// <param name="str">文字埋めされる対象文字列</param>

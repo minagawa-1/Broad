@@ -540,13 +540,13 @@ MonoBehaviour:
   m_MoveAction: {fileID: -3296802432930107258, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
   m_SubmitAction: {fileID: 3846665643137624637, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
   m_CancelAction: {fileID: -7633599935880605402, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
-  m_LeftClickAction: {fileID: 3846665643137624637, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_LeftClickAction: {fileID: 0}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 9003691337703717355, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
 --- !u!114 &353474494
 MonoBehaviour:
@@ -891,8 +891,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BlinkTime: 1
   m_TimeOffset: 0
-  m_UpEase: 12
-  m_DownEase: 11
+  m_UpEase: 11
+  m_DownEase: 12
   m_AfterColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!1 &741924246
 GameObject:

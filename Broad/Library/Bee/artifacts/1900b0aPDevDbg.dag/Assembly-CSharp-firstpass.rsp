@@ -99,6 +99,7 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:MIRROR
 -define:MIRROR_57_0_OR_NEWER
@@ -309,6 +310,7 @@
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/UniTask.Linq.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/UniTask.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/UniTask.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/Unity.TextMeshPro.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/Unity.Timeline.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aPDevDbg.dag/Unity.VisualScripting.Core.ref.dll"

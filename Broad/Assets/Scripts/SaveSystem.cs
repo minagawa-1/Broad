@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-/// <summary>セーブデータ情報クラス（セーブデータの参照はSabeSystem.saveData</summary>
+/// <summary>セーブデータ情報クラス（セーブデータの参照はSaveSystem.saveData</summary>
 [Serializable]
 public class SaveData
 {

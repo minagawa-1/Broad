@@ -13,12 +13,12 @@ public class BlockManager : MonoBehaviour
     public Material[] m_SetBlockMaterials = null;
 
     // 生成したブロックの親
-    public GameObject m_BlockParent = null;
+    [HideInInspector] public GameObject blockParent = null;
 
     private void Start()
     {
-        m_BlockParent = new GameObject("Blocks");
-        m_BlockParent.transform.SetParent(transform);
+        blockParent = new GameObject("Blocks");
+        blockParent.transform.SetParent(transform);
     }
 
     public void CreateMaterials()
@@ -50,8 +50,8 @@ public class BlockManager : MonoBehaviour
         // 親設定
         GameObject parent = new GameObject("ControlBlocks");
         var cb = parent.AddComponent<ControlBlock>();
-        cb.afterSetParent = m_BlockParent.transform;
-        cb.afterSetMaterial = m_SetBlockMaterials[player - 1];
+        cb.afterSetParent = blockParent.transform;
+        cb.afterSetMaterial = m_SetBlockMaterials[player];
         cb.blocks = blocks;
         cb.playerIndex = player;
 
@@ -88,7 +88,7 @@ public class BlockManager : MonoBehaviour
                 newBlock.transform.localPosition = GetBlockPosition(blocks, new Vector2Int(x, y));
 
                 // マテリアルの設定
-                newBlock.GetComponent<Renderer>().material = m_ControlBlockMaterials[player - 1];
+                newBlock.GetComponent<Renderer>().material = m_ControlBlockMaterials[player];
             }
         }
     }
@@ -98,7 +98,7 @@ public class BlockManager : MonoBehaviour
 
     public void SortBlocks()
     {
-        var blockList = m_BlockParent.transform.GetChildren().ToList();
+        var blockList = blockParent.transform.GetChildren().ToList();
 
         // オブジェクトを座標で昇順ソート
         blockList.Sort((a, b) => {

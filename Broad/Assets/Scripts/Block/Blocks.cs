@@ -72,12 +72,12 @@ public class Blocks
                 if (!shape[x, y]) continue;
 
                 // 配列外参照
-                if (position.x + x < 0 || board.width <= position.x + x) return false;
+                if (position.x + x < 0 || board.width  <= position.x + x) return false;
                 if (position.y + y < 0 || board.height <= position.y + y) return false;
 
                 // 渡された座標のstateが-1もしくは同じプレイヤー番号ならfalse
                 if (board.GetBoardData(position.x + x, position.y + y) == -1
-                 || board.GetBoardData(position.x + x, position.y + y) == player) return false;
+                 || board.GetBoardData(position.x + x, position.y + y) == player + 1) return false;
             }
         }
 
@@ -146,7 +146,7 @@ public class Blocks
             {
                 if (!shape[x, y]) continue;
 
-                texture.SetPixels32(x * blockSize.x, y * blockSize.y, blockSize.x, blockSize.x, spritePixels);
+                texture.SetPixels32(x * blockSize.x, (height - y - 1) * blockSize.y, blockSize.x, blockSize.x, spritePixels);
 
                 if (--cnt <= 0) break;
             }

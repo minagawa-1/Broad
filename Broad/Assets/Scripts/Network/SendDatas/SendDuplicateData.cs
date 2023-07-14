@@ -5,10 +5,10 @@ using Mirror;
 
 public struct DuplicateData : NetworkMessage
 {
-    public Vector2Int[] position;
+    public GameObject[] duplicates;
 
-    public DuplicateData(Vector2Int[] position)
+    public DuplicateData(GameObject[] duplicates)
     {
-        this.position = position;
+        this.duplicates = duplicates;
     }
 }

@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,13 +44,13 @@ public class DonutChip : MaskableGraphic
         }
     }
 
-    [Chapter("ƒh[ƒiƒcî•ñ")]
-    [Min(0f)] public float  thickness = 20f;  // ƒh[ƒiƒc‚Ì‘¾‚³
-    [Min(3)]  public int    resolution = 100;    // ‰ğ‘œ“x
+    [Chapter("ãƒ‰ãƒ¼ãƒŠãƒ„æƒ…å ±")]
+    [Min(0f)] public float  thickness = 20f;  // ãƒ‰ãƒ¼ãƒŠãƒ„ã®å¤ªã•
+    [Min(3)]  public int    resolution = 100;    // è§£åƒåº¦
 
-    [Header("ƒh[ƒiƒc‚Ì”ÍˆÍ")]
+    [Header("ãƒ‰ãƒ¼ãƒŠãƒ„ã®ç¯„å›²")]
     [Range(0f, 1f)] public float  areaMin = 0f;
-    [Range(0f, 1f)] public float  areaMax = 1f;
+    [Range(0f, 1f)] public float  areaMax = 0f;
 
     protected override void OnPopulateMesh(VertexHelper vh)
     {
@@ -60,10 +60,10 @@ public class DonutChip : MaskableGraphic
 
         vh.Clear();
 
-        // ’†SÀ•W‚ÌŒvZ
+        // ä¸­å¿ƒåº§æ¨™ã®è¨ˆç®—
         Vector3 center = rectTransform.rect.center;
 
-        // ’Z”¼Œa
+        // çŸ­åŠå¾„
         float radius = rectTransform.rect.height * 0.5f;
 
         int startAngle = (int)(areaMin * (float)resolution);
@@ -71,45 +71,45 @@ public class DonutChip : MaskableGraphic
 
         int vertexCount = 0;
 
-        // Color‚É”ä‚×‚ÄColor32‚ÍŒ^•ÏŠ·‚ğ‹²‚Ü‚È‚¢‚½‚ß‚‘¬
+        // Colorã«æ¯”ã¹ã¦Color32ã¯å‹å¤‰æ›ã‚’æŒŸã¾ãªã„ãŸã‚é«˜é€Ÿ
         Color32 color32 = color;
 
         var uv = (sprite != null) ? UnityEngine.Sprites.DataUtility.GetOuterUV(sprite) : Vector4.zero;
 
-        // ’¸“_‚ÌÀ•W‚ğŒvZ‚µ‚Ä’¸“_ƒŠƒXƒg‚É’Ç‰Á
+        // é ‚ç‚¹ã®åº§æ¨™ã‚’è¨ˆç®—ã—ã¦é ‚ç‚¹ãƒªã‚¹ãƒˆã«è¿½åŠ 
         for (int i = startAngle; i <= endAngle; i++)
         {
             float angle = -(Mathf.PI * 2f * i) / resolution;
 
             Vector3 rot = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-            // “à‰~‚Ì’¸“_À•W
+            // å†…å††ã®é ‚ç‚¹åº§æ¨™
             Vector3 pos = rot * radius;
 
-            // ’¸“_‚ğ‰¼İ’è
+            // é ‚ç‚¹ã‚’ä»®è¨­å®š
             UIVertex innerVertex = UIVertex.simpleVert;
             UIVertex outerVertex = UIVertex.simpleVert;
 
-            // ’¸“_À•W
+            // é ‚ç‚¹åº§æ¨™
             innerVertex.position = center + pos.normalized * (pos.magnitude - thickness);
             outerVertex.position = center + pos.normalized * (pos.magnitude + thickness);
 
-            // ’¸“_ƒJƒ‰[
+            // é ‚ç‚¹ã‚«ãƒ©ãƒ¼
             innerVertex.color = color32;
             outerVertex.color = color32;
 
-            // UVÀ•W
+            // UVåº§æ¨™
             innerVertex.uv0 = new Vector2((float)(i - startAngle) / (float)(endAngle - startAngle), 0f);
             outerVertex.uv0 = new Vector2((float)(i - startAngle) / (float)(endAngle - startAngle), 1f);
 
             vh.AddVert(innerVertex);
             vh.AddVert(outerVertex);
 
-            // “à‰~EŠO‰~‚ğ“¯İ’è‚µ‚½‚½‚ß {‚Q
+            // å†…å††ãƒ»å¤–å††ã‚’åŒæ™‚è¨­å®šã—ãŸãŸã‚ ï¼‹ï¼’
             vertexCount += 2;
         }
 
-        // OŠpŒ`‚ğ\¬‚·‚é’¸“_ƒCƒ“ƒfƒbƒNƒX‚ğ’Ç‰Á
+        // ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’è¿½åŠ 
         for (int i = 0; i < vertexCount - 2; i += 2)
         {
             int innerIndex = i;
@@ -150,7 +150,7 @@ public class DonutChipEditor : UnityEditor.UI.GraphicEditor
     SerializedProperty m_Thickness;
     SerializedProperty m_Resolution;
 
-    [Header("ƒh[ƒiƒc‚Ì”ÍˆÍ")]
+    [Header("ãƒ‰ãƒ¼ãƒŠãƒ„ã®ç¯„å›²")]
     SerializedProperty m_AreaMin;
     SerializedProperty m_AreaMax;
 

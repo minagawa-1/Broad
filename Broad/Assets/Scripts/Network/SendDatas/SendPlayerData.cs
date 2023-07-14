@@ -6,10 +6,10 @@ using Mirror;
 [System.Serializable]
 public struct PlayerData : NetworkMessage
 {
-    public int index;          // プレイヤー番号
+    public int selfIndex;          // プレイヤー番号
 
-    public PlayerData(int index)
+    public PlayerData(int selfIndex)
     {
-        this.index = index;
+        this.selfIndex = selfIndex;
     }
 }

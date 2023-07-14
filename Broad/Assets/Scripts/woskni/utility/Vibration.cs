@@ -11,7 +11,7 @@ public static class Vibration
     /// <param name="rate">振動率</param>
     /// <param name="time">振動時間</param>
     /// <param name="ease">振動の種別(DG.Tweening.Ease)</param>
-    public static Tweener Vibrate(this Transform transform, float intensity, Vector3 rate, float time, Ease ease = Ease.Linear)
+    public static Tweener OnVibrate(this Transform transform, float intensity, Vector3 rate, float time, Ease ease = Ease.Linear)
     {
         if (transform.IsVibrating()) return m_Tweener;
 

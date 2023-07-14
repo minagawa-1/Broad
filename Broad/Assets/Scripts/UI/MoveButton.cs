@@ -38,7 +38,7 @@ public class MoveButton : Button
 
     public override void OnSelect(BaseEventData eventData)
     {
-        base.OnDeselect(eventData);
+        base.OnSelect(eventData);
         DoMove(basisPosition + moveDistance);
     }
 
@@ -51,7 +51,7 @@ public class MoveButton : Button
 
     public override void OnDeselect(BaseEventData eventData)
     {
-        base.OnSelect(eventData);
+        base.OnDeselect(eventData);
         DoMove(basisPosition);
     }
 

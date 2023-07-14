@@ -19,7 +19,8 @@ public class GameSetting : ScriptableObject
     // デッキに設定できるブロックスの数
     public const int deck_blocks = 16;
 
-
+    // 手札のブロックスの数
+    public const int hand_blocks = 4;
 
 // 変数
 

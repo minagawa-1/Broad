@@ -40,6 +40,8 @@ public class StartButtonState : MonoBehaviour
         m_MatchingText.DOPause();
         m_MatchingText.DOFade(1f, m_ButtonStartTime).SetEase(Ease.OutCubic);
 
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(gameObject);
+
         m_StartText.rectTransform.DOMove(m_InitStartTextPosition + m_EasedStartTextOffset, m_ButtonStartTime).SetEase(Ease.OutCubic);
         m_Banner.rectTransform.DOMoveY(0f, m_BannerStartTime).SetEase(Ease.OutCubic);
     }
@@ -48,7 +50,9 @@ public class StartButtonState : MonoBehaviour
     {
         DoFontSize(m_InitStartTextFontSize, m_ButtonEndTime, Ease.InCubic);
         m_MatchingText.DOPause();
-        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => setPlayerNum.Invoke(1));
+        m_MatchingText.DOFade(0f, m_ButtonEndTime).SetEase(Ease.InCubic).OnComplete(() => setPlayerNum.Invoke(0));
+
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(gameObject);
 
         m_StartText.rectTransform.DOMove(m_InitStartTextPosition, m_ButtonEndTime).SetEase(Ease.InCubic);
         m_Banner.rectTransform.DOMoveY(-m_Banner.rectTransform.rect.height, m_BannerEndTime).SetEase(Ease.InCubic);

@@ -18,6 +18,24 @@ public struct Board
         data = new int[width * height];
     }
 
+    public Board(int[,] deserializedBoard)
+    {
+        width = deserializedBoard.GetLength(0);
+        height = deserializedBoard.GetLength(1);
+
+        data = new int[width * height];
+        SetBoard(deserializedBoard);
+    }
+
+    public Board(bool[,] deserializedBoard)
+    {
+        width = deserializedBoard.GetLength(0);
+        height = deserializedBoard.GetLength(1);
+
+        data = new int[width * height];
+        SetBoard(deserializedBoard);
+    }
+
     public void Reset()
     {
         data = new int[width * height];
@@ -31,9 +49,11 @@ public struct Board
         // パーリンノイズのシード値
         Vector2 seed = new Vector2(Random.value, Random.value) * 100f;
 
-        for (int y = 0; y < width; ++y)
+        Debug.Log($"Width: {width}, Hight: {height}");
+
+        for (int y = 0; y < height; ++y)
         {
-            for (int x = 0; x < height; ++x)
+            for (int x = 0; x < width; ++x)
             {
                 // パーリンノイズのサンプリングをして設置不可マスにする確率を決める
                 Vector2 value = new Vector2(x, y) * GameSetting.instance.perlinScale + seed;
@@ -41,6 +61,9 @@ public struct Board
 
                 if (perlinValue >= GameSetting.instance.boardViability)
                 {
+                    Debug.Log($"SetPosition : {x}, {y}");
+                    Debug.Log($"NoizePosition : {x * height + y}");
+
                     // 設置不可にする
                     SetBoardData(-1, x, y);
                 }

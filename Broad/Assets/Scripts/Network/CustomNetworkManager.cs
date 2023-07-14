@@ -7,8 +7,8 @@ using Cysharp.Threading.Tasks;
 
 public class CustomNetworkManager : NetworkManager
 {
-    public List<PlayerData> playerDataList;            // プレイヤーデータリスト
-    public List<NetworkConnectionToClient> clientDataList; // 接続しているクライアントリスト
+    public List<PlayerData> playerDataList;                 // プレイヤーデータリスト
+    public List<NetworkConnectionToClient> clientDataList;  // 接続しているクライアントリスト
 
     public override void Awake()
     {
@@ -44,26 +44,19 @@ public class CustomNetworkManager : NetworkManager
         base.OnServerConnect(conn);
     }
 
-    /// <summary>サーバーシーン切り替え直後</summary>
-    /// <param name="sceneName"></param>
-    public override void OnServerSceneChanged(string sceneName)
-    {
-        base.OnServerSceneChanged(sceneName);
-    }
-
     /// <summary>クライアントからの接続が切れた</summary>
     /// <param name="conn">接続が切れたクライアント情報</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
 
-        var removeData = playerDataList.Find(p => p.index == conn.connectionId);
+        var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
 
         // 削除したいクライアント
         var removeClient = clientDataList.Find(c => c == conn);
 
         // 切断したプレイヤーから最後のプレイヤーまでの番号を-1する
-        for (int i = removeData.index; i < playerDataList.Count; ++i)
-            playerDataList[i] = new PlayerData(playerDataList[i].index - 1);
+        for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)
+            playerDataList[i] = new PlayerData(playerDataList[i].selfIndex - 1);
 
         // connに一致するPlayerDataを見つけてリストから削除
         playerDataList.Remove(removeData);
@@ -78,6 +71,9 @@ public class CustomNetworkManager : NetworkManager
     /// <summary>サーバーへの接続が切れた</summary>
     public override void OnClientDisconnect()
     {
+        // 次のマッチングに盤面情報を持ち越さないように空にする
+        GameManager.board.data = null;
+
         // マッチングシーンに戻る
         SceneManager.LoadScene(Scene.TitleScene);
 
@@ -91,4 +87,6 @@ public class CustomNetworkManager : NetworkManager
 
         base.OnStopServer();
     }
+
+    
 }

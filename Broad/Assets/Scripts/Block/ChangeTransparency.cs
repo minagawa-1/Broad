@@ -9,7 +9,7 @@ public class ChangeTransparency : MonoBehaviour
     public int player;
 
     /// <summary>透明・半透明を切り替える</summary>
-    public void Change(ref Transform[] transforms) => Set(ref transforms, rm.GetBlendMode(blockMaterials[player - 1]) != rm.Mode.Fade);
+    public void Change(ref Transform[] transforms) => Set(ref transforms, rm.GetBlendMode(blockMaterials[player]) != rm.Mode.Fade);
 
     /// <summary>透明・半透明にする</summary>
     /// <param name="transparent">true : 透明にする<br></br>false: 半透明にする</param>
@@ -25,7 +25,7 @@ public class ChangeTransparency : MonoBehaviour
         rm.Mode mode = transparent ? rm.Mode.Fade : rm.Mode.Opaque;
         float alpha  = transparent ? m_transparent_alpha : 1f;
 
-        blockMaterials[player - 1] = rm.GetAttachedBlend(blockMaterials[player - 1], mode);
-        blockMaterials[player - 1].color = blockMaterials[player - 1].color.GetAlphaColor(alpha);
+        blockMaterials[player] = rm.GetAttachedBlend(blockMaterials[player], mode);
+        blockMaterials[player].color = blockMaterials[player].color.GetAlphaColor(alpha);
     }
 }

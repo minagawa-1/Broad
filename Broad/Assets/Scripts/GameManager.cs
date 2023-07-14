@@ -34,16 +34,17 @@ public partial class GameManager : MonoBehaviour
     GameObject m_UnsetableParent = null;
     GameObject m_SetableParent = null;
 
-    public List<BoardData> orderBoardDataList;          // ターン内での各プレイヤーの設置申請情報
+    public List<BoardData> orderBoardDataList;  // ターン内での各プレイヤーの設置申請情報
 
-    public static Board board;             // 盤面
-    public static Board oldBoard;          // 前のターンの盤面
+    public static Board board;                  // 盤面
 
-    public static Vector2Int boardSize;     // 盤面のサイズ
+    public static Vector2Int boardSize;         // 盤面のサイズ
 
-    public int readyCount = 0;   // 準備完了したプレイヤーの数
+    public int readyCount = 0;                  // 準備完了したプレイヤーの数
 
-    public bool isReceived;              // データを受信できたか
+    public bool isReceived;                     // データを受信できたか
+
+    public List<GameObject> createdBlockList;   // 生成したブロックを格納するリスト
 
     private void Awake()
     {
@@ -71,12 +72,11 @@ public partial class GameManager : MonoBehaviour
 
         // リストを初期化
         orderBoardDataList = new List<BoardData>();
+        createdBlockList = new List<GameObject>();
     }
 
     private void Start()
     {
-        m_State = State.Placement;
-
         // ボード生成
         LayOutBoard().Forget();
     }
@@ -85,7 +85,7 @@ public partial class GameManager : MonoBehaviour
     private async UniTaskVoid LayOutBoard()
     {
 
-        /////////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         // ホストのみボード設定をする
         if (NetworkClient.activeHost)
@@ -97,7 +97,7 @@ public partial class GameManager : MonoBehaviour
                                             NetworkServer.connections.Count < 2);
 
             // readyCountのリセット
-            readyCount = 0;
+            readyCount -= NetworkServer.connections.Count;
 
             // ボードサイズをランダムに設定
             boardSize = RandomVector2Int(GameSetting.instance.minBoardSize, GameSetting.instance.maxBoardSize);
@@ -113,10 +113,10 @@ public partial class GameManager : MonoBehaviour
             NetworkServer.SendToAll(sendData);
         }
 
-        ///////////////// ▼クライアントの処理▼ ///////////////////////////////////////////////////////////////////////////////////////
+///////////////// ▼共通の処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         // ボードの情報が入るまで待機
-        await UniTask.WaitUntil(() => board.data != null);
+        await UniTask.WaitUntil(() => board.data != null && board.data.Length > 0);
 
         // ボードの作成
         LayOutSquare(m_SquarePrefab, m_UnsetbleSquarePrefab, boardSize);
@@ -128,9 +128,6 @@ public partial class GameManager : MonoBehaviour
 
         // 背景の作成
         CreateBackGround(m_UnsetbleSquarePrefab, boardSize);
-
-        // playersColorの中身が入るまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
 
         m_BlockManager.CreateMaterials();
 
@@ -193,7 +190,8 @@ public partial class GameManager : MonoBehaviour
     /// <returns>生成したブロックのオブジェクト</returns>
     public List<GameObject> ComplementBoard(int[,] afterBoard, int[,] beforeBoard)
     {
-        List<GameObject> blockList = new List<GameObject>();
+        createdBlockList = new List<GameObject>();
+        createdBlockList.Clear();
 
         for (int y = 0; y < boardSize.y; ++y)
         {
@@ -205,56 +203,59 @@ public partial class GameManager : MonoBehaviour
                 // このターンでの[x, y]座標において、設置情報に変化がない場合はcontinue
                 if (afterBoard[x, y] == beforeBoard[x, y]) continue;
 
-                // 一致しない値取得
-                int index = afterBoard[x, y];
-
                 // プレファブの生成
                 GameObject newBlock = Instantiate(m_BlockPrefab);
 
                 // 名前・親オブジェクト・座標・マテリアルを設定
-                newBlock.gameObject.name = "Block[" + x + "," + y + "]";
-                newBlock.transform.parent = m_BlockManager.m_BlockParent.transform;
+                newBlock.gameObject.name = $"Block[{x}, {y}]new";
+                newBlock.transform.parent = m_BlockManager.blockParent.transform;
                 newBlock.transform.position = new Vector3Int(x, 1, -y);
-                newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[index - 1];
+                newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[afterBoard[x, y] - 1];
                 newBlock.transform.position = newBlock.transform.position;
                 newBlock.transform.localScale = newBlock.transform.localScale;
 
-                // イージング (終了後、盤面に反映させて終了)
-                newBlock.transform.DOMoveY(0f, 0.25f).SetEase(Ease.InQuart);
-
-                blockList.Add(newBlock);
+                createdBlockList.Add(newBlock);
             }
         }
 
-        return blockList;
+        return createdBlockList;
     }
 
     /// <summary>重複除去</summary>
     /// <param name="setData"><b>タプルの設置データ</b>
     /// <br></br>player: プレイヤー番号
     /// <br></br>set: 設置するボード上の位置</param>
-    /// <returns>重複している座標</returns>
-    public List<Vector2Int> RidDuplicate((int player, bool[,] set)[] setData)
+    /// <returns>重複しているオブジェクト</returns>
+    public List<GameObject> RidDuplicate(BoardData[] setData)
     {
-        var duplicateList = new List<Vector2Int>();
+        var duplicateList = new List<GameObject>();
 
         int[,] newBoard = board.GetBoard();
 
         // Board -> bool[,]変換
         // ボードのサイズ分調べる
-        for (int y = 0; y < setData[0].set.GetLength(1); y++)
+        for (int y = 0; y < setData[0].board.height; y++)
         {
-            for (int x = 0; x < setData[0].set.GetLength(0); x++)
+            for (int x = 0; x < setData[0].board.width; x++)
             {
                 // 座標に対して設置申請を出しているplayer番号を抽出
-                int[] players = setData.Where(d => d.set[x, y]).Select(d => d.player).ToArray();
+                int[] players = setData.Where(d => d.board.GetBoardData(x, y) != 0).Select(d => d.player).ToArray();
 
                 // その座標の設置申請が2人以上だった場合は0を、 1人だった場合はplayer番号を代入
                 switch (players.Length)
                 {
-                    case 0:                                                                          break;
-                    case 1:  newBoard[x, y] = players[0];                                            break;
-                    default: newBoard[x, y] = 0; duplicateList.Add(new Vector2Int(x, y));            break;
+                    case 0:                                 break;
+                    case 1:  newBoard[x, y] = players[0];   break;
+
+                    // 重複
+                    default: 
+                        newBoard[x, y] = 0;
+
+                        // x, yに該当する座標のブロックを抽出
+                        var dups = createdBlockList.Where(obj => ToInt(obj.transform.position) == new Vector3Int(x, 0, -y)).ToArray();
+
+                        duplicateList.AddRange(dups);
+                        break;
                 }
             }
         }
@@ -265,7 +266,7 @@ public partial class GameManager : MonoBehaviour
         checkedBoard.SetBoard(newBoard);
 
         // プレイヤー全員に判定後のボード情報を送信
-        BoardData boardData = new BoardData { board = checkedBoard };
+        BoardData boardData = new BoardData(checkedBoard);
         NetworkServer.SendToAll(boardData);
 
         return duplicateList;
@@ -305,6 +306,8 @@ public partial class GameManager : MonoBehaviour
         top.transform.position = bottom.transform.position.Offset(z: -boardSize.y - top.transform.localScale.z);
     }
 
+
+/////////////// ▼ ホストの処理 ▼ /////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>クライアントからの準備完了の合図を受信</summary>
     /// <param name="connection">接続してきたクライアント</param>
     /// <param name="readyData">合図用データ</param>
@@ -312,8 +315,6 @@ public partial class GameManager : MonoBehaviour
     {
         // データがtrueなことを確認
         if (readyData.isReady) readyCount++;
-
-        Debug.Log("Ready Count : " + readyCount);
     }
 
     /// <summary>サーバーボードデータ受信</summary>
@@ -325,29 +326,25 @@ public partial class GameManager : MonoBehaviour
         orderBoardDataList.Add(receivedData);
     }
 
+//////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////
+
     /// <summary>クライアント側で盤面情報を取得</summary>
     /// <param name="boardData">盤面データ</param>
     void ClientReceivedBoardData(BoardData boardData)
     {
-        // 前のターンの盤面情報を更新する
-        if (board.data != null)
-        {
-            oldBoard = board;
-
-            // 受信フラグをtrueにする
-            isReceived = true;
-        }
+        // 重複判定をした盤面情報を受信したらフラグをtrueにする
+        if (board.data != null) isReceived = true;
 
         // 新しい盤面情報を取得
         board = boardData.board;
 
         // 盤面のサイズを取得
         boardSize = new Vector2Int(boardData.board.width, boardData.board.height);
-
-        Debug.Log("board : " + board.data);
     }
 
     // 範囲内でランダムな座標を返す関数
     Vector2Int RandomVector2Int(Vector2Int min, Vector2Int max)
         => new Vector2Int(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
+
+    Vector3Int ToInt(Vector3 v) => new Vector3Int((int)v.x, (int)v.y, (int)v.z);
 }

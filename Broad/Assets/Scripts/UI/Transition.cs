@@ -10,16 +10,17 @@ public class Transition : MonoBehaviour
 {
     public static Transition instance { get; private set; }
 
-    public const float basis_fade_time = 0.5f; // フェードの時間
+    /// <summary>フェードの時間</summary>
+    public const float basis_fade_time = 0.5f;
 
-    public woskni.Timer fadeTimer;
+    /// <summary>フェード用のCanvasGroup</summary>
+    public CanvasGroup fadeCanvasGroup { get; private set; }
 
-    public CanvasGroup fadeCanvasGroup { get; private set; } // フェード用のCanvasGroup
+    /// <summary>遷移中か</summary>
+    public bool fading { get; private set; }    
 
     private void Awake()
     {
-        fadeTimer.Setup(basis_fade_time);
-
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -30,7 +31,11 @@ public class Transition : MonoBehaviour
     {
         fadeCanvasGroup = CreateFadeCanvas();
 
-        fadeCanvasGroup.alpha = 0f;
+        fading = true;
+
+        // フェードアウト開始
+        fadeCanvasGroup.alpha = 1f;
+        fadeCanvasGroup.DOFade(0f, basis_fade_time).OnComplete(() => fading = false);
     }
 
     private CanvasGroup CreateFadeCanvas()
@@ -65,7 +70,7 @@ public class Transition : MonoBehaviour
             fadePanelRectTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
             fadePanelRectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
 
-            CanvasRenderer fadePanelCanvasRenderer = panelObject.AddComponent<CanvasRenderer>();
+            panelObject.AddComponent<CanvasRenderer>();
 
             Image fadePanelImage = panelObject.AddComponent<Image>();
             fadePanelImage.color = Color.black;
@@ -75,34 +80,31 @@ public class Transition : MonoBehaviour
         return panelObject.AddComponent<CanvasGroup>();
     }
 
-    public async void LoadScene(string sceneName, NetworkManager networkManager, float fadeInTime = basis_fade_time, float fadeOutTime = basis_fade_time)
-        => await DoLoadScene(sceneName, networkManager, fadeInTime, fadeOutTime);
+    public void LoadScene(string sceneName, NetworkManager networkManager, float fadeInTime = basis_fade_time, float fadeOutTime = basis_fade_time)
+        => DOLoadScene(sceneName, networkManager, fadeInTime, fadeOutTime);
 
-    async UniTask DoLoadScene(string sceneName, NetworkManager networkManager, float fadeInTime = basis_fade_time, float fadeOutTime = basis_fade_time)
+    void DOLoadScene(string sceneName, NetworkManager networkManager, float fadeInTime = basis_fade_time, float fadeOutTime = basis_fade_time)
     {
-        if (fadeTimer.IsStarted()) return;
+        if (fading) return;
 
-        // フェードイン
-        fadeTimer.Setup(fadeInTime);
+        fading = true;
 
+        // フェードイン開始
         fadeCanvasGroup.alpha = 0f;
-        fadeCanvasGroup.DOFade(1f, fadeInTime); // フェードイン開始
+        fadeCanvasGroup.DOFade(1f, fadeInTime).OnComplete(FadeOut);
 
-        await UniTask.WaitUntil(() => IsFadeFinished());
+        void FadeOut()
+        {
+            // シーン遷移
+            if (NetworkClient.activeHost) networkManager.ServerChangeScene(sceneName);
 
-        // フェードアウト
-        DOTween.Clear();
+            // 遷移前のシーンで再生していたDOTweenをリセットする
+            DOTween.KillAll();
 
-        fadeCanvasGroup.alpha = 1f;
-        fadeCanvasGroup.DOFade(0f, fadeOutTime); // フェードアウト開始
+            fadeCanvasGroup.alpha = 1f;
 
-        // シーン遷移
-        if(NetworkClient.activeHost) networkManager.ServerChangeScene(sceneName);
-    }
-
-    bool IsFadeFinished()
-    {
-        fadeTimer.Update();
-        return fadeTimer.IsFinished();
+            // フェードアウト開始
+            fadeCanvasGroup.DOFade(0f, fadeOutTime).OnComplete(() => fading = false);
+        }
     }
 }

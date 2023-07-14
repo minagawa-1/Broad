@@ -172,9 +172,9 @@ MonoBehaviour:
   m_BlockPrefab: {fileID: 4511753789749413597, guid: ba55a8d7ccb955b4982436799a6cd040, type: 3}
   m_FurthestCameraOffset: {x: 0, y: 4, z: -4}
   m_BlockManager: {fileID: 442827331}
-  m_CalcBroad: {fileID: 1678821120}
-  m_GameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
+  readyCount: 0
   isReceived: 0
+  createdBlockList: []
 --- !u!114 &429558200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e928340e5d0fc3429c7800e7d3aa772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HitObject: {fileID: 0}
 --- !u!1 &442827330
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +245,7 @@ MonoBehaviour:
   m_BlockPrefab: {fileID: 4511753789749413597, guid: ba55a8d7ccb955b4982436799a6cd040, type: 3}
   m_ControlBlockMaterials: []
   m_SetBlockMaterials: []
+  blockParent: {fileID: 0}
 --- !u!4 &442827332
 Transform:
   m_ObjectHideFlags: 0
@@ -301,16 +301,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 514283933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_PointAction: {fileID: -4746434615520912780, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_MoveAction: {fileID: -3296802432930107258, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_SubmitAction: {fileID: 3846665643137624637, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_CancelAction: {fileID: -7633599935880605402, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_LeftClickAction: {fileID: 3846665643137624637, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 9003691337703717355, guid: a179a674942b52d4bbbdc982639e6780, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &514283936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,13 +561,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ButtonPrefab: {fileID: 6908716221318228062, guid: 2e32f8d8ad7195a49a8198b6b9a1c84d, type: 3}
   m_BlockSprite: {fileID: 21300000, guid: 02b7794073a5b4c4c801a0752738c7e9, type: 3}
-  m_BlocksScale: 0.5
-  m_ShadowColor: {r: 0, g: 0, b: 0, a: 0.09803922}
   m_ShadowDistance: {x: 0.33, y: -0.33}
   buttonGroupWidth: 1600
-  maxDeckBlocks: 16
-  maxHandBlocks: 4
   m_BlockManager: {fileID: 442827331}
+  m_GameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
 --- !u!222 &1520345860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -725,6 +730,7 @@ GameObject:
   - component: {fileID: 1972892718}
   - component: {fileID: 1972892720}
   - component: {fileID: 1972892719}
+  - component: {fileID: 1972892721}
   m_Layer: 0
   m_Name: DonutChart
   m_TagString: Untagged
@@ -740,16 +746,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972892717}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8.089919}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1702290702}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -957.04517, y: -532.727}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972892719
 MonoBehaviour:
@@ -767,6 +773,7 @@ MonoBehaviour:
   thickness: 8
   resolution: 255
   m_AnimationTime: 0.5
+  gameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
 --- !u!222 &1972892720
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -775,3 +782,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972892717}
   m_CullTransparentMesh: 1
+--- !u!114 &1972892721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972892717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f54a5b79c2a1341a9afdebfb366784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.5019608}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  thickness: 12
+  resolution: 255
+  areaMin: 0
+  areaMax: 1

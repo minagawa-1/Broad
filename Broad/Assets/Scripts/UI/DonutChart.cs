@@ -33,14 +33,6 @@ public class DonutChart : MonoBehaviour
 
     private void Start()
     {
-        Initialize().Forget();
-    }
-
-    async UniTask Initialize()
-    {
-        // playersColorの中身が入るまで待機
-        await UniTask.WaitUntil(() => GameSetting.instance.playerColors.Length > 0);
-
         int[] result = CalcBroad.Calc();
 
         for (int i = 0; i < GameSetting.instance.playerColors.Length; ++i)
@@ -48,12 +40,8 @@ public class DonutChart : MonoBehaviour
             Add(i, result[i], color: GameSetting.instance.playerColors[i]);
         }
 
-        float basisAngle = Random.Range(0f, 360f);
-        GetComponent<RectTransform>().Rotate(0f, 0f, basisAngle);
-
         UpdateDonut();
     }
-
 
     public void Add(int num, int value, Color? color)
     {
@@ -89,22 +77,19 @@ public class DonutChart : MonoBehaviour
 
         int sum = dataList.Sum(d => d.value);
 
+        if (sum == 0) return;
+
         float range = 0f;
 
         for(int i = 0; i < dataList.Count; ++i)
         {
+            if (DOTween.IsTweening(dataList[i].chip)) break;
+
             float rate = (float)dataList[i].value / (float)sum;
 
             dataList[i].chip.DoChangeArea(range, range + rate, m_AnimationTime, Ease.OutCubic);
 
             range += rate;
         }
-    }
-
-    public void ResetValue()
-    {
-        for (int i = 0; i < dataList.Count; ++i) dataList[i].value = Random.Range(0, 16);
-
-        UpdateDonut();
     }
 }

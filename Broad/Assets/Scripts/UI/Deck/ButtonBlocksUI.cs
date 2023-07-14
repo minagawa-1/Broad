@@ -26,14 +26,15 @@ public class ButtonBlocksUI : MonoBehaviour
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+
         buttonTransform = transform.parent.GetComponent<RectTransform>();
         button = transform.parent.GetComponent<Button>();
         image = GetComponent<Image>();
     }
 
-    public void Setup(Blocks blocks, Sprite blockSprite)
+    public void Setup(Blocks blocks, Sprite blockSprite, bool hasNumText = true, bool hasIndexText = true)
     {
-        blockIndexText.text = (blocks.index + 1).ToString();
+        if(hasIndexText) blockIndexText.text = (blocks.index + 1).ToString();
 
         // ブロックスが未設定なら終了
         if (blocks == null) return;
@@ -41,24 +42,29 @@ public class ButtonBlocksUI : MonoBehaviour
 
         this.blocks = blocks;
 
-        // "コ"のフォントサイズを取得
-        var fontSize = System.Text.RegularExpressions.Regex.Match(blockNumText.text, @"<size=(\d+)>").Groups[1].Value;
+        if (hasNumText)
+        {
+            // "コ"のフォントサイズを取得
+            var fontSize = System.Text.RegularExpressions.Regex.Match(blockNumText.text, @"<size=(\d+)>").Groups[1].Value;
 
-        // ブロック数テキストの設定
-        blockNumText.text = $"{blocks.GetBlockNum()}<size={fontSize}>コ</size>";
+            // ブロック数テキストの設定
+            blockNumText.text = $"{blocks.GetBlockNum()}<size={fontSize}>コ</size>";
+        }
 
         // サイズ設定
         float limitSize = Mathf.Max(3, this.blocks.width, this.blocks.height);
+
         float dispBlocksSize = m_ButtonRectTransform.sizeDelta.x / limitSize;
 
         image.rectTransform.sizeDelta = new Vector2(this.blocks.width * dispBlocksSize, this.blocks.height * dispBlocksSize);
 
+        // ブロックスの画像設定
         Texture2D texture = this.blocks.GetBlocksTexture(blockSprite);
-
         image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
         // 拡大率と色を設定
         image.rectTransform.localScale = new Vector2(m_Scale, m_Scale);
+
         image.color = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
     }
 

@@ -6,11 +6,11 @@ using Mirror;
 public struct BoardData : NetworkMessage
 {
     public Board board;   // ボード情報
-    public int   index;   // プレイヤー番号
+    public int   player;   // プレイヤー番号
 
-    public BoardData(Board board, int index)
+    public BoardData(Board board, int player = -1)
     {
         this.board = board;
-        this.index = index;
+        this.player = player;
     }
 }

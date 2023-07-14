@@ -105,6 +105,7 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:MIRROR
 -define:MIRROR_57_0_OR_NEWER
@@ -329,7 +330,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UniTask.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
-"Library/PackageCache/com.cysharp.unitask@f2773f585e/Runtime/External/Addressables/AddressablesAsyncExtensions.cs"
+"Library/PackageCache/com.cysharp.unitask@d210e3d76a/Runtime/External/Addressables/AddressablesAsyncExtensions.cs"
 -langversion:8.0
 
 /deterministic
