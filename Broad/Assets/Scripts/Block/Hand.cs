@@ -47,23 +47,6 @@ public class Hand
         return hand[blanks[0]];
     }
 
-    /// <summary>手札から場に出す</summary>
-    /// <param name="index">取得するブロックス番号</param>
-    /// <returns>場に出すブロックス</returns>
-    public Blocks PlayAt(int index)
-    {
-        // 配列外参照していればエラーを吐いて終了
-        Debug.Assert(!hand.IsProtrude(index), $"配列外参照: hand[{index}] <- Length: {hand.Length}");
-
-        // 参照した手札にブロックスがない場合はエラーを吐いて終了
-        Debug.Assert(!(hand[index] == null), $"{index}番目のブロックスがNullです");
-
-        // 手札のindex番目を返して手札から削除
-        var blocks = hand[index];
-        hand[index] = null;
-        return blocks;
-    }
-
     /// <summary>手札からブロックス情報を取得(場には出さない)</summary>
     /// <param name="index">取得するブロックス番号</param>
     public Blocks GetBlocksAt(int index)

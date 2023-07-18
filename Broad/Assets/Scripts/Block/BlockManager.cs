@@ -43,17 +43,20 @@ public class BlockManager : MonoBehaviour
     /// <param name="player"> プレイヤー番号 </param>
     /// <param name="shape"> 形状データ</param>
     /// <param name="position"> 座標 </param>
-    public void CreateBlock(int player, bool[,] shape, Vector2Int position, float density)
+    public void CreateBlock(HandUI handUI, int handIndex, bool[,] shape, Vector2Int position, float density)
     {
+        int player = GameSetting.instance.selfIndex;
+
         Blocks blocks = new Blocks(shape, position, density);
 
         // 親設定
         GameObject parent = new GameObject("ControlBlocks");
         var cb = parent.AddComponent<ControlBlock>();
         cb.afterSetParent = blockParent.transform;
-        cb.afterSetMaterial = m_SetBlockMaterials[player];
+        cb.afterSetMaterial = m_SetBlockMaterials[GameSetting.instance.selfIndex];
         cb.blocks = blocks;
-        cb.playerIndex = player;
+        cb.handIndex = handIndex;
+        cb.handUI = handUI;
 
         var ct = parent.AddComponent<ChangeTransparency>();
         ct.blockMaterials = m_ControlBlockMaterials;
