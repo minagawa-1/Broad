@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumScene.cs" />
-    <Compile Include="Assets\Scripts\UI\Transition.cs" />
+    <Compile Include="Assets\Scripts\UI\Title\Transition.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ListExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\EditorTheme.cs" />
@@ -89,7 +89,7 @@
     <Compile Include="Assets\Scripts\Board\Board.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ColorExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\BlocksListUI.cs" />
-    <Compile Include="Assets\Scripts\UI\HandUI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\HandUI.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\DeckListUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayerCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\RangeInt.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Chapter.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Name.cs" />
     <Compile Include="Assets\Scripts\UI\BlinkGraphic.cs" />
-    <Compile Include="Assets\Scripts\UI\SelectCursor.cs" />
+    <Compile Include="Assets\Scripts\UI\Title\SelectCursor.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\DebugHotKey.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumLength.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumSceneCreator.cs" />
@@ -125,10 +125,10 @@
     <Compile Include="Assets\Scripts\Network\SendDatas\SendReadyData.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendBoardData.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\TextOperate.cs" />
-    <Compile Include="Assets\Scripts\UI\CalcBroad.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\CalcBroad.cs" />
     <Compile Include="Assets\Scripts\Block\Blocks.cs" />
     <Compile Include="Assets\Scripts\ContrastCamera.cs" />
-    <Compile Include="Assets\Scripts\UI\StartButtonState.cs" />
+    <Compile Include="Assets\Scripts\UI\Title\StartButtonState.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\FilePath.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayer.cs" />

@@ -91,16 +91,14 @@ public class DeckListUI : MonoBehaviour
         // デッキ内の同じ番号のブロックスを列挙
         var duplicates = deckUIs.Where(ui => ui.blocks.index == blocks.index).ToArray();
 
-        Debug.Log(duplicates.Length);
-
         // 入れ替え (もともとデッキに入っていたブロックスと入れ替え)
         for(int i = 0; i < duplicates.Length; ++i)
         {
-            Debug.Log(duplicates[i].blocks.index);
-
             duplicates[i].Setup(deckUIs[deckIndex].blocks, m_BlockSprite);
             duplicates[i].SetupShadow(m_ShadowDistance);
         }
+
+        SaveSystem.saveData.deck[deckIndex] = blocks;
 
         deckUIs[deckIndex].Setup(blocks, m_BlockSprite);
         deckUIs[deckIndex].SetupShadow(m_ShadowDistance);

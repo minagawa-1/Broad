@@ -25,15 +25,15 @@ public class HandUI : MonoBehaviour
     Deck m_Deck;
     Hand m_Hand;
 
-    MoveButton[] m_MoveButtons;
+    public MoveButton[] moveButtons;
 
     // Start is called before the first frame update
     void Awake()
     {
         Blocks[] deck = new Blocks[SaveSystem.saveData.deck.Length];
-        m_MoveButtons = new MoveButton[GameSetting.hand_blocks];
+        moveButtons = new MoveButton[GameSetting.hand_blocks];
 
-        for (int i = 0; i < deck.Length; ++i) deck[i] = LotteryBlocks.Lottery();
+        for (int i = 0; i < deck.Length; ++i) deck[i] = SaveSystem.saveData.deck[i];
 
         m_Deck = new Deck(deck);
         m_Hand = new Hand(m_Deck, GameSetting.hand_blocks);
@@ -43,11 +43,9 @@ public class HandUI : MonoBehaviour
 
     void BuildButton()
     {
-        Color playerColor = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
-
+        // ボタンの生成
         for (int i = 0; i < GameSetting.hand_blocks; ++i)
         {
-            // ボタンの生成
             var button = Instantiate(m_ButtonPrefab.gameObject).GetComponent<MoveButton>();
 
             button.gameObject.name = $"Button[{i}]";
@@ -72,62 +70,60 @@ public class HandUI : MonoBehaviour
             blocksUI.Setup(m_Hand.GetBlocksAt(i), m_BlockSprite, false, false);
             blocksUI.SetupShadow(m_ShadowDistance);
 
-            m_MoveButtons[i] = button;
+            moveButtons[i] = button;
         }
 
+        // ボタンを押したときの処理
         for (int i = 0; i < GameSetting.hand_blocks; ++i)
         {
-            // ボタンを押したときの処理
             int handIndex = i;
-            m_MoveButtons[i].onClick.AddListener(() => DrawHandToBoard(handIndex));
+            moveButtons[i].onClick.AddListener(() => DrawHandToBoard(handIndex));
         }
 
         // 左端の手札ボタンを選択
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(m_MoveButtons[0].gameObject);
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtons[0].gameObject);
     }
 
     /// <summary>盤面にブロックスを生成するUI処理</summary>
     public void DrawHandToBoard(int handIndex)
     {
         // いずれかのボタンが操作不能・いずれかのボタンが移動処理中
-        foreach (var mb in m_MoveButtons) if (!mb.interactable || DOTween.IsTweening(mb.gameObject)) return;
+        foreach (var mb in moveButtons) if (!mb.interactable || DOTween.IsTweening(mb.gameObject)) return;
 
         Vector2Int pos = GameManager.boardSize / 2;
 
-        Debug.Log("山札の数: " + m_Deck.deck.Count);
-        Debug.Log("手札の数: " + m_Hand.hand.Length);
+        var blocks = m_Hand.GetBlocksAt(handIndex);
 
-        var blocks = m_Hand.PlayAt(handIndex);
-
-        m_BlockManager.CreateBlock(GameSetting.instance.selfIndex, blocks.shape, pos, blocks.density);
+        // ブロックの生成
+        m_BlockManager.CreateBlock(this, handIndex, blocks.shape, pos, blocks.density);
 
         // すべてのボタンを操作不能にする
-        for(int i = 0; i < GameSetting.hand_blocks; ++i) m_MoveButtons[i].Uninteractate(true);
+        Uninteractate();
     }
 
     /// <summary>山札からドローするUI処理</summary>
     /// <param name="num">ドロー先の手札UIの番号</param>
     public void DrawDeckToHand(int handIndex)
     {
-        m_MoveButtons[handIndex].DoMove(new Vector2(m_MoveButtons[handIndex].basisPosition.x, 0f), Ease.InOutCubic, Replace);
+        moveButtons[handIndex].DoMove(new Vector2(moveButtons[handIndex].basisPosition.x, 0f), Ease.InOutCubic, Replace);
 
         void Replace()
         {
             m_Hand.SetBlocksAt(handIndex, m_Deck.Draw());
 
-            m_MoveButtons[handIndex].DoMove(m_MoveButtons[handIndex].basisPosition, Ease.InOutCubic);
+            moveButtons[handIndex].DoMove(moveButtons[handIndex].basisPosition, Ease.InOutCubic);
         }
     }
 
-    private void Update()
+    public void Interactate()
     {
-        // 右クリック or Yボタン or □ボタン
-        if(Mouse.current.rightButton.wasPressedThisFrame || Gamepad.current.buttonWest.wasPressedThisFrame)
-        {
-            // すべてのボタンを操作可能にする
-            for (int i = 0; i < GameSetting.hand_blocks; ++i) m_MoveButtons[i].Interactate();
+        // すべてのボタンを操作可能にする
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtons[i].Interactate();
+    }
 
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(m_MoveButtons[0].gameObject);
-        }
+    public void Uninteractate()
+    {
+        // すべてのボタンを操作可能にする
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtons[i].Uninteractate(true);
     }
 }

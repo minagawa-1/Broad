@@ -11,17 +11,20 @@ using Microsoft.VisualBasic;
 
 public class ControlBlock : MonoBehaviour
 {
-    const float m_operatable_interval = 0.2f;
-    const float m_move_time = 0.05f;
-    const float m_set_time = 0.25f;
+    const float m_operatable_interval   = 0.2f;
+    const float m_move_time             = 0.05f;
+    const float m_set_time              = 0.25f;
 
 // public:
 
     // ブロック情報
     public Blocks blocks;
 
-    // プレイヤー番号
-    public int playerIndex;
+    // 手札UI
+    public HandUI handUI;
+    
+    // 手札番号
+    public int handIndex;
 
     ///<summary>設置後のオブジェクト</summary>
     public Transform afterSetParent;
@@ -134,19 +137,26 @@ public class ControlBlock : MonoBehaviour
 
     void WaitState()
     {
-        // Xキー で、ブロックスを半透明にする
-        if (Keyboard.current.xKey.wasPressedThisFrame || Gamepad.current.buttonNorth.wasPressedThisFrame)
+        // ブロックスの半透明・不透明切り替え（ Cキー | Xボタン | △ボタン ）
+        if (Keyboard.current.cKey.wasPressedThisFrame || Gamepad.current.buttonNorth.wasPressedThisFrame)
         {
             var children = transform.GetChildren();
             GetComponent<ChangeTransparency>().Change(ref children);
         }
 
-        // Zキー or Enterキー or Aボタン or ○ボタン で、ブロックスを設置
+        // キャンセル（ Xキー | Escキー | Bボタン | ×ボタン ）
+        if (Keyboard.current.xKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame
+            || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
+            m_BlocksState = BlocksState.Discard;
+        }
+
+        // ブロックスを設置（ Zキー | Enterキー | Aボタン | ○ボタン ）
         if (Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame
             || Gamepad.current.buttonEast.wasPressedThisFrame)
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
-            if (blocks.IsSetable(GameManager.board, playerIndex))
+            if (blocks.IsSetable(GameManager.board, GameSetting.instance.selfIndex))
                 m_BlocksState = BlocksState.Decision;
 
             // 設置ができない場合は振動
@@ -157,12 +167,12 @@ public class ControlBlock : MonoBehaviour
             }
         }
 
-        // 回転処理
+        // 回転処理（Ease.OutCubic　相対回転）
         int rotate = GetInputRotation();
         if (rotate < 0) ChangeRotateState(-90f);
         if (rotate > 0) ChangeRotateState( 90f);
 
-        // 上下左右の移動処理（Ease.OutCubic・相対移動)
+        // 移動処理（Ease.OutCubic　相対移動)
         Vector2Int move = GetInputDirection();
 
         if(move != Vector2Int.zero) ChangeMoveState(move);
@@ -351,7 +361,7 @@ public class ControlBlock : MonoBehaviour
         // 設置データから現在のターンの盤面メッセージデータを作って送信
         Board board = new Board(setData);
 
-        BoardData boardData = new BoardData(board, playerIndex + 1);
+        BoardData boardData = new BoardData(board, GameSetting.instance.selfIndex + 1);
         NetworkClient.Send(boardData);
 
         // Stateを切り替え
@@ -446,6 +456,9 @@ public class ControlBlock : MonoBehaviour
             // ヒエラルキ上のブロックスをソート
             m_BlockManager.SortBlocks();
 
+            // 現在のターンで生成したブロックの情報を次のターンに持ち越さないようにリストをクリア
+            m_GameManager.createdBlockList.Clear();
+
             m_BlocksState = BlocksState.Discard;
         }
 
@@ -479,11 +492,9 @@ public class ControlBlock : MonoBehaviour
         }
     }
 
+    /// <summary>ブロックの破棄</summary>
     void DiscardState()
     {
-        // 現在のターンで生成したブロックの情報を次のターンに持ち越さないようにリストをクリア
-        m_GameManager.createdBlockList.Clear();
-
         // 操作用のブロックを破棄
         var children = transform.GetChildren();
 
@@ -491,6 +502,9 @@ public class ControlBlock : MonoBehaviour
             DOTween.Kill(children[i].gameObject);
             Destroy(children[i].gameObject);
         }
+
+        handUI.Interactate();
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(handUI.moveButtons[handIndex].gameObject);
 
         DOTween.Kill(gameObject);
         Destroy(gameObject);
