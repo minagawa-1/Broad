@@ -319,7 +319,9 @@ public class ControlBlock : MonoBehaviour
 
                 blocks.position = GetBoardPosition(transform.position).Offset((int)-blocks.center.x, (int)-blocks.center.y);
 
+#if UNITY_EDITOR
                 OutputDebugText(false, "blockShape[,].txt");
+#endif
 
                 // 移動方向をゼロにする
                 m_RotateDirection = 0f;
@@ -458,7 +460,9 @@ public class ControlBlock : MonoBehaviour
         var children = transform.GetChildren();
         for (int i = 0; i < children.Length; ++i) children[i].gameObject.SetActive(false);
 
+#if UNITY_EDITOR
         OutputDebugText(true, "board[,].txt");
+#endif
 
         // イージング (終了後、盤面に反映させて終了)
         for (int i = 0; i < m_GameManager.createdBlockList.Count; ++i)
