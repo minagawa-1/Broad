@@ -272,6 +272,25 @@ public partial class GameManager : MonoBehaviour
         return duplicateList;
     }
 
+    /// <summary>ゲームから抜けたプレイヤーのブロックを削除</summary>
+    /// <param name="playerIndex">抜けたプレイヤー番号</param>
+    void BlockDestroy(int playerIndex)
+    {
+        for (int y = 0; y < boardSize.y; ++y)
+        {
+            for (int x = 0; x < boardSize.x; ++x)
+            {
+                if (board.GetBoardData(x, y) == playerIndex)
+                {
+                    // playerIndexと一致したブロックを削除
+
+                    // board.data[i]を0に変える
+                    board.SetBoardData(0, x, y);
+                }
+            }
+        }
+    }
+
     /// <summary> 背景生成 </summary>
     /// <param name="prefab">プレファブ</param>
     /// <param name="boardSize">ボードのサイズ</param>

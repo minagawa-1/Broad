@@ -48,11 +48,14 @@ public class CustomNetworkManager : NetworkManager
     /// <param name="conn">接続が切れたクライアント情報</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-
+        // 削除したいプレイヤーデータ
         var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
 
         // 削除したいクライアント
         var removeClient = clientDataList.Find(c => c == conn);
+
+        // ここで、GameManagerにremoveDataと一致するプレイヤーのブロックを削除するようにする
+        // ※ [ClientRpc]タグを付けてすべてのクライアントで実行できるようにする
 
         // 切断したプレイヤーから最後のプレイヤーまでの番号を-1する
         for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)
