@@ -85,43 +85,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1494}
     - Class: 114
-      Script: {instanceID: 2748}
+      Script: {instanceID: 2784}
     - Class: 114
-      Script: {instanceID: 3318}
+      Script: {instanceID: 3354}
     - Class: 114
-      Script: {instanceID: 3550}
+      Script: {instanceID: 3586}
     - Class: 114
-      Script: {instanceID: 4100}
+      Script: {instanceID: 4136}
     - Class: 114
-      Script: {instanceID: 4306}
+      Script: {instanceID: 4342}
     - Class: 114
-      Script: {instanceID: 4580}
+      Script: {instanceID: 4616}
     - Class: 114
-      Script: {instanceID: 4788}
+      Script: {instanceID: 4824}
     - Class: 114
-      Script: {instanceID: 5014}
+      Script: {instanceID: 5050}
     - Class: 114
-      Script: {instanceID: 5346}
+      Script: {instanceID: 5382}
     - Class: 114
-      Script: {instanceID: 6040}
+      Script: {instanceID: 6076}
     - Class: 114
-      Script: {instanceID: 6410}
+      Script: {instanceID: 6446}
     - Class: 114
-      Script: {instanceID: 7024}
+      Script: {instanceID: 7060}
     - Class: 114
-      Script: {instanceID: 7224}
+      Script: {instanceID: 7260}
     - Class: 114
-      Script: {instanceID: 7460}
+      Script: {instanceID: 7496}
     - Class: 114
-      Script: {instanceID: 7524}
+      Script: {instanceID: 7560}
     - Class: 114
-      Script: {instanceID: 7948}
+      Script: {instanceID: 7984}
     - Class: 114
-      Script: {instanceID: 8270}
+      Script: {instanceID: 8306}
     - Class: 114
-      Script: {instanceID: 8332}
+      Script: {instanceID: 8368}
     - Class: 114
-      Script: {instanceID: 8966}
+      Script: {instanceID: 9002}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -172,37 +172,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1492}
     - Class: 114
-      Script: {instanceID: 1640}
+      Script: {instanceID: 1676}
     - Class: 114
-      Script: {instanceID: 2748}
+      Script: {instanceID: 2784}
     - Class: 114
-      Script: {instanceID: 4100}
+      Script: {instanceID: 4136}
     - Class: 114
-      Script: {instanceID: 4474}
+      Script: {instanceID: 4510}
     - Class: 114
-      Script: {instanceID: 4810}
+      Script: {instanceID: 4846}
     - Class: 114
-      Script: {instanceID: 5320}
+      Script: {instanceID: 5356}
     - Class: 114
-      Script: {instanceID: 5362}
+      Script: {instanceID: 5398}
     - Class: 114
-      Script: {instanceID: 6040}
+      Script: {instanceID: 6076}
     - Class: 114
-      Script: {instanceID: 6410}
+      Script: {instanceID: 6446}
     - Class: 114
-      Script: {instanceID: 7224}
+      Script: {instanceID: 7260}
     - Class: 114
-      Script: {instanceID: 7460}
+      Script: {instanceID: 7496}
     - Class: 114
-      Script: {instanceID: 7702}
+      Script: {instanceID: 7738}
     - Class: 114
-      Script: {instanceID: 7998}
+      Script: {instanceID: 8034}
     - Class: 114
-      Script: {instanceID: 8260}
+      Script: {instanceID: 8296}
     - Class: 114
-      Script: {instanceID: 8270}
+      Script: {instanceID: 8306}
     - Class: 114
-      Script: {instanceID: 9146}
+      Script: {instanceID: 9182}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -247,47 +247,47 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1492}
     - Class: 114
-      Script: {instanceID: 1598}
+      Script: {instanceID: 1634}
     - Class: 114
-      Script: {instanceID: 1792}
+      Script: {instanceID: 1828}
     - Class: 114
-      Script: {instanceID: 1856}
+      Script: {instanceID: 1892}
     - Class: 114
-      Script: {instanceID: 2748}
+      Script: {instanceID: 2784}
     - Class: 114
-      Script: {instanceID: 3318}
+      Script: {instanceID: 3354}
     - Class: 114
-      Script: {instanceID: 3742}
+      Script: {instanceID: 3778}
     - Class: 114
-      Script: {instanceID: 3804}
+      Script: {instanceID: 3840}
     - Class: 114
-      Script: {instanceID: 4100}
+      Script: {instanceID: 4136}
     - Class: 114
-      Script: {instanceID: 4398}
+      Script: {instanceID: 4434}
     - Class: 114
-      Script: {instanceID: 5558}
+      Script: {instanceID: 5594}
     - Class: 114
-      Script: {instanceID: 6040}
+      Script: {instanceID: 6076}
     - Class: 114
-      Script: {instanceID: 6282}
+      Script: {instanceID: 6318}
     - Class: 114
-      Script: {instanceID: 6410}
+      Script: {instanceID: 6446}
     - Class: 114
-      Script: {instanceID: 6424}
+      Script: {instanceID: 6460}
     - Class: 114
-      Script: {instanceID: 6474}
+      Script: {instanceID: 6510}
     - Class: 114
-      Script: {instanceID: 7428}
+      Script: {instanceID: 7464}
     - Class: 114
-      Script: {instanceID: 7460}
+      Script: {instanceID: 7496}
     - Class: 114
-      Script: {instanceID: 7898}
+      Script: {instanceID: 7934}
     - Class: 114
-      Script: {instanceID: 8220}
+      Script: {instanceID: 8256}
     - Class: 114
-      Script: {instanceID: 8270}
+      Script: {instanceID: 8306}
     - Class: 114
-      Script: {instanceID: 9018}
+      Script: {instanceID: 9054}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -357,7 +357,7 @@ ScriptsOnlyBuild:
     className: NetworkDiscoveryHUD
   - hash:
       serializedVersion: 2
-      Hash: 893c346001924cd53c4b8142b8bb9d4d
+      Hash: ef3dfcfb9736b467be55eda57b6e66ed
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -501,7 +501,7 @@ ScriptsOnlyBuild:
     className: UnityOnJointBreakMessageListener
   - hash:
       serializedVersion: 2
-      Hash: a6370fb2cd6b4037af3f9ee3d5468c4a
+      Hash: 5288e68fb50337d3439c64b16cfe3472
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ControlBlock
@@ -1029,7 +1029,7 @@ ScriptsOnlyBuild:
     className: CCUNetworkManager
   - hash:
       serializedVersion: 2
-      Hash: 413f98f0096e166dcf2a3f39ceb26216
+      Hash: fadfef6b9d86fa25a9880fa3e4432374
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HandUI

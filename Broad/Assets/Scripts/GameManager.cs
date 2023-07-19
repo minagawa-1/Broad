@@ -25,6 +25,7 @@ public partial class GameManager : MonoBehaviour
 
     [Header("コンポーネント")]
     [SerializeField] BlockManager m_BlockManager = null;     // ブロックマネージャー
+    [SerializeField] DonutChart   m_DonutChart   = null;     // ドーナツチャート
 
     // ネットワークマネージャー
     CustomNetworkManager m_NetworkManager = null;
@@ -54,6 +55,7 @@ public partial class GameManager : MonoBehaviour
 
         // クライアント側がデータを受信したときに対応した関数を実行するように登録
         NetworkClient.RegisterHandler<BoardData>(ClientReceivedBoardData);
+        NetworkClient.ReplaceHandler<PlayerData>(ClientReceivedPlayerData);
 
         // シーンをまたいで存在するNetworkManagerの取得
         m_NetworkManager = GameObject.Find(nameof(NetworkManager)).GetComponent<CustomNetworkManager>();
@@ -272,6 +274,34 @@ public partial class GameManager : MonoBehaviour
         return duplicateList;
     }
 
+    /// <summary>プレイヤーがゲームから抜けた</summary>
+    /// <param name="playerIndex">プレイヤー番号</param>
+    void PlayerExits(int playerIndex)
+    {
+        // 抜けたプレイヤーが設置した場所を探す
+        for (int y = 0; y < boardSize.y; ++y)
+        {
+            for (int x = 0; x < boardSize.x; ++x)
+            {
+                // 設置個所が判明
+                if (board.GetBoardData(x,y) == playerIndex)
+                {
+                    // 一致した箇所を0に変更
+                    board.SetBoardData(0, x, y);
+
+                    // 座標と一致する名前のブロックを削除
+                    Transform destroyObject = m_BlockManager.blockParent.transform.Find($"Block[{x}, {y}]");
+
+                    // 一致した座標のブロックを削除
+                    Destroy(destroyObject.gameObject);
+                }
+            }
+        }
+
+        // ドーナツチャートを更新
+        m_DonutChart.UpdateDonut();
+    }
+
     /// <summary> 背景生成 </summary>
     /// <param name="prefab">プレファブ</param>
     /// <param name="boardSize">ボードのサイズ</param>
@@ -340,6 +370,15 @@ public partial class GameManager : MonoBehaviour
 
         // 盤面のサイズを取得
         boardSize = new Vector2Int(boardData.board.width, boardData.board.height);
+    }
+
+    /// <summary>クライアント側でプレイヤーデータを受信</summary>
+    /// <param name="playerData">プレイヤーデータ</param>
+    void ClientReceivedPlayerData(PlayerData playerData)
+    {
+        // ゲーム中に抜けたプレイヤーのブロックを削除
+        // ※ selfIndexに1加算しているのは、設置時に1加算しているためそっちに合わせる
+        PlayerExits(playerData.selfIndex + 1);
     }
 
     // 範囲内でランダムな座標を返す関数

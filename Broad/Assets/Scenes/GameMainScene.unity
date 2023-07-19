@@ -172,6 +172,7 @@ MonoBehaviour:
   m_BlockPrefab: {fileID: 4511753789749413597, guid: ba55a8d7ccb955b4982436799a6cd040, type: 3}
   m_FurthestCameraOffset: {x: 0, y: 4, z: -4}
   m_BlockManager: {fileID: 442827331}
+  m_DonutChart: {fileID: 1972892719}
   readyCount: 0
   isReceived: 0
   createdBlockList: []
@@ -564,7 +565,7 @@ MonoBehaviour:
   m_ShadowDistance: {x: 0.33, y: -0.33}
   buttonGroupWidth: 1600
   m_BlockManager: {fileID: 442827331}
-  m_GameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
+  moveButtons: []
 --- !u!222 &1520345860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -773,7 +774,6 @@ MonoBehaviour:
   thickness: 8
   resolution: 255
   m_AnimationTime: 0.5
-  gameSetting: {fileID: 11400000, guid: 7921ac6de435c664ba8fa8167f529e08, type: 2}
 --- !u!222 &1972892720
 CanvasRenderer:
   m_ObjectHideFlags: 0

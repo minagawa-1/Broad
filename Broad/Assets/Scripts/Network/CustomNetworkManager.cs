@@ -48,8 +48,14 @@ public class CustomNetworkManager : NetworkManager
     /// <param name="conn">接続が切れたクライアント情報</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-
+        // 削除したいプレイヤーデータ
         var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
+        Debug.Log($"connectionId: {conn.connectionId}");
+        Debug.Log($"removeData: {removeData.selfIndex}");
+
+        // 全クライアントにゲームメイン中にぬけたプレイヤーの情報を送信
+        if (SceneManager.GetActiveScene().name == Scene.GameMainScene)
+            NetworkServer.SendToAll(removeData);
 
         // 削除したいクライアント
         var removeClient = clientDataList.Find(c => c == conn);
