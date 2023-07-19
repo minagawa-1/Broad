@@ -1,0 +1,745 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cdec87f81b5ff6439d8e3ffa5eba519, type: 3}
+  m_Name: Bullet Data
+  m_EditorClassIdentifier: 
+  bulletDataList:
+  - name: Small
+    sprite: {fileID: 21300000, guid: 1bd4bfb6ebeba4e4b81b4b2e5850f439, type: 3}
+    scale: {x: 0.1, y: 0.1}
+    rotateSpeed: 0
+  - name: Middle
+    sprite: {fileID: 21300000, guid: 1cd4c53e5bf9dde4bb21b2a40c5cb4f4, type: 3}
+    scale: {x: 0.06, y: 0.06}
+    rotateSpeed: 0
+  - name: Large
+    sprite: {fileID: 21300000, guid: 7ed29dd30fb8e2244b33ad81cd451923, type: 3}
+    scale: {x: 1, y: 1}
+    rotateSpeed: 0
+  - name: Blade
+    sprite: {fileID: 21300000, guid: 0e26d6b3759fdf6448827bbf3a7c5f7b, type: 3}
+    scale: {x: 0.2, y: 0.2}
+    rotateSpeed: 0
+  - name: Star
+    sprite: {fileID: 21300000, guid: 8663b5d1fec7daa439e6dc0b226c2a02, type: 3}
+    scale: {x: 0.2, y: 0.2}
+    rotateSpeed: 360
+  - name: Gear
+    sprite: {fileID: 21300000, guid: 811b2b8fe00f3154da939ea54a2446a0, type: 3}
+    scale: {x: 0.25, y: 0.25}
+    rotateSpeed: 180
+  - name: Bone
+    sprite: {fileID: 21300000, guid: 9a5f377cdf4eb5843aa3429be1a67c3f, type: 3}
+    scale: {x: 0.2, y: 0.2}
+    rotateSpeed: 1080
+  bulletPresetList:
+  - explanation: "\u30D9\u30EC\u30C3\u30BFSO5"
+    type: 3
+    bullet: 0
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.5019608}
+      key1: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 0
+    injectionInterval:
+      min: 0.4
+      max: 0.4
+    homingPower: 100
+    moveCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    shakeAngle: 10
+  - explanation: UZI
+    type: 3
+    bullet: 0
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.5019608}
+      key1: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 1
+    injectionInterval:
+      min: 0.1
+      max: 0.1
+    homingPower: 100
+    moveCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    shakeAngle: 6
+  - explanation: "\u4E94\u8292\u6483"
+    type: 0
+    bullet: 3
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key1: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 2
+    injectionInterval:
+      min: 0.02
+      max: 0.02
+    homingPower: 100
+    moveCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 0
+    shakeAngle: 8
+  - explanation: "\u77E2\u306E\u96E8"
+    type: 3
+    bullet: 3
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key1: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 1
+    injectionInterval:
+      min: 0.07
+      max: 0.07
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 7
+  - explanation: "\u8FFD\u5203"
+    type: 1
+    bullet: 3
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key1: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 3
+    injectionInterval:
+      min: 0.12
+      max: 0.12
+    homingPower: 160
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u96F7\u306E\u6756"
+    type: 1
+    bullet: 4
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 0.9333333, b: 0, a: 0.5019608}
+      key1: {r: 1, g: 0.56363636, b: 0, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 3
+    injectionInterval:
+      min: 0.1
+      max: 0.1
+    homingPower: 40
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u4E09\u5263\u4E00\u4F53"
+    type: 0
+    bullet: 3
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 0.9103774, g: 1, b: 0.9949078, a: 0.5019608}
+      key1: {r: 0.5990566, g: 0.9159699, b: 1, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 193
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 4
+    injectionInterval:
+      min: 0.15
+      max: 0.15
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u30C7\u30A3\u30EC\u30AF\u30B7\u30E7\u30CA\u30EB\u30B9\u30BF\u30FC"
+    type: 0
+    bullet: 4
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key1: {r: 1, g: 1, b: 1, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 5
+    injectionInterval:
+      min: 0.2
+      max: 0.2
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u6247\u306E\u4E2D\u592E"
+    type: 0
+    bullet: 3
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 0.44234562, g: 0.77254903, b: 0.32549018, a: 0.5019608}
+      key1: {r: 0.26614794, g: 0.5188679, b: 0.16887683, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 6
+    injectionInterval:
+      min: 0.3
+      max: 0.3
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u6247\u306E\u5DE6\u53F3"
+    type: 0
+    bullet: 4
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 0.44234562, g: 0.77254903, b: 0.32549018, a: 0.5019608}
+      key1: {r: 0.26614794, g: 0.5188679, b: 0.16887683, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 7
+    injectionInterval:
+      min: 0.3
+      max: 0.3
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  - explanation: "\u6247\u306E\u5DE6\u53F3\u7AEF"
+    type: 0
+    bullet: 1
+    colorGradation:
+      serializedVersion: 2
+      key0: {r: 1, g: 0.9333333, b: 0, a: 0.5019608}
+      key1: {r: 1, g: 0.56363636, b: 0, a: 0.5019608}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    processIndex: 8
+    injectionInterval:
+      min: 0.3
+      max: 0.3
+    homingPower: 0
+    moveCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    shakeAngle: 0
+  bulletProcessList:
+  - explanation: "5way\u30B7\u30E7\u30C3\u30C8\u30AC\u30F3"
+    wayCountRange:
+      min: 5
+      max: 5
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 0
+      max: 0
+    speed: 16
+    deadTime: 0.75
+  - explanation: "\u9023\u5C04\u5F3E"
+    wayCountRange:
+      min: 1
+      max: 1
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 0
+      max: 0
+    speed: 16
+    deadTime: 0.75
+  - explanation: "\uFF15\u65B9\u5411\u5C04\u51FA"
+    wayCountRange:
+      min: 5
+      max: 5
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 1
+    rotateDirection:
+      min: 8
+      max: 8
+    angleRange:
+      min: 0
+      max: 0
+    speed: 6
+    deadTime: 3
+  - explanation: "\u8FFD\u5203"
+    wayCountRange:
+      min: 1
+      max: 1
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 0
+      max: 0
+    speed: 12
+    deadTime: 1.2
+  - explanation: "\uFF13\u65B9\u5411\u5C04\u51FA"
+    wayCountRange:
+      min: 3
+      max: 3
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 3
+      max: 3
+    speed: 12
+    deadTime: 1.2
+  - explanation: "16\u65B9\u5411\u5C04\u51FA"
+    wayCountRange:
+      min: 8
+      max: 8
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 1
+    rotateDirection:
+      min: 45
+      max: 45
+    angleRange:
+      min: 3
+      max: 3
+    speed: 7.2
+    deadTime: 2
+  - explanation: "\u6247\u306E\u4E2D\u592E"
+    wayCountRange:
+      min: 3
+      max: 3
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 7
+      max: 7
+    speed: 6
+    deadTime: 2.4
+  - explanation: "\u6247\u306E\u5DE6\u53F3"
+    wayCountRange:
+      min: 2
+      max: 2
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 14
+      max: 14
+    speed: 6
+    deadTime: 2.4
+  - explanation: "\u6247\u306E\u5DE6\u53F3\u7AEF"
+    wayCountRange:
+      min: 2
+      max: 2
+    isLookTarget: 0
+    direction: 0
+    isSniping: 0
+    isAllRange: 0
+    rotateDirection:
+      min: 0
+      max: 0
+    angleRange:
+      min: 21
+      max: 21
+    speed: 6
+    deadTime: 2.4

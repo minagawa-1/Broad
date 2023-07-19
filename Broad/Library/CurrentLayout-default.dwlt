@@ -19,9 +19,13 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
+<<<<<<< HEAD
   m_Title: Console
+=======
+  m_Title: Game
+>>>>>>> parent of 27901a81 (デバッグログの削除)
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -119,7 +123,11 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 342}
   m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
+<<<<<<< HEAD
   controlID: 113
+=======
+  controlID: 19
+>>>>>>> parent of 27901a81 (デバッグログの削除)
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +152,11 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 342}
   m_MaxSize: {x: 8003, y: 8042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 88
+=======
+  controlID: 74
+>>>>>>> parent of 27901a81 (デバッグログの削除)
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +181,11 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
+<<<<<<< HEAD
   controlID: 89
+=======
+  controlID: 75
+>>>>>>> parent of 27901a81 (デバッグログの削除)
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -332,7 +348,11 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
+<<<<<<< HEAD
       m_ExpandedIDs: 50fbffff
+=======
+      m_ExpandedIDs: f4f7ffff32f8ffff5efaffff72faffff76faffff4afbffff
+>>>>>>> parent of 27901a81 (デバッグログの削除)
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -624,21 +644,27 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\GamePG\Documents\GitHub\Broad\Broad
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 2}
     m_SelectedIDs: b45b0000
     m_LastClickedID: 23476
+=======
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: b05b0000
+    m_LastClickedID: 23472
+>>>>>>> parent of 27901a81 (デバッグログの削除)
     m_ExpandedIDs: 00000000865b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0

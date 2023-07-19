@@ -261,8 +261,12 @@ public class TitleState : NetworkDiscovery
                 // 取得したURIを使ってサーバーに接続する
                 m_NetworkManager.StartClient(m_DiscoverdServer.uri);
 
+                Debug.Log("Start Client");
+
                 // サーバー検索を止める
                 StopDiscovery();
+
+                Debug.Log("Start Client");
             }
             else
             {
@@ -278,6 +282,8 @@ public class TitleState : NetworkDiscovery
                     // サーバーの宣言をする
                     // これをしないと、サーバーが見つからない
                     AdvertiseServer();
+
+                    Debug.Log("Start Host");
                 }
             }
         }
