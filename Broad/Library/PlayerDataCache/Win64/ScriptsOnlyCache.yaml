@@ -357,7 +357,7 @@ ScriptsOnlyBuild:
     className: NetworkDiscoveryHUD
   - hash:
       serializedVersion: 2
-      Hash: 893c346001924cd53c4b8142b8bb9d4d
+      Hash: ef3dfcfb9736b467be55eda57b6e66ed
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -501,7 +501,7 @@ ScriptsOnlyBuild:
     className: UnityOnJointBreakMessageListener
   - hash:
       serializedVersion: 2
-      Hash: a6370fb2cd6b4037af3f9ee3d5468c4a
+      Hash: 5288e68fb50337d3439c64b16cfe3472
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ControlBlock
@@ -1029,7 +1029,7 @@ ScriptsOnlyBuild:
     className: CCUNetworkManager
   - hash:
       serializedVersion: 2
-      Hash: 413f98f0096e166dcf2a3f39ceb26216
+      Hash: fadfef6b9d86fa25a9880fa3e4432374
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HandUI
