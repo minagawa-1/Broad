@@ -1,27 +1,20 @@
-﻿/// <summary>タグ(列挙型)</summary>
-public class Tag
+﻿/// <summary>レイヤー(列挙型)</summary>
+public enum Tag
 {
 	/// <summary>Untagged</summary>
-	public const string Untagged = "Untagged";
-
+	Untagged,
 	/// <summary>Respawn</summary>
-	public const string Respawn = "Respawn";
-
+	Respawn,
 	/// <summary>Finish</summary>
-	public const string Finish = "Finish";
-
+	Finish,
 	/// <summary>EditorOnly</summary>
-	public const string EditorOnly = "EditorOnly";
-
+	EditorOnly,
 	/// <summary>MainCamera</summary>
-	public const string MainCamera = "MainCamera";
-
+	MainCamera,
 	/// <summary>Player</summary>
-	public const string Player = "Player";
-
+	Player,
 	/// <summary>GameController</summary>
-	public const string GameController = "GameController";
-
+	GameController,
 	/// <summary>Block</summary>
-	public const string Block = "Block";
+	Block
 }

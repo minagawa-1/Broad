@@ -28,8 +28,8 @@ public static class EnumTagCreator
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("/// <summary>タグ(列挙型)</summary>");
-        builder.AppendLine("public class " + class_name);
+        builder.AppendLine("/// <summary>レイヤー(列挙型)</summary>");
+        builder.AppendLine("public enum " + class_name);
         builder.AppendLine("{");
 
         var tags = InternalEditorUtility.tags.Select(c => new { enumeration = ScriptCreator.RemoveInvalidChars(c), name = c });
@@ -37,9 +37,11 @@ public static class EnumTagCreator
         {
             builder.AppendLine($"\t/// <summary>{tags.ElementAt(i).enumeration}</summary>");
 
-            string fin = i < tags.Count() - 1 ? "\n" : "";
+            string fin = i < tags.Count() - 1 ? "," : "";
 
-            builder.AppendLine($"\tpublic const string {tags.ElementAt(i).enumeration} = \"{tags.ElementAt(i).name}\";" + fin);
+            string enumeration = tags.ElementAt(i).enumeration;
+
+            builder.AppendLine($"\t{enumeration}" + fin);
         }
 
         builder.AppendLine("}");

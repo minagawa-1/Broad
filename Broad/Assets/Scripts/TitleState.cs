@@ -189,7 +189,7 @@ public class TitleState : NetworkDiscovery
             SetupPlayerColor();
 
             // シーン遷移処理
-            Transition.instance.LoadScene(Scene.GameMainScene, m_NetworkManager, 1f, 0.5f);
+            Transition.instance.LoadScene(Scene.GameMainScene.ToString(), m_NetworkManager, 1f, 0.5f);
         }
     }
 
@@ -342,17 +342,17 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    public void OpenDeckScene()
+    public void OpenScene(string sceneName)
     {
         if (m_MatchState >= MatchState.CompleteMatch) return;
 
         m_EventSystem.enabled = false;
         m_AudioListener.enabled = false;
 
-        SceneManager.LoadSceneAsync(Scene.DeckScene, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 
-    public void OnClosedDeckScene()
+    public void OnClosedScene()
     {
         m_EventSystem.firstSelectedGameObject = m_DeckButton.gameObject;
         m_EventSystem.enabled = true;

@@ -42,7 +42,7 @@ public class Transition : MonoBehaviour
     {
         GameObject canvasObject = new GameObject("FadeCanvas");
         canvasObject.transform.SetParent(transform);
-        canvasObject.layer = LayerMask.NameToLayer(Layer.UI);
+        canvasObject.layer = (int)Layer.UI;
 
         RectTransform fadeCanvasRectTransform = canvasObject.AddComponent<RectTransform>();
         fadeCanvasRectTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);

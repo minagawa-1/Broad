@@ -24,7 +24,7 @@ public class CustomNetworkManager : NetworkManager
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
         // タイトルシーンのみでの処理
-        if (SceneManager.GetActiveScene().name == Scene.TitleScene)
+        if (SceneManager.GetActiveScene().name == Scene.TitleScene.ToString())
         {
             if (conn != null)
             {
@@ -54,7 +54,7 @@ public class CustomNetworkManager : NetworkManager
         Debug.Log($"removeData: {removeData.selfIndex}");
 
         // 全クライアントにゲームメイン中にぬけたプレイヤーの情報を送信
-        if (SceneManager.GetActiveScene().name == Scene.GameMainScene)
+        if (SceneManager.GetActiveScene().name == Scene.GameMainScene.ToString())
             NetworkServer.SendToAll(removeData);
 
         // 削除したいクライアント
@@ -81,7 +81,7 @@ public class CustomNetworkManager : NetworkManager
         GameManager.board.data = null;
 
         // マッチングシーンに戻る
-        SceneManager.LoadScene(Scene.TitleScene);
+        SceneManager.LoadScene((int)Scene.TitleScene);
 
         base.OnClientDisconnect();
     }

@@ -1,18 +1,14 @@
 ﻿/// <summary>レイヤー(列挙型)</summary>
-public class Layer
+public enum Layer
 {
 	/// <summary>Default</summary>
-	public const string Default = "Default";
-
+	Default = 0,
 	/// <summary>TransparentFX</summary>
-	public const string TransparentFX = "TransparentFX";
-
+	TransparentFX = 1,
 	/// <summary>IgnoreRaycast</summary>
-	public const string IgnoreRaycast = "Ignore Raycast";
-
+	IgnoreRaycast = -1,
 	/// <summary>Water</summary>
-	public const string Water = "Water";
-
+	Water = 4,
 	/// <summary>UI</summary>
-	public const string UI = "UI";
+	UI = 5
 }

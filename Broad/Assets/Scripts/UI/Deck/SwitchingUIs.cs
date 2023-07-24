@@ -66,9 +66,9 @@ public class SwitchingUIs : MonoBehaviour
         m_RectTransform.DOMove(m_BasisPosition + m_MoveDistance, m_SwitchTime).SetEase(m_CloseEase)
             .OnComplete(() =>
             {
-                m_TitleState.OnClosedDeckScene();
+                m_TitleState.OnClosedScene();
 
-                SceneManager.UnloadSceneAsync(Scene.DeckScene);
+                SceneManager.UnloadSceneAsync((int)Scene.DeckScene);
             });
     }
 
