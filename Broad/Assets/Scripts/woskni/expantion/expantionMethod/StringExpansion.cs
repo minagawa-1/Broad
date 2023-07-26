@@ -1,6 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static  class StringExpansion
@@ -24,7 +25,38 @@ public static  class StringExpansion
     /// <param name="search">検索文字列</param>
     public static int HitCount(this string text, string search) => new Regex(Regex.Escape(search)).Matches(text).Count;
 
-    /// <summary>全角に変換する</summary>
+    /// <summary>数値を抽出</summary>
+    /// <returns>見つからなかった場合、0を返す</returns>
+    public static double ExtractNumerics(this string text)
+    {
+        // 正規表現を適用してマッチした文字列を取得
+        // [-+]?    ：- or + が 0～1回現れる
+        // \d+      ：数値(\d)が1回以上現れる
+        // (\.\d+)? ：小数点以下の数値(\.\d+)が1回以上現れる
+        Match match = Regex.Match(text, @"[-+]?\d+(\.\d+)?");
+
+        // マッチが成功している場合は、double型に変換して返す
+        return match.Success && double.TryParse(match.Value, out double result) ? result : 0;
+    }
+
+    /// <summary>指定行目の文字列を抽出</summary>
+    /// <param name="line">行</param>
+    public static string GetLine(this string text, int line)
+    {
+        return text.Split(new[] { System.Environment.NewLine }, System.StringSplitOptions.None)[line];
+    }
+
+    /// <summary>指定行範囲の文字列を抽出</summary>
+    /// <param name="startLine">開始行</param>
+    /// <param name="endLine">終了行</param>
+    public static string GetLine(this string text, int startLine, int endLine)
+    {
+        var result = text.Split(new[] { System.Environment.NewLine }, System.StringSplitOptions.None);
+
+        return string.Join(System.Environment.NewLine, result.Skip(startLine).Take(endLine));
+    }
+
+    /// <summary>全角に変換</summary>
     /// <param name="halfText">半角の文字列</param>
     public static string ToFullWidth(this string halfText)
     {
@@ -36,7 +68,7 @@ public static  class StringExpansion
         return fullWidthStr;
     }
 
-    /// <summary>半角に変換する</summary>
+    /// <summary>半角に変換</summary>
     /// <param name="fullText">全角の文字列</param>
     static public string ToHalfWidth(this string fullText)
     {

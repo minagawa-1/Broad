@@ -98,7 +98,6 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Comment.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ReadOnly.cs" />
     <Compile Include="Assets\Scripts\woskni\math\Round.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\LongExpansion.cs" />
     <Compile Include="Assets\Scripts\TitleState.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendPlayerData.cs" />
     <Compile Include="Assets\Scripts\UI\ExtendButton.cs" />
@@ -130,6 +129,7 @@
     <Compile Include="Assets\Scripts\Block\Blocks.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\FileCountGUI.cs" />
     <Compile Include="Assets\Scripts\ContrastCamera.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\Title\StartButtonState.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\FilePath.cs" />
@@ -144,7 +144,8 @@
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumExpansion.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\BuiltInIconWindow.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\NumericExpansion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

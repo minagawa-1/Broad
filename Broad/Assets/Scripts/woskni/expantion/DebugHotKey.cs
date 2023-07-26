@@ -49,7 +49,7 @@ public class DebugHotKey : EditorWindow
 
     /// <summary>Debug.Log(FPS)</summary>
     [MenuItem("Woskni/Editor/FPS出力 _F6")] 
-    public static void LogHPS() { Debug.Log($"FPS: {1f / Time.deltaTime}"); }
+    public static void LogFPS() { Debug.Log($"FPS: {1f / Time.deltaTime}"); }
 
     [MenuItem("Woskni/Editor/セーブデータ出力 _F8")]
     public static void LogSaveData() { SaveSystem.ConfirmData(); }
