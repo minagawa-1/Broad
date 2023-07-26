@@ -24,7 +24,6 @@ public static class GameObjectExpansion
     }
 
 	/// <summary>レイヤーを変更</summary>
-	/// <param name="gameObject">お前</param>
 	/// <param name="layer">レイヤー番号</param>
 	/// <param name="needSetChildrens">子オブジェクトのレイヤーも変更するか</param>
 	public static void SetLayer(this GameObject gameObject, int layer, bool needSetChildrens = true)
@@ -40,7 +39,6 @@ public static class GameObjectExpansion
 	}
 
 	/// <summary>レイヤーを変更</summary>
-	/// <param name="gameObject">お前</param>
 	/// <param name="layerName">レイヤー名</param>
 	/// <param name="needSetChildrens">子オブジェクトのレイヤーも変更するか</param>
 	public static void SetLayer(this GameObject gameObject, string layerName, bool needSetChildrens = true)

@@ -5,10 +5,8 @@ using UnityEngine;
 
 public static  class StringExpansion
 {
-    /// <summary>指定回数分、文字列を繰り返す</summary>
-    /// <param name="text">元となる文字列</param>
-    /// <param name="count">繰り返し回数</param>
-    /// <returns>繰り返された文字列</returns>
+    /// <summary>文字列を繰り返す</summary>
+    /// <param name="count">繰り返す回数</param>
     public static string Repeat(this string text, int count)
     {
         // 連続回数が1回未満なら空を返す
@@ -40,7 +38,7 @@ public static  class StringExpansion
 
     /// <summary>半角に変換する</summary>
     /// <param name="fullText">全角の文字列</param>
-    static public string ConvertToHalfWidth(this string fullText)
+    static public string ToHalfWidth(this string fullText)
     {
         string halfWidthStr = null;
 
@@ -55,7 +53,7 @@ public static  class StringExpansion
     /// <param name="fillStr">文字埋めに使用する文字列(例："　", "0")</param>
     /// <param name="maxDigit">文字埋めする際の最大文字数</param>
     /// <returns></returns>
-    public static string ZeroFillFront(string str, string fillStr, int maxDigit)
+    public static string FillFront(string str, string fillStr, int maxDigit)
     {
         // 最大文字数を文字埋め数に変換
         maxDigit -= str.Length;
