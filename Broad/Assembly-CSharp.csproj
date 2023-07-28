@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ListExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\EditorTheme.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\BuiltInIconWindow.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\TextExpansion.cs" />
     <Compile Include="Assets\Scripts\PlayerPrefabsList.cs" />
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\Base64.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\PreviewTexture.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Percentage.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\NumericExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ComponentGUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\AESEncrypt.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\RenderingMode.cs" />
@@ -144,8 +146,6 @@
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\BuiltInIconWindow.cs" />
-    <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\NumericExpansion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
