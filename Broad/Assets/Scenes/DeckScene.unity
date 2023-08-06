@@ -330,7 +330,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6607\u9806"
+  m_Text: Asc
 --- !u!222 &155425993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -687,7 +687,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 60, y: -48}
-  m_SizeDelta: {x: 270, y: 48}
+  m_SizeDelta: {x: 380, y: 48}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &251741861
 MonoBehaviour:
@@ -738,13 +738,13 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: "\u756A\u53F7 \u9806"
+    - m_Text: Number order
       m_Image: {fileID: 0}
-    - m_Text: "\u30D6\u30ED\u30C3\u30AF\u6570 \u9806"
+    - m_Text: PIiece order
       m_Image: {fileID: 0}
-    - m_Text: "\u7E26\u6A2A\u5E45 \u9806"
+    - m_Text: Width and height order
       m_Image: {fileID: 0}
-    - m_Text: "\u5BC6\u5EA6 \u9806"
+    - m_Text: Density order
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1197,10 +1197,10 @@ RectTransform:
   m_Father: {fileID: 1991248424}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -48, y: 0}
-  m_SizeDelta: {x: 128, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 128, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541429973
 MonoBehaviour:
@@ -1229,13 +1229,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u2190 \u623B\u308B"
+  m_Text: Back
 --- !u!222 &541429974
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1654,6 +1654,7 @@ MonoBehaviour:
   m_DecksButtonScaleDirection: {x: 261.5, y: 0}
   m_AudioListener: {fileID: 1728687950}
   m_EventSystem: {fileID: 471990892}
+  m_SwitchScene: 2
 --- !u!1 &840411968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,7 +2453,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u756A\u53F7 \u9806"
+  m_Text: Number order
 --- !u!222 &1286244272
 CanvasRenderer:
   m_ObjectHideFlags: 0

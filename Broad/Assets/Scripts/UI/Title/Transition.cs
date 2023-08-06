@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections;
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using DG.Tweening;
 using Mirror;
 
@@ -17,7 +16,10 @@ public class Transition : MonoBehaviour
     public CanvasGroup fadeCanvasGroup { get; private set; }
 
     /// <summary>遷移中か</summary>
-    public bool fading { get; private set; }    
+    public bool fading { get; private set; }
+
+    /// <summary>フェードアウト後の最大明度</summary>
+    public float minAlpha => woskni.Range.O1.Lerp(1f - Config.data.brightness, 0.2f, 1f);
 
     private void Awake()
     {
@@ -25,6 +27,11 @@ public class Transition : MonoBehaviour
         else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        Config.Load();
+        SaveSystem.Load();
+        Localization.Setup();
+        Localization.Correct();
     }
 
     private void Start()
@@ -35,7 +42,7 @@ public class Transition : MonoBehaviour
 
         // フェードアウト開始
         fadeCanvasGroup.alpha = 1f;
-        fadeCanvasGroup.DOFade(0f, basis_fade_time).OnComplete(() => fading = false);
+        fadeCanvasGroup.DOFade(minAlpha, basis_fade_time).OnComplete(() => fading = false);
     }
 
     private CanvasGroup CreateFadeCanvas()
@@ -90,7 +97,7 @@ public class Transition : MonoBehaviour
         fading = true;
 
         // フェードイン開始
-        fadeCanvasGroup.alpha = 0f;
+        fadeCanvasGroup.alpha = minAlpha;
         fadeCanvasGroup.DOFade(1f, fadeInTime).OnComplete(FadeOut);
 
         void FadeOut()
@@ -98,13 +105,25 @@ public class Transition : MonoBehaviour
             // シーン遷移
             if (NetworkClient.activeHost) networkManager.ServerChangeScene(sceneName);
 
+            Localization.Setup();
+            Localization.Correct();
+
             // 遷移前のシーンで再生していたDOTweenをリセットする
             DOTween.KillAll();
 
             fadeCanvasGroup.alpha = 1f;
 
             // フェードアウト開始
-            fadeCanvasGroup.DOFade(0f, fadeOutTime).OnComplete(() => fading = false);
+            fadeCanvasGroup.DOFade(minAlpha, fadeOutTime).OnComplete(() => fading = false);
         }
+    }
+
+    /// <summary>画面のフェードアウト後の最大明度を設定</summary>
+    /// <param name="brightness">最大明度 (0.0 to 1.0)</param>
+    public void SetMaxBrightness()
+    {
+        if (fading) return;
+
+        fadeCanvasGroup.alpha = minAlpha;
     }
 }

@@ -43,7 +43,7 @@ public partial class BlocksListUI : MonoBehaviour
         m_ScrollRectTransform = m_ScrollRect.GetComponent<RectTransform>();
 
         // ボタンの配置
-        for (int i = 0; i < SaveSystem.saveData.blocksList.Count; ++i) blocksList.Add(AddContent());
+        for (int i = 0; i < SaveSystem.data.blocksList.Count; ++i) blocksList.Add(AddContent());
 
         // カーソル移動先の設定
         SetupNavigation();
@@ -88,7 +88,7 @@ public partial class BlocksListUI : MonoBehaviour
         blocksUI.rectTransform.anchoredPosition = new Vector2(0f, 10f);
 
         // セーブデータからブロックスを取得
-        Blocks blocks = SaveSystem.saveData.blocksList[index];
+        Blocks blocks = SaveSystem.data.blocksList[index];
         if (blocks != null)
         {
             blocksUI.Setup(blocks, m_BlockSprite);

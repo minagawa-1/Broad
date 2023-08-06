@@ -20,6 +20,9 @@ namespace woskni
         /// <param name="max">最大値</param>
         public Range(float min, float max) { this.max = max; this.min = min; }
 
+        /// <summary>0～1の範囲</summary>
+        public static Range O1 => new Range(0f, 1f);
+
         /// <summary>範囲内検知</summary>
         /// <param name="value">浮動小数点型の検索値</param>
         /// <returns>引数値が範囲内に含まれているか</returns>
@@ -28,40 +31,38 @@ namespace woskni
         /// <summary>範囲内の収束値取得</summary>
         /// <param name="value">範囲内に収束させる数値</param>
         /// <returns>収束された数値</returns>
-        public float GetIn(float value) => Mathf.Max(min, Mathf.Min(value, max));
+        public float Clamp(float value) => Mathf.Max(min, Mathf.Min(value, max));
 
         /// <summary>範囲外の発散値取得</summary>
         /// <param name="value">範囲外に発散させる数値</param>
         /// <returns>発散された数値</returns>
-        public float GetOut(float value) => !IsIn(value) ? value : ( value - min >= (max - min) / 2f ? max : min );
+        public float ClampOut(float value) => !IsIn(value) ? value : ( value - min >= (max - min) / 2f ? max : min );
 
         /// <summary>範囲拡縮した値の取得</summary>
         /// <param name="beforeValue">旧範囲の値</param>
-        /// <param name="beforeRange">旧範囲</param>
+        /// <param name="beforeRange">新しい範囲</param>
         /// <returns>拡縮した範囲の値</returns>
-        public float GetCompress(float beforeValue, Range beforeRange) => GetCompress(beforeValue, beforeRange.min, beforeRange.max);
+        public float Lerp(float beforeValue, Range newRange) => Lerp(beforeValue, newRange.min, newRange.max);
 
         /// <summary>範囲拡縮した値の取得</summary>
         /// <param name="beforeValue">旧範囲の値</param>
-        /// <param name="min">旧範囲の最小値</param>
-        /// <param name="max">旧範囲の最大値</param>
+        /// <param name="min">新しい範囲の最小値</param>
+        /// <param name="max">新しい範囲の最大値</param>
         /// <returns>拡縮した範囲の値</returns>
-        public float GetCompress(float beforeValue, float min, float max) => (this.max - this.min) * ((beforeValue - min) / (max - min)) + this.min;
+        public float Lerp(float beforeValue, float min, float max) => (max - min) * ((beforeValue - this.min) / (this.max - this.min)) + this.min;
 
         /// <summary>範囲内の収束値取得(min, maxからの差分を残す)</summary>
         /// <param name="value">範囲内に収束させる数値</param>
         /// <returns>収束された数値</returns>
-        public float GetAround(float value) => IsIn(value) ? value : GetAround((value > max ? value - (max - min) : value + (max - min)));
+        public float Repeat(float value) => IsIn(value) ? value : Repeat((value > max ? value - (max - min) : value + (max - min)));
 
         /// <summary>範囲内のランダムな値取得</summary>
         /// <returns>乱数値</returns>
         public float Random() => UnityEngine.Random.Range(min, max);
 
-        /// <summary>デバッグログ</summary>
-        public void DebugLog() => Debug.Log("min: " + min.ToString() + ", max: " + max.ToString());
-
-        bool IEquatable<Range>.Equals(Range other) { return Equals(this, other); }
-        public string ToString(string format, IFormatProvider formatProvider) { return min.ToString(format, formatProvider); }
+        bool IEquatable<Range>.Equals(Range other) => Equals(this, other);
+        public string ToString(string format, IFormatProvider formatProvider)
+            => $"({min.ToString(format, formatProvider)} ～ {max.ToString(format, formatProvider)})";
     }
 }
 

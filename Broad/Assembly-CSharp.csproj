@@ -87,10 +87,13 @@
     <Compile Include="Assets\Scripts\woskni\utility\CSVLoader.cs" />
     <Compile Include="Assets\Scripts\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Block\BlockManager.cs" />
+    <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\TextConverter.cs" />
     <Compile Include="Assets\Scripts\Board\Board.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\ColorExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\BlocksListUI.cs" />
+    <Compile Include="Assets\Scripts\Config.cs" />
     <Compile Include="Assets\Scripts\UI\GameMain\HandUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Config\ConfigUI.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\DeckListUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayerCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\RangeInt.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Comment.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ReadOnly.cs" />
     <Compile Include="Assets\Scripts\woskni\math\Round.cs" />
+    <Compile Include="Assets\Scripts\UI\Localization.cs" />
     <Compile Include="Assets\Scripts\TitleState.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendPlayerData.cs" />
     <Compile Include="Assets\Scripts\UI\ExtendButton.cs" />
@@ -146,6 +150,8 @@
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonGuide.cs" />
+    <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

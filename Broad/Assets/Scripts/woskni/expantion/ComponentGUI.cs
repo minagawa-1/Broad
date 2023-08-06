@@ -21,6 +21,10 @@ public class ComponentGUI : MonoBehaviour
             , typeof(CanvasRenderer)
         };
 
+    static Dictionary<System.Type, Texture2D> m_IconDictionary = new Dictionary<System.Type, Texture2D>();
+
+    private void OnEnable() => m_IconDictionary = new Dictionary<System.Type, Texture2D>();
+
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
@@ -46,15 +50,13 @@ public class ComponentGUI : MonoBehaviour
 
         foreach (var component in components)
         {
+            // 表示しないコンポーネントの場合はcontinue
             if (Ignore(component)) continue;
 
-            // コンポーネントからアイコン画像を取得
-            var texture2D = Copy(AssetPreview.GetMiniThumbnail(component));
+            // コンポーネントからアイコンを取得
+            GUI.DrawTexture(selectionRect, FindTexure(component));
 
-            // そのままでは主張が激しいため、透明度を下げる
-            texture2D = ReduceAlpha(texture2D, 1f - icon_transparency);
-
-            GUI.DrawTexture(selectionRect, texture2D);
+            // 次の画像の表示位置に移動する
             selectionRect.x += icon_size;
         }
     }
@@ -62,6 +64,26 @@ public class ComponentGUI : MonoBehaviour
     /// <summary>そのコンポーネントは非表示対象か</summary>
     /// <param name="component">調べるコンポーネント</param>
     static bool Ignore(Component component) => ignore_components.Contains(component.GetType());
+
+    /// <summary>コンポーネントからアイコンを辞書参照によって取得</summary>
+    /// <param name="component">コンポーネント</param>
+    /// <returns>未登録の場合はnullを返す</returns>
+    static Texture2D FindTexure(Component component)
+    {
+        if (!m_IconDictionary.ContainsKey(component.GetType()))
+        {
+            // コンポーネントからアイコン画像を取得
+            Texture2D texture = Copy(AssetPreview.GetMiniThumbnail(component));
+
+            // そのままでは主張が激しいため、透明度を下げる
+            texture = ReduceAlpha(texture, 1f - icon_transparency);
+
+            // リストに追加
+            m_IconDictionary.Add(component.GetType(), texture);
+        }
+
+        return m_IconDictionary[component.GetType()];
+    }
 
     /// <summary>画像の透明度を下げる</summary>
     /// <param name="texture">ソース画像</param>
@@ -86,11 +108,7 @@ public class ComponentGUI : MonoBehaviour
 
     public static Texture2D Copy(Texture2D originalTexture)
     {
-        if (originalTexture == null)
-        {
-            Debug.LogError("Cannot create a readable copy. The original texture is null.");
-            return null;
-        }
+        if (originalTexture == null) return null;
 
         int width = originalTexture.width;
         int height = originalTexture.height;

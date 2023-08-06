@@ -20,8 +20,10 @@ public static class GameObjectExpansion
 	{
 		T component = gameObject.GetComponent<T>();
 
-		return component != null ? component : gameObject.AddComponent<T>();
-    }
+		if (!component) component = gameObject.AddComponent<T>();
+
+		return component;
+	}
 
 	/// <summary>レイヤーを変更</summary>
 	/// <param name="layer">レイヤー番号</param>

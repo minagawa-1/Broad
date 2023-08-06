@@ -32,5 +32,5 @@ public static class LongExpansion
 public static class IntegerExpansion
 {
     /// <summary>桁数を取得</summary>
-    public static int Digit(int num) => num == 0 ? 1 : (int)Math.Log10(num) + 1;
+    public static int Digit(this int num) => num == 0 ? 1 : (int)Math.Log10(num) + 1;
 }

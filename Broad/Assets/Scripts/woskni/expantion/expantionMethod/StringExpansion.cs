@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static  class StringExpansion
+public static class StringExpansion
 {
     /// <summary>文字列を繰り返す</summary>
     /// <param name="count">繰り返す回数</param>

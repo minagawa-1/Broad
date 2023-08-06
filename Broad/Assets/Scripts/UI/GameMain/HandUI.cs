@@ -30,10 +30,10 @@ public class HandUI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Blocks[] deck = new Blocks[SaveSystem.saveData.deck.Length];
+        Blocks[] deck = new Blocks[SaveSystem.data.deck.Length];
         moveButtons = new MoveButton[GameSetting.hand_blocks];
 
-        for (int i = 0; i < deck.Length; ++i) deck[i] = SaveSystem.saveData.deck[i];
+        for (int i = 0; i < deck.Length; ++i) deck[i] = SaveSystem.data.deck[i];
 
         m_Deck = new Deck(deck);
         m_Hand = new Hand(m_Deck, GameSetting.hand_blocks);
