@@ -151,11 +151,14 @@ class GuideDataListDrawer : PropertyDrawer
         Rect textRect = new Rect(rect.x     + cutline + rect.height, rect.y
                                , rect.width - cutline - rect.height, rect.height);
 
-
+        // 描画処理（横一列にプロパティを並べる））
         EditorGUILayout.BeginHorizontal();
+
         EditorGUI.PropertyField(keyRect , itemKey , GUIContent.none);
-        EditorGUI.DrawTextureTransparent(iconRect, )
+        EditorGUI.DrawTextureTransparent(iconRect, GamepadButtonIconLoader.Load((GamepadButton)itemKey.enumValueIndex));
         EditorGUI.PropertyField(textRect, itemText, GUIContent.none);
+
+        // 横一列の終了
         EditorGUILayout.EndHorizontal();
     }
 

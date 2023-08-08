@@ -138,6 +138,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\EnumExpansion.cs" />
     <Compile Include="Assets\Scripts\UI\Title\StartButtonState.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonGuide.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\FilePath.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayer.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\StringExpansion.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="Assets\Scripts\UI\SynchronizeAlpha.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
-    <Compile Include="Assets\Scripts\UI\ButtonGuide.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
   </ItemGroup>
   <ItemGroup>
