@@ -67,7 +67,7 @@ public class ComponentGUI : MonoBehaviour
 
     /// <summary>コンポーネントからアイコンを辞書参照によって取得</summary>
     /// <param name="component">コンポーネント</param>
-    /// <returns>未登録の場合はnullを返す</returns>
+    /// <returns>未登録の場合は登録してから返す</returns>
     static Texture2D FindTexure(Component component)
     {
         if (!m_IconDictionary.ContainsKey(component.GetType()))

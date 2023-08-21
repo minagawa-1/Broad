@@ -1,172 +1,156 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem;
+using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEditorInternal;
+using UnityEditor.UI;
 #endif
 
-[AddComponentMenu("UI/ButtonGuide", 35)]
-[RequireComponent(typeof(RectTransform))]
-public class ButtonGuide : MonoBehaviour
+[RequireComponent(typeof(CanvasRenderer))]
+[AddComponentMenu("UI/ButonGuide", 11)]
+[ExecuteAlways]
+public class ButtonGuide : Image
 {
-    protected internal class ButtonGuideItem : MonoBehaviour
-    {
-        [SerializeField] Text  m_Text;
-        [SerializeField] Image m_Icon;
-        [SerializeField] RectTransform m_RectTransform;
+    [SerializeField] IconButton m_IconButton;
 
-        public Text  text { get { return m_Text; } set { m_Text = value; } }
-        public Image icon { get { return m_Icon; } set { m_Icon = value; } }
-        public RectTransform rectTransform { get { return m_RectTransform; } set { m_RectTransform = value; } }
+    GamepadType m_GamepadType;
+
+    bool m_Highlight;
+
+    Vector2 m_BasisSizeDelta;
+
+    public IconButton iconButton
+    {
+        get { return m_IconButton; }
+        set { m_IconButton = value; OnChangedIconButton(); }
     }
 
-    [Serializable]
-    public class GuideData
+    public void OnChangedIconButton()
     {
-        [SerializeField] GamepadButton m_Key;
-        [SerializeField] string m_Text;
-
-        public GamepadButton key  { get { return m_Key; } set { m_Key = value; } }
-        public string        text { get { return m_Text; } set { m_Text = value; } }
-
-        public GuideData()                               { key = GamepadButton.A; text = ""; }
-        public GuideData(GamepadButton key)              { this.key = key;        text = ""; }
-        public GuideData(string text)                    { key = GamepadButton.A; this.text = text; }
-        public GuideData(GamepadButton key, string text) { this.key = key;        this.text = text; }
-        public GuideData(string text, GamepadButton key) { this.key = key;        this.text = text; }
+        var tex = GamepadButtonIconLoader.Load(iconButton);
+        sprite =  Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
     }
 
-    [Serializable]
-    public class GuideDataList
+    protected override void Awake()
     {
-        [SerializeField] List<GuideData> m_Guides;
+        m_GamepadType = GamepadType.None;
+        m_Highlight = false;
+        m_BasisSizeDelta = rectTransform.sizeDelta;
+    }
 
-        public List<GuideData> guides { get { return m_Guides; } set { m_Guides = value; } }
+    private void Update()
+    {
+        var gamepadType = GamepadButtonIconLoader.GetGamepadType();
 
-        public GuideDataList()
+        // ゲームパッド種別が異なる場合はアイコンを更新する
+        if (m_GamepadType != gamepadType) {
+            m_GamepadType = gamepadType;
+            OnChangedIconButton();
+        }
+
+        // ボタンを検知して拡縮
+        IconHIghlight();
+    }
+
+    void IconHIghlight()
+    {
+        bool press = IsPressedButton(m_IconButton);
+
+        // ハイライト状態にする
+        if (!m_Highlight && press)
         {
-            guides = new List<GuideData>();
+            m_Highlight = true;
+
+            rectTransform.DOKill();
+            rectTransform.DOSizeDelta(m_BasisSizeDelta * 1.2f, 0.1f).SetEase(Ease.OutCubic);
+        }
+
+        // 非ハイライト状態にする
+        else if (m_Highlight && !press)
+        {
+            m_Highlight = false;
+
+            rectTransform.DOKill();
+            rectTransform.DOSizeDelta(m_BasisSizeDelta, 0.1f).SetEase(Ease.InCubic);
         }
     }
 
-    [SerializeField] int m_Size;
-
-    public int size
+    bool IsPressedButton(IconButton iconButton)
     {
-        get { return m_Size; }
-        set { m_Size = Mathf.Max(0, value); OnChangedSize(); }
-    }
+        var pad = Gamepad.current;
 
-    [Space]
+        if (pad == null) return false;
 
-    [SerializeField] GuideDataList m_Guides = new GuideDataList();
-
-    public List<GuideData> guides
-    {
-        get { return m_Guides.guides; }
-        set { m_Guides.guides = value; }
-    }
-
-
-
-    void OnChangedSize()
-    {
-
+        switch (iconButton)
+        {
+            case IconButton.Dpad:            return pad.dpad.ReadValue() != Vector2.zero;
+            case IconButton.DpadUp:          return pad.dpad.ReadValue().x > 0f;
+            case IconButton.DpadDown:        return pad.dpad.ReadValue().x < 0f;
+            case IconButton.DpadLeft:        return pad.dpad.ReadValue().y < 0f;
+            case IconButton.DpadRight:       return pad.dpad.ReadValue().y > 0f;
+            case IconButton.DpadVertical:    return pad.dpad.ReadValue().y != 0f;
+            case IconButton.DpadHorizontal:  return pad.dpad.ReadValue().x != 0f;
+            case IconButton.A:               return pad.buttonEast .isPressed;
+            case IconButton.B:               return pad.buttonSouth.isPressed;
+            case IconButton.X:               return pad.buttonNorth.isPressed;
+            case IconButton.Y:               return pad.buttonWest .isPressed;
+            case IconButton.LeftStick:       return pad.leftStick .ReadValue() != Vector2.zero;
+            case IconButton.RightStick:      return pad.rightStick.ReadValue() != Vector2.zero;
+            case IconButton.LeftStickPress:  return pad.leftStickButton .isPressed;
+            case IconButton.RightStickPress: return pad.rightStickButton.isPressed;
+            case IconButton.L:               return pad.leftTrigger  .isPressed;
+            case IconButton.R:               return pad.rightTrigger .isPressed;
+            case IconButton.ZL:              return pad.leftShoulder .isPressed;
+            case IconButton.ZR:              return pad.rightShoulder.isPressed;
+            case IconButton.Start:           return pad.startButton.IsPressed();
+            case IconButton.Select:          return pad.selectButton.IsPressed(); ;
+            case IconButton.Home:            return false;
+            default: return false;
+        }
     }
 }
 
-#if UNITY_EDITOR
 [CustomEditor(typeof(ButtonGuide), true)]
 [CanEditMultipleObjects]
-public class ButtonGuideEditor : Editor
+/// <summary>
+///   Custom Editor for the Image Component.
+///   Extend this class to write a custom editor for an Image-derived component.
+/// </summary>
+public class ImageEditor : GraphicEditor
 {
-    SerializedProperty m_Size;
-    SerializedProperty m_Guides;
+    SerializedProperty m_IconButton;
 
-    protected void OnEnable()
+    protected override void OnEnable()
     {
-        m_Size   = serializedObject.FindProperty("m_Size");
-        m_Guides = serializedObject.FindProperty("m_Guides");
+        base.OnEnable();
+
+        m_IconButton = serializedObject.FindProperty(nameof(m_IconButton));
     }
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.Space();
-
         serializedObject.Update();
-        EditorGUILayout.PropertyField(m_Size);
-        EditorGUILayout.PropertyField(m_Guides);
+
+        EditorGUILayout.PropertyField(m_IconButton);
+        EditorGUILayout.PropertyField(m_Color);
+        EditorGUILayout.PropertyField(m_Material);
+        EditorGUILayout.PropertyField(m_RaycastTarget);
+        EditorGUILayout.PropertyField(m_RaycastPadding);
+        EditorGUILayout.PropertyField(m_Maskable);
+
         serializedObject.ApplyModifiedProperties();
+
+        if (GUI.changed)
+        {
+            ButtonGuide script = target as ButtonGuide;
+            if (script != null)
+            {
+                script.OnChangedIconButton();
+            }
+        }
     }
 }
-
-[CustomPropertyDrawer(typeof(ButtonGuide.GuideDataList), true)]
-class GuideDataListDrawer : PropertyDrawer
-{
-    ReorderableList m_ReorderableList = null;
-
-    void Init(SerializedProperty property)
-    {
-        if (m_ReorderableList != null) return;
-
-        SerializedProperty array = property.FindPropertyRelative("m_Guides");
-
-        m_ReorderableList = new ReorderableList(property.serializedObject, array);
-        m_ReorderableList.drawElementCallback = DrawGuideData;
-        m_ReorderableList.drawHeaderCallback = DrawHeader;
-        //m_ReorderableList.elementHeight += 16;
-    }
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-        Init(property);
-
-        m_ReorderableList.DoList(position);
-    }
-
-    void DrawHeader(Rect rect)
-    {
-        GUI.Label(rect, "Guides");
-    }
-
-    void DrawGuideData(Rect rect, int index, bool isActive, bool isFocused)
-    {
-        SerializedProperty itemData = m_ReorderableList.serializedProperty.GetArrayElementAtIndex(index);
-        SerializedProperty itemKey = itemData.FindPropertyRelative("m_Key");
-        SerializedProperty itemText = itemData.FindPropertyRelative("m_Text");
-
-        rect.height = EditorGUIUtility.singleLineHeight;
-
-        float cutline = rect.width * 0.33f;
-
-        Rect keyRect  = new Rect(rect.x, rect.y, cutline, rect.height);
-
-        Rect iconRect = new Rect(rect.x + cutline, rect.y, EditorGUIUtility.singleLineHeight, rect.y);
-
-        Rect textRect = new Rect(rect.x     + cutline + rect.height, rect.y
-                               , rect.width - cutline - rect.height, rect.height);
-
-        // 描画処理（横一列にプロパティを並べる））
-        EditorGUILayout.BeginHorizontal();
-
-        EditorGUI.PropertyField(keyRect , itemKey , GUIContent.none);
-        EditorGUI.DrawTextureTransparent(iconRect, GamepadButtonIconLoader.Load((GamepadButton)itemKey.enumValueIndex));
-        EditorGUI.PropertyField(textRect, itemText, GUIContent.none);
-
-        // 横一列の終了
-        EditorGUILayout.EndHorizontal();
-    }
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        Init(property);
-
-        return m_ReorderableList.GetHeight();
-    }
-}
-#endif

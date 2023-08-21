@@ -1,87 +1,147 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Switch;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
-using UnityEngine.InputSystem.LowLevel;
+
+[System.Serializable]
+public enum IconButton
+{
+    Dpad,
+    DpadUp,
+    DpadDown,
+    DpadLeft,
+    DpadRight,
+    DpadVertical,
+    DpadHorizontal,
+    A,
+    B,
+    X,
+    Y,
+    LeftStick,
+    LeftStickPress,
+    RightStick,
+    RightStickPress,
+    L,
+    R,
+    ZL,
+    ZR,
+    Start,
+    Select,
+    Home,
+    Console,
+    Controller
+}
+
+public enum GamepadType
+{
+    None,
+    Joycon,
+    DualShock,
+    Xbox
+}
 
 public class GamepadButtonIconLoader
 {
-    enum GamepadType
+    static Dictionary<IconButton, string> m_JoyconImages = new Dictionary<IconButton, string>()
     {
-        None,
-        Joycon,
-        DualShock,
-        Xbox
-    }
+        { IconButton.Dpad           , "dpad3"            },
+        { IconButton.DpadUp         , "dpad3_up"         },
+        { IconButton.DpadDown       , "dpad3_down"       },
+        { IconButton.DpadLeft       , "dpad3_left"       },
+        { IconButton.DpadRight      , "dpad3_right"      },
+        { IconButton.DpadVertical   , "dpad3_vertical"   },
+        { IconButton.DpadHorizontal , "dpad3_horizontal" },
 
-    static Dictionary<GamepadButton, string> m_JoyconImages = new Dictionary<GamepadButton, string>()
-    {
-        { GamepadButton.East        , "button_a" },
-        { GamepadButton.South       , "button_b" },
-        { GamepadButton.North       , "button_x" },
-        { GamepadButton.West        , "button_y" },
+        { IconButton.A              , "button_a" },
+        { IconButton.B              , "button_b" },
+        { IconButton.X              , "button_x" },
+        { IconButton.Y              , "button_y" },
 
-        { GamepadButton.A           , "button_a" },
-        { GamepadButton.B           , "button_b" },
-        { GamepadButton.X           , "button_x" },
-        { GamepadButton.Y           , "button_y" },
+        { IconButton.LeftStick      , "joystick3_left"        },
+        { IconButton.LeftStickPress , "joystick3_left_press"  },
+        { IconButton.RightStick     , "joystick3_right"       },
+        { IconButton.RightStickPress, "joystick3_right_press" },
 
-        { GamepadButton.DpadUp      , "dpad3_up"    },
-        { GamepadButton.DpadDown    , "dpad3_down"  },
-        { GamepadButton.DpadLeft    , "dpad3_left"  },
-        { GamepadButton.DpadRight   , "dpad3_right" },
+        { IconButton.L              , "bumper2_left"    },
+        { IconButton.R              , "bumper2_right"   },
+        { IconButton.ZL             , "trigger2_left"   },
+        { IconButton.ZR             , "trigger2_right"  },
 
-        { GamepadButton.Circle      , "dpad3_horizontal" },
-        { GamepadButton.Cross       , "dpad3_vertical"   }
+        { IconButton.Start          , "button_plus"     },
+        { IconButton.Select         , "button_minus"    },
+        { IconButton.Home           , "button_home"         },
+        { IconButton.Console        , "console_switch"      },
+        { IconButton.Controller     , "controller_switch"   }
     };
 
-    static Dictionary<GamepadButton, string> m_DualShockImages = new Dictionary<GamepadButton, string>()
+    static Dictionary<IconButton, string> m_DualShockImages = new Dictionary<IconButton, string>()
     {
-        { GamepadButton.East        , "button_circle"   },
-        { GamepadButton.South       , "button_cross"    },
-        { GamepadButton.North       , "button_triangle" },
-        { GamepadButton.West        , "button_square"   },
+        { IconButton.Dpad           , "dpad2"            },
+        { IconButton.DpadUp         , "dpad2_up"         },
+        { IconButton.DpadDown       , "dpad2_down"       },
+        { IconButton.DpadLeft       , "dpad2_left"       },
+        { IconButton.DpadRight      , "dpad2_right"      },
+        { IconButton.DpadVertical   , "dpad2_vertical"   },
+        { IconButton.DpadHorizontal , "dpad2_horizontal" },
 
-        { GamepadButton.Circle      , "button_circle"   },
-        { GamepadButton.Cross       , "button_cross"    },
-        { GamepadButton.Triangle    , "button_triangle" },
-        { GamepadButton.Square      , "button_square"   },
+        { IconButton.A              , "button_circle"   },
+        { IconButton.B              , "button_cross"    },
+        { IconButton.X              , "button_triangle" },
+        { IconButton.Y              , "button_square"   },
 
-        { GamepadButton.DpadUp      , "dpad2_up"    },
-        { GamepadButton.DpadDown    , "dpad2_down"  },
-        { GamepadButton.DpadLeft    , "dpad2_left"  },
-        { GamepadButton.DpadRight   , "dpad2_right" },
+        { IconButton.LeftStick      , "joystick2_left"        },
+        { IconButton.LeftStickPress , "joystick2_left_press"  },
+        { IconButton.RightStick     , "joystick2_right"       },
+        { IconButton.RightStickPress, "joystick2_right_press" },
 
-        { GamepadButton.A           , "dpad2_horizontal" },
-        { GamepadButton.B           , "dpad2_vertical"   }
+        { IconButton.L              , "bumper1_l1"      },
+        { IconButton.R              , "bumper1_r1"      },
+        { IconButton.ZL             , "trigger1_l2"     },
+        { IconButton.ZR             , "trigger1_r2"     },
+
+        { IconButton.Start          , "button_options"  },
+        { IconButton.Select         , "button_share"    },
+        { IconButton.Home           , "button_ps"       },
+        { IconButton.Console        , "console_ps4"     },
+        { IconButton.Controller     , "controller_ps4"  }
     };
 
-    static Dictionary<GamepadButton, string> m_XboxImages = new Dictionary<GamepadButton, string>()
+    static Dictionary<IconButton, string> m_XboxImages = new Dictionary<IconButton, string>()
     {
-        { GamepadButton.East        , "button_b" },
-        { GamepadButton.South       , "button_a" },
-        { GamepadButton.North       , "button_y" },
-        { GamepadButton.West        , "button_x" },
+        { IconButton.Dpad           , "dpad1"            },
+        { IconButton.DpadUp         , "dpad1_up"         },
+        { IconButton.DpadDown       , "dpad1_down"       },
+        { IconButton.DpadLeft       , "dpad1_left"       },
+        { IconButton.DpadRight      , "dpad1_right"      },
+        { IconButton.DpadVertical   , "dpad1_vertical"   },
+        { IconButton.DpadHorizontal , "dpad1_horizontal" },
 
-        { GamepadButton.B           , "button_b" },
-        { GamepadButton.A           , "button_a" },
-        { GamepadButton.Y           , "button_y" },
-        { GamepadButton.X           , "button_x" },
+        { IconButton.A              , "button_b" },
+        { IconButton.B              , "button_a" },
+        { IconButton.X              , "button_y" },
+        { IconButton.Y              , "button_x" },
 
-        { GamepadButton.DpadUp      , "dpad1_up"    },
-        { GamepadButton.DpadDown    , "dpad1_down"  },
-        { GamepadButton.DpadLeft    , "dpad1_left"  },
-        { GamepadButton.DpadRight   , "dpad1_right" },
+        { IconButton.LeftStick      , "joystick1_left"        },
+        { IconButton.LeftStickPress , "joystick1_left_press"  },
+        { IconButton.RightStick     , "joystick1_right"       },
+        { IconButton.RightStickPress, "joystick1_right_press" },
 
-        { GamepadButton.Circle      , "dpad1_horizontal" },
-        { GamepadButton.Cross       , "dpad1_vertical"   }
+        { IconButton.L              , "lb"  },
+        { IconButton.R              , "rb"  },
+        { IconButton.ZL             , "lt"  },
+        { IconButton.ZR             , "rt"  },
+
+        { IconButton.Start          , "button_menu"     },
+        { IconButton.Select         , "button_view"     },
+        { IconButton.Home           , "xbox"            },
+        { IconButton.Console        , "console_xbox"    },
+        { IconButton.Controller     , "controller_xbox" }
     };
 
-    public static Texture2D Load(GamepadButton button)
+    public static Texture2D Load(IconButton button)
     {
         string path = $"{Application.dataPath}/Textures/ControllerIcon/{GetButtonImageName(button)}.png";
 
@@ -98,7 +158,7 @@ public class GamepadButtonIconLoader
 
     /// <summary>ゲームパッドのボタンから画像名を取得</summary>
     /// <param name="button">ボタン</param>
-    static string GetButtonImageName(GamepadButton button)
+    static string GetButtonImageName(IconButton button)
     {
         switch (GetGamepadType())
         {
@@ -111,7 +171,7 @@ public class GamepadButtonIconLoader
     }
 
     /// <summary>現在使用しているゲームパッドの種類を取得</summary>
-    static GamepadType GetGamepadType()
+    public static GamepadType GetGamepadType()
     {
         Gamepad current = Gamepad.current;
 

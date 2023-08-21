@@ -39,12 +39,12 @@ public class ConfigUI : MonoBehaviour
 
     Dictionary<int, Vector2Int> m_Value2ScreenSize = new Dictionary<int, Vector2Int>() {
         { 0, new Vector2Int(1280, 720)  },
-        { 1, new Vector2Int(1960, 1080) }
+        { 1, new Vector2Int(1920, 1080) }
     };
 
     Dictionary<Vector2Int, int> m_ScreenSize2Value = new Dictionary<Vector2Int, int>() {
         { new Vector2Int(1280, 720) , 0 },
-        { new Vector2Int(1960, 1080), 0 }
+        { new Vector2Int(1920, 1080), 1 }
     };
 
     public void Start()
@@ -65,6 +65,7 @@ public class ConfigUI : MonoBehaviour
 
         m_Brightness.value    = Config.data.brightness   * 100f;
         m_FontSize.value      = m_FontSize.Value2Number(Config.data.fontSizeScale, m_FontSizeRange.min, m_FontSizeRange.max);
+
         m_ScreenSize.value    = m_ScreenSize2Value[Config.data.screenSize];
     }
 
@@ -101,6 +102,10 @@ public class ConfigUI : MonoBehaviour
     public void SetButtonGuide() {
         SetData(() => Config.data.buttonGuide = m_ButtonGuide.value > 0.5f);
 
+        // 全てのボタンガイドの表示を操作する
+        var guides = FindObjectsOfType<ButtonGuideActivate>(true);
+
+        foreach (var guide in guides) guide.SetActive();
     }
 
     /// <summary>マスター音量の設定</summary>
@@ -141,6 +146,8 @@ public class ConfigUI : MonoBehaviour
     public void SetScreenSize() {
         SetData(() => Config.data.screenSize = m_Value2ScreenSize[m_ScreenSize.value]);
 
+        bool fullScreen = m_ScreenSize.value < 1;
+        Screen.SetResolution(Config.data.screenSize.x, Config.data.screenSize.y, fullScreen);
     }
 
     /// <summary>コンフィグのリセット</summary>
@@ -148,30 +155,4 @@ public class ConfigUI : MonoBehaviour
 
     /// <summary>セーブデータの初期化</summary>
     public void ResetSaveData() => SaveSystem.Reset();
-
-
-
-    // 非アクティブなオブジェクトも含む全てのTextコンポーネントを取得する
-    public List<ButtonGuide> GetAllButtonGuide(Transform root)
-    {
-        List<ButtonGuide> guides = new List<ButtonGuide>();
-
-        // 子要素を探索
-        for (int i = 0; i < root.childCount; i++)
-        {
-            Transform child = root.GetChild(i);
-
-            // Textコンポーネントがアタッチされている場合、リストに追加
-            ButtonGuide guide = child.GetComponent<ButtonGuide>();
-            if (guide != null)
-            {
-                guides.Add(guide);
-            }
-
-            // 再帰的に子要素を探索
-            guides.AddRange(GetAllButtonGuide(child));
-        }
-
-        return guides;
-    }
 }
