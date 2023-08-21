@@ -22,8 +22,9 @@ Start game,ゲームスタート,开始游戏
 Deck,デッキ,牌堆
 Setting,設定,设置
 In Queue,マッチング中,配對中
-Confirm,決定,确认
+Decision,決定,确认
 Cancel,キャンセル,取消
+Move,移動,移动
 Back,戻る,返回
 pcs,コ,个
 Reorder,並べ替え,排序

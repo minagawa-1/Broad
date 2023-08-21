@@ -152,6 +152,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonGuideActivate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -166,6 +167,7 @@
     <None Include="Assets\Mirror\Readme.txt" />
     <None Include="Assets\Scripts\woskni\math\仕様.txt" />
     <None Include="Assets\Mirror\Notice.txt" />
+    <None Include="Assets\Prefabs\Materials\OutlineSobel.shader" />
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\License.txt" />
     <None Include="Assets\Scripts\woskni\control\仕様.txt" />
   </ItemGroup>
