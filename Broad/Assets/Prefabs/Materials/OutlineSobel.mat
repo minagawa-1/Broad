@@ -84,7 +84,7 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _Thickness: 16.73
+    - _Thickness: 1.2
     - _Threshold: 0
     - _UVSec: 0
     - _UseUIAlphaClip: 0

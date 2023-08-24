@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\UI\Localization.cs" />
     <Compile Include="Assets\Scripts\TitleState.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendPlayerData.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonGuideActivate.cs" />
     <Compile Include="Assets\Scripts\UI\ExtendButton.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\RLE.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\SortBlocksList.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
-    <Compile Include="Assets\Scripts\UI\ButtonGuideActivate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
