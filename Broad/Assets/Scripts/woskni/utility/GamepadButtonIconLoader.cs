@@ -141,20 +141,9 @@ public class GamepadButtonIconLoader
         { IconButton.Controller     , "controller_xbox" }
     };
 
-    public static Texture2D Load(IconButton button)
-    {
-        string path = $"{Application.dataPath}/Textures/ControllerIcon/{GetButtonImageName(button)}.png";
-
-        // 画像データを取得
-        byte[] textureData = System.IO.File.ReadAllBytes(path);
-
-        // データから画像を読み込む
-        var texture = new Texture2D(0, 0);
-        texture.LoadImage(textureData);
-
-        // 読み込んだ画像を返す
-        return texture;
-    }
+    /// <summary>ボタンの種類から画像を読み込み</summary>
+    /// <param name="button">ボタンの種類</param>
+    public static Texture2D Load(IconButton button) => Resources.Load<Texture2D>($"ControllerIcon/{GetButtonImageName(button)}");
 
     /// <summary>ゲームパッドのボタンから画像名を取得</summary>
     /// <param name="button">ボタン</param>

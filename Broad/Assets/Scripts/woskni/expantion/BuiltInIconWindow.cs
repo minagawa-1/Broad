@@ -1,26 +1,28 @@
-using UnityEditor;
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEditor;
+
 public class IconViewerWindow : EditorWindow
 {
-    //“Ç‚İ‚ñ‚¾ƒAƒCƒRƒ“‚ÌƒLƒƒƒbƒVƒ…
+    //èª­ã¿è¾¼ã‚“ã ã‚¢ã‚¤ã‚³ãƒ³ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     Texture2D[] icons;
 
-    //ƒAƒCƒRƒ“•‚ÌÅ‘å’li“®“IŒvZj
+    //ã‚¢ã‚¤ã‚³ãƒ³å¹…ã®æœ€å¤§å€¤ï¼ˆå‹•çš„è¨ˆç®—ï¼‰
     float maxIconWidth = -1;
 
-    //ƒAƒCƒRƒ“–¼ƒ‰ƒxƒ‹•‚ÌÅ‘å’li“®“IŒvZj
+    //ã‚¢ã‚¤ã‚³ãƒ³åãƒ©ãƒ™ãƒ«å¹…ã®æœ€å¤§å€¤ï¼ˆå‹•çš„è¨ˆç®—ï¼‰
     float maxLabelWidth = -1;
 
-    //ƒXƒNƒ[ƒ‹ƒrƒ…[‚ÌˆÊ’u
+    //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒ“ãƒ¥ãƒ¼ã®ä½ç½®
     Vector2 scrollpos;
 
-    //ƒtƒBƒ‹ƒ^
+    //ãƒ•ã‚£ãƒ«ã‚¿
     string filter;
 
-    //ŠeƒAƒCƒRƒ“‚²‚Æ‚ÌƒŠƒXƒg“àFoldoutó‹µ
+    //å„ã‚¢ã‚¤ã‚³ãƒ³ã”ã¨ã®ãƒªã‚¹ãƒˆå†…FoldoutçŠ¶æ³
     Dictionary<string, bool> foldouts = new Dictionary<string, bool>();
 
     [MenuItem("Window/IconViewer")]
@@ -31,17 +33,17 @@ public class IconViewerWindow : EditorWindow
 
     private void OnEnable()
     {
-        //built-inƒAƒCƒRƒ“‚ğ‘S‚Ä“Ç‚İ‚İ
+        //built-inã‚¢ã‚¤ã‚³ãƒ³ã‚’å…¨ã¦èª­ã¿è¾¼ã¿
         icons = Resources.FindObjectsOfTypeAll(typeof(Texture2D))
-            .Where(x => AssetDatabase.GetAssetPath(x) == "Library/unity editor resources") //ƒAƒCƒRƒ“‚ÌAssetPath‚ğæ“¾‚·‚é‚Æ‘S‚Ä‚±‚ê
-            .Select(x => x.name)    //“¯ˆê–¼‚Å•¡”‚ÌƒAƒCƒRƒ“‚ª‘¶İ‚·‚éê‡‚ª‚ ‚é‚Ì‚Å
-            .Distinct()             //d•¡‚ğœ‹
+            .Where(x => AssetDatabase.GetAssetPath(x) == "Library/unity editor resources") //ã‚¢ã‚¤ã‚³ãƒ³ã®AssetPathã‚’å–å¾—ã™ã‚‹ã¨å…¨ã¦ã“ã‚Œ
+            .Select(x => x.name)    //åŒä¸€åã§è¤‡æ•°ã®ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆãŒã‚ã‚‹ã®ã§
+            .Distinct()             //é‡è¤‡ã‚’é™¤å»
             .OrderBy(x => x)
             .Select(x => EditorGUIUtility.Load(x) as Texture2D)
-            .Where(x => x)          //FontTexture‚È‚ÇAƒ[ƒh‚Å‚«‚È‚¢‚à‚Ì‚ğœŠO
+            .Where(x => x)          //FontTextureãªã©ã€ãƒ­ãƒ¼ãƒ‰ã§ããªã„ã‚‚ã®ã‚’é™¤å¤–
             .ToArray();
 
-        //Še€–Ú‚Ìfoldout‚ğ‰Šú‰»
+        //å„é …ç›®ã®foldoutã‚’åˆæœŸåŒ–
         foreach (var icon in icons)
         {
             foldouts[icon.name] = false;
@@ -65,7 +67,7 @@ public class IconViewerWindow : EditorWindow
     {
         var evt = Event.current;
 
-        //GUIStyle‚ÌƒLƒƒƒbƒVƒ…
+        //GUIStyleã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
         if (evt.type == EventType.Repaint)
         {
             if (blackLabel == null)
@@ -79,14 +81,14 @@ public class IconViewerWindow : EditorWindow
             }
         }
 
-        //ƒ‰ƒxƒ‹•`‰æ—Ìˆæ‚É•K—v‚È•‚ğŒvZ
+        //ãƒ©ãƒ™ãƒ«æç”»é ˜åŸŸã«å¿…è¦ãªå¹…ã‚’è¨ˆç®—
         if (maxLabelWidth <= 0)
         {
             maxLabelWidth = icons.Max(x => GUI.skin.label.CalcSize(new GUIContent(x.name)).x);
         }
         var labelWidth = maxLabelWidth + 10;
 
-        //ƒAƒCƒRƒ“•`‰æ—Ìˆæ‚É•K—v‚È•‚ğŒvZ
+        //ã‚¢ã‚¤ã‚³ãƒ³æç”»é ˜åŸŸã«å¿…è¦ãªå¹…ã‚’è¨ˆç®—
         RectOffset iconPadding = new RectOffset(10, 10, 4, 4);
         if (maxIconWidth <= 0)
         {
@@ -94,10 +96,10 @@ public class IconViewerWindow : EditorWindow
         }
         var iconRectWidth = maxIconWidth + iconPadding.left + iconPadding.right;
 
-        //ƒtƒBƒ‹ƒ^
+        //ãƒ•ã‚£ãƒ«ã‚¿
         filter = FilterField(filter, Repaint);
 
-        //ƒwƒbƒ_
+        //ãƒ˜ãƒƒãƒ€
         var headerHeight = 24;
         var headerRect = EditorGUILayout.GetControlRect(GUILayout.Height(headerHeight));
         var labelHeaderRect = new Rect(headerRect) { x = headerRect.x, width = labelWidth };
@@ -113,7 +115,7 @@ public class IconViewerWindow : EditorWindow
         elementBGColorConfig = EditorGUI.ColorField(colorPickerRect, elementBGColorConfig);
         GUI.Label(colorPickerLabelRect, "BGColor", whiteLabel);
 
-        //ƒŠƒXƒg
+        //ãƒªã‚¹ãƒˆ
         var elementMinHeight = 20;
         var foldedRectLineHeight = 20;
         var foldedRectLinePaddingHeight = 2;
@@ -123,7 +125,7 @@ public class IconViewerWindow : EditorWindow
         int i = 0;
         foreach (var icon in icons)
         {
-            //ƒtƒBƒ‹ƒ^“à—e‚É‰‚¶‚ÄƒXƒLƒbƒv
+            //ãƒ•ã‚£ãƒ«ã‚¿å†…å®¹ã«å¿œã˜ã¦ã‚¹ã‚­ãƒƒãƒ—
             if (!string.IsNullOrEmpty(filter) && !icon.name.ToLower().Contains(filter.ToLower())) continue;
 
             var iconRectHeight = Mathf.Max(elementMinHeight, icon.height + iconPadding.top + iconPadding.bottom);
@@ -146,7 +148,7 @@ public class IconViewerWindow : EditorWindow
             GUI.DrawTexture(iconRect, icon);
             GUI.DrawTexture(darkIconRect, icon);
 
-            //ƒRƒs[—pƒtƒH[ƒ€EÚ×î•ñ
+            //ã‚³ãƒ”ãƒ¼ç”¨ãƒ•ã‚©ãƒ¼ãƒ ãƒ»è©³ç´°æƒ…å ±
             if (foldouts[icon.name])
             {
                 var foldedRect = new Rect(elementRect.x + copyRectPadding, elementRect.y + iconRectHeight, elementRect.width - copyRectPadding * 2, copyRectHeight);
@@ -194,7 +196,7 @@ public class IconViewerWindow : EditorWindow
                 whiteLabel.alignment = TextAnchor.MiddleLeft;
             }
 
-            //ƒNƒŠƒbƒN‚ÅƒRƒs[—pƒtƒH[ƒ€‚ğŠJ•Â
+            //ã‚¯ãƒªãƒƒã‚¯ã§ã‚³ãƒ”ãƒ¼ç”¨ãƒ•ã‚©ãƒ¼ãƒ ã‚’é–‹é–‰
             if (evt.type == EventType.MouseDown && evt.button == 0 && elementMainRect.Contains(evt.mousePosition))
             {
                 foldouts[icon.name] = !foldouts[icon.name];
@@ -206,33 +208,33 @@ public class IconViewerWindow : EditorWindow
     }
 
     /// <summary>
-    /// ƒtƒBƒ‹ƒ^“ü—Í—pƒtƒB[ƒ‹ƒhBrepaintCallback‚É‚ÍEditorWindow‚ÌRepaint‚â‚»‚ê‚É€‚¸‚é‚à‚Ì‚ğ“n‚·‚±‚ÆB
+    /// ãƒ•ã‚£ãƒ«ã‚¿å…¥åŠ›ç”¨ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã€‚repaintCallbackã«ã¯EditorWindowã®Repaintã‚„ãã‚Œã«æº–ãšã‚‹ã‚‚ã®ã‚’æ¸¡ã™ã“ã¨ã€‚
     /// </summary>
     public static string FilterField(string filter, System.Action repaintCallback, string controlName = "__FilterField__")
     {
         var evt = Event.current;
         using (new EditorGUILayout.HorizontalScope())
         {
-            //“ü—Í’†‚ÉEnterƒL[‚ÅƒtƒH[ƒJƒX‚ğŠO‚·
+            //å…¥åŠ›ä¸­ã«Enterã‚­ãƒ¼ã§ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¤–ã™
             if (GUI.GetNameOfFocusedControl() == controlName && evt.type == EventType.KeyDown && evt.keyCode == KeyCode.Return)
             {
                 EditorGUI.FocusTextInControl("");
                 repaintCallback?.Invoke();
             }
 
-            //“ü—Í—“
+            //å…¥åŠ›æ¬„
             GUI.SetNextControlName(controlName);
             filter = GUILayout.TextField(filter, "SearchTextField");
             var lastrect = GUILayoutUtility.GetLastRect();
 
-            //“ü—Í—“ˆÈŠO‚ÅƒNƒŠƒbƒN‚³‚ê‚½‚çƒtƒH[ƒJƒX‚ğŠO‚·
+            //å…¥åŠ›æ¬„ä»¥å¤–ã§ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‚‰ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¤–ã™
             if (evt.type == EventType.MouseDown && evt.button == 0 && !lastrect.Contains(evt.mousePosition))
             {
                 EditorGUI.FocusTextInControl("");
                 repaintCallback?.Invoke();
             }
 
-            //ƒNƒŠƒAƒ{ƒ^ƒ“
+            //ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
             using (new EditorGUI.DisabledGroupScope(string.IsNullOrEmpty(filter)))
             {
                 if (GUILayout.Button("Clear", "SearchCancelButton"))
@@ -244,3 +246,4 @@ public class IconViewerWindow : EditorWindow
         return filter;
     }
 }
+#endif

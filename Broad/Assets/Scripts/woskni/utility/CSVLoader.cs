@@ -29,41 +29,37 @@ namespace woskni
             dataPositions = new Dictionary<string, Vector2Int>();
 
             // ファイルを読み込む
-            // （usingステートメントを抜けるとき、自動でStreamReaderのファイルリソースが解放される）
-            using (StreamReader reader = new StreamReader(filePath))
+            var csv = Resources.Load<TextAsset>(filePath);
+
+            // 読み込めなかった場合はエラーを出力して終了
+            if (csv == null) {
+                Debug.LogError(filePath + "の読み込み失敗");
+                return;
+            }
+
+            // 行で分割
+            var lines = csv.text.Split('\n');
+            
+            // 末尾まで繰り返す
+            for(int line = 0; line < lines.Length; ++line)
             {
-                // 読み込めなかった場合はエラーを出力して終了
-                if (reader == null)
+                var data = lines[line].Split(',');
+
+                for (int i = 0; i < data.Length; ++i)
                 {
-                    Debug.LogError(filePath + "の読み込み失敗");
-                    return;
-                }
+                    this.data.Add(data[i]);
 
-                // 末尾まで繰り返す
-                while (!reader.EndOfStream)
-                {
-                    // CSVファイルの一行を読み込む
-                    string line = reader.ReadLine();
-
-                    // 読み込んだ一行をカンマ毎に分けて配列に格納する
-                    for (int i = 0; i < line.Split(',').Length; ++i)
-                    {
-                        string value = line.Split(',')[i];
-
-                        data.Add(value);
-
-                        // 位置情報を格納
-                        if (dataPositions.ContainsKey(value)) dataPositions[value] = new Vector2Int(i, rows);
-                        else dataPositions.Add(value, new Vector2Int(i, rows));
-                    }
+                    // 位置情報を格納
+                    if (dataPositions.ContainsKey(data[i])) dataPositions[data[i]] = new Vector2Int(i, rows);
+                    else dataPositions.Add(data[i], new Vector2Int(i, rows));
 
                     // 行数を加算
                     ++rows;
                 }
-
-                // 列数を算出
-                cols = data.Count / rows;
             }
+
+            // 列数を算出
+            cols = this.data.Count / rows;
         }
 
         /// <summary>指定されたデータを文字列で取得</summary>

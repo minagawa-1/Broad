@@ -114,6 +114,7 @@ public class ButtonGuide : Image
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ButtonGuide), true)]
 [CanEditMultipleObjects]
 /// <summary>
@@ -154,3 +155,4 @@ public class ImageEditor : GraphicEditor
         }
     }
 }
+#endif

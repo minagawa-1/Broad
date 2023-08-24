@@ -59,8 +59,8 @@ public class CustomNetworkManager : NetworkManager
         var removeClient = clientDataList.Find(c => c == conn);
 
         // 切断したプレイヤーから最後のプレイヤーまでの番号を-1する
-        for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)
-            playerDataList[i] = new PlayerData(playerDataList[i].selfIndex - 1);
+        //for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)
+        //    playerDataList[i] = new PlayerData(playerDataList[i].selfIndex - 1);
 
         // connに一致するPlayerDataを見つけてリストから削除
         playerDataList.Remove(removeData);
@@ -68,6 +68,9 @@ public class CustomNetworkManager : NetworkManager
         // PlayerCountを再送信
         ConnectionData sendData = new ConnectionData(NetworkServer.connections.Count);
         NetworkServer.SendToAll(sendData);
+
+        // 自分以外のプレイヤーがいなければ終了
+        if (NetworkServer.connections.Count < 2) StopServer();
 
         base.OnServerDisconnect(conn);
     }
@@ -86,8 +89,15 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnStopServer()
     {
+        // 次のマッチングに影響が出ないようにリストのクリア
         playerDataList.Clear();
         clientDataList.Clear();
+
+        // 次のマッチングに盤面情報を持ち越さないように空にする
+        GameManager.board.data = null;
+
+        // マッチングシーンに戻る
+        SceneManager.LoadScene((int)Scene.TitleScene);
 
         base.OnStopServer();
     }

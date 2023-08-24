@@ -18,7 +18,7 @@ public class Localization : MonoBehaviour
         // 辞書とCSVの初期化
         if (m_CSVLoader == null)
         {
-            m_CSVLoader = new woskni.CSVLoader(Application.dataPath + @"\Resources\LanguageInfo.csv");
+            m_CSVLoader = new woskni.CSVLoader("LanguageInfo");
             m_BasisFontSizes = new Dictionary<Text, int>();
         }
 

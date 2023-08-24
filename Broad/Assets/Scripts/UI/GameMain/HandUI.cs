@@ -32,10 +32,10 @@ public class HandUI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Blocks[] deckBlocks = new Blocks[SaveSystem.saveData.deck.Length];
+        Blocks[] deckBlocks = new Blocks[SaveSystem.data.deck.Length];
         moveButtonList = new List<MoveButton>();
 
-        for (int i = 0; i < deckBlocks.Length; ++i) deckBlocks[i] = SaveSystem.saveData.deck[i];
+        for (int i = 0; i < deckBlocks.Length; ++i) deckBlocks[i] = SaveSystem.data.deck[i];
 
         deckBlocks.Shuffle();
 
