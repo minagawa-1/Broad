@@ -49,10 +49,16 @@ public class ButtonBlocksUI : MonoBehaviour
         if (hasNumText)
         {
             // "コ"のフォントサイズを取得
-            var fontSize = System.Text.RegularExpressions.Regex.Match(blockNumText.text, @"<size=(\d+)>").Groups[1].Value;
+            int fontSize = (int)blockNumText.text.ExtractNumerics();
+
+            // 設定の文字サイズを反映
+            fontSize = (int)((float)fontSize * Config.data.fontSizeScale);
+
+            // 個数表記をローカライズ
+            string pieces = Localization.Translate("pcs");
 
             // ブロック数テキストの設定
-            blockNumText.text = $"{blocks.GetBlockNum()}<size={fontSize}>コ</size>";
+            blockNumText.text = $"{Localization.LocalizeInt(blocks.GetBlockNum())}<size={fontSize}> {pieces}</size>";
         }
 
         // サイズ設定

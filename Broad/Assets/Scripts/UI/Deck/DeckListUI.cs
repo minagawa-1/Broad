@@ -49,7 +49,7 @@ public class DeckListUI : MonoBehaviour
         bool isLeft = (float)index / GameSetting.deck_blocks < 0.5f;
         blocksUI.transform.parent.SetParent(isLeft ? m_ContentLeft.transform : m_ContentRight.transform);
 
-        Blocks blocks = SaveSystem.saveData.deck[index];
+        Blocks blocks = SaveSystem.data.deck[index];
 
         if (blocks.shape != null)
         {
@@ -80,7 +80,7 @@ public class DeckListUI : MonoBehaviour
 
         SetBlocks(m_BlocksListUI.editingDeckIndex, selectBlocksIndex);
 
-        SaveSystem.Save();
+        if(Config.data.autosave) SaveSystem.Save();
     }
 
     void SetBlocks(int deckIndex, int blocksIndex)
@@ -98,7 +98,7 @@ public class DeckListUI : MonoBehaviour
             duplicates[i].SetupShadow(m_ShadowDistance);
         }
 
-        SaveSystem.saveData.deck[deckIndex] = blocks;
+        SaveSystem.data.deck[deckIndex] = blocks;
 
         deckUIs[deckIndex].Setup(blocks, m_BlockSprite);
         deckUIs[deckIndex].SetupShadow(m_ShadowDistance);

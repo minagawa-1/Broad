@@ -25,7 +25,7 @@ public class PathConverter : MonoBehaviour
             case FilePathType.RootDirectoryPath:      return path;
             case FilePathType.AssetsPath:             return path.Substring(path.IndexOf("Assets/"));
             case FilePathType.CurrentDirectoryPath:   return path.Substring(path.LastIndexOf("/") + 1);
-            default:                                                    return "";
+            default:                                  return "";
         }
     }
 

@@ -1,0 +1,131 @@
+BooleanExpansion.cs
+{
+	bool型の拡張メソッドです
+
+	ToInt:
+		true/falseを、int型の1/0に変換します
+
+	Random:
+		引数rate(初期値0.5)の確率でtrueを返します。
+}
+
+ColorExpansion.cs
+{
+	Color型の拡張メソッドです
+
+	ToHex:
+		RGB値をカラーコードで取得します
+		引数isUpperで、A～Fを大文字で返すか小文字で返すかを選択できます
+
+	GetAlphaColor:
+		アルファ値を変動させた色を返します
+		カラーの透明度のみを変えたいときなどに活用することができます
+
+	GetHue:
+	GetSaturation:
+	GetValue:
+		それぞれで色相・彩度・明度を取得することが可能です
+
+	SetHSV:
+		HSV形式で色を設定します
+		「明度のみを下げる」といった個々の設定が可能です
+
+	Contrast:
+		コントラストを調整した色を返します
+
+	GetRelativeColor:
+		複数の相対色を取得します
+		たとえばColor.red.GetRelativeColor(4)を行うと、
+		赤色を含め、赤色から均等に離れた4色(赤・黄緑・水色・紫)を取得します
+}
+
+EnumExpansion.cs
+{
+	列挙型の拡張メソッドです
+	
+	AtRandom<T>:
+		列挙型に含まれるランダムな列挙子を返します
+
+	GetLength<T>: 
+		列挙型の列挙子の数を返します
+}
+
+GameObjectExpansion.cs
+{
+	GameObjectの拡張メソッドです
+
+	ToTransforms:
+		複数のGameObjectを複数のTransformに変換して返します
+
+	GetOrAddComponent:
+		コンポーネントを取得し、コンポーネントがアタッチされていない場合はアタッチして返します
+
+	SetLayer:
+		レイヤーを変更します
+		引数でレイヤー番号やレイヤー名指定・子オブジェクトのレイヤーも変更するかを設定できます
+}
+
+ListExpansion.cs
+{
+	Listの拡張メソッドです
+	
+	AtRandom<T>:
+		リストに含まれるランダムな要素を返します
+
+	IsProtrude<T>: 
+		引数の要素番号が配列外参照かどうかを返します
+}
+
+LongExpansion.cs
+{
+	long型の拡張メソッドです
+
+	FormatSize:
+		値をデータ量として解釈し、文字列に変換します（例: 1263000 => "1.26M"）
+}
+
+StringExpansion.cs
+{
+	string型の拡張メソッドです
+
+	Repeat:
+		引数countの回数繰り返した文字列を返します
+		たとえば("Hello").Repeat(3)を行うと、"HelloHelloHello"を返します
+
+	HitCount: 
+		引数serchに一致する文字列が何個存在するかを返します
+		たとえば("Hello").HitCount("l")を行うと、2を返します
+}
+
+TranformExpansion.cs
+{
+	Transform型の拡張メソッドです
+
+	GetChildren:
+		非再帰的に子オブジェクトを取得します
+		孫や孫以降は取得せず子のみを取得します
+
+	GetRootParent:
+		最上位の親を取得します
+
+	ToGameObjects:
+		複数のTransformを複数のGameObjectに変換して返します
+}
+
+VecotrExpansion.cs
+{
+	Vector3型, Vector3Int型, Vector2型, Vector2Int型の拡張メソッドです
+
+	Offset:
+		一定距離はなれたベクトルを返します
+		たとえばVector2(5f, 2f).Offset(y: -3f)を行うと、Vector2(5f, -1f)を返します
+
+	Setter: 
+		個々の値を設定した値を返します
+		たとえばVector2(5f, 2f).Setter(x: 0f)を行うと、Vector2(0f, -1f)を返します
+		transform.positionのような個々の変更ができない際などに活用できます
+
+	GetSwapXY: xとyを入れ替えたベクトルを返します
+	GetSwapXZ: xとzを入れ替えたベクトルを返します　Vector3, Vector3Intにのみ存在します
+	GetSwapYZ: yとzを入れ替えたベクトルを返します　Vector3, Vector3Intにのみ存在します
+}

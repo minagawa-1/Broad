@@ -1,0 +1,49 @@
+﻿General,一般,一般设置
+Operation,操作設定,操作设置
+Volume,オーディオ,音量
+Language,言語,语言
+Screen,画面設定,屏幕设置
+Initialize,初期化,初始化
+Player name,プレイヤー名,玩家名
+Autosave,自動セーブ,自动保存
+Left stick deadzone,デッドゾーン (左スティック),摇杆死区（左）
+Right stick deadzone,デッドゾーン (右スティック),摇杆死区（右）
+Move speed,移動速度,移动速度
+Button guide display,ボタンガイドの表示,按钮指南显示
+Master volume,マスター音量,总音量
+Music volume,BGM,背景音乐
+SFX volume,効果音,游戏音效
+Brightness,明るさ,亮度
+Font size,文字サイズ,字体大小
+Screen size,画面サイズ,屏幕尺寸
+Settings reset,設定のリセット,重置设置
+Save data initialization,セーブデータの初期化,初始化存档数据
+Start game,ゲームスタート,开始游戏
+Deck,デッキ,牌堆
+Setting,設定,设置
+In Queue,マッチング中,配對中
+Decision,決定,确认
+Cancel,キャンセル,取消
+Move,移動,移动
+Back,戻る,返回
+pcs,コ,个
+Reorder,並べ替え,排序
+Number order,番号 順,编号 顺序
+PIiece order,ブロック数 順,方块数量 顺序
+Width and height order,縦横幅 順,宽度和高度 顺序
+Density order,密度順,密度顺序
+Asc,昇順,升序
+Desc,降順,降序
+Select,選択,选择
+Rotate,回転,旋转
+Turn on transparency,透過ON,开启透明
+Turn off transparency,透過OFF,关闭透明
+Put,設置,放在这里
+Slow,おそい,慢
+Normal,ふつう,中
+Fast,はやい,快
+Small,小,小
+Large,大,大
+Window<size=18>（1280x720）</size>,ウィンドウ<size=18>（1280x720）</size>,窗口<size=18>（1280x720）</size>
+Fullscreen<size=18>（1920x1080）</size>,フルスクリーン<size=18>（1920x1080）</size>,全屏<size=18>（1920x1080）</size>
+Reset,リセット,重置

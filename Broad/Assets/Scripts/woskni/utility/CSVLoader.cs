@@ -7,111 +7,87 @@ namespace woskni
 {
     public class CSVLoader
     {
-        // CSVデータリスト
-        public static List<string> m_Data = new List<string>();
+        /// <summary>データのリスト</summary>
+        public List<string> data { get; }
 
-        public static int m_Cols; // 横に並んでいるデータの個数
-        public static int m_Rows; // 縦に並んでいるデータの個数
+        /// <summary>横に並んでいるデータの個数</summary>
+        public int cols { get; }
 
-        /// <summary>
-        /// CSVファイル読み込み
-        /// </summary>
-        /// <param name="file_path"> 読み込むCSVファイルパス </param>
-        public void Load(string file_path)
+        /// <summary>縦に並んでいるデータの個数</summary>
+        public int rows { get; }
+
+        // データをキーと位置を対応付けるハッシュテーブル
+        private Dictionary<string, Vector2Int> dataPositions;
+
+        /// <summary>CSVファイル読み込み
+        /// <param name="filePath"> 読み込むCSVファイルパス </param>
+        public CSVLoader(string filePath)
         {
-            // 念のため解放する
-            Unload();
+            // データ初期化
+            data = new List<string>();
+            cols = rows = 0;
+            dataPositions = new Dictionary<string, Vector2Int>();
 
-            StreamReader reader = new StreamReader(file_path);
-
-            // 読み込めなかった場合はエラーを出力して終了
-            if (reader == null) { Debug.LogError(file_path + "の読み込み失敗"); return; }
-
-            // 末尾まで繰り返す
-            while (!reader.EndOfStream)
+            // ファイルを読み込む
+            // （usingステートメントを抜けるとき、自動でStreamReaderのファイルリソースが解放される）
+            using (StreamReader reader = new StreamReader(filePath))
             {
-                // CSVファイルの一行を読み込む
-                string line = reader.ReadLine();
+                // 読み込めなかった場合はエラーを出力して終了
+                if (reader == null)
+                {
+                    Debug.LogError(filePath + "の読み込み失敗");
+                    return;
+                }
 
-                // 読み込んだ一行をカンマ毎に分けて配列に格納する
-                for (int i = 0; i < line.Split(',').Length; ++i)
-                    m_Data.Add(line.Split(',')[i]);
+                // 末尾まで繰り返す
+                while (!reader.EndOfStream)
+                {
+                    // CSVファイルの一行を読み込む
+                    string line = reader.ReadLine();
 
-                // 縦に並んでいる数をカウント
-                ++m_Rows;
+                    // 読み込んだ一行をカンマ毎に分けて配列に格納する
+                    for (int i = 0; i < line.Split(',').Length; ++i)
+                    {
+                        string value = line.Split(',')[i];
+
+                        data.Add(value);
+
+                        // 位置情報を格納
+                        if (dataPositions.ContainsKey(value)) dataPositions[value] = new Vector2Int(i, rows);
+                        else dataPositions.Add(value, new Vector2Int(i, rows));
+                    }
+
+                    // 行数を加算
+                    ++rows;
+                }
+
+                // 列数を算出
+                cols = data.Count / rows;
             }
-            // 横に並んでいる数を算出
-            m_Cols = m_Data.Count / m_Rows;
         }
 
-        /// <summary>
-        /// 解放
-        /// </summary>
-        public void Unload()
-        {
-            m_Data.Clear();
-
-            m_Cols = m_Rows = 0;
-        }
-
-        /// <summary>
-        /// 横に並んでいる数を取得
-        /// </summary>
-        /// <returns>列数</returns>
-        public int GetCols()
-        {
-            return m_Cols;
-        }
-
-        /// <summary>
-        /// 縦に並んでいる数を取得
-        /// </summary>
-        /// <returns>行数</returns>
-        public int GetRows()
-        {
-            return m_Rows;
-        }
-
-        /// <summary>
-        /// データ数を取得
-        /// </summary>
-        /// <returns>データ数</returns>
-        public int GetDataCount()
-        {
-            return m_Data.Count;
-        }
-
-        /// <summary>
-        /// 指定されたデータを文字列で取得
-        /// </summary>
+        /// <summary>指定されたデータを文字列で取得</summary>
         /// <param name="rows">行</param>
         /// <param name="cols">列</param>
-        /// <returns>行列に該当する文字列</returns>
-        public string GetString(int rows, int cols)
-        {
-            return m_Data[(rows * m_Cols) + cols];
-        }
+        public string GetString(int row, int col) => data[(row * cols) + col];
 
-        /// <summary>
-        /// 指定されたデータを整数に変換して取得
-        /// </summary>
+        /// <summary>指定されたデータを整数に変換して取得</summary>
         /// <param name="rows">行</param>
         /// <param name="cols">列</param>
-        /// <returns>行列に該当する整数</returns>
-        public int GetInteger(int rows, int cols)
-        {
-            return int.Parse(m_Data[(rows * m_Cols) + cols]);
-        }
+        public int GetInteger(int row, int col) => int.Parse(data[(row * cols) + col]);
 
-        /// <summary>
-        /// 指定されたデータを実数に変換して取得
-        /// </summary>
+        /// <summary>指定されたデータを実数に変換して取得</summary>
         /// <param name="rows">行</param>
         /// <param name="cols">列</param>
-        /// <returns>行列に該当する実数</returns>
-        public float GetFloat(int rows, int cols)
+        public float GetFloat(int row, int col) => float.Parse(data[(row * cols) + col]);
+
+        /// <summary>データの場所を検索</summary>
+        /// <param name="search">検索文字列</param>
+        /// <returns>見つかった場所の行列。見つからなかった場合は(-1, -1)</returns>
+        public Vector2Int Find(string search)
         {
-            return float.Parse(m_Data[(rows * m_Cols) + cols]);
+            Vector2Int position;
+            return dataPositions.TryGetValue(search, out position) ? position : new Vector2Int(-1, -1);
         }
     }
 }

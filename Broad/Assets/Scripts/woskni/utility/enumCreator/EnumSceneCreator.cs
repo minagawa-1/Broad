@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -28,19 +29,19 @@ public static class EnumSceneCreator
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("/// <summary>シーン(列挙型)</summary>");
-        builder.AppendLine("public class " + class_name);
+        builder.AppendLine("/// <summary>レイヤー(列挙型)</summary>");
+        builder.AppendLine("public enum " + class_name);
         builder.AppendLine("{");
-
-        var layers = GetAllScenes().Select(c => new { enumeration = ScriptCreator.RemoveInvalidChars(c), name = c });
         
-        for (int i = 0; i < layers.Count(); ++i)
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; ++i)
         {
-            builder.AppendLine($"\t/// <summary>{layers.ElementAt(i).enumeration}</summary>");
+            string scene = System.IO.Path.GetFileNameWithoutExtension(EditorBuildSettings.scenes[i].path);
 
-            string fin = i < layers.Count() - 1 ? "\n" : "";
+            builder.AppendLine($"\t/// <summary>{scene}</summary>");
 
-            builder.AppendLine($"\tpublic const string {layers.ElementAt(i).enumeration} = \"{layers.ElementAt(i).name}\";" + fin);
+            string fin = i < SceneManager.sceneCountInBuildSettings - 1 ? "," : "";
+
+            builder.AppendLine($"\t{scene}" + fin);
         }
 
         builder.AppendLine("}");

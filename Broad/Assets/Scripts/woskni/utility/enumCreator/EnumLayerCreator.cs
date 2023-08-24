@@ -27,8 +27,8 @@ public static class EnumLayerCreator
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("/// <summary>シーン(列挙型)</summary>");
-        builder.AppendLine("public class " + class_name);
+        builder.AppendLine("/// <summary>レイヤー(列挙型)</summary>");
+        builder.AppendLine("public enum " + class_name);
         builder.AppendLine("{");
 
         var layers = InternalEditorUtility.layers.Select(c => new { enumeration = ScriptCreator.RemoveInvalidChars(c), name = c });
@@ -36,9 +36,11 @@ public static class EnumLayerCreator
         {
             builder.AppendLine($"\t/// <summary>{layers.ElementAt(i).enumeration}</summary>");
 
-            string fin = i < layers.Count() - 1 ? "\n" : "";
+            string fin = i < layers.Count() - 1 ? "," : "";
 
-            builder.AppendLine($"\tpublic const string {layers.ElementAt(i).enumeration} = \"{layers.ElementAt(i).name}\";" + fin);
+            string enumeration = layers.ElementAt(i).enumeration;
+
+            builder.AppendLine($"\t{enumeration} = {UnityEngine.LayerMask.NameToLayer(enumeration)}" + fin);
         }
 
         builder.AppendLine("}");

@@ -24,6 +24,7 @@ public class SwitchingUIs : MonoBehaviour
     [Header("シーン遷移用に保持するコンポーネント")]
     [SerializeField] AudioListener m_AudioListener;
     [SerializeField] UnityEngine.EventSystems.EventSystem m_EventSystem;
+    [SerializeField] Scene m_SwitchScene;
 
     Vector3 m_BasisPosition;
 
@@ -37,6 +38,9 @@ public class SwitchingUIs : MonoBehaviour
     void Start()
     {
         m_TitleState = FindObjectOfType<TitleState>();
+
+        Localization.Setup();
+        Localization.Correct();
 
         m_RectTransform = GetComponent<RectTransform>();
         m_BasisPosition = m_RectTransform.position;
@@ -66,9 +70,9 @@ public class SwitchingUIs : MonoBehaviour
         m_RectTransform.DOMove(m_BasisPosition + m_MoveDistance, m_SwitchTime).SetEase(m_CloseEase)
             .OnComplete(() =>
             {
-                m_TitleState.OnClosedDeckScene();
+                m_TitleState.OnClosedScene(m_SwitchScene);
 
-                SceneManager.UnloadSceneAsync(Scene.DeckScene);
+                SceneManager.UnloadSceneAsync((int)m_SwitchScene);
             });
     }
 

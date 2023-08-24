@@ -30,7 +30,7 @@ public partial class BlocksListUI
         asc = !asc;
 
         text.rectTransform.DoHighlight();
-        text.text = asc ? "昇順" : "降順";
+        text.text = Localization.Translate(asc ? "Asc" : "Desc");
 
         // 降順設定の場合は並びを反転させる
         blocksList.Reverse();

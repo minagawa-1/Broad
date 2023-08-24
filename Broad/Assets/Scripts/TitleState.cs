@@ -15,6 +15,7 @@ public class TitleState : NetworkDiscovery
     [SerializeField] StartButtonState m_StartButtonState;
     [SerializeField] Text[] m_MatchingTexts;
     [SerializeField] Button m_DeckButton;
+    [SerializeField] Button m_ConfigButton;
 
     [Header("シーン遷移用に保持するコンポーネント")]
     [SerializeField] AudioListener m_AudioListener;
@@ -60,8 +61,6 @@ public class TitleState : NetworkDiscovery
 
     void Awake()
     {
-        SaveSystem.Load();
-
         // 各メッセージデータを受信したら対応した関数を実行するように登録
         NetworkClient.RegisterHandler<PlayerData>(ReceivedPlalyerData);
         NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
@@ -71,8 +70,8 @@ public class TitleState : NetworkDiscovery
         if (m_GameSetting.playerColors.Length == 0 || m_GameSetting.playerColors[0].a == 0f)
         {
             m_GameSetting.selfIndex       = 0;
-            m_GameSetting.playerColors = new Color[1];
-            m_GameSetting.playerColors[0] = SaveSystem.saveData.lastColor;
+            m_GameSetting.playerColors    = new Color[1];
+            m_GameSetting.playerColors[0] = SaveSystem.data.lastColor;
         }
 
         m_MatchState = MatchState.None;
@@ -189,7 +188,7 @@ public class TitleState : NetworkDiscovery
             SetupPlayerColor();
 
             // シーン遷移処理
-            Transition.instance.LoadScene(Scene.GameMainScene, m_NetworkManager, 1f, 0.5f);
+            Transition.instance.LoadScene(Scene.GameMainScene.ToString(), m_NetworkManager, 1f, 0.5f);
         }
     }
 
@@ -342,19 +341,19 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    public void OpenDeckScene()
+    public void OpenScene(string sceneName)
     {
         if (m_MatchState >= MatchState.CompleteMatch) return;
 
         m_EventSystem.enabled = false;
         m_AudioListener.enabled = false;
 
-        SceneManager.LoadSceneAsync(Scene.DeckScene, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
 
-    public void OnClosedDeckScene()
+    public void OnClosedScene(Scene scene)
     {
-        m_EventSystem.firstSelectedGameObject = m_DeckButton.gameObject;
+        m_EventSystem.SetSelectedGameObject((scene == Scene.DeckScene ? m_DeckButton : m_ConfigButton).gameObject);
         m_EventSystem.enabled = true;
         m_AudioListener.enabled = true;
     }
