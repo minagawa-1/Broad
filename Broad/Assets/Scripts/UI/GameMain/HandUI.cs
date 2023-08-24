@@ -19,80 +19,90 @@ public class HandUI : MonoBehaviour
     [Header("手札全体の横幅")]
     public float buttonGroupWidth = Screen.width * 0.8f;
 
+    [Header("初期の高さ")]
+    public float initHeight = 80f;
+
     [Chapter("コンポーネント")]
     [SerializeField] BlockManager m_BlockManager;
 
-    Deck m_Deck;
-    Hand m_Hand;
+    public Hand hand;
 
-    public MoveButton[] moveButtons;
+    public List<MoveButton> moveButtonList;
 
     // Start is called before the first frame update
     void Awake()
     {
-        Blocks[] deck = new Blocks[SaveSystem.saveData.deck.Length];
-        moveButtons = new MoveButton[GameSetting.hand_blocks];
+        Blocks[] deckBlocks = new Blocks[SaveSystem.saveData.deck.Length];
+        moveButtonList = new List<MoveButton>();
 
-        for (int i = 0; i < deck.Length; ++i) deck[i] = SaveSystem.saveData.deck[i];
+        for (int i = 0; i < deckBlocks.Length; ++i) deckBlocks[i] = SaveSystem.saveData.deck[i];
 
-        m_Deck = new Deck(deck);
-        m_Hand = new Hand(m_Deck, GameSetting.hand_blocks);
+        deckBlocks.Shuffle();
 
-        BuildButton();
+        hand = new Hand(new Deck(deckBlocks), GameSetting.hand_blocks);
+
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) BuildButton(i, true);
     }
 
-    void BuildButton()
+    public void BuildButton(int handIndex, bool firstBuild = false)
     {
+        // ボタン単体の横幅
+        float width = buttonGroupWidth / GameSetting.hand_blocks;
+
         // ボタンの生成
-        for (int i = 0; i < GameSetting.hand_blocks; ++i)
-        {
-            var button = Instantiate(m_ButtonPrefab.gameObject).GetComponent<MoveButton>();
+        var button = Instantiate(m_ButtonPrefab.gameObject).GetComponent<MoveButton>();
+        button.transform.SetParent(transform);
 
-            button.gameObject.name = $"Button[{i}]";
-            button.transform.SetParent(transform);
+        // ボタンの横幅と位置を演算
+        float x = handIndex * width;
 
-            var rectTransform = button.GetComponent<RectTransform>();
+        // ボタンの横幅を設定
+        var rectTransform = button.GetComponent<RectTransform>();
+        rectTransform.offsetMin = rectTransform.offsetMin.Setter(x: x);
+        rectTransform.offsetMax = rectTransform.offsetMax.Setter(x: x + width);
 
-            // ボタンの横幅と位置を演算
-            float width = buttonGroupWidth / GameSetting.hand_blocks;
-            float x = i * width;
+        // 初期位置の設定
+        bool selected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == button.gameObject;
 
-            // ボタンの横幅を設定
-            rectTransform.offsetMin = rectTransform.offsetMin.Setter(x: x);
-            rectTransform.offsetMax = rectTransform.offsetMax.Setter(x: x + width);
+        // ボタンの名前を設定
+        button.transform.GetChild(0).GetComponent<Text>().text = $"Blocks";
 
-            // ボタンの名前を設定
-            button.transform.GetChild(0).GetComponent<Text>().text = $"Blocks[{i}]";
+        // BlocksUI
+        ButtonBlocksUI blocksUI = button.GetComponentInChildren<ButtonBlocksUI>();
 
-            // BlocksUI
-            ButtonBlocksUI blocksUI = button.GetComponentInChildren<ButtonBlocksUI>();
+        blocksUI.Setup(hand.GetBlocksAt(handIndex), m_BlockSprite, false, false);
+        blocksUI.SetupShadow(m_ShadowDistance);
 
-            blocksUI.Setup(m_Hand.GetBlocksAt(i), m_BlockSprite, false, false);
-            blocksUI.SetupShadow(m_ShadowDistance);
-
-            moveButtons[i] = button;
-        }
+        moveButtonList.Add(button);
+        
 
         // ボタンを押したときの処理
-        for (int i = 0; i < GameSetting.hand_blocks; ++i)
         {
-            int handIndex = i;
-            moveButtons[i].onClick.AddListener(() => DrawHandToBoard(handIndex));
+            moveButtonList[handIndex].name = $"Button[{handIndex}]";
+
+            moveButtonList[handIndex].basisPosition = moveButtonList[handIndex].rectTransform.position;
+
+            // 開始時の移動表示DOTween
+            moveButtonList[handIndex].rectTransform.DOMove(moveButtonList[handIndex].basisPosition.Setter(y: -40f), moveButtonList[handIndex].moveTime)
+                .SetEase(Ease.InOutBack).SetDelay(firstBuild ? 0.06f * handIndex : 0f);
+
+            moveButtonList[handIndex].onClick.AddListener(() => PlayAt(handIndex));
         }
 
-        // 左端の手札ボタンを選択
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtons[0].gameObject);
+        // ゲーム開始時の生成後は左端の手札ボタンを選択
+        if(hand.deck.deck.Count == GameSetting.deck_blocks - GameSetting.hand_blocks)
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[0].gameObject);
     }
 
-    /// <summary>盤面にブロックスを生成するUI処理</summary>
-    public void DrawHandToBoard(int handIndex)
+    /// <summary>手札から盤面にブロックスを生成するUI処理</summary>
+    public void PlayAt(int handIndex)
     {
         // いずれかのボタンが操作不能・いずれかのボタンが移動処理中
-        foreach (var mb in moveButtons) if (!mb.interactable || DOTween.IsTweening(mb.gameObject)) return;
+        foreach (var mb in moveButtonList) if (!mb.interactable || DOTween.IsTweening(mb.gameObject)) return;
 
         Vector2Int pos = GameManager.boardSize / 2;
 
-        var blocks = m_Hand.GetBlocksAt(handIndex);
+        var blocks = hand.GetBlocksAt(handIndex);
 
         // ブロックの生成
         m_BlockManager.CreateBlock(this, handIndex, blocks.shape, pos, blocks.density);
@@ -101,29 +111,56 @@ public class HandUI : MonoBehaviour
         Uninteractate();
     }
 
-    /// <summary>山札からドローするUI処理</summary>
+    /// <summary>山札から手札にドローするUI処理</summary>
     /// <param name="num">ドロー先の手札UIの番号</param>
-    public void DrawDeckToHand(int handIndex)
+    public void DrawAt(int handIndex)
     {
-        moveButtons[handIndex].DoMove(new Vector2(moveButtons[handIndex].basisPosition.x, 0f), Ease.InOutCubic, Replace);
+        // ① handIndexと一致するUIを下方向に移動
+        // ② 手札UIのドロー処理
+        Vector3 spos = moveButtonList[handIndex].basisPosition;
+        Vector3 fpos = moveButtonList[handIndex].basisPosition.Setter(y: -40f);
 
-        void Replace()
-        {
-            m_Hand.SetBlocksAt(handIndex, m_Deck.Draw());
-
-            moveButtons[handIndex].DoMove(moveButtons[handIndex].basisPosition, Ease.InOutCubic);
-        }
+        moveButtonList[handIndex].rectTransform.DOMove(spos, moveButtonList[handIndex].moveTime).SetEase(Ease.InCubic)
+            .OnComplete(() => Rebuild(handIndex));
     }
 
-    public void Interactate()
+    public void OnSet(int handIndex)
+    {
+        hand.hand[handIndex] = null;
+    }
+
+    public void Rebuild(int handIndex)
+    {
+        if (hand.deck.deck.Count == 0) return;
+
+        Blocks blocks = hand.deck.Draw();
+
+        hand.hand[handIndex] = blocks;
+
+        // ボタンのブロックス画像を更新
+        moveButtonList[handIndex].GetComponentInChildren<ButtonBlocksUI>().ResetBlocks(blocks);
+
+        BuildButton(handIndex);
+    }
+
+    /// <summary>選択可能にする</summary>
+    /// <param name="selectHandIndex">選択する手札番号</param>
+    public void Interactate(int selectHandIndex)
     {
         // すべてのボタンを操作可能にする
-        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtons[i].Interactate();
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtonList[i].interactable = true;
+
+        Debug.Log($"-Count:{moveButtonList.Count}-------------------------------------------------");
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) Debug.Log($"\t{i}: {moveButtonList[i].gameObject}");
+        Debug.Log("---------------------------------------------------------------");
+
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[selectHandIndex].gameObject);
     }
 
+    /// <summary>選択不可能にする</summary>
     public void Uninteractate()
     {
         // すべてのボタンを操作可能にする
-        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtons[i].Uninteractate(true);
+        for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtonList[i].interactable = false;
     }
 }

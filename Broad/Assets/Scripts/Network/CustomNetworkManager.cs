@@ -50,8 +50,6 @@ public class CustomNetworkManager : NetworkManager
     {
         // 削除したいプレイヤーデータ
         var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
-        Debug.Log($"connectionId: {conn.connectionId}");
-        Debug.Log($"removeData: {removeData.selfIndex}");
 
         // 全クライアントにゲームメイン中にぬけたプレイヤーの情報を送信
         if (SceneManager.GetActiveScene().name == Scene.GameMainScene)
@@ -59,9 +57,6 @@ public class CustomNetworkManager : NetworkManager
 
         // 削除したいクライアント
         var removeClient = clientDataList.Find(c => c == conn);
-
-        // ここで、GameManagerにremoveDataと一致するプレイヤーのブロックを削除するようにする
-        // ※ [ClientRpc]タグを付けてすべてのクライアントで実行できるようにする
 
         // 切断したプレイヤーから最後のプレイヤーまでの番号を-1する
         for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)

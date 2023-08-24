@@ -30,8 +30,10 @@ public class Deck
         if (deck.Count == 0) return null;
 
         // 山札の0番目を削除してreturn
-        var blocks = deck[0];           
+        var blocks = deck[0];
         deck.RemoveAt(0);
+
+        Debug.Log($"Deck Count: {deck.Count}");
 
         return blocks;
     }

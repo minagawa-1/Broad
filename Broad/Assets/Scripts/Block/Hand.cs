@@ -12,7 +12,7 @@ public class Hand
     public Blocks[] hand { get; private set; }
 
     /// <summary>デッキクラス</summary>
-    private readonly Deck m_Deck;
+    public readonly Deck deck;
 
     /// <summary>コンストラクタ</summary>
     /// <param name="deck">ドローするためのデッキ</param>
@@ -22,7 +22,7 @@ public class Hand
         this.maxHandBlocks = maxHandBlocks;
 
         // デッキのコピーを作成して取得
-        m_Deck = new Deck(deck.deck.ToArray());
+        this.deck = deck;
 
         hand = new Blocks[maxHandBlocks];
 
@@ -42,7 +42,7 @@ public class Hand
         Debug.Assert(blanks.Length > 0, $"手札が満杯です。max: {hand.Length}");
 
         // 山札からドローしてreturn
-        hand[blanks[0]] = m_Deck.Draw();
+        hand[blanks[0]] = deck.Draw();
 
         return hand[blanks[0]];
     }

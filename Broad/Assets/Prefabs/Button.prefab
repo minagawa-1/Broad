@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5551851e4b10ee42b683697c12ec8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Scale: 0.5
+  m_Scale: 0.36
   m_ButtonRectTransform: {fileID: 6564674858109889272}
   blockIndexText: {fileID: 0}
   blockNumText: {fileID: 0}
@@ -140,7 +140,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -340}
-  m_SizeDelta: {x: 1600, y: 420}
+  m_SizeDelta: {x: 1600, y: 300}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6564674858109889275
 CanvasRenderer:
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  moveDistance: {x: 0, y: 300}
+  moveDistance: {x: 0, y: 0}
   moveTime: 0.25
   rectTransform: {fileID: 6564674858109889272}
   basisPosition: {x: 0, y: -340}

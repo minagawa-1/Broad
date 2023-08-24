@@ -1029,7 +1029,7 @@ ScriptsOnlyBuild:
     className: CCUNetworkManager
   - hash:
       serializedVersion: 2
-      Hash: fadfef6b9d86fa25a9880fa3e4432374
+      Hash: 183718625f41a242a88d93f3b1067b89
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: HandUI

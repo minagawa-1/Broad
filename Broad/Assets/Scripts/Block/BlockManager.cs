@@ -45,6 +45,9 @@ public class BlockManager : MonoBehaviour
     /// <param name="position"> 座標 </param>
     public void CreateBlock(HandUI handUI, int handIndex, bool[,] shape, Vector2Int position, float density)
     {
+        // すでにControlBlocksがHierarchy上に存在する場合何もしない
+        if (FindObjectOfType<ControlBlock>() != null) return;
+
         int player = GameSetting.instance.selfIndex;
 
         Blocks blocks = new Blocks(shape, position, density);

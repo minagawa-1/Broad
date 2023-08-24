@@ -6,14 +6,6 @@
             "id": "89f91f00-1cb3-4f3f-ace9-cc2d46dd3f95",
             "actions": [
                 {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "468722cc-cd49-4e18-96b4-b93c6379428b",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "741f8e3a-3afd-4009-8f18-bc84e0982e70",
@@ -34,14 +26,6 @@
                     "type": "Button",
                     "id": "758d4f5f-0202-4b24-a2ce-49e82b6fb2dc",
                     "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Scroll",
-                    "type": "Value",
-                    "id": "dbc0d4f3-b07b-48d3-aadf-43e1aaf99d62",
-                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -236,56 +220,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4932e5ed-36ee-4431-9872-5dc2fef02e30",
-                    "path": "<Mouse>/backButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Cancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "18aaafb5-b7f7-4732-94c8-185cdf3c443b",
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Submit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cdaa08fd-c160-4c20-92da-cf8429931067",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Submit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e3548c60-47ce-48b0-9628-ab66297d99d4",
-                    "path": "<Mouse>/scroll",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Scroll",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e8e1dd60-f7a6-4d9f-a123-f31d1dbc13b8",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

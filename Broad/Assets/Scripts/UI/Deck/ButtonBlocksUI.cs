@@ -23,6 +23,8 @@ public class ButtonBlocksUI : MonoBehaviour
 
     public Blocks blocks;
 
+    Sprite m_BlockSprite = null;
+
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -34,7 +36,9 @@ public class ButtonBlocksUI : MonoBehaviour
 
     public void Setup(Blocks blocks, Sprite blockSprite, bool hasNumText = true, bool hasIndexText = true)
     {
-        if(hasIndexText) blockIndexText.text = (blocks.index + 1).ToString();
+        m_BlockSprite = blockSprite;
+
+        if (hasIndexText) blockIndexText.text = (blocks.index + 1).ToString();
 
         // ブロックスが未設定なら終了
         if (blocks == null) return;
@@ -78,5 +82,26 @@ public class ButtonBlocksUI : MonoBehaviour
 
         // 影の色
         shadow.effectColor = color ?? Color.black.GetAlphaColor(0.1f);
+    }
+
+    public void ResetBlocks(Blocks blocks)
+    {
+        this.blocks = blocks;
+
+        // サイズ設定
+        float limitSize = Mathf.Max(3, this.blocks.width, this.blocks.height);
+
+        float dispBlocksSize = m_ButtonRectTransform.sizeDelta.x / limitSize;
+
+        image.rectTransform.sizeDelta = new Vector2(this.blocks.width * dispBlocksSize, this.blocks.height * dispBlocksSize);
+
+        // ブロックスの画像設定
+        Texture2D texture = this.blocks.GetBlocksTexture(m_BlockSprite);
+        image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+
+        // 拡大率と色を設定
+        image.rectTransform.localScale = new Vector2(m_Scale, m_Scale);
+
+        image.color = GameSetting.instance.playerColors[GameSetting.instance.selfIndex];
     }
 }

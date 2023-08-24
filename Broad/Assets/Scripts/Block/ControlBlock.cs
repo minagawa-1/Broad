@@ -401,7 +401,7 @@ public class ControlBlock : MonoBehaviour
             m_GameManager.orderBoardDataList.Clear();
         }
 
-///////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////
+///////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 新しい盤面情報を受信できるまで待機
         await UniTask.WaitUntil(() => m_GameManager.isReceived, cancellationToken: this.GetCancellationTokenOnDestroy());
@@ -459,6 +459,11 @@ public class ControlBlock : MonoBehaviour
             // 現在のターンで生成したブロックの情報を次のターンに持ち越さないようにリストをクリア
             m_GameManager.createdBlockList.Clear();
 
+            // 手札UIに選択を合わせる
+            handUI.OnSet(handIndex);
+
+            handUI.DrawAt(handIndex);
+
             m_BlocksState = BlocksState.Discard;
         }
 
@@ -495,6 +500,9 @@ public class ControlBlock : MonoBehaviour
     /// <summary>ブロックの破棄</summary>
     void DiscardState()
     {
+        // 操作可能にする
+        handUI.Interactate(handIndex);
+
         // 操作用のブロックを破棄
         var children = transform.GetChildren();
 
@@ -502,9 +510,6 @@ public class ControlBlock : MonoBehaviour
             DOTween.Kill(children[i].gameObject);
             Destroy(children[i].gameObject);
         }
-
-        handUI.Interactate();
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(handUI.moveButtons[handIndex].gameObject);
 
         DOTween.Kill(gameObject);
         Destroy(gameObject);
@@ -632,8 +637,6 @@ public class ControlBlock : MonoBehaviour
         // 廃棄
         tokenSource.Dispose();
     }
-
-//////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>ホストからの準備完了の合図を受信</summary>
     /// <param name="readyData">合図用メッセージデータ</param>
