@@ -606,8 +606,9 @@ RectTransform:
   - {fileID: 60108063}
   - {fileID: 1850538091}
   - {fileID: 1091481433}
+  - {fileID: 611881661}
   m_Father: {fileID: 907641348}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1291,13 +1292,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 984388855}
-  m_Father: {fileID: 907641348}
-  m_RootOrder: 0
+  m_Father: {fileID: 251741860}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 70, y: -150}
-  m_SizeDelta: {x: -195, y: -200}
+  m_AnchoredPosition: {x: 10, y: -102}
+  m_SizeDelta: {x: 145, y: 572}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &611881662
 MonoBehaviour:
@@ -1397,7 +1398,7 @@ MonoBehaviour:
   m_ShadowDistance: {x: 0.125, y: -0.125}
   m_GamePadScrollRate: 1.5
   m_ScrollFollowTime: 0.2
-  m_ButtonPrefab: {fileID: 684440388027911157, guid: 31c6428d463535e43874429ea7a1e454, type: 3}
+  m_ButtonPrefab: {fileID: 684440388027911157, guid: 362db05498775fc489ade2524512c4f5, type: 3}
   m_DeckListUI: {fileID: 2018427306}
   m_Content: {fileID: 984388857}
   m_Scrollbar: {fileID: 1362830952}
@@ -1885,7 +1886,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 611881661}
   - {fileID: 251741860}
   - {fileID: 1362830951}
   m_Father: {fileID: 760394707}
@@ -2751,7 +2751,7 @@ RectTransform:
   - {fileID: 186247520}
   - {fileID: 759158965}
   m_Father: {fileID: 907641348}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}

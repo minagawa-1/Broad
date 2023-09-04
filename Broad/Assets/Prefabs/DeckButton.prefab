@@ -211,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5551851e4b10ee42b683697c12ec8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
   m_Scale: 0.25
   m_ButtonRectTransform: {fileID: 8584675579531363989}
   blockIndexText: {fileID: 9033338713416562237}
@@ -221,6 +220,7 @@ MonoBehaviour:
   button: {fileID: 0}
   image: {fileID: 0}
   blocks:
+    index: 0
     serializedShape: 
     position: {x: 0, y: 0}
     center: {x: 0, y: 0}
@@ -303,7 +303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: N<size=20>pcs</size>
 --- !u!1 &7710796257788146549
 GameObject:
   m_ObjectHideFlags: 0

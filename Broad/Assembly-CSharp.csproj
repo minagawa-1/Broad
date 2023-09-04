@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Network\SendDatas\SendColorData.cs" />
     <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\attribute\URL.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\Screenshot.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Vibration.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Timer.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayer.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\StringExpansion.cs" />
     <Compile Include="Assets\Scripts\Block\Deck.cs" />
+    <Compile Include="Assets\Scripts\woskni\expantion\HierarchyLines.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Range.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Tag.cs" />
     <Compile Include="Assets\Scripts\Block\Hand.cs" />

@@ -215,10 +215,10 @@ MonoBehaviour:
   m_ButtonRectTransform: {fileID: 8584675579531363989}
   blockIndexText: {fileID: 9033338713416562237}
   blockNumText: {fileID: 5605822189664831476}
-  image: {fileID: 0}
   rectTransform: {fileID: 0}
   buttonTransform: {fileID: 0}
   button: {fileID: 0}
+  image: {fileID: 0}
   blocks:
     index: 0
     serializedShape: 
@@ -303,7 +303,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "N<size=25>\u30B3</size>"
+  m_Text: N<size=25>pcs</size>
 --- !u!1 &7710796257788146549
 GameObject:
   m_ObjectHideFlags: 0
