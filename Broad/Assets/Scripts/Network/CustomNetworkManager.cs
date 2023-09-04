@@ -48,29 +48,29 @@ public class CustomNetworkManager : NetworkManager
     /// <param name="conn">接続が切れたクライアント情報</param>
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        // 削除したいプレイヤーデータ
-        var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
-
-        // 全クライアントにゲームメイン中にぬけたプレイヤーの情報を送信
-        if (SceneManager.GetActiveScene().name == Scene.GameMainScene.ToString())
-            NetworkServer.SendToAll(removeData);
-
-        // 削除したいクライアント
-        var removeClient = clientDataList.Find(c => c == conn);
-
-        // 切断したプレイヤーから最後のプレイヤーまでの番号を-1する
-        //for (int i = removeData.selfIndex; i < playerDataList.Count; ++i)
-        //    playerDataList[i] = new PlayerData(playerDataList[i].selfIndex - 1);
-
-        // connに一致するPlayerDataを見つけてリストから削除
-        playerDataList.Remove(removeData);
-
-        // PlayerCountを再送信
-        ConnectionData sendData = new ConnectionData(NetworkServer.connections.Count);
-        NetworkServer.SendToAll(sendData);
-
         // 自分以外のプレイヤーがいなければ終了
         if (NetworkServer.connections.Count < 2) StopServer();
+
+        // プレイヤー人数が2人以上の場合
+        else
+        {
+            // 削除したいプレイヤーデータ
+            var removeData = playerDataList.Find(p => p.selfIndex == conn.connectionId);
+
+            // 全クライアントにゲームメイン中にぬけたプレイヤーの情報を送信
+            if (SceneManager.GetActiveScene().name == Scene.GameMainScene.ToString())
+                NetworkServer.SendToAll(removeData);
+
+            // 削除したいクライアント
+            var removeClient = clientDataList.Find(c => c == conn);
+
+            // connに一致するPlayerDataを見つけてリストから削除
+            playerDataList.Remove(removeData);
+
+            // PlayerCountを再送信
+            ConnectionData sendData = new ConnectionData(NetworkServer.connections.Count);
+            NetworkServer.SendToAll(sendData);
+        }
 
         base.OnServerDisconnect(conn);
     }

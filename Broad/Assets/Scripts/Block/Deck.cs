@@ -33,8 +33,6 @@ public class Deck
         var blocks = deck[0];
         deck.RemoveAt(0);
 
-        Debug.Log($"Deck Count: {deck.Count}");
-
         return blocks;
     }
 

@@ -96,6 +96,8 @@ public class Blocks
         // centerを回転後の中心位置にする
         center = new Vector2(center.y, width - center.x - 1);
 
+        position = position.Offset((int)-center.x, (int)-center.y);
+
         return shape = newShape;
     }
 

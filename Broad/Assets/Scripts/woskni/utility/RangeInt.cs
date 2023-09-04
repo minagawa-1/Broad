@@ -7,7 +7,7 @@ using UnityEditor;
 namespace woskni
 {
     [System.Serializable]
-    public struct RangeInt : IEquatable<RangeInt>, IFormattable
+    public struct RangeInt
     {
         /// <summary>最小値</summary>
         public int min;
@@ -28,39 +28,39 @@ namespace woskni
         /// <summary>範囲内の収束値取得</summary>
         /// <param name="value">範囲内に収束させる数値</param>
         /// <returns>収束された数値</returns>
-        public int GetIn(int value) => Mathf.Max(min, Mathf.Min(value, max));
+        public int Clamp(int value) => Mathf.Max(min, Mathf.Min(value, max));
 
         /// <summary>範囲外の発散値取得</summary>
         /// <param name="value">範囲外に発散させる数値</param>
         /// <returns>発散された数値</returns>
-        public int GetOut(int value) => IsIn(value) ? (value - min >= (max - min) / 2f ? max : min) : value;
+        public int ClampOut(int value) => !IsIn(value) ? value : (value - min >= (max - min) / 2f ? max : min);
 
         /// <summary>範囲拡縮した値の取得</summary>
         /// <param name="beforeValue">旧範囲の値</param>
-        /// <param name="beforeRange">旧範囲</param>
+        /// <param name="beforeRange">新しい範囲</param>
         /// <returns>拡縮した範囲の値</returns>
-        public int GetCompress(int beforeValue, RangeInt beforeRange) => (int)((float)this.max * ((float)beforeValue / (float)(beforeRange.max - beforeRange.min)));
+        public int Lerp(int beforeValue, RangeInt newRange) => Lerp(beforeValue, newRange.min, newRange.max);
 
         /// <summary>範囲拡縮した値の取得</summary>
         /// <param name="beforeValue">旧範囲の値</param>
-        /// <param name="min">旧範囲の最小値</param>
-        /// <param name="max">旧範囲の最大値</param>
-        public int GetCompress(int beforeValue, int min, int max) => (int)((float)this.max * ((float)beforeValue / (float)(max - min)));
+        /// <param name="min">新しい範囲の最小値</param>
+        /// <param name="max">新しい範囲の最大値</param>
+        /// <returns>拡縮した範囲の値</returns>
+        public int Lerp(int beforeValue, int min, int max) => (max - min) * ((beforeValue - this.min) / (this.max - this.min)) + this.min;
 
         /// <summary>範囲内の収束値取得(min, maxからの差分を残す)</summary>
         /// <param name="value">範囲内に収束させる数値</param>
         /// <returns>収束された数値</returns>
-        public int GetAround(int value) => IsIn(value) ? value : GetAround((value > max ? value - (max - min) : value + (max - min)));
+        public int Repeat(int value) => IsIn(value) ? value : Repeat((value > max ? value - (max - min) : value + (max - min)));
 
         /// <summary>範囲内のランダムな値取得</summary>
         /// <returns>乱数値</returns>
-        public float Random() => UnityEngine.Random.Range(min, max);
+        public int Random() => UnityEngine.Random.Range(min, max + 1);
 
         /// <summary>デバッグログ</summary>
         public void DebugLog() => Debug.Log("min: " + min.ToString() + ", max: " + max.ToString());
 
-        bool IEquatable<RangeInt>.Equals(RangeInt other) { return Equals(this, other); }
-        public string ToString(string format, IFormatProvider formatProvider) { return min.ToString(format, formatProvider); }
+        public string ToString(string format = "F") => $"({min.ToString(format)} ～ {max.ToString(format)})";
     }
 }
 #if UNITY_EDITOR

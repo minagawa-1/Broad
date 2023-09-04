@@ -4,6 +4,7 @@ using System.Threading;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using DG.Tweening;
 using Mirror;
 using Cysharp.Threading.Tasks;
@@ -137,23 +138,23 @@ public class ControlBlock : MonoBehaviour
 
     void WaitState()
     {
-        // ブロックスの半透明・不透明切り替え（ Cキー | Xボタン | △ボタン ）
-        if (Keyboard.current.cKey.wasPressedThisFrame || Gamepad.current.buttonNorth.wasPressedThisFrame)
+        
+
+        // ブロックスの半透明・不透明切り替え（ Cキー | △ボタン ）
+        if (WasPressedKey(Key.C) || WasPressedButton(GamepadButton.North))
         {
             var children = transform.GetChildren();
             GetComponent<ChangeTransparency>().Change(ref children);
         }
 
         // キャンセル（ Xキー | Escキー | Bボタン | ×ボタン ）
-        if (Keyboard.current.xKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame
-            || Gamepad.current.buttonSouth.wasPressedThisFrame)
+        if (WasPressedKey(Key.X, Key.Escape) || WasPressedButton(GamepadButton.South))
         {
             m_BlocksState = BlocksState.Discard;
         }
 
         // ブロックスを設置（ Zキー | Enterキー | Aボタン | ○ボタン ）
-        if (Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.enterKey.wasPressedThisFrame
-            || Gamepad.current.buttonEast.wasPressedThisFrame)
+        if (WasPressedKey(Key.Z, Key.Enter) || WasPressedButton(GamepadButton.East))
         {
             // 設置判定をしてtrueならBlocksStateをSetに変更
             if (blocks.IsSetable(GameManager.board, GameSetting.instance.selfIndex))
@@ -371,7 +372,7 @@ public class ControlBlock : MonoBehaviour
     /// <summary>他プレイヤー待機状態</summary>
     async UniTask WaitOtherState()
     {
-
+        
 ///////////////// ▼ホストの処理▼ //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 自分がホスト
@@ -384,13 +385,43 @@ public class ControlBlock : MonoBehaviour
             // 重複除去処理
             {
                 // RidDuplicateを呼ぶ準備(タプルデータに直す)
-                var setDatas = new BoardData[NetworkServer.connections.Count];
+                var setDatas = new List<BoardData>();
 
-                for (int i = 0; i < setDatas.Length; ++i)
-                    setDatas[i] = new BoardData(m_GameManager.orderBoardDataList[i].board, m_GameManager.orderBoardDataList[i].player);
+                // まず、CPUを除くプレイヤー人数分setDatasにデータを格納する
+                for (int i = 0; i < NetworkServer.connections.Count; ++i)
+                    setDatas.Add(new BoardData(m_GameManager.orderBoardDataList[i].board
+                                             , m_GameManager.orderBoardDataList[i].player));
+
+                // CPUの数分setDatasにデータを格納する
+                for (int i = 0; i < m_GameManager.cpuList.Count; ++i)
+                {
+                    int cpu = NetworkServer.connections.Count;
+
+                    var result = CPU.AI(i + cpu, GameManager.board, m_GameManager.cpuList[i]);
+
+                    // CPUが設置した盤面の情報を取得
+                    Board cpuBoard = result.setData;
+
+                    // CPUが設置した盤面情報を格納
+                    setDatas.Add(new BoardData(cpuBoard, (i + cpu) + 1));
+
+                    // CPUがこのターンで使用したブロックを使用不可にする
+                    if (result.handIndex >= 0) m_GameManager.cpuList[i].hand.hand[result.handIndex] = null;
+
+                    // 設置が出来なかったらランダムな手札を使用不可にする
+                    else m_GameManager.cpuList[i].hand.hand[Random.Range(0, GameSetting.hand_blocks)] = null;
+
+                    m_GameManager.cpuList[i].hand.DrawAt();
+                }
+
+                Debug.Log($"前: {setDatas.Count}");
+
+                setDatas.RemoveAll(b => b.board.data.Length == 0);
+
+                Debug.Log($"後: {setDatas.Count}");
 
                 // 重複除去
-                if (NetworkClient.activeHost) m_Duplicates = m_GameManager.RidDuplicate(setDatas).ToArray();
+                m_Duplicates = m_GameManager.RidDuplicate(setDatas.ToArray()).ToArray();
 
                 // 重複しているブロックの情報を全クライアントに送信
                 DuplicateData duplicateData = new DuplicateData(m_Duplicates.ToArray());
@@ -479,7 +510,7 @@ public class ControlBlock : MonoBehaviour
         for (int i = 0; i < children.Length; ++i) children[i].gameObject.SetActive(false);
 
 #if UNITY_EDITOR
-        OutputDebugText(true, "board[,].txt");
+        //OutputDebugText(true, "board[,].txt");
 #endif
 
         // イージング (終了後、盤面に反映させて終了)
@@ -617,12 +648,8 @@ public class ControlBlock : MonoBehaviour
             {
                 var block = m_BlockManager.blockParent.transform.Find($"Block[{pos.x}, {pos.y}]");
 
-                // 破棄するべきオブジェクトを見つけたらデバッグログを出して削除
-                if (block != null)
-                {
-                    Debug.Log($"block: {block.name}");
-                    Destroy(block.gameObject);
-                }
+                // 破棄すべきオブジェクトを見つけたらデバッグログを出して削除
+                if (block != null) Destroy(block.gameObject);
             }
         }
     }
@@ -651,5 +678,29 @@ public class ControlBlock : MonoBehaviour
     void ClientReceivedDuplicateData(DuplicateData duplicateData)
     {
         m_Duplicates = duplicateData.duplicates;
+    }
+
+    /// <summary>キー検知</summary>
+    bool WasPressedKey(params Key[] keys)
+    {
+        if (Keyboard.current == null) return false;
+
+        foreach (Key key in keys)
+            if (Keyboard.current[key].wasPressedThisFrame)
+                return true;
+
+        return false;
+    }
+
+    /// <summary>ボタン検知</summary>
+    bool WasPressedButton(params GamepadButton[] buttons)
+    {
+        if (Gamepad.current == null) return false;
+
+        foreach (GamepadButton button in buttons)
+            if (Gamepad.current[button].wasPressedThisFrame)
+                return true;
+
+        return false;
     }
 }

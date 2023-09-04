@@ -39,7 +39,7 @@ public class Hand
         int[] blanks = FindBlank();
 
         // 手札が満杯ならエラーを吐いて終了
-        Debug.Assert(blanks.Length > 0, $"手札が満杯です。max: {hand.Length}");
+        if(blanks.Length == 0) Debug.LogError($"手札が満杯です。max: {hand.Length}");
 
         // 山札からドローしてreturn
         hand[blanks[0]] = deck.Draw();
@@ -68,6 +68,8 @@ public class Hand
         hand[index] = blocks;
     }
 
+    /// <summary>中身のない手札を探す</summary>
+    /// <returns></returns>
     public int[] FindBlank()
     {
         List<int> nullIndices = new List<int>();

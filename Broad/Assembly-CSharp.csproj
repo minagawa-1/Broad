@@ -108,6 +108,7 @@
     <Compile Include="Assets\Scripts\Network\SendDatas\SendPlayerData.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonGuideActivate.cs" />
     <Compile Include="Assets\Scripts\UI\ExtendButton.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\PopupUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\RLE.cs" />
     <Compile Include="Assets\Scripts\UI\Deck\SortBlocksList.cs" />
     <Compile Include="Assets\Scripts\UI\Config\SliderValue.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Name.cs" />
     <Compile Include="Assets\Scripts\UI\BlinkGraphic.cs" />
     <Compile Include="Assets\Scripts\UI\Title\SelectCursor.cs" />
+    <Compile Include="Assets\Scripts\Board\CPU.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\DebugHotKey.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumSceneCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\Base64.cs" />

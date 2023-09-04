@@ -7,7 +7,7 @@ using UnityEditor;
 namespace woskni
 {
     [System.Serializable]
-    public struct Range : IEquatable<Range>, IFormattable
+    public struct Range
     {
         /// <summary>最小値</summary>
         public float min;
@@ -60,9 +60,7 @@ namespace woskni
         /// <returns>乱数値</returns>
         public float Random() => UnityEngine.Random.Range(min, max);
 
-        bool IEquatable<Range>.Equals(Range other) => Equals(this, other);
-        public string ToString(string format, IFormatProvider formatProvider)
-            => $"({min.ToString(format, formatProvider)} ～ {max.ToString(format, formatProvider)})";
+        public string ToString(string format = "F") => $"({min.ToString(format)} ～ {max.ToString(format)})";
     }
 }
 

@@ -150,10 +150,6 @@ public class HandUI : MonoBehaviour
         // すべてのボタンを操作可能にする
         for (int i = 0; i < GameSetting.hand_blocks; ++i) moveButtonList[i].interactable = true;
 
-        Debug.Log($"-Count:{moveButtonList.Count}-------------------------------------------------");
-        for (int i = 0; i < GameSetting.hand_blocks; ++i) Debug.Log($"\t{i}: {moveButtonList[i].gameObject}");
-        Debug.Log("---------------------------------------------------------------");
-
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[selectHandIndex].gameObject);
     }
 
