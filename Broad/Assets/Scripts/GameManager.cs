@@ -47,6 +47,16 @@ public partial class GameManager : MonoBehaviour
 
     public List<GameObject> createdBlockList;   // 生成したブロックを格納するリスト
 
+    /// <summary>CPUの情報</summary>
+    public class CPUData
+    {
+        public Hand         hand;
+        public CPU.CPUType  type;
+        public woskni.Range priorityRange;
+    }
+
+    public List<CPUData> cpuList;              // CPUの手札のリスト
+
     private void Awake()
     {
         // サーバー側がデータを受信したときに対応した関数を実行するように登録
@@ -75,6 +85,52 @@ public partial class GameManager : MonoBehaviour
         // リストを初期化
         orderBoardDataList = new List<BoardData>();
         createdBlockList = new List<GameObject>();
+        cpuList = new List<CPUData>();
+
+        // CPUの手札の設定をする
+        if (NetworkClient.activeHost)
+        {
+            for (int i = NetworkServer.connections.Count; i < NetworkServer.maxConnections; ++i)
+            {
+                Blocks[] deckBlocks = new Blocks[GameSetting.deck_blocks];
+
+                // CPUの情報
+                var cpu = new CPUData();
+                {
+                    // CPUの種類
+                    cpu.type = CPU.CPUType.Larger;//woskni.Enum.AtRandom<CPU.CPUType>();
+
+                    // アルゴリズムの優先度
+                    float min = Random.value;
+                    cpu.priorityRange = new woskni.Range(min, Random.Range(min, 1f));
+
+                    // ブロックの個数傾向
+                    var unitsRange = new woskni.RangeInt(1, 10);
+                    var densityRange = new woskni.Range(0f, 1f);
+                    
+                    if (cpu.type == CPU.CPUType.Larger) {
+                        unitsRange.min = new woskni.RangeInt(1, 6 ).Lerp(unitsRange.Random(), unitsRange);
+                        unitsRange.max = new woskni.RangeInt(5, 10).Lerp(unitsRange.Random(), unitsRange);
+                    }
+                    else if (cpu.type == CPU.CPUType.Densitic) {
+                        densityRange.min = new woskni.Range(0f, 0.7f).Lerp(densityRange.Random(), densityRange);
+                        densityRange.max = new woskni.Range(0.3f, 1f).Lerp(densityRange.Random(), densityRange);
+                    }
+
+                    // ブロックの抽選処理
+                    for (int k = 0; k < GameSetting.deck_blocks; ++k)
+                        deckBlocks[k] = LotteryBlocks.Lottery(unitsRange.Random(), densityRange.Random());
+
+                    // 手札情報
+                    cpu.hand = new Hand(new Deck(deckBlocks), GameSetting.hand_blocks);
+                }
+
+                Debug.Log
+                    ("Player[" + i + "]: { type:" + cpu.type.ToString() + ", priority: " + cpu.priorityRange.ToString("F2") + "}");
+
+                cpuList.Add(cpu);
+            }
+        }
     }
 
     private void Start()
@@ -186,7 +242,7 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>盤面情報をみて足りていないブロックを生成</summary>
+    /// <summary>他プレイヤーのブロックを生成</summary>
     /// <param name="afterBoard">新しい盤面情報</param>
     /// <param name="beforeBoard">古い盤面情報</param>
     /// <returns>生成したブロックのオブジェクト</returns>
@@ -240,7 +296,7 @@ public partial class GameManager : MonoBehaviour
         {
             for (int x = 0; x < setData[0].board.width; x++)
             {
-                // 座標に対して設置申請を出しているplayer番号を抽出
+                // 座標に対して設置申請を出しているplayer番号を抽出（スキップしたプレイヤーは無視）
                 int[] players = setData.Where(d => d.board.GetBoardData(x, y) != 0).Select(d => d.player).ToArray();
 
                 // その座標の設置申請が2人以上だった場合は0を、 1人だった場合はplayer番号を代入

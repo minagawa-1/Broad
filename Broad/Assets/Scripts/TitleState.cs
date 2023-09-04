@@ -62,8 +62,8 @@ public class TitleState : NetworkDiscovery
     void Awake()
     {
         // 各メッセージデータを受信したら対応した関数を実行するように登録
-        NetworkClient.RegisterHandler<PlayerData>(ReceivedPlalyerData);
-        NetworkClient.RegisterHandler<ConnectionData>(ReceivedConnectionData);
+        NetworkClient.ReplaceHandler<PlayerData>(ReceivedPlalyerData);
+        NetworkClient.ReplaceHandler<ConnectionData>(ReceivedConnectionData);
         NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
 
         // GameSettingの初期化
@@ -217,7 +217,7 @@ public class TitleState : NetworkDiscovery
             Color color1P = Color.HSVToRGB(h, s, v);
 
             // 1Pから相対的に離れた色相の色配列を取得
-            m_GameSetting.playerColors = color1P.GetRelativeColor(NetworkServer.connections.Count);
+            m_GameSetting.playerColors = color1P.GetRelativeColor(NetworkServer.maxConnections);
 
             // ColorDataをクライアント全員に送信
             ColorData color = new ColorData(m_GameSetting.playerColors);
@@ -312,8 +312,6 @@ public class TitleState : NetworkDiscovery
     {
         // 受信したデータをplayersColorに入れる
         m_GameSetting.playerColors = colorData.color;
-
-        Debug.Log("set color");
     }
 
     /// <summary>キャンセル</summary>
