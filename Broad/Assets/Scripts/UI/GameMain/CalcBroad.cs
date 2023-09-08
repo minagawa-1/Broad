@@ -6,54 +6,15 @@ using Cysharp.Threading.Tasks;
 
 public class CalcBroad : MonoBehaviour
 {
-    //[Header("コンポーネント")]
-    //[SerializeField] Text m_PlayerText;
-    //[SerializeField] Text m_BroadValueText;
-    //[SerializeField] BlockManager m_BlockManager;
-
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //    m_PlayerText.text = "";
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    // Calcを呼ぶ
-    //    CallCalc().Forget();
-    //}
-
-    //public async UniTaskVoid SetupPlayerText()
-    //{
-    //    for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
-    //    {
-    //        // players[i]のcolorに色が入るまで待機
-    //        await UniTask.WaitUntil(() => GameSetting.instance.playersColor[i] != Color.clear);
-    //        string colorCode = GameSetting.instance.playersColor[i].ToHex();
-
-    //        m_PlayerText.text += "<size=60><color=" + colorCode + ">" + (i + 1) + " P</color> : </size>\n";
-    //    }
-    //}
-
-    //async UniTaskVoid CallCalc()
-    //{
-    //    await UniTask.WaitUntil(() => GameManager.boardSize != Vector2.zero);
-
-    //    int[] counts = Calc();
-
-    //    m_BroadValueText.text = "";
-
-    //    for (int i = 0; i < GameSetting.instance.playersColor.Length; ++i)
-    //        m_BroadValueText.text += counts[i] + " <size=50>㎡</size>\n";
-    //}
-
-    public static int[] Calc()
+    /// <summary>盤面から各プレイヤーの得点を算出</summary>
+    /// <param name="board">調べる盤面情報</param>
+    /// <returns>各プレイヤーの得点</returns>
+    public static int[] Calc(Board board)
     {
         int[] counts = new int[GameSetting.instance.playerColors.Length];
 
         for (int i = 0; i < GameSetting.instance.playerColors.Length; ++i)
-            counts[i] = GetLargestArea(GameManager.board, i + 1);
+            counts[i] = GetLargestArea(board, i + 1);
 
         return counts;
     }

@@ -397,6 +397,7 @@
 "Assets/Scripts/UI/GameMain/PopupUI.cs"
 "Assets/Scripts/UI/Localization.cs"
 "Assets/Scripts/UI/MoveButton.cs"
+"Assets/Scripts/UI/Result/RankingUI.cs"
 "Assets/Scripts/UI/SynchronizeAlpha.cs"
 "Assets/Scripts/UI/Title/SelectCursor.cs"
 "Assets/Scripts/UI/Title/StartButtonState.cs"

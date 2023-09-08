@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTag.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendColorData.cs" />
+    <Compile Include="Assets\Scripts\UI\Result\RankingUI.cs" />
     <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\URL.cs" />

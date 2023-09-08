@@ -70,8 +70,19 @@ public class ComponentGUI : MonoBehaviour
     /// <returns>未登録の場合は登録してから返す</returns>
     static Texture2D FindTexure(Component component)
     {
-        if (!m_IconDictionary.ContainsKey(component.GetType()))
-        {
+        // 未定義のコンポーネントかどうかを調べる
+        bool undefined = !m_IconDictionary.ContainsKey(component.GetType());
+
+        // 定義済みだったとしても、コンポーネント内容がNullだった場合は再定義を行う
+        if (!undefined) {
+            if (m_IconDictionary[component.GetType()] == null) {
+                undefined = true;
+                m_IconDictionary.Remove(component.GetType());
+            }
+        }
+
+        // 未定義のコンポーネントを定義する
+        if (undefined) {
             // コンポーネントからアイコン画像を取得
             Texture2D texture = Copy(AssetPreview.GetMiniThumbnail(component));
 
