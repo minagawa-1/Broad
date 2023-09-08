@@ -33,7 +33,7 @@ public class DonutChart : MonoBehaviour
 
     private void Start()
     {
-        int[] result = CalcBroad.Calc();
+        int[] result = CalcBroad.Calc(GameManager.board);
 
         for (int i = 0; i < GameSetting.instance.playerColors.Length; ++i)
         {
@@ -72,7 +72,7 @@ public class DonutChart : MonoBehaviour
 
     public void UpdateDonut()
     {
-        int[] result = CalcBroad.Calc();
+        int[] result = CalcBroad.Calc(GameManager.board);
         for(int i = 0; i < dataList.Count; ++i) dataList[i].value = result[i];
 
         int sum = dataList.Sum(d => d.value);
