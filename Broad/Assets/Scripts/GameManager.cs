@@ -98,7 +98,7 @@ public partial class GameManager : MonoBehaviour
                 var cpu = new CPUData();
                 {
                     // CPUの種類
-                    cpu.type = CPU.CPUType.Larger;//woskni.Enum.AtRandom<CPU.CPUType>();
+                    cpu.type = CPU.CPUType.Larger;
 
                     // アルゴリズムの優先度
                     float min = Random.value;

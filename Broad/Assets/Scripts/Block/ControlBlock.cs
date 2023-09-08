@@ -133,13 +133,12 @@ public class ControlBlock : MonoBehaviour
         m_MoveDirection = Vector2Int.zero;
 
         m_IsSet = false;
+
         m_SetCompletedCount = 0;
     }
 
     void WaitState()
     {
-        
-
         // ブロックスの半透明・不透明切り替え（ Cキー | △ボタン ）
         if (WasPressedKey(Key.C) || WasPressedButton(GamepadButton.North))
         {
@@ -236,8 +235,7 @@ public class ControlBlock : MonoBehaviour
                 if (Gamepad.current.dpad.ReadValue().y < -0.5f) return Vector2Int.down;
                 if (Gamepad.current.dpad.ReadValue().x >  0.5f) return Vector2Int.right;
             }
-
-            return Vector2Int.zero;
+                return Vector2Int.zero;
         }
 
         // キーボード・ゲームパッドの操作から回転方向を返す
@@ -372,7 +370,6 @@ public class ControlBlock : MonoBehaviour
     /// <summary>他プレイヤー待機状態</summary>
     async UniTask WaitOtherState()
     {
-        
 ///////////////// ▼ホストの処理▼ //////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 自分がホスト
@@ -414,11 +411,7 @@ public class ControlBlock : MonoBehaviour
                     m_GameManager.cpuList[i].hand.DrawAt();
                 }
 
-                Debug.Log($"前: {setDatas.Count}");
-
                 setDatas.RemoveAll(b => b.board.data.Length == 0);
-
-                Debug.Log($"後: {setDatas.Count}");
 
                 // 重複除去
                 m_Duplicates = m_GameManager.RidDuplicate(setDatas.ToArray()).ToArray();
