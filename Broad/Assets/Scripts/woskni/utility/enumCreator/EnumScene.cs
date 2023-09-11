@@ -8,5 +8,7 @@ public enum Scene
 	/// <summary>DeckScene</summary>
 	DeckScene,
 	/// <summary>ConfigScene</summary>
-	ConfigScene
+	ConfigScene,
+	/// <summary>ResultScene</summary>
+	ResultScene
 }

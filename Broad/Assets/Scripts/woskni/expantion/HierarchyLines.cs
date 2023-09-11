@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+#if UNITY_EDITOR
 using UnityEditor;
 
 [InitializeOnLoad]
@@ -87,3 +88,4 @@ public class HierarchySymbols : MonoBehaviour
     /// <summary>そのTransformが兄弟関係において末弟かどうか</summary>
     private static bool IsLast(Transform transform) => transform.GetSiblingIndex() == transform.parent.childCount - 1;
 }
+#endif
