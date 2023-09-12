@@ -10,20 +10,13 @@ public class PopupUI : MonoBehaviour
 {
     public enum PopupType
     {
-        /// <summary>位置決定後の待機ポップアップ</summary>
         Wait,
-
-        /// <summary>全手札が設置不可能な時のポップアップ</summary>
         Unsetable,
-
-        /// <summary>任意でスキップを選択したときのポップアップ</summary>
-        Skip,
     }
 
     [Chapter("コンポーネント")]
-    [SerializeField] Image  m_PopupBackground;
-    [SerializeField] Text   m_PopupText;
-    [SerializeField] HandUI m_HandUI;
+    [SerializeField] Image m_PopupBackground;
+    [SerializeField] Text  m_PopupText;
 
     [Chapter("その他")]
 
@@ -34,13 +27,25 @@ public class PopupUI : MonoBehaviour
     [Header("ポップアップ文字")]
     [Multiline(2), SerializeField] string m_WaitPlayerText;
     [Multiline(2), SerializeField] string m_UnsetablePlayerText;
-    [Multiline(2), SerializeField] string m_SkipPlayerText;
 
     public bool isShowing { get; private set; }
 
     bool IsTweening => DOTween.IsTweening(m_PopupText)
                     || DOTween.IsTweening(m_PopupText.rectTransform)
                     || DOTween.IsTweening(m_PopupBackground);
+
+    private void Update()
+    {
+        // Startボタンを押したときの処理
+        if(Gamepad.current.startButton.wasPressedThisFrame)
+        {
+            // Selectボタンを押しながらStartボタンを押すとUnsetableポップアップを表示
+            PopupType popupType = Gamepad.current.selectButton.isPressed ? PopupType.Unsetable : PopupType.Wait;
+
+            if (isShowing) HidePopup();
+            else           ShowPopup(popupType);
+        }
+    }
 
     /// <summary>ポップアップ表示</summary>
     public void ShowPopup(PopupType popupType)
@@ -52,7 +57,7 @@ public class PopupUI : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
 
         // 背景を表示
-        sequence.Append(m_PopupBackground.DOFade(0.75f, m_BackgroundDuration).SetEase(Ease.OutCubic));
+        sequence.Append(m_PopupBackground.DOFade(0.5f, m_BackgroundDuration).SetEase(Ease.OutCubic));
 
         // テキストを表示
         sequence.Join(m_PopupText.DOFade(1f, m_TextDuration).SetEase(Ease.OutCubic).SetDelay(0.1f));
@@ -88,13 +93,18 @@ public class PopupUI : MonoBehaviour
             case PopupType.Wait:
                 m_PopupText.text = m_WaitPlayerText;
 
+<<<<<<< HEAD
                 // 一番下にする（手札を後面にする）
+=======
+                // 大将にする
+>>>>>>> 7770864a5be58c031180ca8880d2646eb9644104
                 transform.SetSiblingIndex(transform.parent.childCount - 1);
                 break;
 
             case PopupType.Unsetable:
                 m_PopupText.text = m_UnsetablePlayerText;
 
+<<<<<<< HEAD
                 m_HandUI.Interactate();
 
                 // 下から２番目にする（手札を前面にする）
@@ -108,6 +118,10 @@ public class PopupUI : MonoBehaviour
 
                 // 下から２番目にする（手札を前面にする）
                 transform.SetSiblingIndex(transform.parent.childCount - 2);
+=======
+                // 次鋒にする
+                transform.SetSiblingIndex(1);
+>>>>>>> 7770864a5be58c031180ca8880d2646eb9644104
                 break;
         }
     }

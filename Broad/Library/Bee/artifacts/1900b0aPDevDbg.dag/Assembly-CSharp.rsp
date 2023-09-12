@@ -359,7 +359,10 @@
 "Assets/Scripts/UI/ExtendButton.cs"
 "Assets/Scripts/UI/GameMain/CalcBroad.cs"
 "Assets/Scripts/UI/GameMain/HandUI.cs"
+<<<<<<< HEAD
 "Assets/Scripts/UI/GameMain/PlayerNameUI.cs"
+=======
+>>>>>>> 7770864a5be58c031180ca8880d2646eb9644104
 "Assets/Scripts/UI/GameMain/PopupUI.cs"
 "Assets/Scripts/UI/Localization.cs"
 "Assets/Scripts/UI/MoveButton.cs"

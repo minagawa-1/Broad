@@ -21,12 +21,22 @@ namespace woskni
         /// <summary>終了時間(秒)</summary>
         public float limit;
 
+        /// <summary>コンストラクタ</summary>
+        /// <param name="limit">終了時間(秒)</param>
+        /// <param name="timeScale">タイマーの速度倍率</param>
+        public Timer(float limit, float timeScale = 1f)
+        {
+            this.time      = 0f;
+            this.limit     = limit;
+            this.timeScale = timeScale;
+        }
+
         /// <summary>終了時間の初期設定</summary>
         /// <param name="limit">終了時間</param>
-        public void Setup(float limit) { time = 0.0f; this.limit = limit; timeScale = 1f; }
+        public void Setup(float limit) { time = 0f; this.limit = limit; timeScale = 1f; }
 
         /// <summary>経過時間の初期化</summary>
-        public void Reset() { time = 0.0f; timeScale = 1f; }
+        public void Reset() { time = 0f; timeScale = 1f; }
 
         /// <summary>タイマー更新</summary>
         /// <param name="affectScale">Time.timeScaleの影響を受けるか</param>
