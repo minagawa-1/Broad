@@ -78,15 +78,17 @@ public class PopupUI : MonoBehaviour
         sequence.AppendCallback(() => isShowing = false);
     }
 
-    void ReflectPopupType(PopupType popupType)
+    /// <summary>ポップアップUIの見た目を種類に合わせて反映する</summary>
+    /// <param name="popupType">反映させる種類</param>
+    void ReflectPopupType(PopupType type)
     {
         // テキスト内容の更新
-        switch (popupType)
+        switch (type)
         {
             case PopupType.Wait:
                 m_PopupText.text = m_WaitPlayerText;
 
-                // 大将にする（手札を後面にする）
+                // 一番下にする（手札を後面にする）
                 transform.SetSiblingIndex(transform.parent.childCount - 1);
                 break;
 
@@ -95,8 +97,8 @@ public class PopupUI : MonoBehaviour
 
                 m_HandUI.Interactate();
 
-                // 次鋒にする（手札を前面にする）
-                transform.SetSiblingIndex(2);
+                // 下から２番目にする（手札を前面にする）
+                transform.SetSiblingIndex(transform.parent.childCount - 2);
                 break;
 
             case PopupType.Skip:
@@ -104,8 +106,8 @@ public class PopupUI : MonoBehaviour
 
                 m_HandUI.Interactate();
 
-                // 次鋒にする（手札を前面にする）
-                transform.SetSiblingIndex(2);
+                // 下から２番目にする（手札を前面にする）
+                transform.SetSiblingIndex(transform.parent.childCount - 2);
                 break;
         }
     }

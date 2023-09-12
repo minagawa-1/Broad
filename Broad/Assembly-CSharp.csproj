@@ -66,10 +66,12 @@
     <Compile Include="Assets\Scripts\PlayerPrefabsList.cs" />
     <Compile Include="Assets\Scripts\Block\ControlBlock.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTag.cs" />
+    <Compile Include="Assets\Scripts\Network\SendDatas\SendNameData.cs" />
     <Compile Include="Assets\Scripts\Network\SendDatas\SendColorData.cs" />
     <Compile Include="Assets\Scripts\UI\Result\RankingUI.cs" />
     <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\PathConverter.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\PlayerNameUI.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\URL.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\Screenshot.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\Vibration.cs" />

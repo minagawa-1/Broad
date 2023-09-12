@@ -25,8 +25,6 @@ public class CPU
 	/// <param name="priority">優先度（CPUTypeをいかに重要視するか）</param>
 	public static (int handIndex, Board setData) AI(int playerIndex, Board board, GameManager.CPUData data)
 	{
-		if (playerIndex == 1) OutputDebugText(board, "board[,].txt");
-
 		// 設置可能マスの設置時の得点リスト
 		var handScoreList = new List<(int handIndex, Blocks blocks, int score)>();
 
@@ -37,17 +35,24 @@ public class CPU
 			// 設置可能マスの設置時の得点リスト
 			var scoreList = new List<(Blocks blocks, int score)>();
 
-			// 設置可能なマスを走査して評価結果を格納
-			for (int y = 0; y < board.height - data.hand.hand[i].height; ++y) {
-				for (int x = 0; x < board.width - data.hand.hand[i].width; ++x)
+			// 設置可能なマスを見つけたらtrueを返す
+			for (int rot = 0; rot < 4; ++rot)
+			{
+				data.hand.hand[i].RotateRight();
+
+				// 設置可能なマスを走査して評価結果を格納
+				for (int y = 0; y < board.height - data.hand.hand[i].height; ++y)
 				{
-					// 位置を設定した手札のブロックを複製
-					Blocks blocks = new Blocks(data.hand.hand[i].shape, new Vector2Int(x, y), data.hand.hand[i].density);
+					for (int x = 0; x < board.width - data.hand.hand[i].width; ++x)
+					{
+						// 位置を設定した手札のブロックを複製
+						Blocks blocks = new Blocks(data.hand.hand[i].shape, new Vector2Int(x, y), data.hand.hand[i].density);
 
-					// 設置不可であれば、次のマスを調べる
-					if (!blocks.IsSetable(board, playerIndex)) continue;
+						// 設置不可であれば、次のマスを調べる
+						if (!blocks.IsSetable(board, playerIndex)) continue;
 
-					scoreList.Add((blocks, Evaluate(blocks, data)));
+						scoreList.Add((blocks, Evaluate(blocks, data)));
+					}
 				}
 			}
 
@@ -104,30 +109,5 @@ public class CPU
 	static (int handIndex, Blocks blocks, int score) WhereBetter(List<(int handIndex, Blocks blocks, int score)> list, int n = 0)
 	{
 		return list.OrderByDescending(item => item.score).Skip(n).First();
-	}
-
-	static void OutputDebugText(Board board, string filePath = "debugText.txt")
-	{
-		string debugText = "";
-
-		for (int y = 0; y < GameManager.boardSize.y; ++y)
-		{
-			for (int x = 0; x < GameManager.boardSize.x; ++x)
-			{
-				int n = board.GetBoardData(x, y);
-
-				switch (n)
-				{
-					case -1: debugText += "　"; break;
-					case 0:  debugText += "・"; break;
-					default: debugText += n.ToString().ToFullWidth(); break;
-				}
-			}
-
-			debugText += "\n";
-		}
-		
-
-		TextOperate.WriteFile(filePath, debugText);
 	}
 }

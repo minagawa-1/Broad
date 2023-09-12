@@ -27,8 +27,9 @@ public class GameSetting : ScriptableObject
     [Chapter("ゲーム情報")]
 
     [Header("プレイヤーの情報")]
-    public int selfIndex = 0;
-    public Color[] playerColors;
+    public int      selfIndex = 0;
+    public Color[]  playerColors;
+    public string[] playerNames;
 
     [Chapter("盤面情報")]
 

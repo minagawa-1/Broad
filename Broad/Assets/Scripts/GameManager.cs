@@ -243,10 +243,10 @@ public partial class GameManager : MonoBehaviour
     }
 
     /// <summary>他プレイヤーのブロックを生成</summary>
-    /// <param name="afterBoard">新しい盤面情報</param>
-    /// <param name="beforeBoard">古い盤面情報</param>
+    /// <param name="after">設置後の盤面情報</param>
+    /// <param name="before">設置前の盤面情報</param>
     /// <returns>生成したブロックのオブジェクト</returns>
-    public List<GameObject> ComplementBoard(int[,] afterBoard, int[,] beforeBoard)
+    public List<GameObject> ComplementBoard(Board after, Board before)
     {
         createdBlockList = new List<GameObject>();
         createdBlockList.Clear();
@@ -256,10 +256,10 @@ public partial class GameManager : MonoBehaviour
             for (int x = 0; x < boardSize.x; ++x)
             {
                 // 設置しない盤・設置できない盤の場合はcontinue
-                if (afterBoard[x, y] <= 0) continue;
+                if (after.GetBoardData(x, y) <= 0) continue;
 
                 // このターンでの[x, y]座標において、設置情報に変化がない場合はcontinue
-                if (afterBoard[x, y] == beforeBoard[x, y]) continue;
+                if (after.GetBoardData(x, y) == before.GetBoardData(x, y)) continue;
 
                 // プレファブの生成
                 GameObject newBlock = Instantiate(m_BlockPrefab);
@@ -268,7 +268,7 @@ public partial class GameManager : MonoBehaviour
                 newBlock.gameObject.name = $"Block[{x}, {y}]new";
                 newBlock.transform.parent = m_BlockManager.blockParent.transform;
                 newBlock.transform.position = new Vector3Int(x, 1, -y);
-                newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[afterBoard[x, y] - 1];
+                newBlock.GetComponent<MeshRenderer>().material = m_BlockManager.m_SetBlockMaterials[after.GetBoardData(x, y) - 1];
                 newBlock.transform.position = newBlock.transform.position;
                 newBlock.transform.localScale = newBlock.transform.localScale;
 
@@ -302,17 +302,18 @@ public partial class GameManager : MonoBehaviour
                 // その座標の設置申請が2人以上だった場合は0を、 1人だった場合はplayer番号を代入
                 switch (players.Length)
                 {
-                    case 0:                                 break;
-                    case 1:  newBoard[x, y] = players[0];   break;
+                    case 0: break;
+                    case 1: newBoard[x, y] = players[0]; break;
 
                     // 重複
-                    default: 
-                        newBoard[x, y] = 0;
+                    default:
+                        newBoard[x, y] = board.GetBoardData(new Vector2Int(x, y));
 
-                        // x, yに該当する座標のブロックを抽出
+                        // x, yに該当する座標のブロックをこのターンに生成したブロックリストから抽出
                         var dups = createdBlockList.Where(obj => ToInt(obj.transform.position) == new Vector3Int(x, 0, -y)).ToArray();
 
                         duplicateList.AddRange(dups);
+
                         break;
                 }
             }
@@ -322,6 +323,9 @@ public partial class GameManager : MonoBehaviour
         Board checkedBoard = new Board(boardSize.x ,boardSize.y);
 
         checkedBoard.SetBoard(newBoard);
+
+        // テキストスクリプトに重複判定後の盤面情報を出力
+        OutputDebugText(checkedBoard, "board[,].txt");
 
         // プレイヤー全員に判定後のボード情報を送信
         BoardData boardData = new BoardData(checkedBoard);
@@ -392,6 +396,31 @@ public partial class GameManager : MonoBehaviour
         top.transform.position = bottom.transform.position.Offset(z: -boardSize.y - top.transform.localScale.z);
     }
 
+    // 盤面情報をでバック用テキストスクリプトに出力
+    static void OutputDebugText(Board board, string filePath = "debugText.txt")
+    {
+        string debugText = "";
+
+        for (int y = 0; y < GameManager.boardSize.y; ++y)
+        {
+            for (int x = 0; x < GameManager.boardSize.x; ++x)
+            {
+                int n = board.GetBoardData(x, y);
+
+                switch (n)
+                {
+                    case -1: debugText += "　"; break;
+                    case 0: debugText += "・"; break;
+                    default: debugText += n.ToString().ToFullWidth(); break;
+                }
+            }
+
+            debugText += "\n";
+        }
+
+
+        TextOperate.WriteFile(filePath, debugText);
+    }
 
 /////////////// ▼ ホストの処理 ▼ /////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>クライアントからの準備完了の合図を受信</summary>

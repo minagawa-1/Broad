@@ -17,8 +17,6 @@ public class DFR : MonoBehaviour
 
     private void Update()
     {
-
-
         ChangedLog();
     }
 

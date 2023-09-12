@@ -78,7 +78,13 @@ public class ConfigUI : MonoBehaviour
 
     /// <summary>プレイヤー名の設定</summary>
     /// <param name="field">名前入力欄</param>
-    public void SetPlayerName()     => SetData(() => Config.data.playerName     = m_PlayerName.text);
+    public void SetPlayerName()
+    {
+        SetData(() => Config.data.playerName = m_PlayerName.text);
+
+        // 入力した名前をGameSettingのplayerNames[0]に保存
+        GameSetting.instance.playerNames[0] = Config.data.playerName;
+    }
 
     /// <summary>自動セーブの設定</summary>
     /// <param name="slider">スライダー式のトグル</param>

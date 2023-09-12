@@ -32,6 +32,8 @@ public class HandUI : MonoBehaviour
     public List<MoveButton> moveButtonList;
     public List<Text> moveButtonTitleList;
 
+    [ReadOnly] public int m_AddListenerCounter;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -57,7 +59,7 @@ public class HandUI : MonoBehaviour
         // スキップ（ Yボタン | □ボタン ）
         if (Gamepad.current.buttonWest.wasPressedThisFrame)
         {
-            if (!m_PopupUI.isShowing) ShowSkip();
+            if (!m_PopupUI.isShowing) ShowSkip(PopupUI.PopupType.Skip);
             else HideSkip();
         }
 
@@ -104,8 +106,6 @@ public class HandUI : MonoBehaviour
         // ボタンのタイトルを設定
         moveButtonTitleList[handIndex].text = $"Blocks";
 
-
-
         moveButtonList[handIndex].name = $"Button[{handIndex}]";
         moveButtonList[handIndex].basisPosition = moveButtonList[handIndex].rectTransform.position;
 
@@ -117,8 +117,7 @@ public class HandUI : MonoBehaviour
         moveButtonList[handIndex].onClick.AddListener(() => PlayAt(handIndex));
 
         // ゲーム開始時の生成後は左端の手札ボタンを選択
-        if(hand.deck.deck.Count == GameSetting.deck_blocks - GameSetting.hand_blocks)
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[0].gameObject);
+        if(firstBuild) UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[0].gameObject);
     }
 
     /// <summary>手札から盤面にブロックスを生成するUI処理</summary>
@@ -139,14 +138,16 @@ public class HandUI : MonoBehaviour
     }
 
     /// <summary>設置スキップ</summary>
-    public void ShowSkip()
+    public void ShowSkip(PopupUI.PopupType type)
     {
         // 設置不可の時のポップアップ
-        m_PopupUI.ShowPopup(PopupUI.PopupType.Skip);
+        m_PopupUI.ShowPopup(type);
 
         // 各手札ボタンの処理内容を「手札交換処理」に変更
         for (int i = 0; i < GameSetting.hand_blocks; ++i)
         {
+            moveButtonList[i].onClick.RemoveAllListeners();
+
             // COLUMN: AddListenerの引数インデックスはループ変数への対応力がないため、
             //         一度ローカル変数を介して引数を提示する必要がある
             int index = i;
@@ -162,8 +163,9 @@ public class HandUI : MonoBehaviour
         // 各手札ボタンの処理内容を「手札交換処理」に変更
         for (int i = 0; i < GameSetting.hand_blocks; ++i) 
         {
-            // QUIZ: AddListenerの関数内引数に対して i ではなく index を用いている理由を述べよ
+            moveButtonList[i].onClick.RemoveAllListeners();
 
+            // QUIZ: AddListenerの関数内引数に対して i ではなく index を用いている理由を述べよ
             int index = i;
             moveButtonList[i].onClick.AddListener(() => PlayAt(index));
         }
@@ -276,14 +278,14 @@ public class HandUI : MonoBehaviour
         if (unsetables.Count == 0) return;
 
         // 全て操作不可能な場合はスキップ処理
-        if (unsetables.Count >= GameSetting.hand_blocks) ShowSkip();
+        if (unsetables.Count == GameSetting.hand_blocks) ShowSkip(PopupUI.PopupType.Unsetable);
 
         // 一部が操作できない場合は設置不可手札を操作不可能にする
         else foreach (int unsetable in unsetables) Uninteractate(unsetable);
 
-        // 最後に操作可能なハンドにカーソルを合わせる
+        // 最後に操作可能な手札UIにカーソルを合わせる
         for (int i = 0; i < GameSetting.hand_blocks; ++i) {
-            if (moveButtonList[i].interactable == true) {
+            if (moveButtonList[i].interactable) {
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(moveButtonList[i].gameObject);
                 break;
             }

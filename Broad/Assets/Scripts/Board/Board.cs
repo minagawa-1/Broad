@@ -49,8 +49,6 @@ public struct Board
         // パーリンノイズのシード値
         Vector2 seed = new Vector2(Random.value, Random.value) * 100f;
 
-        //Debug.Log($"Width: {width}, Hight: {height}");
-
         for (int y = 0; y < height; ++y)
         {
             for (int x = 0; x < width; ++x)
@@ -61,9 +59,6 @@ public struct Board
 
                 if (perlinValue >= GameSetting.instance.boardViability)
                 {
-                    //Debug.Log($"SetPosition : {x}, {y}");
-                    //Debug.Log($"NoizePosition : {x * height + y}");
-
                     // 設置不可にする
                     SetBoardData(-1, x, y);
                 }

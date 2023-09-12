@@ -83,7 +83,7 @@ public class ControlBlock : MonoBehaviour
     GameObject[] m_Duplicates;
 
     // ターン開始時のボード情報
-    int[,] m_InitialBoardData;
+    Board m_InitialBoard;
 
     // Start is called before the first frame update
     void Start()
@@ -94,7 +94,8 @@ public class ControlBlock : MonoBehaviour
 
         Setup();
 
-        m_InitialBoardData = GameManager.board.GetBoard();
+        // ターン開始時の盤面情報を取得
+        m_InitialBoard = GameManager.board;
     }
 
     // Update is called once per frame
@@ -394,7 +395,7 @@ public class ControlBlock : MonoBehaviour
                 {
                     int cpu = NetworkServer.connections.Count;
 
-                    var result = CPU.AI(i + cpu, GameManager.board, m_GameManager.cpuList[i]);
+                    var result = CPU.AI(i + cpu, m_InitialBoard, m_GameManager.cpuList[i]);
 
                     // CPUが設置した盤面の情報を取得
                     Board cpuBoard = result.setData;
@@ -434,7 +435,7 @@ public class ControlBlock : MonoBehaviour
         m_GameManager.isReceived = false;
 
         // 他プレイヤーのブロックを生成
-        m_GameManager.ComplementBoard(GameManager.board.GetBoard(), m_InitialBoardData);
+        m_GameManager.ComplementBoard(GameManager.board, m_InitialBoard);
 
         // 準備完了したことをホストに伝える
         ReadyData readyData = new ReadyData(true);
@@ -630,20 +631,18 @@ public class ControlBlock : MonoBehaviour
     /// <summary>前のターンに設置した重複ブロックを削除</summary>
     void DestroyOldBlocks()
     {
-        var newBlocks = m_GameManager.createdBlockList.ToArray();
+        // 現在のターンに生成したブロックを取得
+        var objs = m_GameManager.createdBlockList.ToArray();
 
-        for (int i = 0; i < newBlocks.Length; ++i)
+        foreach(var obj in objs)
         {
-            var pos = GetBoardPosition(newBlocks[i].transform.position);
+            var pos = GetBoardPosition(obj.transform.position);
 
-            // 設置するブロックの座標に、前のターンの時点でブロックが存在する
-            if (m_InitialBoardData[pos.x, pos.y] > 0)
-            {
-                var block = m_BlockManager.blockParent.transform.Find($"Block[{pos.x}, {pos.y}]");
+            // 盤面にobjと同じ座標のブロックがいないかを調べる
+            var block = m_BlockManager.blockParent.transform.Find($"Block[{pos.x}, {pos.y}]");
 
-                // 破棄すべきオブジェクトを見つけたらデバッグログを出して削除
-                if (block != null) Destroy(block.gameObject);
-            }
+            // 破棄すべきオブジェクトを見つけたら削除
+            if (block != null) Destroy(block.gameObject);
         }
     }
 
@@ -657,6 +656,8 @@ public class ControlBlock : MonoBehaviour
         // 廃棄
         tokenSource.Dispose();
     }
+
+//////////////// ▼データの受信処理▼ //////////////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>ホストからの準備完了の合図を受信</summary>
     /// <param name="readyData">合図用メッセージデータ</param>
@@ -672,6 +673,8 @@ public class ControlBlock : MonoBehaviour
     {
         m_Duplicates = duplicateData.duplicates;
     }
+
+/////////////// ▼入力検知▼  ////////////////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>キー検知</summary>
     bool WasPressedKey(params Key[] keys)

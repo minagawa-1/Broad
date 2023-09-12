@@ -39,6 +39,10 @@ public class CustomNetworkManager : NetworkManager
             // PlayerDataの送信
             ConnectionData sendData = new ConnectionData(NetworkServer.connections.Count);
             NetworkServer.SendToAll(sendData);
+
+            // NameDataを全プレイヤーに送信
+            NameData nameData = new NameData(GameSetting.instance.playerNames);
+            NetworkServer.SendToAll(nameData);
         }
 
         base.OnServerConnect(conn);

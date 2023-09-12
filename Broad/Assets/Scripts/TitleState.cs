@@ -16,6 +16,7 @@ public class TitleState : NetworkDiscovery
     [SerializeField] Text[] m_MatchingTexts;
     [SerializeField] Button m_DeckButton;
     [SerializeField] Button m_ConfigButton;
+    [SerializeField] CustomNetworkManager m_CustomNetworkManager;
 
     [Header("シーン遷移用に保持するコンポーネント")]
     [SerializeField] AudioListener m_AudioListener;
@@ -61,10 +62,14 @@ public class TitleState : NetworkDiscovery
 
     void Awake()
     {
-        // 各メッセージデータを受信したら対応した関数を実行するように登録
+        // ホストがメッセージデータを受信したら対応した関数を実行するように登録
+        NetworkServer.ReplaceHandler<PlayerData>(HostReceivedPlayerData);
+
+        // クライアントがメッセージデータを受信したら対応した関数を実行するように登録
         NetworkClient.ReplaceHandler<PlayerData>(ReceivedPlalyerData);
         NetworkClient.ReplaceHandler<ConnectionData>(ReceivedConnectionData);
         NetworkClient.ReplaceHandler<ColorData>(ReceivedColorData);
+        NetworkClient.ReplaceHandler<NameData>(ReceivedNameData);
 
         // GameSettingの初期化
         if (m_GameSetting.playerColors.Length == 0 || m_GameSetting.playerColors[0].a == 0f)
@@ -73,6 +78,10 @@ public class TitleState : NetworkDiscovery
             m_GameSetting.playerColors    = new Color[1];
             m_GameSetting.playerColors[0] = SaveSystem.data.lastColor;
         }
+
+        // プレイヤー名をGameSettingに保存
+        m_GameSetting.playerNames = new string[4];
+        m_GameSetting.playerNames[0] = Config.data.playerName;
 
         m_MatchState = MatchState.None;
 
@@ -187,6 +196,8 @@ public class TitleState : NetworkDiscovery
         {
             SetupPlayerColor();
 
+            SetupPlayerName().Forget();
+
             // シーン遷移処理
             Transition.instance.LoadScene(Scene.GameMainScene.ToString(), m_NetworkManager, 1f, 0.5f);
         }
@@ -222,6 +233,37 @@ public class TitleState : NetworkDiscovery
             // ColorDataをクライアント全員に送信
             ColorData color = new ColorData(m_GameSetting.playerColors);
             NetworkServer.SendToAll(color);
+        }
+    }
+
+    async UniTask SetupPlayerName()
+    {
+//////////// ▼共通の処理▼ /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // サーバーに自分のプレイヤー情報を送信
+        PlayerData playerData = new PlayerData(m_GameSetting.selfIndex, m_GameSetting.playerNames[0]);
+        NetworkClient.Send(playerData);
+
+/////////// ▼ホストの処理▼ ///////////////////////////////////////////////////////////////////////////////////////////////////
+        if (NetworkClient.activeHost)
+        {
+            // [最大接続人数] - [サーバーに接続している人数]でCPUの数を求める
+            int cpuCount = NetworkServer.maxConnections - NetworkServer.connections.Count;
+
+            // プレイヤー名を設定していない数
+            int unsetNameCount = 0;
+            for (int i = 0; i < m_GameSetting.playerNames.Length; ++i)
+                if (m_GameSetting.playerNames[i] == null) unsetNameCount++;
+
+            // プレイヤー全員の名前が揃うまで待機
+            await UniTask.WaitUntil(() => unsetNameCount == cpuCount);
+
+            // PlayerNamesにCPU用の名前を追加
+            for (int i = 0; i < cpuCount; ++i)
+                m_GameSetting.playerNames[i + 1] = $"CPU{i + 1}";
+
+            // 全クライアントに名前情報を送信
+            NameData nameData = new NameData(m_GameSetting.playerNames);
+            NetworkServer.SendToAll(nameData);
         }
     }
 
@@ -288,6 +330,16 @@ public class TitleState : NetworkDiscovery
         }
     }
 
+
+///////////// ▼ホストの処理▼ /////////////////////////////////////////////////////////////////////////////////////////////////
+/// <summary>クライアントからのプレイヤー情報を取得</summary>
+/// <param name="playerData">プレイヤー情報</param>
+    void HostReceivedPlayerData(PlayerData playerData)
+    {
+        m_GameSetting.playerNames[playerData.selfIndex] = playerData.name;
+    }
+
+///////////// ▼クライアントの処理▼ ////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>ホストからプレイヤーデータ受信</summary>
     /// <param name="playerData">プレイヤーデータ</param>
     void ReceivedPlalyerData(PlayerData playerData)
@@ -313,6 +365,15 @@ public class TitleState : NetworkDiscovery
         // 受信したデータをplayersColorに入れる
         m_GameSetting.playerColors = colorData.color;
     }
+
+    /// <summary>ホストからプレイヤー名情報を受信</summary>
+    /// <param name="nameData">プレイヤー名情報</param>
+    void ReceivedNameData(NameData nameData)
+    {
+        m_GameSetting.playerNames = nameData.name;
+    }
+
+//////////////// ▼共通の処理▼ ////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>キャンセル</summary>
     /// <param name="tokenSource">キャンセルトークンソース</param>
