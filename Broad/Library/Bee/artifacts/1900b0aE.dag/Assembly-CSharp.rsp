@@ -399,6 +399,7 @@
 "Assets/Scripts/UI/MoveButton.cs"
 "Assets/Scripts/UI/Result/RankingUI.cs"
 "Assets/Scripts/UI/SynchronizeAlpha.cs"
+"Assets/Scripts/UI/Title/Demo.cs"
 "Assets/Scripts/UI/Title/SelectCursor.cs"
 "Assets/Scripts/UI/Title/StartButtonState.cs"
 "Assets/Scripts/UI/Title/Transition.cs"

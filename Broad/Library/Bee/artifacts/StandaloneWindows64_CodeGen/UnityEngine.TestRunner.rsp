@@ -429,7 +429,7 @@
 -langversion:8.0
 
 /deterministic
-/optimize-
+/optimize+
 /debug:portable
 /nologo
 /RuntimeMetadataVersion:v4.0.30319

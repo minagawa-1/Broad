@@ -158,6 +158,7 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\Title\Demo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
