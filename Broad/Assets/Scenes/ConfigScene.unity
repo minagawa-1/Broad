@@ -2535,6 +2535,8 @@ GameObject:
   - component: {fileID: 339900859}
   - component: {fileID: 339900858}
   - component: {fileID: 339900857}
+  - component: {fileID: 339900860}
+  - component: {fileID: 339900861}
   m_Layer: 5
   m_Name: Category Volume
   m_TagString: Untagged
@@ -2605,7 +2607,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 339900858}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 780042218}
+        m_TargetAssemblyTypeName: ConfigUI, Assembly-CSharp
+        m_MethodName: SelectFollow
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 724455899}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &339900858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2644,6 +2658,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339900855}
   m_CullTransparentMesh: 1
+--- !u!114 &339900860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339900855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8365424bf87ff4cb873046832bc612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scrollbar: {fileID: 1886494620}
+  m_FollowedPosition: 0.4
+  m_FollowDuration: 0.2
+--- !u!114 &339900861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339900855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 339900860}
+          m_TargetAssemblyTypeName: FollowSlider, Assembly-CSharp
+          m_MethodName: OnSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &353953792
 GameObject:
   m_ObjectHideFlags: 0
@@ -5625,6 +5683,8 @@ GameObject:
   - component: {fileID: 780487009}
   - component: {fileID: 780487008}
   - component: {fileID: 780487007}
+  - component: {fileID: 780487011}
+  - component: {fileID: 780487010}
   m_Layer: 5
   m_Name: Category Screen
   m_TagString: Untagged
@@ -5695,7 +5755,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 780487008}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 780042218}
+        m_TargetAssemblyTypeName: ConfigUI, Assembly-CSharp
+        m_MethodName: SelectFollow
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1145889307}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &780487008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5734,6 +5806,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780487005}
   m_CullTransparentMesh: 1
+--- !u!114 &780487010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780487005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 780487011}
+          m_TargetAssemblyTypeName: FollowSlider, Assembly-CSharp
+          m_MethodName: OnSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &780487011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780487005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8365424bf87ff4cb873046832bc612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scrollbar: {fileID: 1886494620}
+  m_FollowedPosition: 0
+  m_FollowDuration: 0.2
 --- !u!1 &792925067
 GameObject:
   m_ObjectHideFlags: 0
@@ -6055,6 +6171,7 @@ MonoBehaviour:
   blocksListTransform: {fileID: 0}
   m_LeftDeckGroup: {fileID: 0}
   m_RightDeckGroup: {fileID: 0}
+  m_blocksGroup: {fileID: 0}
   m_DecksMoveDirection: {x: 523, y: 0}
   m_BlocksListMoveDirection: {x: 523, y: 0}
   m_DecksButtonScaleDirection: {x: 261.5, y: 0}
@@ -7008,6 +7125,8 @@ GameObject:
   - component: {fileID: 990021372}
   - component: {fileID: 990021371}
   - component: {fileID: 990021370}
+  - component: {fileID: 990021374}
+  - component: {fileID: 990021373}
   m_Layer: 5
   m_Name: Category Language
   m_TagString: Untagged
@@ -7078,7 +7197,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 990021371}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 780042218}
+        m_TargetAssemblyTypeName: ConfigUI, Assembly-CSharp
+        m_MethodName: SelectFollow
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1330616492}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &990021371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7117,6 +7248,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990021368}
   m_CullTransparentMesh: 1
+--- !u!114 &990021373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990021368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 990021374}
+          m_TargetAssemblyTypeName: FollowSlider, Assembly-CSharp
+          m_MethodName: OnSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &990021374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990021368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8365424bf87ff4cb873046832bc612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scrollbar: {fileID: 1886494620}
+  m_FollowedPosition: 0.114
+  m_FollowDuration: 0.2
 --- !u!1 &997418801
 GameObject:
   m_ObjectHideFlags: 0
@@ -11604,6 +11779,8 @@ GameObject:
   - component: {fileID: 1555603637}
   - component: {fileID: 1555603636}
   - component: {fileID: 1555603635}
+  - component: {fileID: 1555603639}
+  - component: {fileID: 1555603638}
   m_Layer: 5
   m_Name: Category Operation
   m_TagString: Untagged
@@ -11674,7 +11851,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1555603636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 780042218}
+        m_TargetAssemblyTypeName: ConfigUI, Assembly-CSharp
+        m_MethodName: SelectFollow
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1233342676}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1555603636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11713,6 +11902,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555603633}
   m_CullTransparentMesh: 1
+--- !u!114 &1555603638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555603633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1555603639}
+          m_TargetAssemblyTypeName: FollowSlider, Assembly-CSharp
+          m_MethodName: OnSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1555603639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555603633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8365424bf87ff4cb873046832bc612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scrollbar: {fileID: 1886494620}
+  m_FollowedPosition: 0.77
+  m_FollowDuration: 0.2
 --- !u!1 &1563377987
 GameObject:
   m_ObjectHideFlags: 0
@@ -12674,6 +12907,8 @@ GameObject:
   - component: {fileID: 1729925752}
   - component: {fileID: 1729925751}
   - component: {fileID: 1729925750}
+  - component: {fileID: 1729925754}
+  - component: {fileID: 1729925753}
   m_Layer: 5
   m_Name: Category General
   m_TagString: Untagged
@@ -12744,7 +12979,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1729925751}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 780042218}
+        m_TargetAssemblyTypeName: ConfigUI, Assembly-CSharp
+        m_MethodName: SelectFollow
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1278792875}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1729925751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12783,6 +13030,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729925748}
   m_CullTransparentMesh: 1
+--- !u!114 &1729925753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729925748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1729925754}
+          m_TargetAssemblyTypeName: FollowSlider, Assembly-CSharp
+          m_MethodName: OnSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1729925754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729925748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8365424bf87ff4cb873046832bc612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Scrollbar: {fileID: 1886494620}
+  m_FollowedPosition: 1
+  m_FollowDuration: 0.2
 --- !u!1 &1761562917
 GameObject:
   m_ObjectHideFlags: 0

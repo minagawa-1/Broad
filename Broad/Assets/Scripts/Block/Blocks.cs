@@ -84,6 +84,33 @@ public class Blocks
         return true;
     }
 
+    /// <summary>盤面に設置することが可能か検証する</summary>
+    /// <param name="board">盤面</param>
+    /// <param name="player">調べるプレイヤー番号</param>
+    public bool ValidateSetable(Board board, int player)
+    {
+        // 返却用仮変数
+        bool setable = false;
+
+        // 設置可能なマスを見つけたらtrueを返す
+        for (int rot = 0; rot < 4; ++rot)
+        {
+            RotateRight();
+
+            for (int y = 0; y < GameManager.board.height - height + 1; ++y)
+            {
+                for (int x = 0; x < GameManager.board.width - width + 1; ++x)
+                {
+                    position = new Vector2Int(x, y);
+
+                    if (IsSetable(board, player)) setable = true;
+                }
+            }
+        }
+
+        return setable;
+    }
+
     /// <summary>左回転</summary>
     public bool[,] RotateLeft()
     {

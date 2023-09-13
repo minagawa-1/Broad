@@ -161,4 +161,9 @@ public class ConfigUI : MonoBehaviour
 
     /// <summary>セーブデータの初期化</summary>
     public void ResetSaveData() => SaveSystem.Reset();
+
+    public void SelectFollow(Selectable selectable)
+    {
+        selectable.Select();
+    }
 }

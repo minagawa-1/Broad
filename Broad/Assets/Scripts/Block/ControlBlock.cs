@@ -114,8 +114,6 @@ public class ControlBlock : MonoBehaviour
             case BlocksState.Rotate:    RotateState();                  break;
             case BlocksState.Discard:   DiscardState();                 break;
         }
-
-        //Debug.Log("current state : " + m_BlocksState);
     }
 
     /// <summary>準備</summary>
@@ -129,7 +127,7 @@ public class ControlBlock : MonoBehaviour
 
         m_BlocksState = BlocksState.Wait;
 
-        m_DelayTimer.Setup(Mathf.Abs(m_operatable_interval - m_move_time));
+        m_DelayTimer.Setup(Mathf.Abs(m_operatable_interval - m_move_time) * (1f / Config.data.moveSpeed));
 
         m_MoveDirection = Vector2Int.zero;
 
@@ -139,8 +137,6 @@ public class ControlBlock : MonoBehaviour
 
     void WaitState()
     {
-        
-
         // ブロックスの半透明・不透明切り替え（ Cキー | △ボタン ）
         if (WasPressedKey(Key.C) || WasPressedButton(GamepadButton.North))
         {
@@ -226,16 +222,16 @@ public class ControlBlock : MonoBehaviour
             if(Gamepad.current != null)
             {
                 // 左スティック
-                if (Gamepad.current.leftStick.ReadValue().y >  0.5f) return Vector2Int.up;
-                if (Gamepad.current.leftStick.ReadValue().x < -0.5f) return Vector2Int.left;
-                if (Gamepad.current.leftStick.ReadValue().y < -0.5f) return Vector2Int.down;
-                if (Gamepad.current.leftStick.ReadValue().x >  0.5f) return Vector2Int.right;
+                if (Gamepad.current.leftStick.ReadValue().y >  Config.data.deadzoneLeft) return Vector2Int.up;
+                if (Gamepad.current.leftStick.ReadValue().x < -Config.data.deadzoneLeft) return Vector2Int.left;
+                if (Gamepad.current.leftStick.ReadValue().y < -Config.data.deadzoneLeft) return Vector2Int.down;
+                if (Gamepad.current.leftStick.ReadValue().x >  Config.data.deadzoneLeft) return Vector2Int.right;
 
                 // 十字キー
-                if (Gamepad.current.dpad.ReadValue().y >  0.5f) return Vector2Int.up;
-                if (Gamepad.current.dpad.ReadValue().x < -0.5f) return Vector2Int.left;
-                if (Gamepad.current.dpad.ReadValue().y < -0.5f) return Vector2Int.down;
-                if (Gamepad.current.dpad.ReadValue().x >  0.5f) return Vector2Int.right;
+                if (Gamepad.current.dpad.ReadValue().y >  Config.data.deadzoneLeft) return Vector2Int.up;
+                if (Gamepad.current.dpad.ReadValue().x < -Config.data.deadzoneLeft) return Vector2Int.left;
+                if (Gamepad.current.dpad.ReadValue().y < -Config.data.deadzoneLeft) return Vector2Int.down;
+                if (Gamepad.current.dpad.ReadValue().x >  Config.data.deadzoneLeft) return Vector2Int.right;
             }
 
             return Vector2Int.zero;
@@ -274,7 +270,7 @@ public class ControlBlock : MonoBehaviour
     {
         if (DOTween.IsTweening(transform)) return;
 
-        transform.DOLocalMove(GetVector3Board(m_MoveDirection), m_move_time).SetEase(Ease.OutCubic).SetRelative()
+        transform.DOLocalMove(GetVector3Board(m_MoveDirection), m_move_time * (1f / Config.data.moveSpeed)).SetEase(Ease.OutCubic).SetRelative()
             .OnComplete(() =>
             {
                 blocks.position = GetBoardPosition(transform.position).Offset((int)-blocks.center.x, (int)-blocks.center.y);
@@ -415,11 +411,7 @@ public class ControlBlock : MonoBehaviour
                     m_GameManager.cpuList[i].hand.DrawAt();
                 }
 
-                Debug.Log($"前: {setDatas.Count}");
-
                 setDatas.RemoveAll(b => b.board.data.Length == 0);
-
-                Debug.Log($"後: {setDatas.Count}");
 
                 // 重複除去
                 m_Duplicates = m_GameManager.RidDuplicate(setDatas.ToArray()).ToArray();
@@ -494,6 +486,7 @@ public class ControlBlock : MonoBehaviour
             // 手札UIに選択を合わせる
             handUI.OnSet(handIndex);
 
+            // ドロー処理
             handUI.DrawAt(handIndex);
 
             m_BlocksState = BlocksState.Discard;

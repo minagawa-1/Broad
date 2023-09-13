@@ -101,7 +101,6 @@
     <Compile Include="Assets\Scripts\UI\Deck\DeckListUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumLayerCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\RangeInt.cs" />
-    <Compile Include="Assets\Scripts\UI\MoveButton.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChip.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Comment.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ReadOnly.cs" />
@@ -160,6 +159,9 @@
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\ScriptCreator.cs" />
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\Title\Demo.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\RemainingTurnUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Config\FollowSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

@@ -54,9 +54,10 @@ public partial class BlocksListUI : MonoBehaviour
         var selection = GetSelection();
 
         if (selection == null) return;
-        if (Gamepad.current == null) return;
 
-        float y = Gamepad.current.rightStick.ReadValue().y;
+        float y = 0f;
+
+        if (Gamepad.current != null) y = Gamepad.current.rightStick.ReadValue().y;
 
         // スクロール処理 (デッドゾーン: 0.05)
         if (y < -0.05f) m_ScrollRect.verticalNormalizedPosition = Mathf.Lerp(m_ScrollRect.verticalNormalizedPosition, y, m_GamePadScrollRate * Time.deltaTime);

@@ -17,6 +17,7 @@ public class SwitchingUIs : MonoBehaviour
     public RectTransform blocksListTransform;
     [SerializeField] RectTransform m_LeftDeckGroup;
     [SerializeField] RectTransform m_RightDeckGroup;
+    [SerializeField] RectTransform m_blocksGroup;
     [SerializeField] Vector2 m_DecksMoveDirection;
     [SerializeField] Vector2 m_BlocksListMoveDirection;
     [SerializeField] Vector2 m_DecksButtonScaleDirection;
@@ -80,6 +81,7 @@ public class SwitchingUIs : MonoBehaviour
     {
         decksTransform     .DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         blocksListTransform.DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        m_blocksGroup      .DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
 
         m_LeftDeckGroup .DOSizeDelta(-m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         m_RightDeckGroup.DOSizeDelta(-m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
@@ -89,6 +91,9 @@ public class SwitchingUIs : MonoBehaviour
     {
         decksTransform     .DOSizeDelta( m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         blocksListTransform.DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+        m_blocksGroup      .DOSizeDelta(-m_DecksMoveDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
+
+
 
         m_LeftDeckGroup .DOSizeDelta(m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);
         m_RightDeckGroup.DOSizeDelta(m_DecksButtonScaleDirection, m_SwitchTime).SetRelative().SetEase(m_OpenEase);

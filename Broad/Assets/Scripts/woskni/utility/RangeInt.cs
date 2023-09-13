@@ -57,9 +57,6 @@ namespace woskni
         /// <returns>乱数値</returns>
         public int Random() => UnityEngine.Random.Range(min, max + 1);
 
-        /// <summary>デバッグログ</summary>
-        public void DebugLog() => Debug.Log("min: " + min.ToString() + ", max: " + max.ToString());
-
         public string ToString(string format = "F") => $"({min.ToString(format)} ～ {max.ToString(format)})";
     }
 }

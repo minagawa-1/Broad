@@ -259,7 +259,7 @@ public class TitleState : NetworkDiscovery
 
             // PlayerNamesにCPU用の名前を追加
             for (int i = 0; i < cpuCount; ++i)
-                m_GameSetting.playerNames[i + 1] = $"CPU{i + 1}";
+                m_GameSetting.playerNames[i + 1] = $"CPU[{i + 1}]";
 
             // 全クライアントに名前情報を送信
             NameData nameData = new NameData(m_GameSetting.playerNames);
