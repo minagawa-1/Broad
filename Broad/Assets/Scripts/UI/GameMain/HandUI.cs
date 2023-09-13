@@ -157,7 +157,7 @@ public class HandUI : MonoBehaviour
     public void ChangeAt(int handIndex)
     {
         for (int i = 0; i < buttonList.Count; ++i)
-            if (i != handIndex) buttonList[i].button.interactable = false;
+            buttonList[i].button.interactable = false;
 
         //UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(buttonList[3].gameObject);
 
