@@ -24,6 +24,9 @@ public class RankingUI : MonoBehaviour
     [SerializeField] Vector3 m_MoveDistance;
     [SerializeField] float   m_MoveDuration;
 
+    [Header("リザルト移行時に選択するボタン")]
+    [SerializeField] Button m_FirstSelectButton;
+
     [System.Serializable]
     public class ResultContent
     {
@@ -50,6 +53,8 @@ public class RankingUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_FirstSelectButton.Select();
+
         var rectTransform = transform.parent.GetComponent<RectTransform>();
 
         rectTransform.anchoredPosition3D -= m_MoveDistance;
@@ -79,6 +84,9 @@ public class RankingUI : MonoBehaviour
         UpdateSibling();
     }
 
+    /// <summary>ランキングの背景色を修正</summary>
+    /// <param name="index">修正する背景の番号</param>
+    /// <param name="color">修正後の色</param>
     void FixColor(int index, Color color)
     {
         // 背景色

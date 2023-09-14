@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class Demo : MonoBehaviour
@@ -17,8 +18,8 @@ public class Demo : MonoBehaviour
 
     [Chapter("コンポーネント")]
     [SerializeField] Image m_EdgeImage;
-    [SerializeField] Text m_TitleText;
-    [SerializeField] Text m_PushText;
+    [SerializeField] Text  m_TitleText;
+    [SerializeField] Text  m_PushText;
 
     RawImage m_RawImage;
     VideoPlayer m_VideoPlayer;
@@ -30,17 +31,26 @@ public class Demo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_DemoHideTimer = new woskni.Timer(m_DemoHideTime);
-        m_EdgeImage.rectTransform.localScale = Vector3.zero;
-
         m_RawImage = GetComponent<RawImage>();
         m_VideoPlayer = GetComponent<VideoPlayer>();
+
+        // タイマーを初期化
+        m_DemoHideTimer = new woskni.Timer(m_DemoHideTime);
+
+        // 外枠の拡大率を初期化
+        m_EdgeImage.rectTransform.localScale = Vector3.zero;
+
+        // 色を初期化
+        m_EdgeImage.color = m_EdgeImage.color.GetAlphaColor(0f);
+        m_TitleText.color = m_TitleText.color.GetAlphaColor(0f);
+        m_PushText .color = m_PushText .color.GetAlphaColor(0f);
+        m_RawImage .color = m_RawImage .color.GetAlphaColor(0f);
 
         showing = false;
 
         // 画面の最上位に移動する
         transform.parent.SetParent(Transition.instance.fadeCanvasGroup.transform.parent);
-        transform.parent.SetAsFirstSibling();
+        transform.parent.SetAsLastSibling();
     }
 
     // Update is called once per frame
@@ -48,6 +58,14 @@ public class Demo : MonoBehaviour
     {
         if(!showing)
         {
+            // タイトルシーン以外が開かれている場合はポップアップを開かない
+            if (SceneManager.sceneCount > 1 || SceneManager.GetActiveScene().buildIndex != (int)Scene.TitleScene)
+            {
+                // タイマーのリセット
+                if (m_DemoHideTimer.IsStarted()) m_DemoHideTimer.Reset();
+                return;
+            }
+
             m_DemoHideTimer.Update();
 
             if (WasPressedAnyButton()) m_DemoHideTimer.Reset();

@@ -33,17 +33,28 @@ public class Localization : MonoBehaviour
     {
         var texts = FindObjectsOfType<Text>();
 
-        var language = Config.data.language;
-
         // 辞書を参照して各テキストに補正を行う
         foreach (Text text in texts)
         {
-            if (m_BasisFontSizes.ContainsKey(text))
-                text.fontSize = Mathf.RoundToInt((float)m_BasisFontSizes[text] * Config.data.fontSizeScale);
+            //if (m_BasisFontSizes.ContainsKey(text))
+                //text.fontSize = Mathf.RoundToInt((float)m_BasisFontSizes[text] * Config.data.fontSizeScale);
 
             if (m_CSVLoader.Find(text.text).y == -1) continue;
 
-            text.text = Translate(text.text, language);
+            text.text = Translate(text.text);
+        }
+
+        var dropdowns = FindObjectsOfType<Dropdown>();
+
+        // 辞書を参照してドロップダウンの各テキストに補正を行う
+        foreach(Dropdown dropdown in dropdowns)
+        {
+            foreach(var option in dropdown.options)
+            {
+                if (m_CSVLoader.Find(option.text).y == -1) continue;
+
+                option.text = Translate(option.text);
+            }
         }
     }
 
@@ -56,18 +67,21 @@ public class Localization : MonoBehaviour
         // 翻訳言語が未設定の場合、設定言語を使用する
         afterLanguage ??= Config.data.language;
 
-        // CSVから該当する単語を探して行数を返す
-        int row = m_CSVLoader.Find(source).y;
+        // CSVから該当する単語を探して位置を返す
+        Vector2Int position = m_CSVLoader.Find(source);
 
         // 見つからなかったらエラー文を返す
-        if (row == -1) return $"#can not translate:\"{source}\"#";
+        if (position.y == -1) return $"#can not translate:\"{source}\"#";
 
-        switch (Config.data.language)
+        // 翻訳する必要がなければ原文を返す
+        if (position.x == GetColumn()) return source;
+
+        switch (afterLanguage)
         {
-            case SystemLanguage.English: return m_CSVLoader.GetString(row, 0);
-            case SystemLanguage.Japanese: return m_CSVLoader.GetString(row, 1);
-            case SystemLanguage.ChineseSimplified: return m_CSVLoader.GetString(row, 2);
-            default: return $"#invalid language: {afterLanguage}#";
+            case SystemLanguage.English:            return m_CSVLoader.GetString(position.y, 0);
+            case SystemLanguage.Japanese:           return m_CSVLoader.GetString(position.y, 1);
+            case SystemLanguage.ChineseSimplified:  return m_CSVLoader.GetString(position.y, 2);
+            default:                                return $"#invalid language: {afterLanguage}#";
         }
     }
 
@@ -81,6 +95,20 @@ public class Localization : MonoBehaviour
             case SystemLanguage.Japanese:          return num.ToString();
             case SystemLanguage.ChineseSimplified: return TextConverter.ToKanji(num, KansujiType.Normal);
             default:                               return num.ToString();
+        }
+    }
+
+    static int GetColumn(SystemLanguage? language = null)
+    {
+        // 言語が未設定の場合、設定言語を使用する
+        language ??= Config.data.language;
+
+        switch (language)
+        {
+            case SystemLanguage.English:            return 0;
+            case SystemLanguage.Japanese:           return 1;
+            case SystemLanguage.ChineseSimplified:  return 2;
+            default:                                return -1;
         }
     }
 }

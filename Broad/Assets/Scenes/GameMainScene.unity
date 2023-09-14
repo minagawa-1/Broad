@@ -2987,7 +2987,14 @@ MonoBehaviour:
     max: 100
   m_TenseColor: {r: 1, g: 0, b: 0, a: 1}
   m_StartTenseTurn: 5
-  m_RemainingText: "<size=25>\u306E\u3053\u308A</size>"
+  m_RemainingFontSize: 25
+  m_MoveDuration: 0.2
+  m_MoveDirection: {x: -556, y: 0, z: 0}
+  m_MoveUIs:
+  - {fileID: 1972892718}
+  - {fileID: 1614057424}
+  - {fileID: 874763714}
+  - {fileID: 1833139934}
 --- !u!114 &1614057426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,7 +3028,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "<size=25>\u306E\u3053\u308A</size>\n16"
+  m_Text: '<size=25>remain</size>
+
+    16'
 --- !u!222 &1614057427
 CanvasRenderer:
   m_ObjectHideFlags: 0
