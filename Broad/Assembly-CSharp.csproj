@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Network\SendDatas\SendDuplicateData.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\MethodButton.cs" />
     <Compile Include="Assets\Scripts\woskni\control\KeyboardExpansion.cs" />
+    <Compile Include="Assets\Scripts\UI\GameMain\RemainingTurnUI.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\enumCreator\EnumTagCreator.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\ProgressBar.cs" />
     <Compile Include="Assets\Scripts\Network\CustomNetworkManager.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Scripts\woskni\expantion\attribute\Percentage.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\NumericExpansion.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\ComponentGUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Config\FollowSlider.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\encrypt,encode\AESEncrypt.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\RenderingMode.cs" />
     <Compile Include="Assets\Scripts\woskni\expantion\expantionMethod\GameObjectExpansion.cs" />
@@ -160,8 +162,6 @@
     <Compile Include="Assets\Scripts\UI\DonutChart.cs" />
     <Compile Include="Assets\Scripts\woskni\utility\GamepadButtonIconLoader.cs" />
     <Compile Include="Assets\Scripts\UI\Title\Demo.cs" />
-    <Compile Include="Assets\Scripts\UI\GameMain\RemainingTurnUI.cs" />
-    <Compile Include="Assets\Scripts\UI\Config\FollowSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
