@@ -153,8 +153,8 @@ public class TitleState : NetworkDiscovery
         if (Gamepad .current != null && Gamepad .current.buttonSouth.isPressed) m_MatchState = MatchState.CancelMatch;
         if (Keyboard.current != null && Keyboard.current.xKey.isPressed)        m_MatchState = MatchState.CancelMatch;
 
-        // 自分がホストかつプレイヤー人数が２人未満の場合はreturn
-        if (NetworkClient.activeHost && NetworkServer.connections.Count < 2) return;
+        // 人数が２人未満の場合はreturn
+        if (NetworkServer.connections.Count < 2) return;
 
         m_MatchTimer.Update(false);
 
@@ -191,13 +191,12 @@ public class TitleState : NetworkDiscovery
     /// <summary>マッチング完了</summary>
     void CompleteMatch()
     {
-        Debug.Log("aaaaaaaaaaaaaaaaaaaa");
-        SetupPlayerName().Forget();
-
         // プレイヤーカラー設定
         if (!Transition.instance.fading)
         {
             SetupPlayerColor();
+
+            SetupPlayerName().Forget();
 
             // シーン遷移処理
             Transition.instance.LoadScene(Scene.GameMainScene.ToString(), m_NetworkManager, 1f, 0.5f);
@@ -237,7 +236,6 @@ public class TitleState : NetworkDiscovery
         }
     }
 
-    /// <summary>プレイヤー名を設定</summary>
     async UniTask SetupPlayerName()
     {
 //////////// ▼共通の処理▼ /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,14 +254,12 @@ public class TitleState : NetworkDiscovery
             for (int i = 0; i < m_GameSetting.playerNames.Length; ++i)
                 if (m_GameSetting.playerNames[i] == null) unsetNameCount++;
 
-            Debug.Log($"UnsetNameCount: {unsetNameCount}");
-
             // プレイヤー全員の名前が揃うまで待機
             await UniTask.WaitUntil(() => unsetNameCount == cpuCount);
 
             // PlayerNamesにCPU用の名前を追加
             for (int i = 0; i < cpuCount; ++i)
-                m_GameSetting.playerNames[cpuCount + i] = $"CPU[{i + 1}]";
+                m_GameSetting.playerNames[i + 1] = $"CPU[{i + 1}]";
 
             // 全クライアントに名前情報を送信
             NameData nameData = new NameData(m_GameSetting.playerNames);
@@ -340,11 +336,10 @@ public class TitleState : NetworkDiscovery
 /// <param name="playerData">プレイヤー情報</param>
     void HostReceivedPlayerData(PlayerData playerData)
     {
-        Debug.Log($"playerData.playerNames[{playerData.selfIndex}].name: {m_GameSetting.playerNames[playerData.selfIndex]}");
         m_GameSetting.playerNames[playerData.selfIndex] = playerData.name;
     }
 
-    ///////////// ▼クライアントの処理▼ ////////////////////////////////////////////////////////////////////////////////////////
+///////////// ▼クライアントの処理▼ ////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>ホストからプレイヤーデータ受信</summary>
     /// <param name="playerData">プレイヤーデータ</param>
     void ReceivedPlalyerData(PlayerData playerData)
