@@ -135,6 +135,10 @@ public partial class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // UIのローカライズ
+        Localization.Setup();
+        Localization.Correct();
+
         // ボード生成
         LayOutBoard().Forget();
     }
