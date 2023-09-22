@@ -40,6 +40,7 @@ public class SwitchingUIs : MonoBehaviour
     {
         m_TitleState = FindObjectOfType<TitleState>();
 
+        // UIのローカライズ
         Localization.Setup();
         Localization.Correct();
 

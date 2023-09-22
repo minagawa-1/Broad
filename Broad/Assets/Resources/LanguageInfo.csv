@@ -26,6 +26,7 @@ Decision,決定,确认
 Cancel,キャンセル,取消
 Move,移動,移动
 Back,戻る,返回
+Skip,スキップ,跳过
 pcs,コ,个
 Reorder,並べ替え,排序
 Number order,番号 順,编号 顺序
@@ -36,8 +37,8 @@ Asc,昇順,升序
 Desc,降順,降序
 Select,選択,选择
 Rotate,回転,旋转
-Turn on transparency,透過ON,开启透明
-Turn off transparency,透過OFF,关闭透明
+Transparent ON,透過ON,开启透明
+Transparent OFF,透過OFF,关闭透明
 Put,設置,放在这里
 Slow,おそい,慢
 Normal,ふつう,中
