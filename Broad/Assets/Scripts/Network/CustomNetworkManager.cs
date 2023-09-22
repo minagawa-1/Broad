@@ -85,8 +85,9 @@ public class CustomNetworkManager : NetworkManager
         // 次のマッチングに盤面情報を持ち越さないように空にする
         GameManager.board.data = null;
 
-        // マッチングシーンに戻る
-        SceneManager.LoadScene((int)Scene.TitleScene);
+        // 現在のシーンがリザルトでなければマッチングシーンに戻る
+        if (SceneManager.GetActiveScene().name != Scene.ResultScene.ToString())
+            SceneManager.LoadScene((int)Scene.TitleScene);
 
         base.OnClientDisconnect();
     }
@@ -100,8 +101,9 @@ public class CustomNetworkManager : NetworkManager
         // 次のマッチングに盤面情報を持ち越さないように空にする
         GameManager.board.data = null;
 
-        // マッチングシーンに戻る
-        SceneManager.LoadScene((int)Scene.TitleScene);
+        // 現在のシーンがリザルトでなければマッチングシーンに戻る
+        if (SceneManager.GetActiveScene().name != Scene.ResultScene.ToString())
+            SceneManager.LoadScene((int)Scene.TitleScene);
 
         base.OnStopServer();
     }

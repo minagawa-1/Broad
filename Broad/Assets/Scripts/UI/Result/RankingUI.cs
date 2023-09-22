@@ -163,4 +163,9 @@ public class RankingUI : MonoBehaviour
         // ソートされた配列内でのindexの位置を求める
         return System.Array.IndexOf(sortedData, broads[index]);
     }
+
+    public void ToTile()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)Scene.TitleScene);
+    }
 }
