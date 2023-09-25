@@ -26,6 +26,11 @@ public class Demo : MonoBehaviour
 
     woskni.Timer m_DemoHideTimer;
 
+    private InputAction m_AnyKeyAction = new InputAction(type: InputActionType.PassThrough, binding: "*/<Button>", interactions: "Press");
+
+    private void OnEnable() => m_AnyKeyAction.Enable();
+    private void OnDisable() => m_AnyKeyAction.Disable();
+
     public bool showing { get; private set; }
 
     // Start is called before the first frame update
@@ -68,7 +73,7 @@ public class Demo : MonoBehaviour
 
             m_DemoHideTimer.Update();
 
-            if (WasPressedAnyButton()) m_DemoHideTimer.Reset();
+            if (m_AnyKeyAction.triggered) m_DemoHideTimer.Reset();
 
             if (m_DemoHideTimer.IsFinished())
             {
@@ -80,7 +85,7 @@ public class Demo : MonoBehaviour
         else
         {
             // いずれかのボタンが押されたら
-            if (WasPressedAnyButton())
+            if (m_AnyKeyAction.triggered)
             {
                 showing = false;
 
@@ -121,22 +126,5 @@ public class Demo : MonoBehaviour
 
         // 映像の停止（Pause関数と違ってStop関数の場合、次回再生時は最初からになる）
         sequence.AppendCallback(m_VideoPlayer.Stop);
-    }
-
-    bool WasPressedAnyButton()
-    {
-        if (Gamepad.current != null)
-        {
-            foreach (ButtonControl button in Gamepad.current.allControls)
-                if (button.wasPressedThisFrame) return true;
-        }
-
-        if (Keyboard.current != null)
-        {
-            foreach (ButtonControl button in Keyboard.current.allControls)
-                if (button.wasPressedThisFrame) return true;
-        }
-
-        return false;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using Mirror;
 
 [RequireComponent(typeof(Text))]
 public class RemainingTurnUI : MonoBehaviour
@@ -59,6 +60,9 @@ public class RemainingTurnUI : MonoBehaviour
 
     void OnFinish()
     {
+        // ゲームが終了したら通信を切る
+        NetworkManager.singleton.StopHost();
+
         Move(m_MoveUIs.ToArray());
 
         Camera.main.transform.DOMoveX(GameManager.boardSize.x * 0.25f, m_MoveDuration).SetRelative().SetEase(Ease.InOutCirc)
